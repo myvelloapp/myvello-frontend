@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="mvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+    <linearGradient id="tealAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#mvGrad)"/>
+  <path d="M128 360L216 170L272 290L336 170L400 360" stroke="#FFFFFF" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="216" cy="170" r="22" fill="url(#tealAccent)"/>
+  <circle cx="336" cy="170" r="22" fill="url(#tealAccent)"/>
+  <circle cx="272" cy="290" r="18" fill="#FFFFFF"/>
+</svg>
