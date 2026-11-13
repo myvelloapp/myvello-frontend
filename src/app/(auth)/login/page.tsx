@@ -88,11 +88,24 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Field interaction tracking
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // Check URL parameters for verification status or errors
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("verified") === "1") {
+        setSuccessMessage("Your email has been verified successfully! You can now sign in.");
+      } else if (params.get("error") === "invalid_link") {
+        setErrorMessage("The verification link is invalid or has expired. Please sign in and request a fresh link.");
+      }
+    }
+  }, []);
 
   // Smooth redirection if already logged in (zero flashing)
   useEffect(() => {
@@ -374,6 +387,14 @@ export default function LoginPage() {
                   <span className="font-semibold text-slate-700">Remember this device</span>
                 </label>
               </div>
+
+              {/* Email Verified Success Message */}
+              {successMessage && (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200/80 flex items-start gap-2.5 text-emerald-700 text-xs font-semibold animate-in fade-in duration-150">
+                  <Check className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
+                  <span className="leading-relaxed">{successMessage}</span>
+                </div>
+              )}
 
               {/* Server / Authentication Error Message */}
               {errorMessage && (

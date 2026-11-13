@@ -21,18 +21,22 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated, user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.replace(`/login?redirect=${encodeURIComponent(pathname)}`);
+    if (!isLoading) {
+      if (!isAuthenticated) {
+        router.replace(`/login?redirect=${encodeURIComponent(pathname)}`);
+      } else if (user && !user.email_verified_at) {
+        router.replace("/verify-email");
+      }
     }
-  }, [isLoading, isAuthenticated, router, pathname]);
+  }, [isLoading, isAuthenticated, user, router, pathname]);
 
-  // If session is verifying or unauthenticated, block rendering and show secure verification state
-  if (isLoading || !isAuthenticated) {
+  // If session is verifying, unauthenticated, or email not verified, block rendering
+  if (isLoading || !isAuthenticated || (user && !user.email_verified_at)) {
     return (
       <div className="min-h-screen min-h-dvh bg-[#F0F5FF] flex flex-col items-center justify-center p-6 text-center select-none pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
         <div className="mb-4 flex items-center justify-center">

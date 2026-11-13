@@ -42,19 +42,10 @@ export default function VerifyEmailPage() {
           router.push("/emis");
         }, 1200);
       } else {
-        // Fallback for simulation / testing if not yet verified on server
-        setIsVerified(true);
-        setStatusMessage("Email verified successfully! Preparing your vault...");
-        setTimeout(() => {
-          router.push("/emis");
-        }, 1200);
+        setErrorMessage("Your email address is not verified yet. Please check your inbox (including Spam folder) and click the verification link.");
       }
     } catch {
-      // In local dev, allow simulation to proceed smoothly
-      setIsVerified(true);
-      setTimeout(() => {
-        router.push("/emis");
-      }, 1200);
+      setErrorMessage("Could not refresh verification status. Please click the link sent to your email or click Resend.");
     } finally {
       setIsChecking(false);
     }
