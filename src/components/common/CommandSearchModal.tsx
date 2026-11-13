@@ -6,16 +6,16 @@ import {
   Search,
   X,
   CreditCard,
-  LayoutDashboard,
   Clock,
   Users,
   Bell,
   Settings,
   PlusCircle,
-  FileText,
   ChevronRight,
 } from "lucide-react";
 import { mockEmis } from "@/lib/mockData";
+import { formatCurrency, getCurrencySymbol } from "@/lib/formatters";
+import { useAuth } from "@/modules/authentication/AuthContext";
 
 interface CommandSearchModalProps {
   isOpen: boolean;
@@ -24,6 +24,9 @@ interface CommandSearchModalProps {
 
 export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps) {
   const router = useRouter();
+  const { user } = useAuth();
+  const currency = user?.preferred_currency || "INR";
+  const currencySymbol = getCurrencySymbol(currency);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -50,7 +53,6 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
   );
 
   const quickLinks = [
-    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { label: "EMI Management", href: "/emis", icon: CreditCard },
     { label: "Add New EMI", href: "/emis/new", icon: PlusCircle },
     { label: "Payment History", href: "/payment-history", icon: Clock },
@@ -103,14 +105,14 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-indigo-100/70 text-indigo-600 flex items-center justify-center font-bold text-xs">
-                        ₹
+                        {currencySymbol}
                       </div>
                       <div>
                         <div className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600">
                           {loan.loanName}
                         </div>
-                        <div className="text-xs text-slate-400">
-                          {loan.bankName} • ₹{loan.emiAmount.toLocaleString()}/mo • Due: {loan.nextDueDate}
+                        <div suppressHydrationWarning className="text-xs text-slate-400">
+                          {loan.bankName} • {formatCurrency(loan.emiAmount, currency)}/mo • Due: {loan.nextDueDate}
                         </div>
                       </div>
                     </div>

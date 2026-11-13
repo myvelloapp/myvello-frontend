@@ -13,6 +13,38 @@ export const apiClient = axios.create({
   withCredentials: true,
 });
 
+// Automatically attach Bearer token and CSRF token if present
+apiClient.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("myvello_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
+// Global response interceptor to handle unauthenticated sessions (e.g. copied links in new browsers, expired tokens)
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && typeof window !== "undefined") {
+      localStorage.removeItem("myvello_token");
+      document.cookie = "myvello_token=; path=/; max-age=0; SameSite=Lax";
+
+      const pathname = window.location.pathname;
+      const isPublicPath = ["/login", "/register", "/forgot-password", "/verify-email", "/auth"].some(
+        (p) => pathname === p || pathname.startsWith(`${p}/`)
+      );
+
+      if (!isPublicPath && pathname !== "/") {
+        window.location.href = `/login?redirect=${encodeURIComponent(pathname)}`;
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 /**
  * Initializes CSRF protection cookie via Laravel Sanctum
  */

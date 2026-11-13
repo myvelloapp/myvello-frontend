@@ -1,4 +1,4 @@
-import apiClient, { getCsrfCookie } from "@/lib/api";
+import apiClient from "@/lib/api";
 import { User, ApiResponse } from "@/types";
 
 export interface RegisterPayload {
@@ -24,15 +24,30 @@ export interface AuthSuccessData {
   email_verified: boolean;
 }
 
+/**
+ * Synchronize authentication token with browser cookies for server-side Next.js route protection
+ */
+export function setAuthCookie(token: string) {
+  if (typeof document !== "undefined") {
+    document.cookie = `myvello_token=${encodeURIComponent(token)}; path=/; max-age=2592000; SameSite=Lax`;
+  }
+}
+
+export function clearAuthCookie() {
+  if (typeof document !== "undefined") {
+    document.cookie = `myvello_token=; path=/; max-age=0; SameSite=Lax`;
+  }
+}
+
 export const authService = {
   /**
    * Register a new user
    */
   async register(payload: RegisterPayload): Promise<AuthSuccessData> {
-    await getCsrfCookie().catch(() => {});
     const response = await apiClient.post<ApiResponse<AuthSuccessData>>("/auth/register", payload);
     if (response.data.data.token) {
       localStorage.setItem("myvello_token", response.data.data.token);
+      setAuthCookie(response.data.data.token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
     }
     return response.data.data;
@@ -42,10 +57,10 @@ export const authService = {
    * Login with email and password
    */
   async login(payload: LoginPayload): Promise<AuthSuccessData> {
-    await getCsrfCookie().catch(() => {});
     const response = await apiClient.post<ApiResponse<AuthSuccessData>>("/auth/login", payload);
     if (response.data.data.token) {
       localStorage.setItem("myvello_token", response.data.data.token);
+      setAuthCookie(response.data.data.token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
     }
     return response.data.data;
@@ -57,7 +72,10 @@ export const authService = {
   async getAuthenticatedUser(): Promise<User> {
     const token = typeof window !== "undefined" ? localStorage.getItem("myvello_token") : null;
     if (token) {
+      setAuthCookie(token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      clearAuthCookie();
     }
     const response = await apiClient.get<ApiResponse<{ user: User; email_verified: boolean }>>("/auth/user");
     return response.data.data.user;
@@ -72,6 +90,7 @@ export const authService = {
     } finally {
       if (typeof window !== "undefined") {
         localStorage.removeItem("myvello_token");
+        clearAuthCookie();
       }
       delete apiClient.defaults.headers.common["Authorization"];
     }

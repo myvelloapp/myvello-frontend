@@ -14,6 +14,9 @@ export interface User {
   email_verified_at?: string | null;
   preferred_currency: string;
   timezone: string;
+  has_completed_onboarding?: boolean;
+  is_currency_locked?: boolean;
+  active_emis_count?: number;
   status: "active" | "suspended" | "pending";
   created_at: string;
   updated_at: string;
@@ -69,18 +72,51 @@ export interface Emi {
   emi_amount: string | number;
   interest_rate?: string | number | null;
   outstanding_principal?: string | number | null;
+  processing_fee?: string | number | null;
+  processing_fee_type?: "deducted" | "financed" | null;
+  first_emi_amount?: string | number | null;
+  first_emi_type?: "bpi" | "reamortize" | null;
+  net_disbursed_amount?: string | number | null;
   currency: string;
   loan_start_date: string;
   first_emi_date: string;
   due_day: number;
   loan_tenure_months: number;
   total_emis: number;
+  reminder_days_before?: number[] | null;
   payment_method?: string | null;
+  debit_bank_name?: string | null;
+  debit_account_number?: string | null;
   reminder_enabled: boolean;
   status: EmiStatus;
   notes?: string | null;
   created_at: string;
   updated_at: string;
+  user?: PaymentUserSummary | null;
+  family?: EmiFamilySummary | null;
+}
+
+export interface PaymentUserSummary {
+  id: number;
+  name: string;
+  email: string;
+  profile_photo?: string | null;
+}
+
+export interface FamilyMemberWithUser {
+  id: number;
+  family_id: number;
+  user_id: number;
+  role: "owner" | "admin" | "member";
+  membership_status?: string;
+  joined_at?: string;
+  user?: PaymentUserSummary;
+}
+
+export interface EmiFamilySummary {
+  id: number;
+  name: string;
+  members?: FamilyMemberWithUser[];
 }
 
 export interface EmiSchedule {
@@ -95,6 +131,24 @@ export interface EmiSchedule {
   status: ScheduleStatus;
   created_at: string;
   updated_at: string;
+  payment?: (EmiPayment & { user?: PaymentUserSummary | null }) | null;
+}
+
+export interface EmiPaymentEmiSummary {
+  id: number;
+  loan_name: string;
+  lender_name: string;
+  loan_category: string;
+  currency?: string;
+  original_loan_amount?: string | number;
+  emi_amount?: string | number;
+}
+
+export interface EmiPaymentScheduleSummary {
+  id: number;
+  installment_number: number;
+  due_date?: string;
+  due_amount?: string | number;
 }
 
 export interface EmiPayment {
@@ -103,12 +157,20 @@ export interface EmiPayment {
   emi_schedule_id: number;
   user_id: number;
   amount: string | number;
+  paid_amount?: string | number;
   payment_date: string;
   payment_method: string;
   transaction_reference?: string | null;
+  receipt_path?: string | null;
   notes?: string | null;
   created_at: string;
   updated_at: string;
+  emi?: EmiPaymentEmiSummary | null;
+  schedule?: EmiPaymentScheduleSummary | null;
+  loan_name?: string;
+  lender_name?: string;
+  installment_number?: number;
+  user?: PaymentUserSummary | null;
 }
 
 export interface ApiResponse<T = unknown> {

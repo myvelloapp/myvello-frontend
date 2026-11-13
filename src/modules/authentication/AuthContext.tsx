@@ -41,9 +41,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (payload: LoginPayload) => {
     const data = await authService.login(payload);
     setUser(data.user);
+    try {
+      sessionStorage.removeItem("myvello_pwa_dismissed_session");
+      localStorage.removeItem("myvello_pwa_dismissed");
+    } catch {
+      // ignore
+    }
     if (!data.email_verified) {
       router.push("/verify-email");
     } else {
+      // If user came via a copied link with redirect parameter, send them back to that page safely
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const redirectParam = params.get("redirect");
+        if (redirectParam && redirectParam.startsWith("/") && !redirectParam.startsWith("//")) {
+          router.push(redirectParam);
+          return;
+        }
+      }
       router.push("/emis");
     }
   };
@@ -51,12 +66,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (payload: RegisterPayload) => {
     const data = await authService.register(payload);
     setUser(data.user);
+    try {
+      sessionStorage.removeItem("myvello_pwa_dismissed_session");
+      localStorage.removeItem("myvello_pwa_dismissed");
+    } catch {
+      // ignore
+    }
     router.push("/verify-email");
   };
 
   const logout = async () => {
     await authService.logout();
     setUser(null);
+    try {
+      sessionStorage.removeItem("myvello_pwa_dismissed_session");
+      localStorage.removeItem("myvello_pwa_dismissed");
+    } catch {
+      // ignore
+    }
     router.push("/login");
   };
 

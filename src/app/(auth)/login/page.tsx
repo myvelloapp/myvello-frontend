@@ -1,16 +1,87 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Shield, Lock, Mail, ArrowRight, Eye, EyeOff, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import {
+  ChevronLeft,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Check,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Building2,
+} from "lucide-react";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { authService } from "@/services/authService";
+import { BrandLogo } from "@/components/common/BrandLogo";
+import { cn } from "@/lib/utils";
+
+function LoginFormSkeleton() {
+  return (
+    <div
+      className="w-full max-w-[340px] sm:max-w-[360px] mx-auto my-auto py-4 space-y-6 animate-pulse select-none"
+      aria-busy="true"
+      aria-label="Loading login form"
+    >
+      {/* Logo skeleton */}
+      <div className="h-9 w-32 rounded-xl bg-slate-200/70" />
+
+      {/* Heading skeleton */}
+      <div className="space-y-2 mb-2">
+        <div className="h-7 w-48 rounded-lg bg-slate-200/80" />
+        <div className="h-7 w-36 rounded-lg bg-slate-200/80" />
+      </div>
+
+      {/* Google button skeleton */}
+      <div className="h-11 w-full rounded-xl bg-slate-100 border border-slate-200/60" />
+
+      {/* Divider skeleton */}
+      <div className="flex items-center gap-3 py-1">
+        <div className="h-px bg-slate-200/80 flex-1" />
+        <div className="h-2.5 w-6 rounded bg-slate-200" />
+        <div className="h-px bg-slate-200/80 flex-1" />
+      </div>
+
+      {/* Form Fields skeletons */}
+      <div className="space-y-4">
+        <div className="space-y-1.5">
+          <div className="h-3.5 w-24 rounded bg-slate-200/80" />
+          <div className="h-11 w-full rounded-xl bg-slate-100 border border-slate-200/60" />
+        </div>
+
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <div className="h-3.5 w-16 rounded bg-slate-200/80" />
+            <div className="h-3 w-24 rounded bg-slate-200/60" />
+          </div>
+          <div className="h-11 w-full rounded-xl bg-slate-100 border border-slate-200/60" />
+        </div>
+
+        {/* Remember me skeleton */}
+        <div className="flex items-center gap-2.5 py-1">
+          <div className="w-4 h-4 rounded-[5px] bg-slate-200" />
+          <div className="h-3 w-36 rounded bg-slate-200" />
+        </div>
+
+        {/* Submit button skeleton */}
+        <div className="pt-2">
+          <div className="h-12 w-full rounded-xl bg-slate-200" />
+        </div>
+      </div>
+
+      {/* Sign up footer skeleton */}
+      <div className="h-4 w-48 rounded bg-slate-200 mx-auto" />
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { user, isAuthenticated, isLoading: isAuthLoading, login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,12 +89,74 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Field interaction tracking
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  // Smooth redirection if already logged in (zero flashing)
+  useEffect(() => {
+    if (!isAuthLoading && isAuthenticated && user) {
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const redirectParam = params.get("redirect");
+        if (
+          redirectParam &&
+          redirectParam.startsWith("/") &&
+          !redirectParam.startsWith("//") &&
+          !redirectParam.includes("\\")
+        ) {
+          router.replace(redirectParam);
+          return;
+        }
+      }
+      router.replace("/dashboard");
+    }
+  }, [isAuthLoading, isAuthenticated, user, router]);
+
+  // Memoized Validation Error Computations
+  const emailError = useMemo(() => {
+    if (!emailTouched && !submitted) return null;
+    const trimmed = email.trim();
+    if (!trimmed) return "Email address is required.";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) return "Please enter a valid email address.";
+    return null;
+  }, [email, emailTouched, submitted]);
+
+  const passwordError = useMemo(() => {
+    if (!passwordTouched && !submitted) return null;
+    if (!password) return "Password is required.";
+    if (password.length < 6) return "Password must be at least 6 characters.";
+    return null;
+  }, [password, passwordTouched, submitted]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setSubmitted(true);
     setErrorMessage(null);
+
+    const emailTrimmed = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailErr = !emailTrimmed
+      ? "Email address is required."
+      : !emailRegex.test(emailTrimmed)
+      ? "Please enter a valid email address."
+      : null;
+
+    const pwdErr = !password
+      ? "Password is required."
+      : password.length < 6
+      ? "Password must be at least 6 characters."
+      : null;
+
+    if (emailErr || pwdErr) {
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      await login({ email, password, remember: rememberMe });
+      await login({ email: emailTrimmed.toLowerCase(), password, remember: rememberMe });
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrorMessage(
@@ -36,105 +169,71 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
+      setErrorMessage(null);
       const url = await authService.getGoogleLoginUrl();
       if (url) {
         window.location.href = url;
       }
-    } catch {
-      alert("Google OAuth redirect is initializing. You may also register or login directly using email.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } } };
+      setErrorMessage(
+        errorObj.response?.data?.message || "Google Sign-In is currently initializing."
+      );
     }
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#F8FAFC]">
-      {/* Left Column: Visual Brand Hero */}
-      <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-[#0C1222] via-[#141C33] to-[#1E1B4B] text-white relative overflow-hidden">
-        {/* Top Logo */}
-        <div className="flex items-center gap-2.5 z-10">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#6366F1] to-[#818CF8] flex items-center justify-center shadow-lg shadow-indigo-900/40">
-            <span className="font-extrabold text-white text-lg">M</span>
-          </div>
-          <span className="text-2xl font-bold tracking-tight text-white">myvello</span>
-        </div>
+    <div className="min-h-dvh w-full flex flex-col lg:flex-row bg-white relative overflow-x-hidden select-none">
+      {/* Mobile top accent gradient bar */}
+      <div className="lg:hidden fixed top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#8830f6] via-[#4054d1] to-[#0cc9e7] z-50 pointer-events-none" />
 
-        {/* Brand Tagline & Message */}
-        <div className="space-y-6 z-10 max-w-lg">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-teal-300 border border-white/10 backdrop-blur-xs">
-            <Shield className="w-3.5 h-3.5" />
-            End-to-End Vault Architecture
-          </div>
+      {/* Left Column: Fixed Pure CSS Gradient Background with Executive Brand Architecture (Desktop Only) */}
+      <div className="hidden lg:flex flex-1 relative overflow-hidden min-h-dvh bg-theme-gradient flex-col justify-between p-10 xl:p-14 2xl:p-16 text-white select-none">
 
-          <h1 className="text-4xl font-extrabold tracking-tight leading-tight">
-            Your Life. Your Records. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#818CF8] to-[#14B8A6]">
-              One Place.
-            </span>
-          </h1>
 
-          <p className="text-sm text-slate-300 leading-relaxed">
-            Welcome back to Myvello. Manage your monthly EMI schedules, track family loan commitments, and never miss a payment deadline.
-          </p>
+ 
 
-          <div className="pt-4 space-y-2.5 text-xs text-slate-300">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Multi-stage payment reminders (7d, 3d, 1d, Due Date)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Strict personal privacy within shared family workspaces</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Accurate calendar date logic for month-end due dates</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-xs text-slate-400 z-10">
-          © 2026 Myvello (www.myvello.life). All rights reserved.
-        </div>
-
-        {/* Decorative blur circle */}
-        <div className="absolute right-0 bottom-0 translate-x-20 translate-y-20 w-80 h-80 rounded-full bg-gradient-to-tr from-indigo-500/20 to-teal-400/20 blur-3xl pointer-events-none" />
+      
       </div>
 
-      {/* Right Column: Clean Login Form */}
-      <div className="flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* Mobile Logo */}
-          <div className="lg:hidden flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#6366F1] to-[#818CF8] flex items-center justify-center">
-              <span className="font-extrabold text-white text-base">M</span>
+      {/* Right Column: Login Form Section (Native Wrap & Thumb-Friendly Mobile Layout) */}
+      <div className="w-full lg:w-[460px] xl:w-[500px] 2xl:w-[560px] shrink-0 min-h-dvh bg-white relative flex flex-col justify-between px-4 sm:px-8 lg:px-8 xl:px-10 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,calc(1rem+env(safe-area-inset-bottom)))] overflow-y-auto">
+        {/* Top Header: Safe-Area Compliant 44px Back Button */}
+        <div className="pt-2 sm:pt-0">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-slate-200/90 bg-white shadow-2xs hover:bg-slate-50 flex items-center justify-center transition-all text-slate-500 hover:text-slate-800 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
+            aria-label="Go back"
+          >
+            <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
+          </button>
+        </div>
+
+        {/* Main Content: High-Fidelity Skeleton OR Live Form */}
+        {isAuthLoading ? (
+          <LoginFormSkeleton />
+        ) : (
+          <div className="w-full max-w-[340px] sm:max-w-[360px] mx-auto my-auto py-4">
+            {/* Logo */}
+            <div className="mb-6">
+              <BrandLogo className="h-8 sm:h-9 w-auto" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-[#172554]">myvello</span>
-          </div>
 
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172554] tracking-tight">
-              Sign in to your account
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1.5">
-              Enter your credentials or continue with your Google account.
-            </p>
-          </div>
+            {/* Heading */}
+            <h1 className="text-2xl sm:text-[28px] font-black text-[#0B132B] tracking-tight leading-[1.2] mb-6">
+              Welcome back to
+              <br />
+              your account
+            </h1>
 
-          {/* Error Alert Display */}
-          {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold animate-fade-in">
-              {errorMessage}
-            </div>
-          )}
-
-          {/* Google OAuth Option matching PRD Section 4.2 */}
-          <div>
+            {/* Google Sign-in Option (44px Minimum Touch Target) */}
             <button
               type="button"
               onClick={handleGoogleLogin}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+              className="w-full min-h-[44px] h-11 flex items-center justify-center gap-2.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-extrabold shadow-2xs transition-all cursor-pointer hover:border-slate-300 active:scale-[0.98] touch-manipulation"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -152,94 +251,169 @@ export default function LoginPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              Continue with Google
+              <span className="font-extrabold">Sign in with Google</span>
             </button>
-          </div>
 
-          <div className="relative flex items-center justify-center">
-            <div className="border-t border-slate-200 w-full" />
-            <span className="bg-[#F8FAFC] px-3 text-[11px] font-semibold text-slate-400 uppercase">
-              Or sign in with email
-            </span>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-slate-400" />
-                Email Address
-              </label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
-              />
+            {/* Centered OR Divider */}
+            <div className="my-4.5 flex items-center gap-3 select-none">
+              <div className="h-px bg-slate-200/80 flex-1" />
+              <span className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase shrink-0">
+                OR
+              </span>
+              <div className="h-px bg-slate-200/80 flex-1" />
             </div>
 
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <Lock className="w-3.5 h-3.5 text-slate-400" />
-                  Password
+            {/* Login Form */}
+            <form onSubmit={handleLogin} noValidate className="space-y-3.5">
+              <div>
+                <label className="block text-xs font-extrabold text-slate-800 mb-1.5">
+                  Email Address <span className="text-rose-500 font-bold ml-0.5">*</span>
                 </label>
-                <Link
-                  href="/forgot-password"
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-              <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white pr-10"
+                  type="email"
+                  inputMode="email"
+                  placeholder="Eg. rahulsharma@gmail.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (!emailTouched) setEmailTouched(true);
+                  }}
+                  onBlur={() => setEmailTouched(true)}
+                  autoComplete="email"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  className={cn(
+                    "w-full min-h-[44px] h-11 px-3.5 rounded-xl border font-semibold transition-all shadow-2xs focus:outline-none touch-manipulation",
+                    "text-[16px] sm:text-[13px] text-slate-900 placeholder:text-slate-400 placeholder:font-normal",
+                    emailError
+                      ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
+                      : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  )}
                 />
+                {emailError && (
+                  <div className="flex items-center gap-1.5 text-[#F43F5E] text-xs font-semibold mt-1.5 animate-in fade-in duration-150">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{emailError}</span>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-extrabold text-slate-800">
+                    Password <span className="text-rose-500 font-bold ml-0.5">*</span>
+                  </label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs font-bold text-[#01c6e4] hover:text-[#0092a8] active:opacity-75 transition-colors py-1 px-1 -mr-1 touch-manipulation"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (!passwordTouched) setPasswordTouched(true);
+                    }}
+                    onBlur={() => setPasswordTouched(true)}
+                    autoComplete="current-password"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={cn(
+                      "w-full min-h-[44px] h-11 pl-3.5 pr-11 rounded-xl border font-semibold transition-all shadow-2xs focus:outline-none touch-manipulation",
+                      "text-[16px] sm:text-[13px] text-slate-900 placeholder:text-slate-400 placeholder:font-normal",
+                      passwordError
+                        ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
+                        : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer active:scale-95 touch-manipulation"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {passwordError && (
+                  <div className="flex items-center gap-1.5 text-[#F43F5E] text-xs font-semibold mt-1.5 animate-in fade-in duration-150">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{passwordError}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Remember this device with Theme Gradient Checkmark (44px Touch Target) */}
+              <div className="flex items-center justify-between pt-0.5">
+                <label className="min-h-[44px] inline-flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer select-none group touch-manipulation">
+                  <div className="relative shrink-0">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="sr-only"
+                    />
+                    <div
+                      className={cn(
+                        "w-4 h-4 rounded-[5px] flex items-center justify-center transition-all duration-200",
+                        rememberMe
+                          ? "bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] shadow-xs shadow-indigo-500/30"
+                          : "border border-slate-300 bg-white group-hover:border-slate-400 group-hover:bg-slate-50/50"
+                      )}
+                    >
+                      {rememberMe && <Check className="w-3 h-3 text-white stroke-[3.5]" />}
+                    </div>
+                  </div>
+                  <span className="font-semibold text-slate-700">Remember this device</span>
+                </label>
+              </div>
+
+              {/* Server / Authentication Error Message */}
+              {errorMessage && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200/80 flex items-start gap-2.5 text-[#F43F5E] text-xs font-semibold animate-in fade-in duration-150">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{errorMessage}</span>
+                </div>
+              )}
+
+              {/* Submit Button (48px Touch Target, Native Gradient Glow) */}
+              <div className="pt-2">
                 <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] transition-all touch-manipulation shadow-md shadow-indigo-500/20"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {isLoading ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    "Sign In to your account"
+                  )}
                 </button>
               </div>
-            </div>
+            </form>
 
-            <div className="flex items-center justify-between text-xs">
-              <label className="flex items-center gap-2 text-slate-600 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded text-indigo-600"
-                />
-                <span>Remember this device</span>
-              </label>
-            </div>
+            {/* Sign Up Link */}
+            <p className="text-center text-xs text-slate-600 pt-4">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/register"
+                className="font-bold text-[#01c6e4] hover:text-[#0092a8] active:opacity-75 transition-colors py-2 inline-block touch-manipulation"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        )}
 
-            <Button
-              type="submit"
-              variant="secondary"
-              isLoading={isLoading}
-              className="w-full h-11 text-xs font-semibold gap-2 bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl shadow-xs"
-            >
-              Sign In to Myvello
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </form>
-
-          <p className="text-center text-xs text-slate-500">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="font-bold text-indigo-600 hover:text-indigo-800">
-              Create an account
-            </Link>
-          </p>
-        </div>
+        {/* Empty bottom space to balance vertical alignment */}
+        <div className="h-4 sm:h-6" />
       </div>
     </div>
   );

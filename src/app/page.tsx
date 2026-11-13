@@ -9,7 +9,6 @@ import {
   Bell,
   ShieldCheck,
   CheckCircle2,
-  Clock,
   ArrowRight,
   Database,
   Server,
@@ -113,9 +112,9 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-xs font-mono bg-slate-900 text-slate-200 p-3 rounded-xl overflow-x-auto">
-                    <div className="text-slate-400">// API Endpoint</div>
+                    <div className="text-slate-400">{"// API Endpoint"}</div>
                     <div>GET /api/v1/health</div>
-                    <div className="text-slate-400 pt-1">// Response</div>
+                    <div className="text-slate-400 pt-1">{"// Response"}</div>
                     <div className="text-emerald-400">
                       {loadingHealth ? "Querying backend..." : JSON.stringify(healthData ?? { error: errorMsg }, null, 2)}
                     </div>

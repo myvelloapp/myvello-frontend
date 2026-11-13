@@ -44,6 +44,201 @@ body {
   animation: slideRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Fixed Brand Gradient (Pure CSS code - No image) */
+.bg-theme-gradient {
+  background-color: #4054d1;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(12, 201, 231, 0.95) 0%, rgba(12, 201, 231, 0.65) 24%, transparent 60%),
+    radial-gradient(circle at 0% 0%, rgba(136, 48, 246, 0.95) 0%, rgba(109, 45, 230, 0.7) 28%, transparent 55%),
+    radial-gradient(circle at 0% 100%, #4f1ec7 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, #132883 0%, transparent 55%),
+    linear-gradient(135deg, #8830f6 0%, #4054d1 45%, #132883 100%);
+}
+
+/* Living Aurora Animated Gradient */
+@keyframes auroraGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(70px, -60px, 0) scale(1.12);
+  }
+  66% {
+    transform: translate3d(-50px, 45px, 0) scale(0.92);
+  }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(-80px, 65px, 0) scale(1.15);
+  }
+  66% {
+    transform: translate3d(55px, -35px, 0) scale(0.9);
+  }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-55px, -60px, 0) scale(1.18);
+  }
+}
+
+.animate-aurora-bg {
+  background: linear-gradient(120deg, #7c3aed 0%, #6366f1 22%, #2563eb 45%, #0284c7 68%, #06b6d4 88%, #00f2fe 100%);
+  background-size: 260% 260%;
+  animation: auroraGradient 16s ease-in-out infinite;
+}
+
+.animate-orb-1 {
+  animation: orbFloat1 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-orb-2 {
+  animation: orbFloat2 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-orb-3 {
+  animation: orbFloat3 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Infinite Rounding / Rotating Gradient Wheel Animation */
+@keyframes spinInfinite {
+  from {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  to {
+    transform: rotate(360deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes spinInfiniteReverse {
+  from {
+    transform: rotate(360deg) scale(1.08) translate3d(0, 0, 0);
+  }
+  to {
+    transform: rotate(0deg) scale(1.08) translate3d(0, 0, 0);
+  }
+}
+
+.animate-spin-infinite {
+  animation: spinInfinite 20s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-spin-reverse {
+  animation: spinInfiniteReverse 28s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Premium Gradient Button with Hover Glow & Shimmer */
+.btn-gradient-glow {
+  background-image: linear-gradient(90deg, #8B5CF6 0%, #6366F1 32%, #2563EB 65%, #06B6D4 100%);
+  background-size: 220% auto;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient-glow:hover {
+  background-position: right center;
+  box-shadow: 0 4px 18px -2px rgba(99, 102, 241, 0.4);
+}
+
+.btn-gradient-glow:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.3);
+}
+
+.btn-gradient-glow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.btn-gradient-glow:hover::after {
+  left: 170%;
+}
+
+/* Clean High-End Form Inputs */
+.theme-input {
+  width: 100%;
+  height: 2.625rem; /* 42px */
+  padding: 0 0.875rem;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 800;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem; /* 8px rounded-lg */
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+}
+
+.theme-input::placeholder {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.theme-input:hover {
+  border-color: #cbd5e1;
+}
+
+.theme-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.theme-input-error {
+  border-color: #f43f5e !important;
+  background-color: #fff5f5 !important;
+}
+
+.theme-input-error:focus {
+  border-color: #e11d48 !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.18) !important;
+}
+
+.theme-input:-webkit-autofill,
+.theme-input:-webkit-autofill:hover, 
+.theme-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
@@ -58,4 +253,16 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Hide scrollbars cleanly when .no-scrollbar is applied */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
 }

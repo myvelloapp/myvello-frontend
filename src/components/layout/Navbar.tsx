@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, Activity, Users, CreditCard, ChevronRight } from "lucide-react";
+import { CreditCard, ChevronRight } from "lucide-react";
 import { checkBackendHealth, SystemHealthResponse } from "@/lib/api";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";

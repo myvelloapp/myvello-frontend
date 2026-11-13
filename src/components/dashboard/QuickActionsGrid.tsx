@@ -20,7 +20,7 @@ export function QuickActionsGrid() {
     },
     {
       label: "Reports",
-      href: "/dashboard",
+      href: "/emis",
       icon: BarChart3,
       color: "text-emerald-600 bg-emerald-50 hover:bg-emerald-100",
     },
@@ -33,10 +33,12 @@ export function QuickActionsGrid() {
   ];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs transition-all hover:shadow-sm">
-      <div className="flex items-center gap-2 mb-4 text-slate-800">
-        <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
-        <h3 className="text-sm font-bold tracking-tight text-slate-900">
+    <div className="bg-white rounded-[16px] border border-slate-200/80 p-5 shadow-[0_2px_10px_-3px_rgba(15,23,42,0.05)] transition-all duration-300 hover:shadow-md">
+      <div className="flex items-center gap-2 mb-4 text-[#0B132B]">
+        <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center">
+          <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+        </div>
+        <h3 className="text-sm font-extrabold tracking-tight text-[#0B132B]">
           Quick Actions
         </h3>
       </div>

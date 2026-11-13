@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X, Smartphone, Download, CheckCircle2, Shield } from "lucide-react";
+import { X, Smartphone, Download, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 interface PwaInstallModalProps {
