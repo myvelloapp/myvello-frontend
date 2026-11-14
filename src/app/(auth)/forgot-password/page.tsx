@@ -202,11 +202,11 @@ export default function ForgotPasswordPage() {
                   <br />
                   password
                 </h1>
-                <p className="text-xs text-slate-500 mb-6 leading-relaxed">
+                <p className="text-xs text-slate-500 mb-4 leading-relaxed">
                   Enter your registered email address and we&apos;ll send you instructions to recover your account.
                 </p>
 
-                <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
                   <div>
                     <label className="block text-xs font-extrabold text-slate-800 mb-1.5">
                       Email Address <span className="text-rose-500 font-bold ml-0.5">*</span>
@@ -250,7 +250,7 @@ export default function ForgotPasswordPage() {
                   )}
 
                   {/* Submit Button (48px Touch Target, Native Gradient Glow) */}
-                  <div className="pt-2">
+                  <div className="pt-0.5">
                     <button
                       type="submit"
                       disabled={isLoading}
@@ -266,7 +266,7 @@ export default function ForgotPasswordPage() {
                 </form>
 
                 {/* Back to Sign In Link */}
-                <p className="text-center text-xs text-slate-600 pt-5">
+                <p className="text-center text-xs text-slate-600 pt-3.5">
                   Remember your password?{" "}
                   <Link
                     href="/login"
