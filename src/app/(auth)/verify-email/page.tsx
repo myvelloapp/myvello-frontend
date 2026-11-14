@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   ArrowRight,
   RefreshCw,
-  ShieldCheck,
   LogOut,
   KeyRound,
   AlertCircle,
@@ -346,12 +345,6 @@ export default function VerifyEmailPage() {
                       : "Resend Verification Code"}
                   </span>
                 </button>
-              </div>
-
-              {/* Minimal Trust Badge */}
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-center gap-1.5 text-slate-400 text-[11px] font-medium">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Protected with 256-bit bank-grade encryption</span>
               </div>
             </form>
           )}
