@@ -422,7 +422,9 @@ export default function RegisterPage() {
                       if (!passwordTouched) setPasswordTouched(true);
                     }}
                     onBlur={() => setPasswordTouched(true)}
-                    autoComplete="new-password"
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     autoCapitalize="none"
                     autoCorrect="off"
                     spellCheck={false}
