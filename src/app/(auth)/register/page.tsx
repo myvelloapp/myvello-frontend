@@ -496,10 +496,10 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Checkbox agreements with Theme Gradient Checkmarks (44px Touch Targets) */}
-              <div className="space-y-1 pt-1 text-xs text-slate-600 leading-normal">
-                <label className="min-h-[40px] flex items-start gap-2.5 cursor-pointer select-none group touch-manipulation py-1">
-                  <div className="relative mt-0.5 shrink-0">
+              {/* Checkbox agreements with Theme Gradient Checkmarks */}
+              <div className="space-y-1.5 pt-1 text-xs text-slate-600 leading-normal">
+                <label className="flex items-center gap-2.5 cursor-pointer select-none group touch-manipulation py-0.5">
+                  <div className="relative shrink-0">
                     <input
                       type="checkbox"
                       checked={termsAccepted}
@@ -530,7 +530,7 @@ export default function RegisterPage() {
                   </span>
                 </label>
 
-                <label className="min-h-[40px] flex items-start gap-2.5 cursor-pointer select-none group touch-manipulation py-1">
+                <label className="flex items-start gap-2.5 cursor-pointer select-none group touch-manipulation py-0.5">
                   <div className="relative mt-0.5 shrink-0">
                     <input
                       type="checkbox"
@@ -551,7 +551,7 @@ export default function RegisterPage() {
                       )}
                     </div>
                   </div>
-                  <span className="text-slate-600 font-medium">
+                  <span className="text-slate-600 font-medium leading-snug">
                     I accept the{" "}
                     <Link
                       href="#"
