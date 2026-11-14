@@ -347,7 +347,7 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Eg. Rahul Sharma"
+                  placeholder="Enter your name"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -381,7 +381,7 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   inputMode="email"
-                  placeholder="Eg. rahulsharma@gmail.com"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -415,7 +415,7 @@ export default function RegisterPage() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Eg. Rahul123##"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);

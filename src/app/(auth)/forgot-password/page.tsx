@@ -214,7 +214,7 @@ export default function ForgotPasswordPage() {
                     <input
                       type="email"
                       inputMode="email"
-                      placeholder="Eg. rahulsharma@gmail.com"
+                      placeholder="Enter your email"
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
