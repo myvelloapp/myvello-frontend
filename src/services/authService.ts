@@ -105,6 +105,22 @@ export const authService = {
   },
 
   /**
+   * Verify email using 6-digit OTP code
+   */
+  async verifyOtp(otp: string, email?: string): Promise<AuthSuccessData> {
+    const response = await apiClient.post<ApiResponse<AuthSuccessData>>("/auth/verify-otp", {
+      otp: otp.trim(),
+      ...(email ? { email: email.trim().toLowerCase() } : {}),
+    });
+    if (response.data.data.token) {
+      localStorage.setItem("myvello_token", response.data.data.token);
+      setAuthCookie(response.data.data.token);
+      apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
+    }
+    return response.data.data;
+  },
+
+  /**
    * Verify email link
    */
   async verifyEmail(id: number, hash: string): Promise<User> {
@@ -113,11 +129,13 @@ export const authService = {
   },
 
   /**
-   * Resend verification email
+   * Resend verification email with 6-digit OTP code
    */
-  async resendVerification(): Promise<string> {
-    const response = await apiClient.post<ApiResponse<null>>("/auth/resend-verification");
-    return response.data.message || "Verification email sent.";
+  async resendVerification(email?: string): Promise<string> {
+    const response = await apiClient.post<ApiResponse<null>>("/auth/resend-verification", {
+      ...(email ? { email: email.trim().toLowerCase() } : {}),
+    });
+    return response.data.message || "A fresh verification code has been sent.";
   },
 
   /**
