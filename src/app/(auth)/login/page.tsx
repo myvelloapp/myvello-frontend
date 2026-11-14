@@ -363,9 +363,9 @@ export default function LoginPage() {
                 )}
               </div>
 
-              {/* Remember this device with Theme Gradient Checkmark (44px Touch Target) */}
-              <div className="flex items-center justify-between pt-0.5">
-                <label className="min-h-[44px] inline-flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer select-none group touch-manipulation">
+              {/* Remember this device with Theme Gradient Checkmark */}
+              <div className="flex items-center justify-between py-0.5">
+                <label className="inline-flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer select-none group touch-manipulation">
                   <div className="relative shrink-0">
                     <input
                       type="checkbox"
@@ -405,7 +405,7 @@ export default function LoginPage() {
               )}
 
               {/* Submit Button (48px Touch Target, Native Gradient Glow) */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <button
                   type="submit"
                   disabled={isLoading}
