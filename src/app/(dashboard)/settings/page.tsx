@@ -301,6 +301,11 @@ function SettingsPageContent() {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isRemoveAvatarModalOpen, setIsRemoveAvatarModalOpen] = useState(false);
   const [isRemovingAvatar, setIsRemovingAvatar] = useState(false);
+  const [photoLoadError, setPhotoLoadError] = useState(false);
+
+  useEffect(() => {
+    setPhotoLoadError(false);
+  }, [profilePhoto]);
 
   // Password Change Form State
   const [currentPassword, setCurrentPassword] = useState("");
@@ -679,7 +684,7 @@ function SettingsPageContent() {
                           className="relative group w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-indigo-500/15 bg-gradient-to-tr from-[#6366F1] to-[#818CF8] flex items-center justify-center text-white font-black text-2xl sm:text-3xl cursor-pointer shadow-md transition-all hover:ring-indigo-500/30 active:scale-95 touch-manipulation"
                           title="Click to crop and upload profile photo"
                         >
-                          {profilePhoto ? (
+                          {profilePhoto && !photoLoadError ? (
                             <Image
                               src={profilePhoto}
                               alt={name || "Profile"}
@@ -687,6 +692,7 @@ function SettingsPageContent() {
                               unoptimized
                               sizes="80px"
                               className="object-cover"
+                              onError={() => setPhotoLoadError(true)}
                             />
                           ) : (
                             <span>{(name || "U").charAt(0).toUpperCase()}</span>
@@ -1175,7 +1181,7 @@ function SettingsPageContent() {
                   className="relative group w-16 h-16 rounded-2xl overflow-hidden ring-4 ring-indigo-500/15 bg-gradient-to-tr from-[#6366F1] to-[#818CF8] flex items-center justify-center text-white font-black text-xl cursor-pointer shadow-md active:scale-95 transition-all"
                   title="Click to edit profile photo"
                 >
-                  {profilePhoto ? (
+                  {profilePhoto && !photoLoadError ? (
                     <Image
                       src={profilePhoto}
                       alt={name || "Profile"}
@@ -1183,6 +1189,7 @@ function SettingsPageContent() {
                       unoptimized
                       sizes="64px"
                       className="object-cover"
+                      onError={() => setPhotoLoadError(true)}
                     />
                   ) : (
                     <span>{(name || "U").charAt(0).toUpperCase()}</span>

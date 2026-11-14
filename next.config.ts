@@ -9,6 +9,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "api.myvello.app",
+      },
+      {
+        protocol: "https",
+        hostname: "myvello.app",
+      },
+      {
+        protocol: "https",
+        hostname: "www.myvello.app",
+      },
+      {
+        protocol: "https",
         hostname: "images.unsplash.com",
       },
       {
