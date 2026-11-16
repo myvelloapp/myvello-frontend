@@ -93,6 +93,22 @@ export default function RootLayout({
                   document.cookie = 'myvello_token=' + encodeURIComponent(token) + '; path=/; max-age=' + maxAge + '; expires=' + expires + '; SameSite=Lax';
                 }
               } catch (e) {}
+
+              // Prevent iOS Safari auto-zoom on input focus while maintaining standard sleek text size
+              if (typeof window !== 'undefined') {
+                document.addEventListener('touchstart', function(e) {
+                  var t = e.target;
+                  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) {
+                    if (t.type !== 'checkbox' && t.type !== 'radio' && t.type !== 'range' && t.type !== 'button' && t.type !== 'submit') {
+                      var prev = t.style.fontSize;
+                      t.style.fontSize = '16px';
+                      setTimeout(function() {
+                        t.style.fontSize = prev;
+                      }, 100);
+                    }
+                  }
+                }, { passive: true });
+              }
             `,
           }}
         />
