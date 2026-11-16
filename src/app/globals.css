@@ -24,6 +24,7 @@ body {
   color: var(--text-main);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
 }
 
 @keyframes fadeIn {
@@ -265,4 +266,19 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
+}
+
+/* Prevent iOS Safari from auto-zooming on input focus on mobile (requires >= 16px) */
+@media screen and (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea,
+  select,
+  .theme-input {
+    font-size: 16px !important;
+  }
+
+  /* Preserve larger OTP code digits */
+  input[maxlength="1"] {
+    font-size: 1.25rem !important; /* 20px */
+  }
 }
