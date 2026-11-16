@@ -700,84 +700,103 @@ export default function EmiManagementPage() {
                 isLoading={isInitialLoading}
               />
 
-              {/* Mobile Next Payment Quick Glance Card with Desktop-Style Under Dots */}
+              {/* Mobile Next Payment Stacked Deck Banner with Under Dots */}
               {currentMobileEmi && (
-                <div className="w-full lg:hidden select-none space-y-2">
-                  {/* Active Front Banner */}
-                  <div
-                    onTouchStart={handleMobileTouchStart}
-                    onTouchEnd={handleMobileTouchEnd}
-                    className={cn(
-                      "w-full px-3.5 py-3 rounded-[16px] bg-white border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
-                      mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
+                <div className="w-full lg:hidden select-none space-y-1">
+                  {/* Stacked Deck Container */}
+                  <div className="relative w-full">
+                    {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
+                    {mobileCardBehindRight && (
+                      <div
+                        className="absolute inset-x-5 top-2 -bottom-2 bg-slate-100/90 rounded-[16px] border border-slate-200/60 shadow-2xs pointer-events-none transition-all duration-300 -z-10"
+                        aria-hidden="true"
+                      />
                     )}
-                  >
-                    {/* Category Icon */}
+
+                    {/* Layer 1: Peek Card Behind 1 (if 2+ cards) */}
+                    {mobileCardBehindLeft && (
+                      <div
+                        className="absolute inset-x-2.5 top-1 -bottom-1 bg-white/95 rounded-[16px] border border-slate-200/80 shadow-2xs pointer-events-none transition-all duration-300 z-0"
+                        aria-hidden="true"
+                      />
+                    )}
+
+                    {/* Active Front Banner */}
                     <div
-                      onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                      onTouchStart={handleMobileTouchStart}
+                      onTouchEnd={handleMobileTouchEnd}
                       className={cn(
-                        "w-9.5 h-9.5 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs cursor-pointer",
-                        getCategoryBgClass(currentMobileEmi.loan_category || currentMobileEmi.loan_name)
+                        "relative z-10 w-full px-3.5 py-3 rounded-[16px] bg-white border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                        mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                       )}
                     >
-                      {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-4.5 h-4.5")}
-                    </div>
-
-                    {/* Info Text */}
-                    <div
-                      onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
-                      className="min-w-0 flex-1 cursor-pointer"
-                    >
-                      <div className="flex items-center gap-1.5 truncate">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 shrink-0">
-                          NEXT DUE:
-                        </span>
-                        <span className="text-xs font-bold text-slate-800 truncate">
-                          {currentMobileEmi.loan_name}
-                        </span>
-                        {mobileTotal > 1 && (
-                          <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100/80 px-1.5 py-0.2 rounded-full shrink-0">
-                            {safeMobileIndex + 1}/{mobileTotal}
-                          </span>
+                      {/* Category Icon */}
+                      <div
+                        onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                        className={cn(
+                          "w-9.5 h-9.5 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs cursor-pointer",
+                          getCategoryBgClass(currentMobileEmi.loan_category || currentMobileEmi.loan_name)
                         )}
+                      >
+                        {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-4.5 h-4.5")}
                       </div>
-                      <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate flex items-center gap-1.5">
-                        <strong className="text-slate-900 font-extrabold text-xs sm:text-sm shrink-0">
-                          {formatCurrency(currentMobileEmi.amount, user?.preferred_currency || "INR")}
-                        </strong>
-                        <span className="text-slate-300 shrink-0">•</span>
-                        <span className="truncate">Due {currentMobileEmi.due_date}</span>
-                        {currentMobileEmi.days_remaining !== null && (
-                          <span className="text-amber-700 font-bold shrink-0">
-                            ({currentMobileEmi.days_remaining}d left)
-                          </span>
-                        )}
-                      </div>
-                    </div>
 
-                    {/* Paid Button */}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSelectedEmiForPay({
-                          id: currentMobileEmi.emi_id,
-                          loanName: currentMobileEmi.loan_name,
-                          bankName: currentMobileEmi.lender_name,
-                          emiAmount: currentMobileEmi.amount,
-                          nextDueDate: currentMobileEmi.due_date,
-                          scheduleId: currentMobileEmi.schedule_id,
-                        })
-                      }
-                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full border border-indigo-200/90 bg-white hover:bg-indigo-50/80 text-indigo-600 text-xs font-extrabold shadow-2xs active:scale-95 transition-all cursor-pointer"
-                    >
-                      <span>Paid</span>
-                      <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                    </button>
+                      {/* Info Text */}
+                      <div
+                        onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                        className="min-w-0 flex-1 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 shrink-0">
+                            NEXT DUE:
+                          </span>
+                          <span className="text-xs font-bold text-slate-800 truncate">
+                            {currentMobileEmi.loan_name}
+                          </span>
+                          {mobileTotal > 1 && (
+                            <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100/80 px-1.5 py-0.2 rounded-full shrink-0">
+                              {safeMobileIndex + 1}/{mobileTotal}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate flex items-center gap-1.5">
+                          <strong className="text-slate-900 font-extrabold text-xs sm:text-sm shrink-0">
+                            {formatCurrency(currentMobileEmi.amount, user?.preferred_currency || "INR")}
+                          </strong>
+                          <span className="text-slate-300 shrink-0">•</span>
+                          <span className="truncate">Due {currentMobileEmi.due_date}</span>
+                          {currentMobileEmi.days_remaining !== null && (
+                            <span className="text-amber-700 font-bold shrink-0">
+                              ({currentMobileEmi.days_remaining}d left)
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Paid Button */}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelectedEmiForPay({
+                            id: currentMobileEmi.emi_id,
+                            loanName: currentMobileEmi.loan_name,
+                            bankName: currentMobileEmi.lender_name,
+                            emiAmount: currentMobileEmi.amount,
+                            nextDueDate: currentMobileEmi.due_date,
+                            scheduleId: currentMobileEmi.schedule_id,
+                          })
+                        }
+                        className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full border border-indigo-200/90 bg-white hover:bg-indigo-50/80 text-indigo-600 text-xs font-extrabold shadow-2xs active:scale-95 transition-all cursor-pointer"
+                      >
+                        <span>Paid</span>
+                        <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Under Dots / Pagination for Multiple EMIs like Desktop */}
                   {mobileTotal > 1 && (
-                    <div className="flex items-center justify-center gap-1.5 pt-0.5">
+                    <div className="flex items-center justify-center gap-1.5 pt-3 pb-0.5">
                       {upcomingMonthCards.map((_, idx) => (
                         <button
                           key={idx}

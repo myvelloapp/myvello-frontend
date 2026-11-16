@@ -229,45 +229,58 @@ export default function HomePage() {
 
                   {/* Screen Content Body */}
                   <div className="p-3.5 space-y-3 max-h-[580px] overflow-y-auto no-scrollbar">
-                    {/* Next Due Hero Card with Under Dots */}
-                    <div className="space-y-1.5">
-                      <div className="w-full bg-white rounded-[16px] p-3 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5">
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                            <Car className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[9px] font-extrabold uppercase tracking-wider text-indigo-600">
-                                NEXT DUE:
-                              </span>
-                              <span className="text-[11px] font-bold text-slate-800 truncate">
-                                L&amp;T Finance Ve...
-                              </span>
-                              <span className="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded-full shrink-0">
-                                1/3
-                              </span>
+                    {/* Next Due Hero Card with Stacked Under Cards & Under Dots */}
+                    <div className="space-y-1">
+                      <div className="relative w-full">
+                        {/* Layer 2 Under Card */}
+                        <div
+                          className="absolute inset-x-5 top-2 -bottom-2 bg-slate-100/90 rounded-[16px] border border-slate-200/60 shadow-2xs pointer-events-none -z-10"
+                          aria-hidden="true"
+                        />
+                        {/* Layer 1 Under Card */}
+                        <div
+                          className="absolute inset-x-2.5 top-1 -bottom-1 bg-white/95 rounded-[16px] border border-slate-200/80 shadow-2xs pointer-events-none z-0"
+                          aria-hidden="true"
+                        />
+                        {/* Active Front Card */}
+                        <div className="relative z-10 w-full bg-white rounded-[16px] p-3 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                              <Car className="w-4 h-4" />
                             </div>
-                            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mt-0.5">
-                              <span className="font-extrabold text-slate-900">₹9,091</span>
-                              <span>&bull;</span>
-                              <span>Due 10 Dec</span>
-                              <span className="text-amber-600 font-bold">(24d left)</span>
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-[9px] font-extrabold uppercase tracking-wider text-indigo-600">
+                                  NEXT DUE:
+                                </span>
+                                <span className="text-[11px] font-bold text-slate-800 truncate">
+                                  L&amp;T Finance Ve...
+                                </span>
+                                <span className="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded-full shrink-0">
+                                  1/3
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mt-0.5">
+                                <span className="font-extrabold text-slate-900">₹9,091</span>
+                                <span>&bull;</span>
+                                <span>Due 10 Dec</span>
+                                <span className="text-amber-600 font-bold">(24d left)</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <button
-                          type="button"
-                          className="h-7 px-2.5 rounded-full border border-indigo-200 text-indigo-600 text-[10px] font-bold bg-indigo-50/60 shrink-0 flex items-center gap-0.5"
-                        >
-                          <span>Paid</span>
-                          <ChevronRight className="w-3 h-3" />
-                        </button>
+                          <button
+                            type="button"
+                            className="h-7 px-2.5 rounded-full border border-indigo-200 text-indigo-600 text-[10px] font-bold bg-indigo-50/60 shrink-0 flex items-center gap-0.5"
+                          >
+                            <span>Paid</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
+                        </div>
                       </div>
 
                       {/* Under Dots like Desktop */}
-                      <div className="flex items-center justify-center gap-1.5 pt-0.5">
+                      <div className="flex items-center justify-center gap-1.5 pt-3 pb-0.5">
                         <span className="h-1.5 w-5 bg-indigo-600 rounded-full" />
                         <span className="h-1.5 w-1.5 bg-slate-300 rounded-full" />
                         <span className="h-1.5 w-1.5 bg-slate-300 rounded-full" />
