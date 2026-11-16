@@ -303,28 +303,20 @@ export default function EmiManagementPage() {
   const [isTabMenuOpen, setIsTabMenuOpen] = useState(false);
   const tabMenuRef = useRef<HTMLDivElement>(null);
 
-  // Mobile Top Header 3-Dot Quick Actions & Tab Menu Popover
-  const [isMobileHeaderMenuOpen, setIsMobileHeaderMenuOpen] = useState(false);
-  const mobileHeaderMenuRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (tabMenuRef.current && !tabMenuRef.current.contains(event.target as Node)) {
         setIsTabMenuOpen(false);
-      }
-      if (mobileHeaderMenuRef.current && !mobileHeaderMenuRef.current.contains(event.target as Node)) {
-        setIsMobileHeaderMenuOpen(false);
       }
     }
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsTabMenuOpen(false);
-        setIsMobileHeaderMenuOpen(false);
       }
     }
 
-    if (isTabMenuOpen || isMobileHeaderMenuOpen) {
+    if (isTabMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("touchstart", handleClickOutside);
       window.addEventListener("keydown", handleKeyDown);
@@ -335,7 +327,7 @@ export default function EmiManagementPage() {
       document.removeEventListener("touchstart", handleClickOutside);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isTabMenuOpen, isMobileHeaderMenuOpen]);
+  }, [isTabMenuOpen]);
 
   // Deletion modal state
   const [loanToDelete, setLoanToDelete] = useState<EmiListItem | null>(null);
@@ -686,103 +678,6 @@ export default function EmiManagementPage() {
                 />
                 <span>{activeWorkspace.name}</span>
               </span>
-            </div>
-
-            {/* Mobile Only: 3-Dot Quick Actions & Tab Menu Trigger */}
-            <div className="sm:hidden relative shrink-0" ref={mobileHeaderMenuRef}>
-              <button
-                type="button"
-                onClick={() => setIsMobileHeaderMenuOpen((prev) => !prev)}
-                aria-label="Loan options & filters"
-                aria-expanded={isMobileHeaderMenuOpen}
-                className={cn(
-                  "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                  isMobileHeaderMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
-                )}
-              >
-                <MoreHorizontal className="w-5 h-5 text-slate-700" />
-              </button>
-
-              {/* Popover Dropdown matching Payment History & Notifications */}
-              {isMobileHeaderMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
-                  {/* Pointer Tip Arrow */}
-                  <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
-
-                  <div className="relative z-20 space-y-0.5">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActiveTab("active");
-                        setIsMobileHeaderMenuOpen(false);
-                      }}
-                      className={cn(
-                        "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
-                        activeTab === "active" ? "bg-indigo-50/70 text-indigo-700 font-bold" : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
-                      )}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Layers className={cn("w-4 h-4", activeTab === "active" ? "text-indigo-600" : "text-slate-500")} />
-                        <span>Active Loans</span>
-                      </div>
-                      <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", activeTab === "active" ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-600")}>
-                        {activeLoansCount}
-                      </span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActiveTab("completed");
-                        setIsMobileHeaderMenuOpen(false);
-                      }}
-                      className={cn(
-                        "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
-                        activeTab === "completed" ? "bg-indigo-50/70 text-indigo-700 font-bold" : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
-                      )}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <CheckCircle2 className={cn("w-4 h-4", activeTab === "completed" ? "text-emerald-600" : "text-slate-500")} />
-                        <span>Completed Loans</span>
-                      </div>
-                      <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", activeTab === "completed" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600")}>
-                        {completedLoansCount}
-                      </span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActiveTab("archived");
-                        setIsMobileHeaderMenuOpen(false);
-                      }}
-                      className={cn(
-                        "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
-                        activeTab === "archived" ? "bg-indigo-50/70 text-indigo-700 font-bold" : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
-                      )}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Archive className={cn("w-4 h-4", activeTab === "archived" ? "text-slate-600" : "text-slate-500")} />
-                        <span>Archived Loans</span>
-                      </div>
-                      <span className={cn("px-2 py-0.5 rounded-full text-[10px] font-bold", activeTab === "archived" ? "bg-slate-600 text-white" : "bg-slate-100 text-slate-600")}>
-                        {archivedLoansCount}
-                      </span>
-                    </button>
-
-                    <div className="my-1 border-t border-slate-100" />
-
-                    <Link
-                      href="/emis/new"
-                      onClick={() => setIsMobileHeaderMenuOpen(false)}
-                      className="w-full px-3.5 py-2.5 text-left text-xs font-bold text-indigo-600 hover:bg-indigo-50/60 rounded-xl flex items-center gap-2.5 transition-colors"
-                    >
-                      <Plus className="w-4 h-4 text-indigo-600 stroke-[2.5]" />
-                      <span>Add New EMI</span>
-                    </Link>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
