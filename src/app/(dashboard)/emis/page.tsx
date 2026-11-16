@@ -702,19 +702,19 @@ export default function EmiManagementPage() {
 
               {/* Mobile Stacked Deck Next Payment Quick Glance Banner */}
               {currentMobileEmi && (
-                <div className="relative w-full pt-3 pb-3 px-1 lg:hidden select-none">
-                  {/* Layer 1: Peek Card Behind */}
-                  {mobileCardBehindLeft && (
+                <div className="relative w-full pt-1 pb-2.5 px-0.5 lg:hidden select-none">
+                  {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
+                  {mobileCardBehindRight && (
                     <div
-                      className="absolute inset-x-2.5 top-1.5 bottom-0 bg-white/95 rounded-[22px] border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300 translate-y-1.5 z-0"
+                      className="absolute inset-x-4 top-1.5 -bottom-2 bg-slate-100/90 rounded-[18px] border border-slate-200/60 shadow-2xs pointer-events-none transition-all duration-300 -z-10"
                       aria-hidden="true"
                     />
                   )}
 
-                  {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
-                  {mobileCardBehindRight && (
+                  {/* Layer 1: Peek Card Behind 1 (if 2+ cards) */}
+                  {mobileCardBehindLeft && (
                     <div
-                      className="absolute inset-x-5 top-3 bottom-0 bg-white/90 rounded-[22px] border border-slate-200/60 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.05)] pointer-events-none transition-all duration-300 translate-y-3 z-0"
+                      className="absolute inset-x-2 top-0.5 -bottom-1 bg-white/95 rounded-[18px] border border-slate-200/80 shadow-2xs pointer-events-none transition-all duration-300 z-0"
                       aria-hidden="true"
                     />
                   )}
@@ -724,20 +724,20 @@ export default function EmiManagementPage() {
                     onTouchStart={handleMobileTouchStart}
                     onTouchEnd={handleMobileTouchEnd}
                     className={cn(
-                      "relative z-10 px-3.5 py-3 rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                      "relative z-10 px-3.5 py-3 rounded-[18px] bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
                       mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                     )}
                   >
-                    {/* Top Floating Circular Chevron Button (Matching Screenshot) */}
+                    {/* Top Floating Circular Chevron Button (only when multiple EMIs) */}
                     {mobileTotal > 1 && (
                       <button
                         type="button"
                         onClick={handleMobileNextEmi}
-                        className="absolute -top-3.5 right-6 z-20 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
+                        className="absolute -top-3 right-5 z-20 w-7.5 h-7.5 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
                         title="Next EMI of this month"
                         aria-label="Next EMI"
                       >
-                        <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+                        <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
                       </button>
                     )}
 
@@ -745,11 +745,11 @@ export default function EmiManagementPage() {
                     <div
                       onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
                       className={cn(
-                        "w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border border-blue-100/70 shadow-2xs cursor-pointer",
+                        "w-9.5 h-9.5 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs cursor-pointer",
                         getCategoryBgClass(currentMobileEmi.loan_category || currentMobileEmi.loan_name)
                       )}
                     >
-                      {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-5 h-5")}
+                      {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-4.5 h-4.5")}
                     </div>
 
                     {/* Info Text */}
@@ -758,7 +758,7 @@ export default function EmiManagementPage() {
                       className="min-w-0 flex-1 cursor-pointer"
                     >
                       <div className="flex items-center gap-1.5 truncate">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 shrink-0">
                           NEXT DUE:
                         </span>
                         <span className="text-xs font-bold text-slate-800 truncate">
@@ -771,13 +771,13 @@ export default function EmiManagementPage() {
                         )}
                       </div>
                       <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate flex items-center gap-1.5">
-                        <strong className="text-slate-900 font-extrabold text-xs sm:text-sm">
+                        <strong className="text-slate-900 font-extrabold text-xs sm:text-sm shrink-0">
                           {formatCurrency(currentMobileEmi.amount, user?.preferred_currency || "INR")}
                         </strong>
-                        <span className="text-slate-300">•</span>
-                        <span>Due {currentMobileEmi.due_date}</span>
+                        <span className="text-slate-300 shrink-0">•</span>
+                        <span className="truncate">Due {currentMobileEmi.due_date}</span>
                         {currentMobileEmi.days_remaining !== null && (
-                          <span className="text-amber-700 font-bold">
+                          <span className="text-amber-700 font-bold shrink-0">
                             ({currentMobileEmi.days_remaining}d left)
                           </span>
                         )}
