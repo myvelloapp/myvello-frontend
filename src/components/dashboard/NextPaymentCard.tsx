@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Calendar, Plus, CheckCircle2, Clock, Minus } from "lucide-react";
+import { Calendar, Plus, CheckCircle2, Clock, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { MarkAsPaidModal } from "@/components/common/MarkAsPaidModal";
 import { NextEmiHeroData, emiService } from "@/services/emiService";
@@ -252,16 +252,16 @@ export function NextPaymentCard({
               : "scale-100 rotate-0 translate-x-0 translate-y-0 opacity-100"
           )}
         >
-          {/* Top Floating Circular Dash Button (Cycle next / Send to back) */}
+          {/* Top Floating Circular Button (Next EMI / Cycle Deck) */}
           {totalCards > 1 && (
             <button
               type="button"
               onClick={handleSendToBack}
-              className="absolute -top-3.5 right-11 sm:right-13 z-30 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 hover:shadow-lg active:scale-90 transition-all cursor-pointer group"
-              title="Send to back (Cycle next EMI of this month)"
-              aria-label="Send to back"
+              className="absolute -top-3.5 right-11 sm:right-13 z-30 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:bg-slate-50 hover:shadow-lg active:scale-90 transition-all cursor-pointer group"
+              title="Next EMI (Cycle deck)"
+              aria-label="Next EMI"
             >
-              <Minus className="w-4 h-4 stroke-[2.4] text-slate-600 group-hover:text-slate-900 transition-colors" />
+              <ChevronRight className="w-4 h-4 stroke-[2.5] text-slate-600 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all" />
             </button>
           )}
 
