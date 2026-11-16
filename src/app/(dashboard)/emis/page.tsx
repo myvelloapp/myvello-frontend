@@ -38,7 +38,7 @@ const MarkAsPaidModal = dynamic(
   () => import("@/components/common/MarkAsPaidModal").then((mod) => mod.MarkAsPaidModal),
   { ssr: false }
 );
-import { emiService, EmiIndexResponse, EmiListItem } from "@/services/emiService";
+import { emiService, EmiIndexResponse, EmiListItem, NextEmiHeroData } from "@/services/emiService";
 import { CustomDropdown } from "@/components/ui/CustomDropdown";
 import { useWorkspace } from "@/context/WorkspaceContext";
 import { MemberAvatarStack } from "@/components/common/MemberAvatarStack";
@@ -401,6 +401,83 @@ export default function EmiManagementPage() {
 
   const rawRealLoans = apiData?.emis || [];
 
+  // Stacked deck cards for "Next EMI Payment" showing all upcoming EMIs of that target month
+  const upcomingMonthCards: NextEmiHeroData[] = useMemo(() => {
+    if (apiData?.upcoming_month_emis && apiData.upcoming_month_emis.length > 0) {
+      return apiData.upcoming_month_emis;
+    }
+
+    if (!rawRealLoans || rawRealLoans.length === 0) {
+      return apiData?.next_emi_hero ? [apiData.next_emi_hero] : [];
+    }
+
+    // Active loans with upcoming unpaid schedule
+    const activeWithDue = rawRealLoans.filter(
+      (l) => l.status === "active" && l.next_due_date && l.next_due_amount
+    );
+
+    if (activeWithDue.length === 0) {
+      return apiData?.next_emi_hero ? [apiData.next_emi_hero] : [];
+    }
+
+    // Sort ascending by due date
+    const sorted = [...activeWithDue].sort((a, b) => {
+      return new Date(a.next_due_date!).getTime() - new Date(b.next_due_date!).getTime();
+    });
+
+    const now = new Date();
+    const curYear = now.getFullYear();
+    const curMonth = now.getMonth();
+
+    // Check if any active loan is due in the current calendar month
+    const thisMonthLoans = sorted.filter((l) => {
+      const d = new Date(l.next_due_date!);
+      return d.getFullYear() === curYear && d.getMonth() === curMonth;
+    });
+
+    const targetLoans =
+      thisMonthLoans.length > 0
+        ? thisMonthLoans
+        : (() => {
+            // Find earliest upcoming month
+            const earliest = sorted[0];
+            const eDate = new Date(earliest.next_due_date!);
+            const tYear = eDate.getFullYear();
+            const tMonth = eDate.getMonth();
+            return sorted.filter((l) => {
+              const d = new Date(l.next_due_date!);
+              return d.getFullYear() === tYear && d.getMonth() === tMonth;
+            });
+          })();
+
+    return targetLoans.map((l) => {
+      const d = new Date(l.next_due_date!);
+      const diffDays =
+        l.days_remaining !== undefined && l.days_remaining !== null
+          ? l.days_remaining
+          : Math.ceil((d.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+      const formattedDate = d.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+
+      return {
+        schedule_id: l.next_schedule_id || 0,
+        emi_id: l.id,
+        loan_name: l.loan_name,
+        loan_category: l.loan_category,
+        lender_name: l.lender_name,
+        amount: l.next_due_amount || l.emi_amount,
+        due_date: formattedDate,
+        due_date_iso: l.next_due_date!,
+        days_remaining: diffDays,
+        status: (l.next_due_status || "upcoming") as "upcoming" | "due_soon" | "overdue",
+      };
+    });
+  }, [apiData, rawRealLoans]);
+
   // Dynamic bank filter options combining any banks in user's loans + popular banks
   const bankFilterOptions = useMemo(() => {
     const popularBanks = [
@@ -686,50 +763,15 @@ export default function EmiManagementPage() {
                 isLoading={isInitialLoading}
               />
 
-              {/* Mobile Sleek Next Payment Quick Glance Banner (1st Image Kept) */}
-              {apiData?.next_emi_hero && (
-                <div
-                  onClick={() => {
-                    if (apiData.next_emi_hero?.emi_id) {
-                      router.push(`/emis/${apiData.next_emi_hero.emi_id}`);
-                    }
-                  }}
-                  className="sm:hidden px-3.5 py-2.5 rounded-[14px] bg-gradient-to-r from-indigo-50/90 via-white to-violet-50/80 border border-indigo-100/90 shadow-2xs flex items-center justify-between gap-2.5 cursor-pointer active:scale-[0.99] transition-transform select-none"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                    {(() => {
-                      const heroLoan = rawRealLoans.find((l) => l.id === apiData.next_emi_hero?.emi_id);
-                      const catName = apiData.next_emi_hero?.loan_category || heroLoan?.loan_category || apiData.next_emi_hero?.loan_name || "";
-                      return (
-                        <div
-                          className={cn(
-                            "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs",
-                            getCategoryBgClass(catName)
-                          )}
-                        >
-                          {getCategoryIcon(catName, "w-4 h-4")}
-                        </div>
-                      );
-                    })()}
-                    <div className="min-w-0 flex-1 truncate">
-                      <div className="flex items-center gap-1.5 truncate">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600">Next Due:</span>
-                        <span className="text-xs font-bold text-slate-800 truncate">{apiData.next_emi_hero.loan_name}</span>
-                      </div>
-                      <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate">
-                        <strong className="text-slate-900 font-extrabold">{formatCurrency(apiData.next_emi_hero.amount, user?.preferred_currency || "INR")}</strong>
-                        <span className="mx-1">•</span>
-                        <span>Due {apiData.next_emi_hero.due_date}</span>
-                        {apiData.next_emi_hero.days_remaining !== null && (
-                          <span className="ml-1 text-amber-700 font-bold">({apiData.next_emi_hero.days_remaining}d left)</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-[11px] font-extrabold text-indigo-600 shrink-0 bg-white px-2.5 py-1 rounded-full border border-indigo-100 shadow-2xs">
-                    <span>View</span>
-                    <ChevronRight className="w-3 h-3" />
-                  </div>
+              {/* Mobile Stacked Deck Next EMI Payment Section */}
+              {upcomingMonthCards.length > 0 && (
+                <div className="lg:hidden pb-1">
+                  <NextPaymentCard
+                    cards={upcomingMonthCards}
+                    heroData={apiData?.next_emi_hero}
+                    onPaymentRecorded={loadEmis}
+                    isLoading={isInitialLoading}
+                  />
                 </div>
               )}
 
@@ -2012,6 +2054,7 @@ export default function EmiManagementPage() {
             {/* Right Column (Desktop Only - Locked): Next Payment & Mini Calendar */}
             <div className="hidden lg:block w-[350px] xl:w-[380px] shrink-0 space-y-5">
               <NextPaymentCard
+                cards={upcomingMonthCards}
                 heroData={apiData?.next_emi_hero}
                 onPaymentRecorded={loadEmis}
                 isLoading={isInitialLoading}

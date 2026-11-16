@@ -556,6 +556,7 @@ function DashboardPageContent() {
           {/* Right Rail: Next Payment Highlight + Calendar + Quick Actions */}
           <div className="lg:col-span-4 space-y-5">
             <NextPaymentCard
+              cards={apiData?.upcoming_month_emis}
               heroData={apiData?.next_emi_hero ?? null}
               onPaymentRecorded={() => loadDashboardData(true)}
             />

@@ -51,6 +51,7 @@ export interface NextEmiHeroData {
 export interface EmiIndexResponse {
   summary: EmiSummaryStats;
   next_emi_hero: NextEmiHeroData | null;
+  upcoming_month_emis?: NextEmiHeroData[];
   emis: EmiListItem[];
 }
 
