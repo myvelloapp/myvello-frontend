@@ -10,6 +10,7 @@ interface BrandLogoProps {
   href?: string;
   onClick?: () => void;
   priority?: boolean;
+  iconOnly?: boolean;
 }
 
 export function BrandLogo({
@@ -17,16 +18,20 @@ export function BrandLogo({
   href = "/",
   onClick,
   priority = true,
+  iconOnly = false,
 }: BrandLogoProps) {
   const logoImage = (
     <Image
-      src="/images/logo.svg"
+      src={iconOnly ? "/icons/icon.svg" : "/images/logo.svg"}
       alt="myvello"
-      width={324}
-      height={73}
+      width={iconOnly ? 48 : 324}
+      height={iconOnly ? 48 : 73}
       priority={priority}
       unoptimized
-      className={cn("h-8 w-auto object-contain block select-none", className)}
+      className={cn(
+        iconOnly ? "h-8 w-8 object-contain block select-none" : "h-8 w-auto object-contain block select-none",
+        className
+      )}
     />
   );
 
@@ -36,7 +41,7 @@ export function BrandLogo({
     <Link
       href={href}
       onClick={onClick}
-      className="inline-block transition-opacity hover:opacity-90"
+      className="inline-flex items-center justify-center transition-transform hover:opacity-90 active:scale-95 shrink-0"
       aria-label="myvello"
     >
       {logoImage}
