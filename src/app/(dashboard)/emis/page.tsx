@@ -486,6 +486,8 @@ export default function EmiManagementPage() {
   const mobileTotal = upcomingMonthCards.length;
   const safeMobileIndex = mobileTotal > 0 ? mobileEmiIndex % mobileTotal : 0;
   const currentMobileEmi = mobileTotal > 0 ? upcomingMonthCards[safeMobileIndex] : null;
+  const mobileCardBehindLeft = mobileTotal >= 2 ? upcomingMonthCards[(safeMobileIndex + 1) % mobileTotal] : null;
+  const mobileCardBehindRight = mobileTotal >= 3 ? upcomingMonthCards[(safeMobileIndex + 2) % mobileTotal] : null;
 
   const handleMobileNextEmi = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -803,75 +805,91 @@ export default function EmiManagementPage() {
                 isLoading={isInitialLoading}
               />
 
-              {/* Mobile Sleek Next Payment Quick Glance Banner with Month Cycling */}
+              {/* Mobile Stacked Deck Next Payment Quick Glance Banner */}
               {currentMobileEmi && (
-                <div
-                  onTouchStart={handleMobileTouchStart}
-                  onTouchEnd={handleMobileTouchEnd}
-                  className="lg:hidden px-3.5 py-2.5 rounded-[14px] bg-gradient-to-r from-indigo-50/90 via-white to-violet-50/80 border border-indigo-100/90 shadow-2xs flex items-center justify-between gap-2.5 select-none relative overflow-hidden transition-all active:scale-[0.99]"
-                >
-                  {/* Category Icon */}
+                <div className="relative w-full pt-3 pb-2 px-1 lg:hidden select-none">
+                  {/* Layer 1: Peek Card Behind Left/Bottom */}
+                  {mobileCardBehindLeft && (
+                    <div
+                      className="absolute inset-x-1 inset-y-1 bg-white/95 rounded-[22px] border border-slate-200/70 shadow-[0_6px_18px_-4px_rgba(15,23,42,0.07)] pointer-events-none transition-all duration-300 -rotate-[1.6deg] -translate-x-1 translate-y-1.5 z-0 opacity-90"
+                      aria-hidden="true"
+                    />
+                  )}
+
+                  {/* Layer 2: Peek Card Behind Right/Bottom (if 3+ cards) */}
+                  {mobileCardBehindRight && (
+                    <div
+                      className="absolute inset-x-1 inset-y-1 bg-white/90 rounded-[22px] border border-slate-200/60 shadow-[0_5px_15px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300 rotate-[1.6deg] translate-x-1 translate-y-2 z-0 opacity-80"
+                      aria-hidden="true"
+                    />
+                  )}
+
+                  {/* Layer 3: Active Front Banner */}
                   <div
-                    onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                    onTouchStart={handleMobileTouchStart}
+                    onTouchEnd={handleMobileTouchEnd}
                     className={cn(
-                      "w-8.5 h-8.5 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs cursor-pointer",
-                      getCategoryBgClass(currentMobileEmi.loan_category || currentMobileEmi.loan_name)
+                      "relative z-10 px-3.5 py-3 rounded-[22px] bg-white border border-slate-200/90 shadow-[0_10px_25px_-6px_rgba(15,23,42,0.09)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                      mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                     )}
                   >
-                    {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-4.5 h-4.5")}
-                  </div>
-
-                  {/* Info details */}
-                  <div
-                    onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
-                    className={cn(
-                      "min-w-0 flex-1 cursor-pointer transition-opacity duration-150",
-                      mobileCycling ? "opacity-0" : "opacity-100"
-                    )}
-                  >
-                    <div className="flex items-center gap-1.5 truncate">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600">
-                        Next Due:
-                      </span>
-                      <span className="text-xs font-bold text-slate-800 truncate">
-                        {currentMobileEmi.loan_name}
-                      </span>
-                      {mobileTotal > 1 && (
-                        <span className="text-[9px] font-extrabold bg-indigo-100 text-indigo-700 px-1.5 py-0.2 rounded-full shrink-0">
-                          {safeMobileIndex + 1}/{mobileTotal}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate flex items-center gap-1">
-                      <strong className="text-slate-900 font-extrabold">
-                        {formatCurrency(currentMobileEmi.amount, user?.preferred_currency || "INR")}
-                      </strong>
-                      <span className="text-slate-300">•</span>
-                      <span>Due {currentMobileEmi.due_date}</span>
-                      {currentMobileEmi.days_remaining !== null && (
-                        <span className="ml-0.5 text-amber-700 font-bold">
-                          ({currentMobileEmi.days_remaining}d left)
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Actions on the right */}
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    {/* Cycle Next Button (only when multiple EMIs in month) */}
+                    {/* Top Floating Circular Chevron Button (Matching Screenshot) */}
                     {mobileTotal > 1 && (
                       <button
                         type="button"
                         onClick={handleMobileNextEmi}
-                        className="w-7 h-7 rounded-full bg-white border border-indigo-200 shadow-2xs flex items-center justify-center text-indigo-600 active:scale-90 transition-all hover:bg-indigo-50 cursor-pointer"
+                        className="absolute -top-3.5 right-6 z-20 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
                         title="Next EMI of this month"
                         aria-label="Next EMI"
                       >
-                        <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <ChevronRight className="w-4 h-4 stroke-[2.5]" />
                       </button>
                     )}
 
-                    {/* Quick Pay Action */}
+                    {/* Category Icon */}
+                    <div
+                      onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                      className={cn(
+                        "w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border border-blue-100/70 shadow-2xs cursor-pointer",
+                        getCategoryBgClass(currentMobileEmi.loan_category || currentMobileEmi.loan_name)
+                      )}
+                    >
+                      {getCategoryIcon(currentMobileEmi.loan_category || currentMobileEmi.loan_name, "w-5 h-5")}
+                    </div>
+
+                    {/* Info Text */}
+                    <div
+                      onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
+                      className="min-w-0 flex-1 cursor-pointer"
+                    >
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600">
+                          NEXT DUE:
+                        </span>
+                        <span className="text-xs font-bold text-slate-800 truncate">
+                          {currentMobileEmi.loan_name}
+                        </span>
+                        {mobileTotal > 1 && (
+                          <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100/80 px-1.5 py-0.2 rounded-full shrink-0">
+                            {safeMobileIndex + 1}/{mobileTotal}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[11px] font-semibold text-slate-500 mt-0.5 truncate flex items-center gap-1.5">
+                        <strong className="text-slate-900 font-extrabold text-xs sm:text-sm">
+                          {formatCurrency(currentMobileEmi.amount, user?.preferred_currency || "INR")}
+                        </strong>
+                        <span className="text-slate-300">•</span>
+                        <span>Due {currentMobileEmi.due_date}</span>
+                        {currentMobileEmi.days_remaining !== null && (
+                          <span className="text-amber-700 font-bold">
+                            ({currentMobileEmi.days_remaining}d left)
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Paid Button (Changed from View to Paid as requested) */}
                     <button
                       type="button"
                       onClick={() =>
@@ -884,10 +902,10 @@ export default function EmiManagementPage() {
                           scheduleId: currentMobileEmi.schedule_id,
                         })
                       }
-                      className="flex items-center gap-1 text-[11px] font-extrabold text-white bg-indigo-600 hover:bg-indigo-700 px-2.5 py-1 rounded-full shadow-2xs active:scale-95 transition-all cursor-pointer"
+                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full border border-indigo-200/90 bg-white hover:bg-indigo-50/80 text-indigo-600 text-xs font-extrabold shadow-2xs active:scale-95 transition-all cursor-pointer"
                     >
-                      <span>Pay</span>
-                      <CheckCircle2 className="w-3 h-3 stroke-[2.2]" />
+                      <span>Paid</span>
+                      <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
                     </button>
                   </div>
                 </div>
