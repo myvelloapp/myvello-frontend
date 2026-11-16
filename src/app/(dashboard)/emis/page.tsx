@@ -1048,134 +1048,417 @@ export default function EmiManagementPage() {
                 </Link>
               </div>
 
-              {/* Row 3: Minimal Unified Loans Management Table Card */}
-              <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] border border-slate-200/80 relative">
-                {/* Mobile Minimal Unified Toolbar (sm:hidden) */}
-                <div className="sm:hidden p-3 border-b border-slate-100 bg-white rounded-t-[16px] space-y-2.5">
-                  <div className="flex items-center gap-2">
-                    {/* Search Input */}
-                    <div className="relative flex-1 min-w-0">
-                      <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                      <input
-                        type="text"
-                        inputMode="search"
-                        autoCapitalize="none"
-                        autoCorrect="off"
-                        spellCheck="false"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search loans, banks..."
-                        className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[12px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400"
-                      />
-                      {searchQuery && (
-                        <button
-                          type="button"
-                          onClick={() => setSearchQuery("")}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 min-w-[28px] min-h-[28px] flex items-center justify-center cursor-pointer touch-manipulation"
-                          aria-label="Clear search"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Filter Button with Count Badge */}
-                    <button
-                      type="button"
-                      onClick={() => setIsMobileFilterOpen(true)}
-                      className={cn(
-                        "h-10 px-3 rounded-[12px] border text-xs font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer touch-manipulation active:scale-95",
-                        activeFiltersCount > 0
-                          ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-2xs"
-                          : "bg-white border-slate-200/90 text-slate-700 hover:bg-slate-50"
-                      )}
-                      aria-label="Filter loans"
-                    >
-                      <SlidersHorizontal className="w-3.5 h-3.5" />
-                      <span>Filters</span>
-                      {activeFiltersCount > 0 && (
-                        <span className="w-4.5 h-4.5 rounded-full bg-indigo-600 text-white text-[10px] font-black flex items-center justify-center">
-                          {activeFiltersCount}
-                        </span>
-                      )}
-                    </button>
-
-                    {/* Mobile View Toggle: List vs Due Calendar */}
-                    <div className="flex items-center p-0.5 bg-slate-100 rounded-[10px] border border-slate-200/60 shrink-0">
+              {/* Mobile Only: Standalone Header Toolbar Card (sm:hidden) */}
+              <div className="sm:hidden bg-white rounded-[16px] p-3 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] space-y-2.5">
+                <div className="flex items-center gap-2">
+                  {/* Search Input */}
+                  <div className="relative flex-1 min-w-0">
+                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      type="text"
+                      inputMode="search"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search loans, banks..."
+                      className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[12px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400"
+                    />
+                    {searchQuery && (
                       <button
                         type="button"
-                        onClick={() => setViewMode("list")}
-                        className={cn(
-                          "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
-                          viewMode === "list"
-                            ? "bg-white text-indigo-600 shadow-2xs font-bold"
-                            : "text-slate-400 hover:text-slate-700"
-                        )}
-                        aria-label="List view"
-                        title="List view"
+                        onClick={() => setSearchQuery("")}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 min-w-[28px] min-h-[28px] flex items-center justify-center cursor-pointer touch-manipulation"
+                        aria-label="Clear search"
                       >
-                        <LayoutList className="w-4 h-4" />
+                        <X className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => setViewMode("calendar")}
-                        className={cn(
-                          "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
-                          viewMode === "calendar"
-                            ? "bg-white text-indigo-600 shadow-2xs font-bold"
-                            : "text-slate-400 hover:text-slate-700"
-                        )}
-                        aria-label="Due calendar view"
-                        title="Due Calendar View"
-                      >
-                        <Calendar className="w-4 h-4" />
-                      </button>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Active Filter Chips with Reset (if active on mobile) */}
-                  {hasActiveFilters && (
-                    <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        {categoryFilter !== "All" && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
-                            <span>{categoryFilter}</span>
-                            <button type="button" onClick={() => setCategoryFilter("All")}>
-                              <X className="w-2.5 h-2.5" />
-                            </button>
-                          </span>
-                        )}
-                        {bankFilter !== "All" && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
-                            <span>{bankFilter}</span>
-                            <button type="button" onClick={() => setBankFilter("All")}>
-                              <X className="w-2.5 h-2.5" />
-                            </button>
-                          </span>
-                        )}
-                        {statusFilter !== "All" && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
-                            <span>Status: {statusFilter}</span>
-                            <button type="button" onClick={() => setStatusFilter("All")}>
-                              <X className="w-2.5 h-2.5" />
-                            </button>
-                          </span>
-                        )}
-                      </div>
+                  {/* Filter Button with Count Badge */}
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileFilterOpen(true)}
+                    className={cn(
+                      "h-10 px-3 rounded-[12px] border text-xs font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer touch-manipulation active:scale-95",
+                      activeFiltersCount > 0
+                        ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-2xs"
+                        : "bg-white border-slate-200/90 text-slate-700 hover:bg-slate-50"
+                    )}
+                    aria-label="Filter loans"
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5" />
+                    <span>Filters</span>
+                    {activeFiltersCount > 0 && (
+                      <span className="w-4.5 h-4.5 rounded-full bg-indigo-600 text-white text-[10px] font-black flex items-center justify-center">
+                        {activeFiltersCount}
+                      </span>
+                    )}
+                  </button>
 
-                      <button
-                        type="button"
-                        onClick={resetAllFilters}
-                        className="text-[11px] font-bold text-rose-600 hover:text-rose-700 shrink-0 ml-2"
-                      >
-                        Reset All
-                      </button>
-                    </div>
-                  )}
+                  {/* Mobile View Toggle: List vs Due Calendar */}
+                  <div className="flex items-center p-0.5 bg-slate-100 rounded-[10px] border border-slate-200/60 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("list")}
+                      className={cn(
+                        "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
+                        viewMode === "list"
+                          ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                          : "text-slate-400 hover:text-slate-700"
+                      )}
+                      aria-label="List view"
+                      title="List view"
+                    >
+                      <LayoutList className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("calendar")}
+                      className={cn(
+                        "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
+                        viewMode === "calendar"
+                          ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                          : "text-slate-400 hover:text-slate-700"
+                      )}
+                      aria-label="Due calendar view"
+                      title="Due Calendar View"
+                    >
+                      <Calendar className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
+                {/* Active Filter Chips with Reset (if active on mobile) */}
+                {hasActiveFilters && (
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {categoryFilter !== "All" && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                          <span>{categoryFilter}</span>
+                          <button type="button" onClick={() => setCategoryFilter("All")}>
+                            <X className="w-2.5 h-2.5" />
+                          </button>
+                        </span>
+                      )}
+                      {bankFilter !== "All" && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                          <span>{bankFilter}</span>
+                          <button type="button" onClick={() => setBankFilter("All")}>
+                            <X className="w-2.5 h-2.5" />
+                          </button>
+                        </span>
+                      )}
+                      {statusFilter !== "All" && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                          <span>Status: {statusFilter}</span>
+                          <button type="button" onClick={() => setStatusFilter("All")}>
+                            <X className="w-2.5 h-2.5" />
+                          </button>
+                        </span>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={resetAllFilters}
+                      className="text-[11px] font-bold text-rose-600 hover:text-rose-700 shrink-0 ml-2"
+                    >
+                      Reset All
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Only: Standalone Minimal Cards or Calendar (sm:hidden) */}
+              <div className="sm:hidden">
+                {viewMode === "calendar" ? (
+                  <div className="bg-white rounded-[16px] p-3.5 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)]">
+                    <MiniCalendar />
+                  </div>
+                ) : isInitialLoading ? (
+                  <TableSkeleton />
+                ) : filteredRealLoans.length === 0 ? (
+                  <div className="bg-white rounded-[16px] p-6 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)]">
+                    <EmptyEmiState
+                      isFiltered={hasActiveFilters}
+                      onResetFilters={resetAllFilters}
+                    />
+                  </div>
+                ) : (
+                  <div className="space-y-2.5">
+                    {filteredRealLoans.map((loan, index) => {
+                      const isActionOpen = activeActionMenuId === loan.id;
+                      const isLastRow = index >= filteredRealLoans.length - 1;
+
+                      const isOverdue =
+                        loan.next_due_status === "overdue" ||
+                        (loan.days_remaining !== null &&
+                          loan.days_remaining !== undefined &&
+                          loan.days_remaining < 0);
+
+                      const isDueSoon =
+                        !isOverdue &&
+                        (loan.next_due_status === "due_soon" ||
+                          (loan.days_remaining !== null &&
+                            loan.days_remaining !== undefined &&
+                            loan.days_remaining <= 3 &&
+                            loan.days_remaining >= 0));
+
+                      const isCompleted = loan.status === "completed";
+                      const isArchived = loan.status === "closed";
+
+                      return (
+                        <div
+                          key={loan.id}
+                          onClick={() => router.push(`/emis/${loan.id}`)}
+                          className="bg-white rounded-[16px] p-3.5 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] space-y-2.5 hover:border-slate-300 transition-all cursor-pointer group active:scale-[0.99] touch-manipulation relative"
+                        >
+                          {/* Top: Category Icon + Title/Bank + Amount */}
+                          <div className="flex items-start justify-between gap-2.5">
+                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                              <div
+                                className={cn(
+                                  "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 shadow-2xs group-hover:scale-105 transition-transform",
+                                  getCategoryBgClass(loan.loan_category)
+                                )}
+                              >
+                                {getCategoryIcon(loan.loan_category)}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="font-bold text-slate-900 text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">
+                                    {loan.loan_name}
+                                  </span>
+                                  {loan.ownership_type === "family_shared" && (
+                                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-teal-50 text-teal-700 border border-teal-200/60 shrink-0">
+                                      Shared
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-[11px] font-medium text-slate-400 mt-0.5 flex items-center gap-1.5 truncate">
+                                  <BankLogo bankName={loan.lender_name} size="xs" />
+                                  <span className="font-semibold text-slate-600 truncate max-w-[120px]">
+                                    {loan.lender_name}
+                                  </span>
+                                  <span>•</span>
+                                  <span className="truncate">{loan.loan_category}</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="text-right shrink-0">
+                              <span
+                                suppressHydrationWarning
+                                className="font-black text-slate-900 text-sm block leading-tight"
+                              >
+                                {formatCurrency(loan.emi_amount, loan.currency || user?.preferred_currency || "INR")}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-normal block">
+                                per month
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Auto-Debit Chip (compact) if present */}
+                          {(loan.payment_method === "Auto Debit" || loan.debit_bank_name) && (
+                            <div className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/60 max-w-full truncate">
+                              <RotateCcw className="w-2.5 h-2.5 shrink-0" />
+                              <span className="truncate">Auto-Debit: {loan.debit_bank_name || loan.lender_name}</span>
+                              {loan.debit_account_number && (
+                                <span className="text-emerald-600/80 font-mono">({loan.debit_account_number})</span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Progress Bar & Stats */}
+                          <div>
+                            <div className="flex items-center justify-between text-[10px] font-semibold text-slate-400 mb-1">
+                              <span>
+                                {loan.paid_emis} of {loan.total_emis} EMIs paid
+                              </span>
+                              <span className="text-slate-700 font-bold">{loan.progress_percentage}%</span>
+                            </div>
+                            <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+                              <div
+                                className={cn(
+                                  "h-full rounded-full transition-all duration-500",
+                                  loan.progress_percentage > 0
+                                    ? "bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 shadow-2xs"
+                                    : "bg-transparent"
+                                )}
+                                style={{ width: `${loan.progress_percentage}%` }}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Bottom Row: Due Info (Left) + Minimal Actions (Right) */}
+                          <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+                            {/* Left: Due Date and Days Left / Status */}
+                            <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
+                              <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-600">
+                                <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                <span className="truncate">{loan.next_due_date || "—"}</span>
+                              </div>
+
+                              {loan.days_remaining !== null && loan.days_remaining !== undefined && (
+                                isOverdue ? (
+                                  <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 shrink-0">
+                                    <AlertCircle className="w-2.5 h-2.5" />
+                                    {Math.abs(loan.days_remaining)}d overdue
+                                  </span>
+                                ) : isDueSoon ? (
+                                  <span className="inline-flex items-center gap-0.5 text-[9px] font-semibold px-1.5 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200/70 shrink-0">
+                                    <Clock className="w-2.5 h-2.5" />
+                                    {loan.days_remaining}d left
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-0.5 text-[9px] font-semibold px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200/70 shrink-0">
+                                    <Clock className="w-2.5 h-2.5" />
+                                    {loan.days_remaining}d left
+                                  </span>
+                                )
+                              )}
+
+                              {isArchived ? (
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
+                                  <Archive className="w-2.5 h-2.5 text-slate-500" />
+                                  Archived
+                                </span>
+                              ) : isCompleted ? (
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/70 shrink-0">
+                                  <Check className="w-2.5 h-2.5 text-emerald-600" />
+                                  Paid
+                                </span>
+                              ) : null}
+                            </div>
+
+                            {/* Right: Minimal Actions */}
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {isCompleted || isArchived ? (
+                                <Link
+                                  href={`/emis/${loan.id}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <button
+                                    type="button"
+                                    className="h-8 px-2.5 rounded-full text-[11px] font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer inline-flex items-center gap-1 active:scale-95 touch-manipulation"
+                                  >
+                                    <span>Details</span>
+                                    <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                                  </button>
+                                </Link>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedEmiForPay(loan);
+                                  }}
+                                  className="h-8 px-3 rounded-full text-[11px] font-extrabold text-white btn-gradient-glow shadow-xs hover:shadow-indigo-500/25 transition-all cursor-pointer active:scale-95 inline-flex items-center gap-1 touch-manipulation"
+                                >
+                                  <Check className="w-3 h-3 stroke-[2.5]" />
+                                  <span>Pay</span>
+                                </button>
+                              )}
+
+                              {/* 3-Dot More Actions Menu */}
+                              <div className="relative inline-block text-left">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveActionMenuId(isActionOpen ? null : loan.id);
+                                  }}
+                                  className={cn(
+                                    "w-8 h-8 rounded-full text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation",
+                                    isActionOpen && "bg-slate-200 text-slate-900"
+                                  )}
+                                  aria-label="More actions"
+                                >
+                                  <MoreHorizontal className="w-3.5 h-3.5" />
+                                </button>
+
+                                {isActionOpen && (
+                                  <div
+                                    onClick={(e) => e.stopPropagation()}
+                                    className={cn(
+                                      "absolute right-0 z-50 w-48 bg-white rounded-xl shadow-xl border border-slate-200 p-1.5 text-left space-y-0.5 animate-fade-in",
+                                      isLastRow ? "bottom-full mb-1.5" : "top-full mt-1.5"
+                                    )}
+                                  >
+                                    <Link
+                                      href={`/emis/${loan.id}`}
+                                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors touch-manipulation"
+                                    >
+                                      <Eye className="w-3.5 h-3.5 text-slate-400" />
+                                      <span>View Account</span>
+                                    </Link>
+
+                                    {!isCompleted && !isArchived && (
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setSelectedEmiForPay(loan);
+                                          setActiveActionMenuId(null);
+                                        }}
+                                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-black text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer text-left touch-manipulation"
+                                      >
+                                        <Check className="w-3.5 h-3.5 text-indigo-600" />
+                                        <span>Mark as Paid</span>
+                                      </button>
+                                    )}
+
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setActiveActionMenuId(null);
+                                        handleToggleArchive(loan);
+                                      }}
+                                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer text-left touch-manipulation"
+                                    >
+                                      {isArchived ? (
+                                        <>
+                                          <ArchiveRestore className="w-3.5 h-3.5 text-indigo-600" />
+                                          <span>Reactivate Account</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Archive className="w-3.5 h-3.5 text-slate-400" />
+                                          <span>Archive Account</span>
+                                        </>
+                                      )}
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setActiveActionMenuId(null);
+                                        setLoanToDelete(loan);
+                                      }}
+                                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left touch-manipulation"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                                      <span>Delete Loan</span>
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Desktop Unified Loans Management Table Card (hidden sm:block) */}
+              <div className="hidden sm:block bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] border border-slate-200/80 relative">
                 {/* Desktop Single-Row Unified Toolbar (100% Locked for Desktop) */}
-                <div className="hidden sm:flex px-4 py-2.5 border-b border-slate-100 flex-wrap items-center justify-between gap-2.5 bg-white rounded-t-[16px]">
+                <div className="flex px-4 py-2.5 border-b border-slate-100 flex-wrap items-center justify-between gap-2.5 bg-white rounded-t-[16px]">
                   {/* Left: Search Input & Inline Filter Selects */}
                   <div className="flex flex-wrap items-center gap-2 flex-1 min-w-[240px]">
                     {/* Search Input */}
@@ -1285,293 +1568,8 @@ export default function EmiManagementPage() {
                       onResetFilters={resetAllFilters}
                     />
                   ) : (
-                    <>
-                      {/* Mobile View: High-Density Native App Card Stack (320px–639px) */}
-                      <div className="sm:hidden divide-y divide-slate-100">
-                        {filteredRealLoans.map((loan, index) => {
-                          const isActionOpen = activeActionMenuId === loan.id;
-                          const isLastRow = index >= filteredRealLoans.length - 1;
-
-                          const isOverdue =
-                            loan.next_due_status === "overdue" ||
-                            (loan.days_remaining !== null &&
-                              loan.days_remaining !== undefined &&
-                              loan.days_remaining < 0);
-
-                          const isDueSoon =
-                            !isOverdue &&
-                            (loan.next_due_status === "due_soon" ||
-                              (loan.days_remaining !== null &&
-                                loan.days_remaining !== undefined &&
-                                loan.days_remaining <= 3 &&
-                                loan.days_remaining >= 0));
-
-                          const isCompleted = loan.status === "completed";
-                          const isArchived = loan.status === "closed";
-
-                          return (
-                            <div
-                              key={loan.id}
-                              onClick={() => router.push(`/emis/${loan.id}`)}
-                              className="p-3.5 space-y-3 hover:bg-slate-50/70 transition-colors cursor-pointer group active:bg-slate-100/50"
-                            >
-                              {/* Top: Category Icon + Title + Shared Tag + Amount */}
-                              <div className="flex items-start justify-between gap-2.5">
-                                <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                  <div
-                                    className={cn(
-                                      "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-slate-100/80 shadow-2xs group-hover:scale-105 transition-transform",
-                                      getCategoryBgClass(loan.loan_category)
-                                    )}
-                                  >
-                                    {getCategoryIcon(loan.loan_category)}
-                                  </div>
-                                  <div className="min-w-0 flex-1">
-                                    <div className="flex items-center gap-1.5 truncate">
-                                      <span className="font-bold text-slate-900 text-xs truncate group-hover:text-indigo-600 transition-colors">
-                                        {loan.loan_name}
-                                      </span>
-                                      {loan.ownership_type === "family_shared" && (
-                                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-teal-50 text-teal-700 border border-teal-200/60 shrink-0">
-                                          Shared
-                                        </span>
-                                      )}
-                                    </div>
-                                    <div className="text-[11px] font-medium text-slate-400 mt-0.5 flex items-center gap-1.5 truncate">
-                                      <BankLogo bankName={loan.lender_name} size="xs" />
-                                      <span className="font-semibold text-slate-600 truncate max-w-[120px]">
-                                        {loan.lender_name}
-                                      </span>
-                                      <span>•</span>
-                                      <span className="truncate">{loan.loan_category}</span>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="text-right shrink-0">
-                                  <span
-                                    suppressHydrationWarning
-                                    className="font-black text-slate-900 text-sm block"
-                                  >
-                                    {formatCurrency(loan.emi_amount, loan.currency || user?.preferred_currency || "INR")}
-                                  </span>
-                                  <span className="text-[10px] text-slate-400 font-normal block">
-                                    per month
-                                  </span>
-                                </div>
-                              </div>
-
-                              {/* Auto Debit Mandate Chip if present */}
-                              {(loan.payment_method === "Auto Debit" || loan.debit_bank_name) && (
-                                <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/60 max-w-full truncate">
-                                  <RotateCcw className="w-2.5 h-2.5 shrink-0" />
-                                  <span className="truncate">Auto-Debit: {loan.debit_bank_name || loan.lender_name}</span>
-                                  {loan.debit_account_number && (
-                                    <span className="text-emerald-600/80 font-mono">({loan.debit_account_number})</span>
-                                  )}
-                                </div>
-                              )}
-
-                              {/* Next Due Date & Status Row */}
-                              <div className="flex items-center justify-between text-xs pt-0.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                                  <span className="font-semibold text-slate-700 text-xs">
-                                    {loan.next_due_date || "—"}
-                                  </span>
-                                  {loan.days_remaining !== null && (
-                                    isOverdue ? (
-                                      <span className="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.2 rounded-md bg-rose-100/80 text-rose-800 border border-rose-200">
-                                        <AlertCircle className="w-2.5 h-2.5" />
-                                        {Math.abs(loan.days_remaining ?? 0)}d overdue
-                                      </span>
-                                    ) : isDueSoon ? (
-                                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.2 rounded-md bg-rose-50 text-rose-700 border border-rose-200/70">
-                                        <Clock className="w-2.5 h-2.5" />
-                                        {loan.days_remaining}d left
-                                      </span>
-                                    ) : (
-                                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.2 rounded-md bg-amber-50 text-amber-700 border border-amber-200/70">
-                                        <Clock className="w-2.5 h-2.5" />
-                                        {loan.days_remaining}d left
-                                      </span>
-                                    )
-                                  )}
-                                </div>
-
-                                <div>
-                                  {isArchived ? (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                                      <Archive className="w-2.5 h-2.5 text-slate-500" />
-                                      Archived
-                                    </span>
-                                  ) : isCompleted ? (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                                      <Check className="w-2.5 h-2.5 text-emerald-600" />
-                                      Paid
-                                    </span>
-                                  ) : isOverdue ? (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200/80">
-                                      <AlertCircle className="w-2.5 h-2.5 text-rose-600" />
-                                      Overdue
-                                    </span>
-                                  ) : isDueSoon ? (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200/70">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                                      Due Soon
-                                    </span>
-                                  ) : (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-violet-50/80 text-violet-700 border border-violet-200/60">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shadow-2xs" />
-                                      Upcoming
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-
-                              {/* Progress Bar */}
-                              <div>
-                                <div className="flex items-center justify-between text-[10px] font-semibold text-slate-500 mb-1">
-                                  <span>
-                                    {loan.paid_emis} / {loan.total_emis} EMIs
-                                  </span>
-                                  <span className="text-slate-800 font-bold">{loan.progress_percentage}%</span>
-                                </div>
-                                <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                  <div
-                                    className={cn(
-                                      "h-full rounded-full transition-all duration-500",
-                                      loan.progress_percentage > 0
-                                        ? "bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 shadow-2xs"
-                                        : "bg-transparent"
-                                    )}
-                                    style={{ width: `${loan.progress_percentage}%` }}
-                                  />
-                                </div>
-                              </div>
-
-                              {/* Actions Row */}
-                              <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
-                                {isCompleted || isArchived ? (
-                                  <Link
-                                    href={`/emis/${loan.id}`}
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="flex-1"
-                                  >
-                                    <button
-                                      type="button"
-                                      className="w-full h-9 min-h-[38px] px-3 rounded-[8px] text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer inline-flex items-center justify-center gap-1 active:scale-95 touch-manipulation"
-                                    >
-                                      <span>View Details</span>
-                                      <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-                                    </button>
-                                  </Link>
-                                ) : (
-                                  <>
-                                    <button
-                                      type="button"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setSelectedEmiForPay(loan);
-                                      }}
-                                      className="flex-1 h-10 min-h-[42px] px-4 rounded-[12px] text-xs font-extrabold text-white btn-gradient-glow shadow-sm hover:shadow-indigo-500/25 transition-all cursor-pointer active:scale-[0.98] inline-flex items-center justify-center gap-2 touch-manipulation"
-                                    >
-                                      <Check className="w-4 h-4 stroke-[2.5]" />
-                                      <span>Pay {formatCurrency(loan.emi_amount, loan.currency || user?.preferred_currency || "INR")}</span>
-                                    </button>
-                                  </>
-                                )}
-
-                                {/* 3-Dot More Actions Menu */}
-                                <div className="relative inline-block text-left shrink-0">
-                                  <button
-                                    type="button"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setActiveActionMenuId(isActionOpen ? null : loan.id);
-                                    }}
-                                    className={cn(
-                                      "w-10 h-10 min-w-[42px] min-h-[42px] rounded-[12px] text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation",
-                                      isActionOpen && "bg-slate-200 text-slate-900"
-                                    )}
-                                    aria-label="More actions"
-                                  >
-                                    <MoreHorizontal className="w-4 h-4" />
-                                  </button>
-
-                                  {isActionOpen && (
-                                    <div
-                                      onClick={(e) => e.stopPropagation()}
-                                      className={cn(
-                                        "absolute right-0 z-50 w-52 bg-white rounded-2xl shadow-xl border border-slate-200 p-1.5 text-left space-y-0.5 animate-fade-in",
-                                        isLastRow ? "bottom-full mb-1.5" : "top-full mt-1.5"
-                                      )}
-                                    >
-                                      <Link
-                                        href={`/emis/${loan.id}`}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors touch-manipulation"
-                                      >
-                                        <Eye className="w-4 h-4 text-slate-400" />
-                                        <span>View EMI Account</span>
-                                      </Link>
-
-                                      {!isCompleted && !isArchived && (
-                                        <button
-                                          type="button"
-                                          onClick={() => {
-                                            setSelectedEmiForPay(loan);
-                                            setActiveActionMenuId(null);
-                                          }}
-                                          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-black text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer text-left touch-manipulation"
-                                        >
-                                          <Check className="w-4 h-4 text-indigo-600" />
-                                          <span>Mark as Paid</span>
-                                        </button>
-                                      )}
-
-                                      <button
-                                        type="button"
-                                        onClick={() => {
-                                          setActiveActionMenuId(null);
-                                          handleToggleArchive(loan);
-                                        }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer text-left touch-manipulation"
-                                      >
-                                        {isArchived ? (
-                                          <>
-                                            <ArchiveRestore className="w-4 h-4 text-indigo-600" />
-                                            <span>Reactivate Account</span>
-                                          </>
-                                        ) : (
-                                          <>
-                                            <Archive className="w-4 h-4 text-slate-400" />
-                                            <span>Archive Account</span>
-                                          </>
-                                        )}
-                                      </button>
-
-                                      <button
-                                        type="button"
-                                        onClick={() => {
-                                          setActiveActionMenuId(null);
-                                          setLoanToDelete(loan);
-                                        }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left touch-manipulation"
-                                      >
-                                        <Trash2 className="w-4 h-4 text-rose-500" />
-                                        <span>Delete Commitment</span>
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Desktop Rich Table View (hidden sm:block) */}
-                      <div className="hidden sm:block overflow-x-auto min-h-[160px]">
+                    /* Desktop Rich Table View */
+                    <div className="overflow-x-auto min-h-[160px]">
                         <table className="w-full text-left border-collapse">
                         <thead>
                           <tr className="border-b border-slate-100/90 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50/50">
@@ -1885,9 +1883,8 @@ export default function EmiManagementPage() {
                         </tbody>
                       </table>
                     </div>
-                  </>
-                )
-              ) : (
+                  )
+                ) : (
                   /* Grid View Alternative */
                   isInitialLoading ? (
                     <GridSkeleton />
