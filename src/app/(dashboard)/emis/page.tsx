@@ -702,19 +702,19 @@ export default function EmiManagementPage() {
 
               {/* Mobile Stacked Deck Next Payment Quick Glance Banner */}
               {currentMobileEmi && (
-                <div className="relative w-full pt-3 pb-2 px-1 lg:hidden select-none">
-                  {/* Layer 1: Peek Card Behind Left/Bottom */}
+                <div className="relative w-full pt-3 pb-3 px-1 lg:hidden select-none">
+                  {/* Layer 1: Peek Card Behind */}
                   {mobileCardBehindLeft && (
                     <div
-                      className="absolute inset-x-1 inset-y-1 bg-white/95 rounded-[22px] border border-slate-200/70 shadow-[0_6px_18px_-4px_rgba(15,23,42,0.07)] pointer-events-none transition-all duration-300 -rotate-[1.6deg] -translate-x-1 translate-y-1.5 z-0 opacity-90"
+                      className="absolute inset-x-2.5 top-1.5 bottom-0 bg-white/95 rounded-[22px] border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300 translate-y-1.5 z-0"
                       aria-hidden="true"
                     />
                   )}
 
-                  {/* Layer 2: Peek Card Behind Right/Bottom (if 3+ cards) */}
+                  {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
                   {mobileCardBehindRight && (
                     <div
-                      className="absolute inset-x-1 inset-y-1 bg-white/90 rounded-[22px] border border-slate-200/60 shadow-[0_5px_15px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300 rotate-[1.6deg] translate-x-1 translate-y-2 z-0 opacity-80"
+                      className="absolute inset-x-5 top-3 bottom-0 bg-white/90 rounded-[22px] border border-slate-200/60 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.05)] pointer-events-none transition-all duration-300 translate-y-3 z-0"
                       aria-hidden="true"
                     />
                   )}
@@ -724,7 +724,7 @@ export default function EmiManagementPage() {
                     onTouchStart={handleMobileTouchStart}
                     onTouchEnd={handleMobileTouchEnd}
                     className={cn(
-                      "relative z-10 px-3.5 py-3 rounded-[22px] bg-white border border-slate-200/90 shadow-[0_10px_25px_-6px_rgba(15,23,42,0.09)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                      "relative z-10 px-3.5 py-3 rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
                       mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                     )}
                   >

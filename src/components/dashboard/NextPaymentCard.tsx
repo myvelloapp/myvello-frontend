@@ -152,7 +152,7 @@ export function NextPaymentCard({
   if (!activeCard) {
     return (
       <div className="w-full pt-4 pb-2 px-1">
-        <div className="bg-white rounded-[26px] p-6 shadow-[0_8px_30px_-6px_rgba(15,23,42,0.06)] border border-slate-100 text-center space-y-3.5">
+        <div className="bg-white rounded-[26px] p-6 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 text-center space-y-3.5">
           <div className="w-13 h-13 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-2xs">
             <Calendar className="w-6 h-6" />
           </div>
@@ -187,8 +187,8 @@ export function NextPaymentCard({
         {cardBehindLeft && (
           <div
             className={cn(
-              "absolute inset-x-1 inset-y-2 bg-white rounded-[26px] sm:rounded-[28px] border border-slate-200/80 shadow-[0_12px_28px_-6px_rgba(15,23,42,0.08)] pointer-events-none transition-all duration-300",
-              "-rotate-[3.8deg] -translate-x-3.5 -translate-y-0.5 scale-[0.98] z-0 opacity-95"
+              "absolute inset-x-1 inset-y-2 bg-white rounded-[26px] sm:rounded-[28px] border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300",
+              "-rotate-[3.2deg] -translate-x-3 -translate-y-0.5 scale-[0.98] z-0 opacity-95"
             )}
             aria-hidden="true"
           >
@@ -217,8 +217,8 @@ export function NextPaymentCard({
         {cardBehindRight && (
           <div
             className={cn(
-              "absolute inset-x-1 inset-y-2 bg-white rounded-[26px] sm:rounded-[28px] border border-slate-200/70 shadow-[0_10px_24px_-6px_rgba(15,23,42,0.07)] pointer-events-none transition-all duration-300",
-              "rotate-[3.8deg] translate-x-3.5 -translate-y-0.5 scale-[0.97] z-0 opacity-90"
+              "absolute inset-x-1 inset-y-2 bg-white rounded-[26px] sm:rounded-[28px] border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] pointer-events-none transition-all duration-300",
+              "rotate-[3.2deg] translate-x-3 -translate-y-0.5 scale-[0.97] z-0 opacity-90"
             )}
             aria-hidden="true"
           >
@@ -246,7 +246,7 @@ export function NextPaymentCard({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           className={cn(
-            "relative z-10 bg-white rounded-[26px] sm:rounded-[28px] p-5 sm:p-5.5 border border-slate-200/90 shadow-[0_16px_36px_-10px_rgba(15,23,42,0.11)] transition-all duration-200 ease-out",
+            "relative z-10 bg-white rounded-[26px] sm:rounded-[28px] p-5 sm:p-5.5 border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] hover:shadow-md transition-all duration-200 ease-out",
             isCycling
               ? "translate-x-7 -translate-y-2 rotate-6 opacity-0 scale-95"
               : "scale-100 rotate-0 translate-x-0 translate-y-0 opacity-100"
