@@ -29,7 +29,7 @@ export function BrandLogo({
       priority={priority}
       unoptimized
       className={cn(
-        iconOnly ? "h-12 w-12 object-contain block select-none" : "h-12 w-auto object-contain block select-none",
+        iconOnly ? "h-15 w-15 object-contain block select-none" : "h-15 w-auto object-contain block select-none",
         className
       )}
     />
