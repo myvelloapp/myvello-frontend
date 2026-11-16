@@ -2476,44 +2476,58 @@ function EmiDetailContent() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                      Monthly Due Day (1 - 31) <span className="text-rose-500 font-bold ml-0.5">*</span>
-                    </label>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold text-slate-700">
+                        Monthly Due Day (1 - 31) <span className="text-rose-500 font-bold ml-0.5">*</span>
+                      </label>
+                      <span className="text-[10px] text-slate-400 font-medium">
+                        Every month on the {formData.dueDay || 10}th
+                      </span>
+                    </div>
+
+                    {/* 6 Quick Selection Pills in 1 Single Grid Row */}
+                    <div className="grid grid-cols-6 gap-1.5 mb-2">
+                      {QUICK_DUE_DAYS.map((day) => (
+                        <button
+                          key={day}
+                          type="button"
+                          onClick={() => {
+                            setFormData((prev) => ({ ...prev, dueDay: day }));
+                            clearError("dueDay");
+                          }}
+                          className={cn(
+                            "h-10 sm:h-9 min-h-[40px] sm:min-h-[36px] text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
+                            String(formData.dueDay) === String(day)
+                              ? "bg-indigo-600 text-white border-indigo-600 shadow-2xs font-extrabold"
+                              : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                          )}
+                        >
+                          {day}th
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Custom Day Input */}
+                    <div className="relative">
                       <input
                         type="number"
                         inputMode="numeric"
                         min="1"
                         max="31"
                         required
+                        placeholder="Or enter custom day (1 - 31)"
                         value={formData.dueDay}
                         onChange={(e) => {
                           setFormData({ ...formData, dueDay: e.target.value });
                           clearError("dueDay");
                         }}
-                        className={cn(getInputClass(!!errors.dueDay), "w-24 text-center font-extrabold")}
+                        className={cn(getInputClass(!!errors.dueDay), "w-full text-xs font-bold pl-3.5 pr-28 h-10")}
                       />
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        {QUICK_DUE_DAYS.map((day) => (
-                          <button
-                            key={day}
-                            type="button"
-                            onClick={() => {
-                              setFormData((prev) => ({ ...prev, dueDay: day }));
-                              clearError("dueDay");
-                            }}
-                            className={cn(
-                              "min-h-[40px] min-w-[40px] text-xs font-bold px-2.5 py-1.5 rounded-xl border transition-all cursor-pointer active:scale-95 touch-manipulation",
-                              formData.dueDay === day
-                                ? "bg-indigo-600 text-white border-indigo-600 shadow-2xs"
-                                : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-                            )}
-                          >
-                            {day}th
-                          </button>
-                        ))}
-                      </div>
+                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">
+                        Day of month
+                      </span>
                     </div>
+
                     {errors.dueDay && (
                       <p className="text-[11px] font-semibold text-rose-500 mt-1 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
