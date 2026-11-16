@@ -106,11 +106,11 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 sm:h-16 lg:h-18 pt-3 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
+    <header className="sticky top-0 z-30 h-18 sm:h-18 lg:h-20 pt-2.5 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
       {/* Left side: Brand Logo on mobile (< lg) */}
       <div className="flex items-center gap-2 pointer-events-auto">
         <div className="lg:hidden flex items-center">
-          <BrandLogo iconOnly className="h-11 w-11 sm:h-11 sm:w-11" href="/emis" />
+          <BrandLogo iconOnly className="h-10 w-10 sm:h-11 sm:w-11" href="/emis" />
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
               if (isNotificationsOpen) setIsNotificationsOpen(false);
             }}
             className={cn(
-              "h-9 sm:h-10 px-2.5 sm:px-3 rounded-[12px] sm:rounded-[14px] backdrop-blur-md transition-all cursor-pointer flex items-center gap-2 select-none touch-manipulation active:scale-[0.98]",
+              "h-11 px-3 sm:px-3.5 rounded-[15px] sm:rounded-[16px] backdrop-blur-md transition-all cursor-pointer flex items-center gap-2 select-none touch-manipulation active:scale-[0.98]",
               isWorkspaceOpen
                 ? "bg-white border-indigo-400 ring-2 ring-indigo-500/15 shadow-sm text-slate-900"
                 : "bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60"
@@ -139,12 +139,12 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
               type={activeWorkspace.type}
               size="sm"
             />
-            <span className="font-extrabold text-xs text-slate-800 truncate max-w-[130px] sm:max-w-[170px] text-left">
+            <span className="font-extrabold text-[13px] text-slate-800 truncate max-w-[130px] sm:max-w-[170px] text-left">
               {activeWorkspace.name}
             </span>
             <ChevronDown
               className={cn(
-                "w-3.5 h-3.5 text-slate-400 transition-transform shrink-0",
+                "w-4 h-4 text-slate-400 transition-transform shrink-0",
                 isWorkspaceOpen && "rotate-180 text-indigo-600"
               )}
             />
@@ -152,7 +152,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
 
           {/* Workspace Switcher Popover */}
           {isWorkspaceOpen && (
-            <div className="absolute right-0 top-11 sm:top-12 w-[290px] sm:w-[320px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="absolute right-0 top-[calc(100%+0.5rem)] w-[290px] sm:w-[320px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
                 <span>WORKSPACES</span>
                 <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
@@ -537,11 +537,11 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
         <button
           type="button"
           onClick={onOpenMobileMenu}
-          className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-[12px] sm:rounded-[14px] bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation"
+          className="lg:hidden w-11 h-11 rounded-[15px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation"
           aria-label="Open navigation menu"
           title="Open menu"
         >
-          <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+          <Menu className="w-5 h-5" />
         </button>
       </div>
     </header>
