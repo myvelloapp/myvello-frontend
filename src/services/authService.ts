@@ -25,17 +25,20 @@ export interface AuthSuccessData {
 }
 
 /**
- * Synchronize authentication token with browser cookies for server-side Next.js route protection
+ * Synchronize authentication token with browser cookies for server-side Next.js route protection.
+ * Uses 10-year expiration so users remain continuously logged in across app/browser restarts until explicit logout.
  */
 export function setAuthCookie(token: string) {
-  if (typeof document !== "undefined") {
-    document.cookie = `myvello_token=${encodeURIComponent(token)}; path=/; max-age=2592000; SameSite=Lax`;
+  if (typeof document !== "undefined" && token) {
+    const maxAge = 315360000; // 10 years in seconds
+    const expires = new Date(Date.now() + maxAge * 1000).toUTCString();
+    document.cookie = `myvello_token=${encodeURIComponent(token)}; path=/; max-age=${maxAge}; expires=${expires}; SameSite=Lax`;
   }
 }
 
 export function clearAuthCookie() {
   if (typeof document !== "undefined") {
-    document.cookie = `myvello_token=; path=/; max-age=0; SameSite=Lax`;
+    document.cookie = `myvello_token=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
   }
 }
 

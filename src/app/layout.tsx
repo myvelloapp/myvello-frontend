@@ -81,6 +81,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${plusJakarta.variable} ${inter.variable} h-full`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var token = localStorage.getItem('myvello_token');
+                if (token && !document.cookie.includes('myvello_token=')) {
+                  var maxAge = 315360000;
+                  var expires = new Date(Date.now() + maxAge * 1000).toUTCString();
+                  document.cookie = 'myvello_token=' + encodeURIComponent(token) + '; path=/; max-age=' + maxAge + '; expires=' + expires + '; SameSite=Lax';
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
         <AuthProvider>
           <WorkspaceProvider>

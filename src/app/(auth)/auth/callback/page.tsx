@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/modules/authentication/AuthContext";
+import { setAuthCookie } from "@/services/authService";
 import { ShieldCheck, AlertCircle, Lock } from "lucide-react";
 import { BrandLogo } from "@/components/common/BrandLogo";
 
@@ -27,6 +28,7 @@ function CallbackHandler() {
 
     if (token) {
       localStorage.setItem("myvello_token", token);
+      setAuthCookie(token);
       refreshUser()
         .then(() => {
           router.push("/emis");
