@@ -700,47 +700,18 @@ export default function EmiManagementPage() {
                 isLoading={isInitialLoading}
               />
 
-              {/* Mobile Stacked Deck Next Payment Quick Glance Banner */}
+              {/* Mobile Next Payment Quick Glance Card with Desktop-Style Under Dots */}
               {currentMobileEmi && (
-                <div className="relative w-full pt-0.5 pb-2 lg:hidden select-none">
-                  {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
-                  {mobileCardBehindRight && (
-                    <div
-                      className="absolute inset-x-3.5 top-1 -bottom-1.5 bg-slate-100/90 rounded-[16px] border border-slate-200/60 shadow-2xs pointer-events-none transition-all duration-300 -z-10"
-                      aria-hidden="true"
-                    />
-                  )}
-
-                  {/* Layer 1: Peek Card Behind 1 (if 2+ cards) */}
-                  {mobileCardBehindLeft && (
-                    <div
-                      className="absolute inset-x-1.5 top-0.5 -bottom-0.5 bg-white/95 rounded-[16px] border border-slate-200/80 shadow-2xs pointer-events-none transition-all duration-300 z-0"
-                      aria-hidden="true"
-                    />
-                  )}
-
-                  {/* Layer 3: Active Front Banner */}
+                <div className="w-full lg:hidden select-none space-y-2">
+                  {/* Active Front Banner */}
                   <div
                     onTouchStart={handleMobileTouchStart}
                     onTouchEnd={handleMobileTouchEnd}
                     className={cn(
-                      "relative z-10 px-3.5 py-3 rounded-[16px] bg-white border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                      "w-full px-3.5 py-3 rounded-[16px] bg-white border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
                       mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                     )}
                   >
-                    {/* Top Floating Circular Chevron Button (only when multiple EMIs) */}
-                    {mobileTotal > 1 && (
-                      <button
-                        type="button"
-                        onClick={handleMobileNextEmi}
-                        className="absolute -top-2.5 right-4 z-20 w-7 h-7 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
-                        title="Next EMI of this month"
-                        aria-label="Next EMI"
-                      >
-                        <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </button>
-                    )}
-
                     {/* Category Icon */}
                     <div
                       onClick={() => router.push(`/emis/${currentMobileEmi.emi_id}`)}
@@ -784,7 +755,7 @@ export default function EmiManagementPage() {
                       </div>
                     </div>
 
-                    {/* Paid Button (Changed from View to Paid as requested) */}
+                    {/* Paid Button */}
                     <button
                       type="button"
                       onClick={() =>
@@ -803,6 +774,34 @@ export default function EmiManagementPage() {
                       <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
                     </button>
                   </div>
+
+                  {/* Under Dots / Pagination for Multiple EMIs like Desktop */}
+                  {mobileTotal > 1 && (
+                    <div className="flex items-center justify-center gap-1.5 pt-0.5">
+                      {upcomingMonthCards.map((_, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => {
+                            if (idx !== safeMobileIndex && !mobileCycling) {
+                              setMobileCycling(true);
+                              setTimeout(() => {
+                                setMobileEmiIndex(idx);
+                                setMobileCycling(false);
+                              }, 150);
+                            }
+                          }}
+                          className={cn(
+                            "h-1.5 rounded-full transition-all duration-300 cursor-pointer touch-manipulation",
+                            idx === safeMobileIndex
+                              ? "w-5 bg-indigo-600 shadow-2xs"
+                              : "w-1.5 bg-slate-300 hover:bg-slate-400"
+                          )}
+                          aria-label={`Go to EMI ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
