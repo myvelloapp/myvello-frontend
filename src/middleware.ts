@@ -9,7 +9,6 @@ const PROTECTED_PREFIXES = [
   "/notifications",
   "/payment-history",
   "/settings",
-  "/install",
 ];
 
 // Routes reserved for unauthenticated users (redirect to dashboard/emis if already logged in)
