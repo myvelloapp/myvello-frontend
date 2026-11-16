@@ -621,7 +621,7 @@ function SettingsPageContent() {
         </div>
 
         {/* Content Container (Standard 1500px Max-Width matching all core views) */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3.5 sm:space-y-5">
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2 sm:space-y-5">
           {/* Desktop View (hidden lg:block space-y-6) */}
           <div className="hidden lg:block space-y-6">
             {/* Header Title & Subtitle */}
@@ -1170,7 +1170,7 @@ function SettingsPageContent() {
         </div>
 
         {/* Mobile View: Dedicated Profile & Account Hub (lg:hidden) */}
-        <div className="lg:hidden space-y-4">
+        <div className="lg:hidden space-y-2.5">
           {/* 1. User Profile Card (Matching screenshot media_1794579448055_d55bcc07.png) */}
           <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
             <div className="flex items-center gap-3.5">

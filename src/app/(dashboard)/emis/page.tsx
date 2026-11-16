@@ -662,7 +662,7 @@ export default function EmiManagementPage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3.5 sm:space-y-5">
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
           {/* Page Heading */}
           <div className="flex items-center justify-between gap-3 min-h-[36px]">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -911,10 +911,10 @@ export default function EmiManagementPage() {
                 </div>
               )}
 
-              {/* Row 2: Tabs and Action Header */}
-
-              {/* Mobile Only (sm:hidden): Section Title + 3-Dot Dropdown Tab Selector + Add Button */}
-              <div className="sm:hidden flex items-center justify-between gap-2 pt-1">
+              {/* Row 2 & 3: Tabs/Action Header + Loans Management Table Card */}
+              <div className="space-y-2 sm:space-y-3.5">
+                {/* Mobile Only (sm:hidden): Section Title + 3-Dot Dropdown Tab Selector + Add Button */}
+                <div className="sm:hidden flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
                   <h2 className="text-xl font-black text-[#0B132B] tracking-tight truncate">
                     {activeTab === "active"
@@ -2186,6 +2186,7 @@ export default function EmiManagementPage() {
                 )}
               </div>
             </div>
+          </div>
 
             {/* Right Column (Desktop Only - Locked): Next Payment & Mini Calendar */}
             <div className="hidden lg:block w-[350px] xl:w-[380px] shrink-0 space-y-5">

@@ -908,7 +908,7 @@ function EmiDetailContent() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
       </div>
 
-      <div className="relative z-10 max-w-[1500px] mx-auto space-y-4 sm:space-y-6">
+      <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-6">
         {/* Mobile Top Navigation: Clean, thumb-friendly return link */}
         <div className="flex items-center justify-between gap-2 lg:hidden">
           <Link

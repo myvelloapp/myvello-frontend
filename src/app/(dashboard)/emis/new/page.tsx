@@ -695,7 +695,7 @@ export default function AddNewEmiPage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-6">
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3 sm:space-y-6">
           {/* Mobile Header & Progress Track */}
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
