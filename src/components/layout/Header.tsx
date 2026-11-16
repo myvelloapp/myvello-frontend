@@ -110,7 +110,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
       {/* Left side: Brand Logo on mobile (< lg) */}
       <div className="flex items-center gap-2 pointer-events-auto">
         <div className="lg:hidden flex items-center">
-          <BrandLogo iconOnly className="h-10 w-10 sm:h-11 sm:w-11" href="/emis" />
+          <BrandLogo iconOnly className="" href="/emis" />
         </div>
       </div>
 
