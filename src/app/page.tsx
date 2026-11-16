@@ -230,14 +230,14 @@ export default function HomePage() {
                   {/* Screen Content Body */}
                   <div className="p-3.5 space-y-3 max-h-[580px] overflow-y-auto no-scrollbar">
                     {/* Next Due Stacked Hero Card */}
-                    <div className="relative pt-1 pb-1">
+                    <div className="relative pt-0.5 pb-1">
                       {/* Under card peek 2 */}
-                      <div className="absolute inset-x-3.5 -bottom-1 h-10 bg-slate-100/90 rounded-[20px] border border-slate-200/60 shadow-xs -z-2" />
+                      <div className="absolute inset-x-3.5 top-1 -bottom-1 h-10 bg-slate-100/90 rounded-[16px] border border-slate-200/60 shadow-xs -z-2" />
                       {/* Under card peek 1 */}
-                      <div className="absolute inset-x-2 -bottom-0.5 h-10 bg-slate-50 rounded-[20px] border border-slate-200/70 shadow-xs -z-1" />
+                      <div className="absolute inset-x-1.5 top-0.5 -bottom-0.5 h-10 bg-slate-50 rounded-[16px] border border-slate-200/70 shadow-xs -z-1" />
 
                       {/* Top active card */}
-                      <div className="relative bg-white rounded-[20px] p-3 border border-slate-200/90 shadow-sm flex items-center justify-between gap-2.5">
+                      <div className="relative bg-white rounded-[16px] p-3 border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5">
                         <div className="flex items-center gap-2.5 min-w-0">
                           <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                             <Car className="w-4 h-4" />

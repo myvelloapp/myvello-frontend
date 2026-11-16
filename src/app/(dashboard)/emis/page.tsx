@@ -684,7 +684,7 @@ export default function EmiManagementPage() {
           {/* Unified Two-Column Main Layout */}
           <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-6">
             {/* Left Column: Stat Cards, Tabs with Add Button, and Loans Management */}
-            <div className="flex-1 min-w-0 space-y-5 w-full">
+            <div className="flex-1 min-w-0 space-y-3.5 sm:space-y-5 w-full">
               {/* Row 1: 4 Stat Cards */}
               <StatCardRow
                 stats={
@@ -702,11 +702,11 @@ export default function EmiManagementPage() {
 
               {/* Mobile Stacked Deck Next Payment Quick Glance Banner */}
               {currentMobileEmi && (
-                <div className="relative w-full pt-1 pb-2.5 px-0.5 lg:hidden select-none">
+                <div className="relative w-full pt-0.5 pb-2 lg:hidden select-none">
                   {/* Layer 2: Peek Card Behind 2 (if 3+ cards) */}
                   {mobileCardBehindRight && (
                     <div
-                      className="absolute inset-x-4 top-1.5 -bottom-2 bg-slate-100/90 rounded-[18px] border border-slate-200/60 shadow-2xs pointer-events-none transition-all duration-300 -z-10"
+                      className="absolute inset-x-3.5 top-1 -bottom-1.5 bg-slate-100/90 rounded-[16px] border border-slate-200/60 shadow-2xs pointer-events-none transition-all duration-300 -z-10"
                       aria-hidden="true"
                     />
                   )}
@@ -714,7 +714,7 @@ export default function EmiManagementPage() {
                   {/* Layer 1: Peek Card Behind 1 (if 2+ cards) */}
                   {mobileCardBehindLeft && (
                     <div
-                      className="absolute inset-x-2 top-0.5 -bottom-1 bg-white/95 rounded-[18px] border border-slate-200/80 shadow-2xs pointer-events-none transition-all duration-300 z-0"
+                      className="absolute inset-x-1.5 top-0.5 -bottom-0.5 bg-white/95 rounded-[16px] border border-slate-200/80 shadow-2xs pointer-events-none transition-all duration-300 z-0"
                       aria-hidden="true"
                     />
                   )}
@@ -724,7 +724,7 @@ export default function EmiManagementPage() {
                     onTouchStart={handleMobileTouchStart}
                     onTouchEnd={handleMobileTouchEnd}
                     className={cn(
-                      "relative z-10 px-3.5 py-3 rounded-[18px] bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
+                      "relative z-10 px-3.5 py-3 rounded-[16px] bg-white border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] flex items-center justify-between gap-2.5 transition-all duration-150",
                       mobileCycling ? "opacity-0 scale-98 translate-x-3" : "opacity-100 scale-100 translate-x-0"
                     )}
                   >
@@ -733,7 +733,7 @@ export default function EmiManagementPage() {
                       <button
                         type="button"
                         onClick={handleMobileNextEmi}
-                        className="absolute -top-3 right-5 z-20 w-7.5 h-7.5 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
+                        className="absolute -top-2.5 right-4 z-20 w-7 h-7 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-indigo-600 active:scale-90 transition-all cursor-pointer"
                         title="Next EMI of this month"
                         aria-label="Next EMI"
                       >
