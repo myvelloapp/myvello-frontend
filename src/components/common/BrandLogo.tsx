@@ -22,10 +22,10 @@ export function BrandLogo({
 }: BrandLogoProps) {
   const logoImage = (
     <Image
-      src={iconOnly ? "/icons/icon.svg" : "/images/logo.svg"}
+      src={iconOnly ? "/icons/logo-ico.svg" : "/images/logo.svg"}
       alt="myvello"
-      width={iconOnly ? 48 : 324}
-      height={iconOnly ? 48 : 73}
+      width={iconOnly ? 108 : 324}
+      height={iconOnly ? 108 : 73}
       priority={priority}
       unoptimized
       className={cn(

@@ -106,11 +106,11 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-14 sm:h-16 lg:h-18 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
+    <header className="sticky top-0 z-30 h-16 sm:h-16 lg:h-18 pt-3 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
       {/* Left side: Brand Logo on mobile (< lg) */}
       <div className="flex items-center gap-2 pointer-events-auto">
         <div className="lg:hidden flex items-center">
-          <BrandLogo iconOnly className="h-8 w-8 sm:h-8.5 sm:w-8.5" href="/emis" />
+          <BrandLogo iconOnly className="h-11 w-11 sm:h-11 sm:w-11" href="/emis" />
         </div>
       </div>
 
