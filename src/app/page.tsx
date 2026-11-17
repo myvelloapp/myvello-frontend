@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ShieldCheck,
   Lock,
@@ -55,9 +56,34 @@ const FEATURED_BANKS = [
 ];
 
 export default function HomePage() {
-  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [demoLoanTab, setDemoLoanTab] = useState<"active" | "all">("active");
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  // If launched as an installed app (PWA or iOS WebClip), immediately bypass the landing page
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone === true;
+
+    setIsStandalone(standalone);
+
+    if (standalone && !isAuthLoading) {
+      router.replace(isAuthenticated ? "/emis" : "/login");
+    }
+  }, [isAuthenticated, isAuthLoading, router]);
+
+  // Prevent flash of landing page in standalone mode while redirecting
+  if (isStandalone) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-indigo-600 border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   const faqs = [
     {
@@ -137,7 +163,7 @@ export default function HomePage() {
                   className="min-h-[46px] px-5 sm:px-6 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 text-sm font-bold shadow-xs flex items-center justify-center gap-2 transition-all hover:border-slate-300 active:scale-95 touch-manipulation"
                 >
                   <Download className="w-4 h-4 text-indigo-600" />
-                  <span>Install App (PWA)</span>
+                  <span>Install App</span>
                 </Link>
               </div>
 

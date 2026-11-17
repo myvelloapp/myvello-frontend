@@ -389,37 +389,75 @@ export default function InstallPage() {
               {/* 3. IOS (IPHONE / IPAD) */}
               {selectedDevice === "ios" && (
                 <div className="space-y-5">
-                  <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50/60 via-slate-50/40 to-white border border-indigo-100/70">
-                    <h3 className="text-base font-bold text-[#0B132B] mb-1">
-                      Apple Safari on iPhone &amp; iPad
-                    </h3>
-                    <p className="text-xs text-slate-500 font-medium">
-                      Install in 2 taps directly from Safari (no Apple ID password or App Store download needed):
-                    </p>
+                  <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-slate-50/40 to-white border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base font-bold text-[#0B132B]">
+                          Direct iOS App Installation (No App Store Needed)
+                        </h3>
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
+                          100% Free
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 font-medium">
+                        Installs the full standalone Myvello app directly to your iPhone Home Screen. Opens directly to Login &amp; Dashboard without any browser bars or marketing pages.
+                      </p>
+                    </div>
+
+                    <a
+                      href="/api/ios-profile"
+                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
+                    >
+                      <Download className="w-4 h-4 stroke-[2.5]" />
+                      <span>Download iOS App Profile</span>
+                    </a>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">1</span>
-                        <span className="text-sm font-bold text-slate-900">Tap the Share Button</span>
-                        <Share2 className="w-4 h-4 text-indigo-600 ml-auto" />
+                  {/* Method 1: Safari Add to Home Screen (Instant 2-tap) */}
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-400">
+                      Method 1: Instant Add from Safari (2 Taps)
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2.5">
+                        <div className="flex items-center gap-2">
+                          <span className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">1</span>
+                          <span className="text-sm font-bold text-slate-900">Tap the Share Button</span>
+                          <Share2 className="w-4 h-4 text-indigo-600 ml-auto" />
+                        </div>
+                        <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                          Tap the <strong>Share</strong> icon (the square with an arrow pointing up) in the bottom Safari toolbar.
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                        Tap the <strong>Share</strong> icon (the square with an arrow pointing up) in the bottom Safari toolbar.
-                      </p>
-                    </div>
 
-                    <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">2</span>
-                        <span className="text-sm font-bold text-slate-900">Add to Home Screen</span>
-                        <PlusSquare className="w-4 h-4 text-indigo-600 ml-auto" />
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2.5">
+                        <div className="flex items-center gap-2">
+                          <span className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">2</span>
+                          <span className="text-sm font-bold text-slate-900">Add to Home Screen</span>
+                          <PlusSquare className="w-4 h-4 text-indigo-600 ml-auto" />
+                        </div>
+                        <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                          Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>, then confirm by tapping <strong>Add</strong> in the top-right corner.
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                        Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>, then confirm by tapping <strong>Add</strong> in the top-right corner.
-                      </p>
                     </div>
+                  </div>
+
+                  {/* Method 2: Download Configuration Profile Guide */}
+                  <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 text-xs text-slate-600">
+                    <div className="flex items-center gap-2 font-bold text-slate-800">
+                      <span className="w-2 h-2 rounded-full bg-indigo-600" />
+                      <span>How Profile Installation Works:</span>
+                    </div>
+                    <p className="leading-relaxed text-slate-500">
+                      1. Tap <strong>Download iOS App Profile</strong> above and tap <strong>Allow</strong> &bull; 
+                      2. Open your iPhone <strong>Settings</strong> &bull; 
+                      3. Tap <strong>&ldquo;Profile Downloaded&rdquo;</strong> at the top &bull; 
+                      4. Tap <strong>Install</strong> in the top-right corner.
+                    </p>
+                    <p className="text-[11px] text-slate-400 font-medium pt-1 border-t border-slate-200/60">
+                      ✨ Launches directly to Login/Signup, never expires, runs full screen without Safari bars, and requires zero App Store fees.
+                    </p>
                   </div>
                 </div>
               )}

@@ -105,11 +105,21 @@ export default function RegisterPage() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const standalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as any).standalone === true;
+      setIsStandalone(standalone);
+    }
+  }, []);
 
   // Smooth redirection if already logged in (zero flashing)
   useEffect(() => {
     if (!isAuthLoading && isAuthenticated && user) {
-      router.replace("/dashboard");
+      router.replace("/emis");
     }
   }, [isAuthLoading, isAuthenticated, user, router]);
 
@@ -278,7 +288,13 @@ export default function RegisterPage() {
         <div className="pt-2 sm:pt-0">
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={() => {
+              if (isStandalone) {
+                router.push("/login");
+              } else {
+                router.back();
+              }
+            }}
             className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-slate-200/90 bg-white shadow-2xs hover:bg-slate-50 flex items-center justify-center transition-all text-slate-500 hover:text-slate-800 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
             aria-label="Go back"
           >

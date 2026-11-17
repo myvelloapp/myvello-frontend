@@ -94,6 +94,16 @@ export default function LoginPage() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const standalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as any).standalone === true;
+      setIsStandalone(standalone);
+    }
+  }, []);
 
   // Check URL parameters for verification status or errors
   useEffect(() => {
@@ -123,7 +133,7 @@ export default function LoginPage() {
           return;
         }
       }
-      router.replace("/dashboard");
+      router.replace("/emis");
     }
   }, [isAuthLoading, isAuthenticated, user, router]);
 
@@ -211,17 +221,21 @@ export default function LoginPage() {
 
       {/* Right Column: Login Form Section (Native Wrap & Thumb-Friendly Mobile Layout) */}
       <div className="w-full lg:w-[460px] xl:w-[500px] 2xl:w-[560px] shrink-0 min-h-dvh bg-white relative flex flex-col justify-between px-4 sm:px-8 lg:px-8 xl:px-10 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,calc(1rem+env(safe-area-inset-bottom)))] overflow-y-auto">
-        {/* Top Header: Safe-Area Compliant 44px Back Button */}
-        <div className="pt-2 sm:pt-0">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-slate-200/90 bg-white shadow-2xs hover:bg-slate-50 flex items-center justify-center transition-all text-slate-500 hover:text-slate-800 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
-            aria-label="Go back"
-          >
-            <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
-          </button>
-        </div>
+        {/* Top Header: Safe-Area Compliant 44px Back Button (hidden in standalone app mode to prevent backing to marketing landing page) */}
+        {!isStandalone ? (
+          <div className="pt-2 sm:pt-0">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-slate-200/90 bg-white shadow-2xs hover:bg-slate-50 flex items-center justify-center transition-all text-slate-500 hover:text-slate-800 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
+              aria-label="Go back"
+            >
+              <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
+            </button>
+          </div>
+        ) : (
+          <div className="pt-2 sm:pt-0 h-11" />
+        )}
 
         {/* Main Content: High-Fidelity Skeleton OR Live Form */}
         {isAuthLoading ? (
