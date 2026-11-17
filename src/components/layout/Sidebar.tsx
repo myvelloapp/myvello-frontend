@@ -137,12 +137,6 @@ export function Sidebar() {
       badge: "Coming Soon",
     },
     {
-      label: "Install App",
-      href: "/install",
-      icon: Smartphone,
-      active: pathname.startsWith("/install"),
-    },
-    {
       label: "Family Members",
       href: "/family",
       icon: Users,
