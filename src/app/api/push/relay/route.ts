@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       icon: payload?.icon || "/icons/icon-192x192.png",
       badge: payload?.badge || "/icons/icon-192x192.png",
       url: payload?.url || "/notifications",
-      tag: payload?.tag || `myvello-${Date.now()}`,
+      tag: payload?.tag || `myvello-${payload?.title ? payload.title.replace(/\s+/g, '-').toLowerCase() : "alert"}`,
     });
 
     const expiredEndpoints: string[] = [];

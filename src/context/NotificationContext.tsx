@@ -127,24 +127,6 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             const newest = brandNewItems[0];
             setIncomingToast(newest);
 
-            // Trigger OS / Lock-screen notification if permission granted
-            if (
-              typeof window !== "undefined" &&
-              "Notification" in window &&
-              Notification.permission === "granted" &&
-              "serviceWorker" in navigator
-            ) {
-              navigator.serviceWorker.ready.then((reg) => {
-                reg.showNotification(newest.title, {
-                  body: newest.message,
-                  icon: "/icons/icon-192x192.png",
-                  badge: "/icons/icon-192x192.png",
-                  data: { url: newest.action_url || "/notifications" },
-                  tag: `myvello-notif-${newest.id}`,
-                });
-              }).catch(() => {});
-            }
-
             // Automatically trigger instant data refreshes across all open views without page reload
             if (typeof window !== "undefined") {
               window.dispatchEvent(new CustomEvent("myvello:live_data_update", { detail: newest }));
