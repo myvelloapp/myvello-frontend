@@ -4,8 +4,8 @@
   "description": "Your Life. Your Records. One Place. Centralized EMI, family records, and financial responsibility tracking.",
   "start_url": "/login",
   "display": "standalone",
-  "background_color": "#F8FAFC",
-  "theme_color": "#172554",
+  "background_color": "#F0F5FF",
+  "theme_color": "#F0F5FF",
   "orientation": "portrait-primary",
   "icons": [
     {

@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   description:
     "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Myvello",
+  },
   icons: {
     icon: [
       { url: "/images/favicon.svg", type: "image/svg+xml" },
@@ -66,7 +71,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#172554",
+  themeColor: "#F0F5FF",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -80,8 +86,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} h-full`}>
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} h-full bg-[#F0F5FF]`}>
       <head>
+        <meta name="theme-color" content="#F0F5FF" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-navbutton-color" content="#F0F5FF" />
+        <meta name="apple-mobile-web-app-title" content="Myvello" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -113,7 +124,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#F0F5FF] text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
         <AuthProvider>
           <WorkspaceProvider>
             <NotificationProvider>

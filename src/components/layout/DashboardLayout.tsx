@@ -63,7 +63,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <Header onOpenMobileMenu={() => setIsMobileMenuOpen(true)} />
 
         {/* Page Viewport with safe-area padding for bottom mobile nav */}
-        <main className="flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-12 overflow-x-hidden">
+        <main className="flex-1 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-12 overflow-x-hidden">
           {children}
         </main>
       </div>
