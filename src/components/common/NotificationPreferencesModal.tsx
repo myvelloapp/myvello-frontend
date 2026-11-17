@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { X, Bell, Check, AlertCircle, Loader2 } from "lucide-react";
 import { profileService, NotificationPreferences } from "@/services/profileService";
 import { useAuth } from "@/modules/authentication/AuthContext";
+import { PushNotificationCard } from "@/components/notifications/PushNotificationCard";
 import { cn } from "@/lib/utils";
 
 interface NotificationPreferencesModalProps {
@@ -169,6 +170,9 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
             </div>
           ) : (
             <>
+              {/* Device Lock-Screen Push Notifications Activation */}
+              <PushNotificationCard compact className="mb-2" />
+
               {/* Master Email Toggle */}
               <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-center justify-between min-h-[52px]">
                 <div>

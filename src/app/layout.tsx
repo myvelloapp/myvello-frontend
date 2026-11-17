@@ -120,6 +120,12 @@ export default function RootLayout({
                   }
                 }, { passive: true });
               }
+              // Register background service worker for lock-screen push notifications
+              if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                });
+              }
             `,
           }}
         />
