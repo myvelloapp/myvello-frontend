@@ -1,3 +1,5 @@
+import apiClient from "@/lib/api";
+
 export const VAPID_PUBLIC_KEY =
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ||
   "BFgkbj5k7-sHNUp5bxltVu6ishLE2Ui99kJJ-r8wB-fqNhdJeBbI_yrTfVNyBqcP9AmUrAoDv0VuccXTl-IZjTQ";
@@ -81,7 +83,16 @@ export async function subscribeToPush(): Promise<{
       applicationServerKey: applicationServerKey as BufferSource,
     });
 
-    // 4. Save to Next.js API / Backend
+    // 4. Save to Backend Database and Next.js test API
+    try {
+      await apiClient.post("/push/subscribe", {
+        ...subscription.toJSON(),
+        device_type: "ios",
+      });
+    } catch (backendErr) {
+      console.warn("Could not save push subscription to backend:", backendErr);
+    }
+
     try {
       await fetch("/api/push/test", {
         method: "POST",

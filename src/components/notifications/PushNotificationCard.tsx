@@ -46,6 +46,15 @@ export function PushNotificationCard({
       setPermission(Notification.permission);
       getExistingSubscription().then((sub) => {
         setSubscription(sub);
+        if (sub) {
+          // Sync active subscription with backend in background
+          import("@/lib/api").then(({ apiClient }) => {
+            apiClient.post("/push/subscribe", {
+              ...sub.toJSON(),
+              device_type: "ios",
+            }).catch(() => {});
+          });
+        }
       });
     }
   }, []);
