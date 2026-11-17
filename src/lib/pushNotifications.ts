@@ -51,6 +51,25 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
   }
 }
 
+export async function syncPushSubscriptionToBackend(
+  existingSub?: PushSubscription | null
+): Promise<boolean> {
+  if (!isPushSupported()) return false;
+  try {
+    const sub = existingSub || (await getExistingSubscription());
+    if (!sub) return false;
+
+    await apiClient.post("/push/subscribe", {
+      ...sub.toJSON(),
+      device_type: "ios",
+    });
+    return true;
+  } catch (err) {
+    console.warn("Could not sync push subscription to backend:", err);
+    return false;
+  }
+}
+
 export async function subscribeToPush(): Promise<{
   success: boolean;
   subscription?: PushSubscription;
@@ -83,15 +102,8 @@ export async function subscribeToPush(): Promise<{
       applicationServerKey: applicationServerKey as BufferSource,
     });
 
-    // 4. Save to Backend Database and Next.js test API
-    try {
-      await apiClient.post("/push/subscribe", {
-        ...subscription.toJSON(),
-        device_type: "ios",
-      });
-    } catch (backendErr) {
-      console.warn("Could not save push subscription to backend:", backendErr);
-    }
+    // 4. Save to Backend Database
+    await syncPushSubscriptionToBackend(subscription);
 
     try {
       await fetch("/api/push/test", {

@@ -205,6 +205,16 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     fetchNotifications();
   }, [fetchNotifications]);
 
+  // Automatic background push subscription synchronization for active user
+  useEffect(() => {
+    if (!user || typeof window === "undefined") return;
+    if ("Notification" in window && Notification.permission === "granted") {
+      import("@/lib/pushNotifications").then(({ syncPushSubscriptionToBackend }) => {
+        syncPushSubscriptionToBackend().catch(() => {});
+      });
+    }
+  }, [user]);
+
   // Live real-time background sync & instant window focus revalidation
   useEffect(() => {
     if (!user) return;
