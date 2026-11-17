@@ -30,6 +30,7 @@ import { getCategoryIcon, getCategoryBgClass } from "@/lib/categoryConfig";
 import { BankLogo } from "@/components/ui/BankLogo";
 import { cn } from "@/lib/utils";
 import { NotificationPreferencesModal } from "@/components/common/NotificationPreferencesModal";
+import { PushNotificationButton } from "@/components/notifications/PushNotificationButton";
 
 /* -------------------------------------------------------------------------
    Skeleton component with exact layout geometry to prevent CLS
@@ -413,84 +414,88 @@ function NotificationsPageContent() {
             )}
           </div>
 
-          {/* Mobile Only: Quick Actions 3-Dot Dropdown Popover */}
-          <div className="sm:hidden relative shrink-0" ref={headerMenuRef}>
-            <button
-              type="button"
-              onClick={() => setIsHeaderMenuOpen((prev) => !prev)}
-              aria-label="Notification actions"
-              aria-expanded={isHeaderMenuOpen}
-              className={cn(
-                "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                isHeaderMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
-              )}
-            >
-              <MoreHorizontal className="w-5 h-5 text-slate-700" />
-            </button>
+          {/* Mobile Only: Push Button + Quick Actions 3-Dot Dropdown Popover */}
+          <div className="sm:hidden flex items-center gap-1.5 shrink-0">
+            <PushNotificationButton variant="header" />
+            <div className="relative" ref={headerMenuRef}>
+              <button
+                type="button"
+                onClick={() => setIsHeaderMenuOpen((prev) => !prev)}
+                aria-label="Notification actions"
+                aria-expanded={isHeaderMenuOpen}
+                className={cn(
+                  "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
+                  isHeaderMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
+                )}
+              >
+                <MoreHorizontal className="w-5 h-5 text-slate-700" />
+              </button>
 
-            {/* Dropdown Menu Popover matching Mobile Design */}
-            {isHeaderMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
-                {/* Pointer Tip Arrow */}
-                <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
+              {/* Dropdown Menu Popover matching Mobile Design */}
+              {isHeaderMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
+                  {/* Pointer Tip Arrow */}
+                  <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
 
-                <div className="relative z-20 space-y-0.5">
-                  {/* Mark all as read */}
-                  <button
-                    type="button"
-                    disabled={unreadCount === 0}
-                    onClick={() => {
-                      setIsHeaderMenuOpen(false);
-                      handleMarkAll();
-                    }}
-                    className={cn(
-                      "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
-                      unreadCount > 0
-                        ? "text-slate-800 hover:text-indigo-600 hover:bg-indigo-50/50"
-                        : "text-slate-400 opacity-60 cursor-not-allowed"
+                  <div className="relative z-20 space-y-0.5">
+                    {/* Mark all as read */}
+                    <button
+                      type="button"
+                      disabled={unreadCount === 0}
+                      onClick={() => {
+                        setIsHeaderMenuOpen(false);
+                        handleMarkAll();
+                      }}
+                      className={cn(
+                        "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
+                        unreadCount > 0
+                          ? "text-slate-800 hover:text-indigo-600 hover:bg-indigo-50/50"
+                          : "text-slate-400 opacity-60 cursor-not-allowed"
+                      )}
+                    >
+                      <Check className="w-4 h-4 text-slate-600 shrink-0" />
+                      <span>Mark all as read</span>
+                    </button>
+
+                    {/* Notification settings */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsHeaderMenuOpen(false);
+                        setIsPreferencesOpen(true);
+                      }}
+                      className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                    >
+                      <Settings className="w-4 h-4 text-slate-600 shrink-0" />
+                      <span>Notification settings</span>
+                    </button>
+
+                    {/* Clear read (rendered when read items exist) */}
+                    {readCount > 0 && (
+                      <>
+                        <div className="h-px bg-slate-100 my-1" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsHeaderMenuOpen(false);
+                            setIsClearModalOpen(true);
+                          }}
+                          className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-rose-600 hover:bg-rose-50/70 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                        >
+                          <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
+                          <span>Clear read ({readCount})</span>
+                        </button>
+                      </>
                     )}
-                  >
-                    <Check className="w-4 h-4 text-slate-600 shrink-0" />
-                    <span>Mark all as read</span>
-                  </button>
-
-                  {/* Notification settings */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsHeaderMenuOpen(false);
-                      setIsPreferencesOpen(true);
-                    }}
-                    className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                  >
-                    <Settings className="w-4 h-4 text-slate-600 shrink-0" />
-                    <span>Notification settings</span>
-                  </button>
-
-                  {/* Clear read (rendered when read items exist) */}
-                  {readCount > 0 && (
-                    <>
-                      <div className="h-px bg-slate-100 my-1" />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsHeaderMenuOpen(false);
-                          setIsClearModalOpen(true);
-                        }}
-                        className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-rose-600 hover:bg-rose-50/70 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                      >
-                        <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
-                        <span>Clear read ({readCount})</span>
-                      </button>
-                    </>
-                  )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Desktop Only: Classic Action Buttons Row */}
           <div className="hidden sm:flex items-center gap-2">
+            <PushNotificationButton variant="header" />
             {unreadCount > 0 && (
               <button
                 type="button"
