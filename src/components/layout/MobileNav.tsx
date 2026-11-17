@@ -315,7 +315,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
       {/* Instagram-Style Floating Pill Navigation Bar (Mobile & Tablet) */}
       <nav
-        className="lg:hidden fixed bottom-[max(15px,calc(15px+env(safe-area-inset-bottom)))] inset-x-3 max-w-[380px] mx-auto z-40 bg-white/85 backdrop-blur-2xl border border-white/70 shadow-[0_12px_40px_-6px_rgba(15,23,42,0.18),0_4px_16px_-2px_rgba(15,23,42,0.08)] rounded-full px-2 py-1.5 flex items-center justify-between select-none"
+        className="lg:hidden fixed bottom-[max(18px,calc(18px+env(safe-area-inset-bottom)))] inset-x-3 sm:inset-x-4 max-w-[364px] mx-auto z-40 bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.16),0_4px_16px_-2px_rgba(15,23,42,0.08)] rounded-full px-2 py-1.5 flex items-center justify-between select-none"
         aria-label="Mobile Navigation"
       >
         {/* 1st Icon: EMI Management */}
