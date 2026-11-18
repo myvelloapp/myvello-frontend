@@ -562,7 +562,7 @@ export function Header({
         {isPopupMode && (
           <Link
             href="/emis"
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-500 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation hover:border-slate-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-500 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation hover:border-slate-300 animate-popup-enter"
             aria-label="Close popup and return to EMIs"
             title="Close (Esc)"
           >
