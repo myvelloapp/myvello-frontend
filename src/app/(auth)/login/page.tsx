@@ -218,7 +218,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-slate-200/90 bg-white shadow-2xs hover:bg-slate-50 flex items-center justify-center transition-all text-slate-500 hover:text-slate-800 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] border border-slate-200/90 bg-white shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] hover:bg-slate-50 flex items-center justify-center transition-all text-slate-600 hover:text-slate-900 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
               aria-label="Go back"
             >
               <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
