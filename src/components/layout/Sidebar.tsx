@@ -473,7 +473,7 @@ export function Sidebar() {
               <button
                 type="button"
                 onClick={handleDismissPwaCard}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white/20 hover:bg-white/35 text-white shadow-sm border border-white/30 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10 backdrop-blur-xs"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-black/25 hover:bg-black/40 text-white shadow-sm border border-white/30 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10 backdrop-blur-xs"
                 aria-label="Dismiss app install banner"
                 title="Dismiss"
               >
@@ -481,14 +481,14 @@ export function Sidebar() {
               </button>
 
               <Link href="/install" className="flex items-start gap-2.5 group/card cursor-pointer">
-                <div className="w-8 h-8 rounded-[10px] bg-white/18 text-white flex items-center justify-center shrink-0 mt-0.5 group-hover/card:scale-105 transition-transform border border-white/25 shadow-2xs">
+                <div className="w-8 h-8 rounded-[10px] bg-white/20 backdrop-blur-md text-white flex items-center justify-center shrink-0 mt-0.5 group-hover/card:scale-105 transition-transform border border-white/30 shadow-2xs">
                   <Smartphone className="w-4 h-4 stroke-[2.2]" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-white leading-tight group-hover/card:underline">
+                  <h4 className="text-xs font-black text-white leading-tight group-hover/card:underline drop-shadow-[0_1px_2px_rgba(0,35,20,0.5)]">
                     Install Myvello App
                   </h4>
-                  <p className="text-[10px] text-emerald-50/90 font-medium leading-snug mt-0.5">
+                  <p className="text-[10px] text-white/95 font-medium leading-snug mt-0.5 drop-shadow-[0_1px_2px_rgba(0,35,20,0.4)]">
                     Add to your home screen for a faster experience.
                   </p>
                 </div>
