@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -248,17 +248,39 @@ export default function AddNewEmiPage() {
   const [loanMode, setLoanMode] = useState<"new" | "running">("new");
   const [hasBrokenPeriod, setHasBrokenPeriod] = useState(false);
 
-  // Handle ESC key to dismiss popup and navigate back to /emis
+  const [isPopupExiting, setIsPopupExiting] = useState(false);
+
+  const handleClosePopup = useCallback(() => {
+    if (isPopupExiting) return;
+    setIsPopupExiting(true);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("myvello:popup_closing"));
+    }
+    setTimeout(() => {
+      router.push("/emis");
+    }, 220);
+  }, [isPopupExiting, router]);
+
+  // Handle ESC key and synchronized popup closing triggers
   useEffect(() => {
+    const handleClosingEvent = () => {
+      setIsPopupExiting(true);
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't close if target is an open dropdown or editing an input where Esc might be intended to cancel typing
       if (e.key === "Escape") {
-        router.push("/emis");
+        handleClosePopup();
       }
     };
+
+    window.addEventListener("myvello:popup_closing", handleClosingEvent);
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [router]);
+    return () => {
+      window.removeEventListener("myvello:popup_closing", handleClosingEvent);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleClosePopup]);
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
@@ -699,8 +721,13 @@ export default function AddNewEmiPage() {
         {/* Living Brand Gradient Backdrop matching /emis */}
         <div className="absolute inset-0 pointer-events-none z-0" />
 
-        {/* Content Container with Entrance Motion */}
-        <div className="relative z-10 max-w-[1360px] mx-auto space-y-3 sm:space-y-6 animate-popup-enter">
+        {/* Content Container with Entrance & Exit Motion */}
+        <div
+          className={cn(
+            "relative z-10 max-w-[1360px] mx-auto space-y-3 sm:space-y-6",
+            isPopupExiting ? "animate-popup-exit pointer-events-none" : "animate-popup-enter"
+          )}
+        >
           {/* Mobile Header & Progress Track */}
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
