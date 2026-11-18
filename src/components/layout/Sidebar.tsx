@@ -468,16 +468,16 @@ export function Sidebar() {
         {/* Bottom PWA Install Card Matching Screenshot */}
         {isPwaCardVisible && (
           <div className="p-3 pb-3 animate-in fade-in zoom-in-95 duration-200">
-            <div className="relative p-4 rounded-[14px] card-gradient-vibrant text-white shadow-lg shadow-emerald-950/20 space-y-3 border border-emerald-400/30">
+            <div className="relative p-4 rounded-[14px] card-gradient-vibrant text-white shadow-[0_8px_24px_-4px_rgba(16,185,129,0.28)] space-y-3 border border-white/40">
               {/* Close Button Matching Screenshot */}
               <button
                 type="button"
                 onClick={handleDismissPwaCard}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-black/25 hover:bg-black/40 text-white shadow-sm border border-white/30 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10 backdrop-blur-xs"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white text-slate-500 hover:text-slate-800 shadow-md border border-slate-200/90 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10"
                 aria-label="Dismiss app install banner"
                 title="Dismiss"
               >
-                <X className="w-3 h-3 stroke-[2.2]" />
+                <X className="w-3 h-3 stroke-[2.4]" />
               </button>
 
               <Link href="/install" className="flex items-start gap-2.5 group/card cursor-pointer">
