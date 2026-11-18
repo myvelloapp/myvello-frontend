@@ -247,6 +247,7 @@ export default function AddNewEmiPage() {
   // Loan Modes
   const [loanMode, setLoanMode] = useState<"new" | "running">("new");
   const [hasBrokenPeriod, setHasBrokenPeriod] = useState(false);
+  const [customDayInput, setCustomDayInput] = useState("");
 
   const [isPopupExiting, setIsPopupExiting] = useState(false);
 
@@ -1485,54 +1486,71 @@ export default function AddNewEmiPage() {
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
                         <label className="block text-xs font-bold text-slate-700">
-                          Monthly Due Day (1 - 31) <span className="text-rose-500 font-bold ml-0.5">*</span>
+                          Monthly Due Day <span className="text-rose-500 font-bold ml-0.5">*</span>
                         </label>
-                        <span className="text-[10px] text-slate-400 font-medium">
-                          Every month on the {formData.dueDay || 10}th
+                        <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
+                          {formData.dueDay ? `Every month on the ${formData.dueDay}th` : "Select or enter day"}
                         </span>
                       </div>
 
-                      {/* 6 Quick Selection Pills in 1 Single Grid Row */}
-                      <div className="grid grid-cols-6 gap-1.5 mb-2">
-                        {QUICK_DUE_DAYS.map((day) => (
-                          <button
-                            key={day}
-                            type="button"
-                            onClick={() => {
-                              setFormData((prev) => ({ ...prev, dueDay: day }));
-                              clearError("dueDay");
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+                        {/* Quick Selection Pills */}
+                        <div className="grid grid-cols-6 gap-1.5 flex-1">
+                          {QUICK_DUE_DAYS.map((day) => {
+                            const isSelected = !customDayInput && String(formData.dueDay) === String(day);
+                            return (
+                              <button
+                                key={day}
+                                type="button"
+                                onClick={() => {
+                                  setCustomDayInput("");
+                                  setFormData((prev) => ({ ...prev, dueDay: day }));
+                                  clearError("dueDay");
+                                }}
+                                className={cn(
+                                  "h-10 text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
+                                  isSelected
+                                    ? "btn-gradient-glow text-white border-transparent shadow-xs font-extrabold"
+                                    : "bg-white text-slate-700 border-slate-200/90 hover:border-emerald-300 hover:bg-emerald-50/40"
+                                )}
+                              >
+                                {day}th
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Custom Day Input */}
+                        <div className="relative sm:w-32 shrink-0">
+                          <input
+                            type="number"
+                            inputMode="numeric"
+                            min="1"
+                            max="31"
+                            placeholder="Other day"
+                            value={customDayInput}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              if (val === "" || (Number(val) >= 1 && Number(val) <= 31)) {
+                                setCustomDayInput(val);
+                                setFormData((prev) => ({ ...prev, dueDay: val }));
+                                clearError("dueDay");
+                              }
                             }}
                             className={cn(
-                              "h-10 text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
-                              String(formData.dueDay) === String(day)
-                                ? "btn-gradient-glow text-white border-transparent shadow-xs font-extrabold"
-                                : "bg-emerald-50/40 text-slate-700 border-emerald-100/90 hover:bg-emerald-100/50 hover:text-[#02361B]"
+                              getInputClass(!!errors.dueDay),
+                              "w-full h-10 text-xs font-bold pl-3 pr-7 text-center",
+                              customDayInput
+                                ? "border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/20 text-[#02361B] font-extrabold"
+                                : "text-slate-700"
                             )}
-                          >
-                            {day}th
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Custom Day Input */}
-                      <div className="relative">
-                        <input
-                          type="number"
-                          inputMode="numeric"
-                          min="1"
-                          max="31"
-                          required
-                          placeholder="Or enter custom day (1 - 31)"
-                          value={formData.dueDay}
-                          onChange={(e) => {
-                            setFormData({ ...formData, dueDay: e.target.value });
-                            clearError("dueDay");
-                          }}
-                          className={cn(getInputClass(!!errors.dueDay), "w-full text-xs font-bold pl-3.5 pr-28 h-10")}
-                        />
-                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">
-                          Day of month
-                        </span>
+                          />
+                          {customDayInput && (
+                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400 pointer-events-none">
+                              th
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       {errors.dueDay && (
@@ -1541,10 +1559,6 @@ export default function AddNewEmiPage() {
                           <span>{errors.dueDay}</span>
                         </p>
                       )}
-                      <p className="text-[11px] text-slate-400 mt-2 flex items-center gap-1.5 font-medium">
-                        <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                        <span>Dynamic calendar auto-normalizes leap years & February 28/29th end-of-month cycles.</span>
-                      </p>
                     </div>
                   </div>
                 )}
