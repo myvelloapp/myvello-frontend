@@ -234,8 +234,8 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           hasError
             ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
             : isOpen
-            ? "bg-white border-indigo-500 ring-2 ring-indigo-500/20 text-slate-900"
-            : "bg-white hover:bg-slate-50/50 border-slate-200/90 text-slate-800 hover:border-slate-300",
+            ? "bg-white border-emerald-500 ring-2 ring-emerald-500/20 text-[#02361B]"
+            : "bg-white hover:bg-emerald-50/20 border-slate-200/90 text-[#02361B] hover:border-emerald-300",
           disabled && "opacity-50 cursor-not-allowed bg-slate-50"
         )}
       >
@@ -243,7 +243,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           <CalendarIcon
             className={cn(
               "w-4 h-4 sm:w-3.5 sm:h-3.5 transition-colors shrink-0",
-              isOpen || value ? "text-indigo-600" : "text-slate-400 group-hover:text-indigo-500"
+              isOpen || value ? "text-emerald-700" : "text-slate-400 group-hover:text-emerald-600"
             )}
           />
           {value ? (
@@ -326,8 +326,8 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
                       ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25 scale-[1.02]"
                       : isCurrentMonth
                       ? cell.isToday
-                        ? "bg-indigo-50/80 text-indigo-700 font-black border border-indigo-200/80"
-                        : "text-slate-700 hover:bg-slate-100/80 hover:text-slate-900"
+                        ? "bg-emerald-50 text-emerald-800 font-black border border-emerald-200/80"
+                        : "text-slate-700 hover:bg-emerald-50/70 hover:text-[#02361B]"
                       : "text-slate-300 hover:text-slate-500 hover:bg-slate-50"
                   )}
                 >
@@ -353,7 +353,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             <button
               type="button"
               onClick={handleToday}
-              className="text-indigo-600 hover:text-indigo-700 font-bold hover:underline cursor-pointer flex items-center gap-1 py-1 px-2 rounded-lg active:scale-95 touch-manipulation"
+              className="text-emerald-700 hover:text-emerald-800 font-bold hover:underline cursor-pointer flex items-center gap-1 py-1 px-2 rounded-lg active:scale-95 touch-manipulation"
             >
               <span>Today</span>
             </button>

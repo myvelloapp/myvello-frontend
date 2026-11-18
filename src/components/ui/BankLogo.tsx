@@ -69,7 +69,7 @@ export const BankLogo: React.FC<BankLogoProps> = ({
     return (
       <div
         className={cn(
-          "shrink-0 rounded-full font-black flex items-center justify-center bg-indigo-50 text-indigo-700 border border-indigo-100/80 shadow-2xs",
+          "shrink-0 rounded-full font-black flex items-center justify-center bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs",
           sizeClasses[size],
           className
         )}

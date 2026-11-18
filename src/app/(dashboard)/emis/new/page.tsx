@@ -126,7 +126,7 @@ function NewEmiSkeleton() {
           {/* Left: Multi-Step Interactive Form (7/8 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-4">
             {/* Step Indicator Wizard Bar (Desktop Only) */}
-            <div className="hidden sm:block bg-white rounded-2xl border border-slate-200/80 p-2 shadow-2xs">
+            <div className="hidden sm:block bg-white/95 backdrop-blur-md rounded-2xl border border-emerald-100/90 p-2 shadow-[0_4px_20px_-4px_rgba(2,54,27,0.05)]">
               <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                 {[1, 2, 3, 4].map((s) => (
                   <div key={s} className="h-10 rounded-xl bg-slate-100 flex items-center gap-2 px-3">
@@ -138,7 +138,7 @@ function NewEmiSkeleton() {
             </div>
 
             {/* Main Step Form Container */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] space-y-5">
+            <div className="bg-white rounded-2xl border border-emerald-100/90 p-6 sm:p-7 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.06)] space-y-5">
               <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
                 <div className="h-5 w-52 bg-slate-200/80 rounded" />
                 <div className="h-5 w-16 bg-slate-200/60 rounded-full" />
@@ -183,7 +183,7 @@ function NewEmiSkeleton() {
 
           {/* Right: Live Preview Sidebar (Desktop Only: hidden lg:block) */}
           <div className="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-24 space-y-4">
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] space-y-5">
+            <div className="bg-white rounded-2xl border border-emerald-100/90 p-5 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.06)] space-y-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-slate-200/80 shrink-0" />
@@ -696,14 +696,14 @@ export default function AddNewEmiPage() {
 
   // Reusable Theme Input Class with Red Error Styling
   const inputClass =
-    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
+    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
 
   const getInputClass = (hasError?: boolean, extra?: string) =>
     cn(
       "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
       hasError
         ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
-        : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]",
+        : "border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]",
       extra
     );
 
@@ -825,7 +825,7 @@ export default function AddNewEmiPage() {
             {/* Left: Multi-Step Interactive Form (7 of 12 cols / 8 of 12 cols) */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-4">
               {/* Minimal Step Indicator Wizard Bar (Desktop Only) */}
-              <div className="hidden sm:block bg-white rounded-2xl border border-slate-200/80 p-2 shadow-2xs">
+              <div className="hidden sm:block bg-white/95 backdrop-blur-md rounded-2xl border border-emerald-100/90 p-2 shadow-[0_4px_20px_-4px_rgba(2,54,27,0.05)]">
                 <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                   {steps.map((s) => {
                     const isPassed = currentStep > s.id;
@@ -940,7 +940,7 @@ export default function AddNewEmiPage() {
                     }
                   }
                 }}
-                className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] space-y-5"
+                className="bg-white rounded-2xl border border-emerald-100/90 p-6 sm:p-7 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.06)] space-y-5"
               >
                 {/* Global Form Error Banner (if API returns error) */}
                 {formError && (
@@ -1347,15 +1347,15 @@ export default function AddNewEmiPage() {
                       <label className="block text-xs font-bold text-slate-700 mb-2">
                         Loan Lifecycle Status <span className="text-rose-500 font-bold ml-0.5">*</span>
                       </label>
-                      <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-100/80 border border-slate-200/70">
+                      <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-emerald-50/60 border border-emerald-100/90">
                         <button
                           type="button"
                           onClick={() => setLoanMode("new")}
                           className={cn(
                             "flex items-center justify-center gap-1.5 py-2.5 sm:py-2 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap",
                             loanMode === "new"
-                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold"
-                              : "text-slate-500 hover:text-slate-800"
+                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold ring-1 ring-emerald-500/10"
+                              : "text-slate-600 hover:text-[#02361B] hover:bg-white/50"
                           )}
                         >
                           <Sparkles className="w-3.5 h-3.5 shrink-0 text-emerald-700" />
@@ -1367,8 +1367,8 @@ export default function AddNewEmiPage() {
                           className={cn(
                             "flex items-center justify-center gap-1.5 py-2.5 sm:py-2 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap",
                             loanMode === "running"
-                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold"
-                              : "text-slate-500 hover:text-slate-800"
+                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold ring-1 ring-emerald-500/10"
+                              : "text-slate-600 hover:text-[#02361B] hover:bg-white/50"
                           )}
                         >
                           <History className="w-3.5 h-3.5 shrink-0 text-emerald-700" />
@@ -1506,7 +1506,7 @@ export default function AddNewEmiPage() {
                               "h-10 text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                               String(formData.dueDay) === String(day)
                                 ? "btn-gradient-glow text-white border-transparent shadow-xs font-extrabold"
-                                : "bg-slate-50 text-slate-600 border-slate-200/80 hover:bg-slate-100"
+                                : "bg-emerald-50/40 text-slate-700 border-emerald-100/90 hover:bg-emerald-100/50 hover:text-[#02361B]"
                             )}
                           >
                             {day}th
@@ -1675,7 +1675,7 @@ export default function AddNewEmiPage() {
                             "relative flex items-center gap-3 p-3 min-h-[52px] sm:min-h-[48px] rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none active:scale-[0.99] touch-manipulation",
                             formData.ownershipType === "personal"
                               ? "bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/15 shadow-2xs"
-                              : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
+                              : "bg-white border-slate-200/90 hover:border-emerald-300 hover:bg-emerald-50/20 shadow-2xs"
                           )}
                         >
                           <div className="shrink-0">
@@ -1717,7 +1717,7 @@ export default function AddNewEmiPage() {
                             "relative flex items-center gap-3 p-3 min-h-[52px] sm:min-h-[48px] rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none active:scale-[0.99] touch-manipulation",
                             formData.ownershipType === "family_shared"
                               ? "bg-teal-50/70 border-teal-500 ring-2 ring-teal-500/15 shadow-2xs"
-                              : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
+                              : "bg-white border-slate-200/90 hover:border-teal-300 hover:bg-teal-50/20 shadow-2xs"
                           )}
                         >
                           <div className="shrink-0">
@@ -1837,7 +1837,7 @@ export default function AddNewEmiPage() {
                     </div>
 
                     {/* Reminder Toggles */}
-                    <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 space-y-2.5">
+                    <div className="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-100/90 space-y-2.5">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                           <Bell className="w-3.5 h-3.5 text-emerald-700" />
@@ -1849,7 +1849,7 @@ export default function AddNewEmiPage() {
                       </div>
 
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-slate-200/60 cursor-pointer active:scale-95 touch-manipulation">
+                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-emerald-100/90 hover:border-emerald-300 shadow-2xs cursor-pointer active:scale-95 touch-manipulation transition-colors">
                           <input
                             type="checkbox"
                             checked={formData.reminder7Days}
@@ -1859,7 +1859,7 @@ export default function AddNewEmiPage() {
                           <span className="font-semibold text-slate-700 text-xs">7 Days</span>
                         </label>
 
-                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-slate-200/60 cursor-pointer active:scale-95 touch-manipulation">
+                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-emerald-100/90 hover:border-emerald-300 shadow-2xs cursor-pointer active:scale-95 touch-manipulation transition-colors">
                           <input
                             type="checkbox"
                             checked={formData.reminder3Days}
@@ -1869,7 +1869,7 @@ export default function AddNewEmiPage() {
                           <span className="font-semibold text-slate-700 text-xs">3 Days</span>
                         </label>
 
-                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-slate-200/60 cursor-pointer active:scale-95 touch-manipulation">
+                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-emerald-100/90 hover:border-emerald-300 shadow-2xs cursor-pointer active:scale-95 touch-manipulation transition-colors">
                           <input
                             type="checkbox"
                             checked={formData.reminder1Day}
@@ -1879,7 +1879,7 @@ export default function AddNewEmiPage() {
                           <span className="font-semibold text-slate-700 text-xs">1 Day</span>
                         </label>
 
-                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-slate-200/60 cursor-pointer active:scale-95 touch-manipulation">
+                        <label className="flex items-center gap-2 p-2.5 sm:p-2 min-h-[44px] rounded-xl bg-white border border-emerald-100/90 hover:border-emerald-300 shadow-2xs cursor-pointer active:scale-95 touch-manipulation transition-colors">
                           <input
                             type="checkbox"
                             checked={formData.reminderDueDate}
@@ -1901,7 +1901,7 @@ export default function AddNewEmiPage() {
                         placeholder="e.g. Salary account debited automatically on 10th morning"
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
+                        className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
                       />
                     </div>
                   </div>
@@ -1913,7 +1913,7 @@ export default function AddNewEmiPage() {
                     <button
                       type="button"
                       onClick={handlePrev}
-                      className="h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] inline-flex items-center justify-center gap-1.5 px-4 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                      className="h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] inline-flex items-center justify-center gap-1.5 px-4 rounded-xl border border-emerald-200/80 bg-white hover:bg-emerald-50/60 text-[#02361B] text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
                       <span>Previous Step</span>
@@ -1955,7 +1955,7 @@ export default function AddNewEmiPage() {
 
             {/* Right: Live Amortization & Smart Preview Card (Desktop Only: hidden lg:block) */}
             <div className="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-24 space-y-4">
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.08)] space-y-5">
+              <div className="bg-white rounded-2xl border border-emerald-100/90 p-5 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.07)] space-y-5">
                 {/* Header Badge */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -2015,8 +2015,8 @@ export default function AddNewEmiPage() {
                 )}
 
                 {/* Big Monthly EMI Display */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-100 text-center">
-                  <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
+                <div className="p-4 rounded-xl bg-gradient-to-b from-emerald-50/70 to-emerald-50/20 border border-emerald-100/90 text-center">
+                  <span className="text-[10px] font-bold text-emerald-800/80 block uppercase tracking-wider">
                     Monthly Instalment
                   </span>
                   <div className="text-2xl sm:text-3xl font-black text-[#02361B] tracking-tight mt-1">
@@ -2303,8 +2303,8 @@ export default function AddNewEmiPage() {
               )}
 
               {/* Big Monthly EMI Box */}
-              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-100 text-center">
-                <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
+              <div className="p-4 rounded-xl bg-gradient-to-b from-emerald-50/70 to-emerald-50/20 border border-emerald-100/90 text-center">
+                <span className="text-[10px] font-bold text-emerald-800/80 block uppercase tracking-wider">
                   Monthly Instalment
                 </span>
                 <div className="text-2xl sm:text-3xl font-black text-[#02361B] tracking-tight mt-1">
