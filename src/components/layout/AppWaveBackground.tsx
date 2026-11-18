@@ -163,16 +163,6 @@ function AppWaveBackgroundComponent() {
           />
         </svg>
       </div>
-
-      {/* Subtle 4-Pointed Sparkle Star in Bottom-Right Corner */}
-      <div className="absolute bottom-6 right-6 sm:bottom-12 sm:right-16 opacity-30 pointer-events-none select-none">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 0 C12 7 17 12 24 12 C17 12 12 17 12 24 C12 17 7 12 0 12 C7 12 12 7 12 0 Z"
-            fill="#88D1B5"
-          />
-        </svg>
-      </div>
     </div>
   );
 }
