@@ -134,7 +134,7 @@ export default function FamilySetupPage() {
           {/* Header Title & Subtitle with Quick Back Button */}
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#0B132B]">
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
                 Household Workspace Setup
               </h1>
               <p className="text-xs sm:text-sm font-medium text-slate-500">
@@ -417,9 +417,9 @@ export default function FamilySetupPage() {
               {/* Workspace Architecture Overview Card */}
               <div className="bg-white rounded-[16px] p-5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 space-y-3.5">
                 <div className="flex items-center justify-between pb-1 border-b border-slate-100/80">
-                  <div className="flex items-center gap-2 text-[#0B132B]">
+                  <div className="flex items-center gap-2 text-[#02361B]">
                     <Layers className="w-4 h-4 text-indigo-600" />
-                    <h3 className="text-sm font-black tracking-tight text-[#0B132B]">
+                    <h3 className="text-sm font-black tracking-tight text-[#02361B]">
                       Workspace Features
                     </h3>
                   </div>

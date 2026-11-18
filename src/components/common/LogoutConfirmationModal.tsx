@@ -111,7 +111,7 @@ export function LogoutConfirmationModal({
         <div className="text-center space-y-1.5 pb-1">
           <h3
             id="logout-modal-title"
-            className="text-base sm:text-lg font-black text-[#0B132B]"
+            className="text-base sm:text-lg font-black text-[#02361B]"
           >
             Sign Out of Myvello?
           </h3>

@@ -162,7 +162,7 @@ export default function ForgotPasswordPage() {
                 </div>
 
                 <div>
-                  <h1 className="text-2xl sm:text-[28px] font-black text-[#0B132B] tracking-tight leading-[1.2] mb-2">
+                  <h1 className="text-2xl sm:text-[28px] font-black text-[#02361B] tracking-tight leading-[1.2] mb-2">
                     Recovery link
                     <br />
                     sent
@@ -197,7 +197,7 @@ export default function ForgotPasswordPage() {
             ) : (
               /* Reset Request Form */
               <div>
-                <h1 className="text-2xl sm:text-[28px] font-black text-[#0B132B] tracking-tight leading-[1.2] mb-2">
+                <h1 className="text-2xl sm:text-[28px] font-black text-[#02361B] tracking-tight leading-[1.2] mb-2">
                   Reset your
                   <br />
                   password

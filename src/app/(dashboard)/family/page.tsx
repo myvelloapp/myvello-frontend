@@ -662,7 +662,7 @@ _Myvello — Your Life. Your Records. One Place._`
         {/* Mobile Header (sm:hidden): Sleek single compact row with 3-dot dropdown popover & primary action */}
         <div className="sm:hidden flex items-center justify-between gap-2.5 min-h-[36px]">
           <div className="flex items-center gap-2 min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#0B132B] truncate">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
               {activeFamily ? activeFamily.name : "Family Workspace"}
             </h1>
             {activeFamily && (
@@ -852,7 +852,7 @@ _Myvello — Your Life. Your Records. One Place._`
         <div className="hidden sm:flex sm:items-start justify-between gap-4">
           <div className="space-y-2.5 min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-[#0B132B] truncate">
+              <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
                 {activeFamily ? activeFamily.name : "Family Workspace"}
               </h1>
 
@@ -1083,7 +1083,7 @@ _Myvello — Your Life. Your Records. One Place._`
             </div>
 
             <div className="space-y-1.5">
-              <h2 className="text-lg sm:text-xl font-black text-[#0B132B]">
+              <h2 className="text-lg sm:text-xl font-black text-[#02361B]">
                 Start a Household Workspace
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
@@ -1129,7 +1129,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                     Combined Monthly EMI
                   </span>
-                  <div className="text-lg sm:text-2xl font-black text-[#0B132B] truncate tracking-tight">
+                  <div className="text-lg sm:text-2xl font-black text-[#02361B] truncate tracking-tight">
                     {formatCurrency(stats.totalEmi)}
                   </div>
                   <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block truncate">
@@ -1141,7 +1141,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                     Total Shared Debt
                   </span>
-                  <div className="text-lg sm:text-2xl font-black text-[#0B132B] truncate tracking-tight">
+                  <div className="text-lg sm:text-2xl font-black text-[#02361B] truncate tracking-tight">
                     {formatCurrency(stats.totalPrincipal)}
                   </div>
                   <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block truncate">
@@ -1155,7 +1155,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-indigo-600" />
-                    <h3 className="text-sm font-black text-[#0B132B]">
+                    <h3 className="text-sm font-black text-[#02361B]">
                       Shared Loans ({stats.loanCount})
                     </h3>
                   </div>
@@ -1204,7 +1204,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
                         <div className="flex items-center gap-2 shrink-0">
                           <div className="text-right">
-                            <div className="text-xs sm:text-sm font-black text-[#0B132B]">
+                            <div className="text-xs sm:text-sm font-black text-[#02361B]">
                               {formatCurrency(loan.emi_amount)}
                               <span className="text-[10px] font-normal text-slate-400">/mo</span>
                             </div>
@@ -1301,7 +1301,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-indigo-600" />
-                    <h3 className="text-sm font-black text-[#0B132B]">
+                    <h3 className="text-sm font-black text-[#02361B]">
                       Members ({activeFamily.members.length})
                     </h3>
                   </div>
@@ -1445,7 +1445,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   <UserPlus className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#0B132B]">Invite Family Member</h3>
+                  <h3 className="text-sm font-black text-[#02361B]">Invite Family Member</h3>
                   <p className="text-xs text-slate-500">Collaborate in {activeFamily.name}</p>
                 </div>
               </div>
@@ -1497,7 +1497,7 @@ _Myvello — Your Life. Your Records. One Place._`
               ) : (
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-[#0B132B] mb-1.5">
+                    <label className="block text-xs font-bold text-[#02361B] mb-1.5">
                       Email Address *
                     </label>
                     <div className="relative">
@@ -1518,7 +1518,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#0B132B] mb-1.5">Role</label>
+                    <label className="block text-xs font-bold text-[#02361B] mb-1.5">Role</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
@@ -1530,7 +1530,7 @@ _Myvello — Your Life. Your Records. One Place._`
                             : "bg-white border-slate-200 hover:border-slate-300"
                         )}
                       >
-                        <span className="font-bold text-xs text-[#0B132B] block">Member</span>
+                        <span className="font-bold text-xs text-[#02361B] block">Member</span>
                         <span className="text-[10px] text-slate-500 block">Can view & share loans</span>
                       </button>
 
@@ -1544,7 +1544,7 @@ _Myvello — Your Life. Your Records. One Place._`
                             : "bg-white border-slate-200 hover:border-slate-300"
                         )}
                       >
-                        <span className="font-bold text-xs text-[#0B132B] block">Admin</span>
+                        <span className="font-bold text-xs text-[#02361B] block">Admin</span>
                         <span className="text-[10px] text-slate-500 block">Can also invite others</span>
                       </button>
                     </div>
@@ -1590,7 +1590,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   <LinkIcon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#0B132B]">Join Household Workspace</h3>
+                  <h3 className="text-sm font-black text-[#02361B]">Join Household Workspace</h3>
                   <p className="text-xs text-slate-500">Enter code or paste invite link</p>
                 </div>
               </div>
@@ -1612,7 +1612,7 @@ _Myvello — Your Life. Your Records. One Place._`
               )}
 
               <div>
-                <label className="block text-xs font-bold text-[#0B132B] mb-1.5">
+                <label className="block text-xs font-bold text-[#02361B] mb-1.5">
                   Workspace Code or Link *
                 </label>
                 <input
@@ -1664,7 +1664,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
                   <Edit2 className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-black text-[#0B132B]">Rename Workspace</h3>
+                <h3 className="text-sm font-black text-[#02361B]">Rename Workspace</h3>
               </div>
               <button
                 type="button"
@@ -1677,7 +1677,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <form onSubmit={handleRenameFamily} className="p-5 sm:p-6 space-y-4 overflow-y-auto">
               <div>
-                <label className="block text-xs font-bold text-[#0B132B] mb-1.5">Workspace Name *</label>
+                <label className="block text-xs font-bold text-[#02361B] mb-1.5">Workspace Name *</label>
                 <input
                   type="text"
                   required
@@ -1723,7 +1723,7 @@ _Myvello — Your Life. Your Records. One Place._`
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-base font-black text-[#0B132B]">Delete Household Workspace?</h3>
+              <h3 className="text-base font-black text-[#02361B]">Delete Household Workspace?</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
                 Permanently delete <strong>&apos;{activeFamily.name}&apos;</strong>? Shared loans will safely revert to each owner&apos;s personal vault.
               </p>

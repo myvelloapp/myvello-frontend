@@ -127,7 +127,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             className={cn(
               "h-11 px-3 sm:px-3.5 rounded-[15px] sm:rounded-[16px] backdrop-blur-md transition-all cursor-pointer flex items-center gap-2 select-none touch-manipulation active:scale-[0.98]",
               isWorkspaceOpen
-                ? "bg-white border-indigo-400 ring-2 ring-indigo-500/15 shadow-sm text-slate-900"
+                ? "bg-white border-emerald-400 ring-2 ring-emerald-500/15 shadow-sm text-slate-900"
                 : "bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60"
             )}
             aria-label="Switch workspace"
@@ -145,7 +145,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             <ChevronDown
               className={cn(
                 "w-4 h-4 text-slate-400 transition-transform shrink-0",
-                isWorkspaceOpen && "rotate-180 text-indigo-600"
+                isWorkspaceOpen && "rotate-180 text-emerald-700"
               )}
             />
           </button>
@@ -155,7 +155,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             <div className="absolute right-0 top-[calc(100%+0.5rem)] w-[290px] sm:w-[320px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
                 <span>WORKSPACES</span>
-                <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
                   {workspaces.length} ACTIVE
                 </span>
               </div>
@@ -174,7 +174,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                       className={cn(
                         "w-full flex items-center justify-between p-2.5 rounded-[12px] text-xs transition-all cursor-pointer group text-left touch-manipulation active:scale-[0.99]",
                         isSelected
-                          ? "bg-indigo-50/90 text-indigo-900 font-bold border border-indigo-200/80 shadow-2xs"
+                          ? "bg-emerald-50 text-emerald-900 font-bold border border-emerald-200/80 shadow-2xs"
                           : "hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-transparent"
                       )}
                     >
@@ -207,7 +207,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                       </div>
 
                       {isSelected && (
-                        <div className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 ml-2 shadow-2xs">
+                        <div className="w-5 h-5 rounded-full bg-[#1C9E30] text-white flex items-center justify-center shrink-0 ml-2 shadow-2xs">
                           <Check className="w-3 h-3 stroke-[2.5]" />
                         </div>
                       )}
@@ -220,13 +220,13 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                 <Link
                   href="/family"
                   onClick={() => setIsWorkspaceOpen(false)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition-colors"
                 >
                   <span className="flex items-center gap-1.5">
                     <Users className="w-3.5 h-3.5" />
                     <span>Manage Family Workspaces</span>
                   </span>
-                  <ChevronRight className="w-3.5 h-3.5 text-indigo-400" />
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                 </Link>
               </div>
             </div>
@@ -243,7 +243,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             className={cn(
               "relative w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] backdrop-blur-md transition-all cursor-pointer flex items-center justify-center active:scale-[0.98] touch-manipulation",
               isNotificationsOpen
-                ? "bg-indigo-600 text-white shadow-[0_4px_16px_-4px_rgba(79,70,229,0.4)] border border-indigo-500"
+                ? "bg-[#1C9E30] text-white shadow-[0_4px_16px_-4px_rgba(28,158,48,0.4)] border border-[#119230]"
                 : "bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60"
             )}
             aria-label="View notifications"
@@ -260,13 +260,13 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           {isNotificationsOpen && (
             <div className="absolute right-0 top-13 sm:top-14 w-[360px] sm:w-[420px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
               {/* Header */}
-              <div className="px-4 py-3 bg-gradient-to-r from-slate-50/90 via-white to-indigo-50/40 border-b border-slate-100 flex items-center justify-between gap-3">
+              <div className="px-4 py-3 bg-gradient-to-r from-slate-50/90 via-white to-emerald-50/40 border-b border-slate-100 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-[#1C9E30] text-white flex items-center justify-center shadow-xs shrink-0">
                     <Bell className="w-3.5 h-3.5" />
                   </div>
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-xs font-black text-[#0B132B] uppercase tracking-wider truncate">
+                    <span className="text-xs font-black text-[#02361B] uppercase tracking-wider truncate">
                       Notifications
                     </span>
                     {unreadCount > 0 ? (
@@ -289,7 +289,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                         e.stopPropagation();
                         await markAllAsRead();
                       }}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50/80 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50/80 transition-colors cursor-pointer"
                       title="Mark all as read"
                     >
                       <CheckCheck className="w-3.5 h-3.5" />
@@ -321,7 +321,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                       className={cn(
                         "group p-3.5 transition-all cursor-pointer flex items-start gap-3 relative",
                         !n.is_read
-                          ? "bg-indigo-50/40 hover:bg-indigo-50/70"
+                          ? "bg-emerald-50/40 hover:bg-emerald-50/70"
                           : "bg-white hover:bg-slate-50/90"
                       )}
                     >
@@ -349,7 +349,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                                 ? "bg-teal-50 border-teal-100 text-teal-600"
                                 : n.type === "system"
                                 ? "bg-slate-100 border-slate-200 text-slate-700"
-                                : "bg-indigo-50 border-indigo-100 text-indigo-600"
+                                : "bg-emerald-50 border-emerald-100 text-emerald-700"
                             )}
                           >
                             {n.type === "urgent" && <AlertTriangle className="w-5 h-5" />}
@@ -398,13 +398,13 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                           <div className="flex items-center gap-1.5 shrink-0 ml-auto">
                             <span className="text-[10px] text-slate-400 font-medium">{n.timestamp}</span>
                             {!n.is_read && (
-                              <span className="w-2 h-2 rounded-full bg-indigo-600 ring-2 ring-indigo-200 shrink-0" />
+                              <span className="w-2 h-2 rounded-full bg-[#1C9E30] ring-2 ring-emerald-200 shrink-0" />
                             )}
                           </div>
                         </div>
 
                         {/* Title */}
-                        <h4 className="text-xs font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1 leading-snug">
+                        <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 leading-snug">
                           {n.title}
                         </h4>
 
@@ -500,7 +500,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                 {/* Empty State */}
                 {notifications.length === 0 && (
                   <div className="py-10 px-4 text-center">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-500 flex items-center justify-center mx-auto mb-2.5">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2.5">
                       <Sparkles className="w-5 h-5" />
                     </div>
                     <p className="text-xs font-black text-slate-800">All caught up!</p>
@@ -514,7 +514,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                 <Link
                   href="/notifications"
                   onClick={() => setIsNotificationsOpen(false)}
-                  className="font-bold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 text-[11px] transition-all hover:gap-1.5"
+                  className="font-bold text-emerald-700 hover:text-emerald-800 inline-flex items-center gap-1 text-[11px] transition-all hover:gap-1.5"
                 >
                   <span>Open Notification Center</span>
                   <ChevronRight className="w-3.5 h-3.5" />

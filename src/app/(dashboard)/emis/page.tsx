@@ -60,15 +60,15 @@ function EmptyEmiState({
 }) {
   return (
     <div className="py-12 sm:py-16 px-6 text-center max-w-md mx-auto select-none">
-      <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 mx-auto mb-4 shadow-2xs">
+      <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-700 mx-auto mb-4 shadow-2xs">
         {isFiltered ? (
-          <Search className="w-6 h-6 text-indigo-500" />
+          <Search className="w-6 h-6 text-emerald-600" />
         ) : (
-          <CreditCard className="w-6 h-6 text-indigo-600" />
+          <CreditCard className="w-6 h-6 text-emerald-700" />
         )}
       </div>
 
-      <h3 className="text-base sm:text-lg font-black text-[#0B132B]">
+      <h3 className="text-base sm:text-lg font-black text-[#02361B]">
         {isFiltered ? "No Matching EMI Records" : "No EMI Records Found"}
       </h3>
 
@@ -251,7 +251,7 @@ const statusFilterOptions = [
   {
     value: "Upcoming",
     label: "Upcoming",
-    icon: <span className="w-2 h-2 rounded-full bg-indigo-500 inline-block ring-2 ring-indigo-500/20" />,
+    icon: <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block ring-2 ring-emerald-500/20" />,
   },
   {
     value: "Due Soon",
@@ -652,15 +652,15 @@ export default function EmiManagementPage() {
           {/* Page Heading */}
           <div className="flex items-center justify-between gap-3 min-h-[36px]">
             <div className="flex items-center gap-2.5 min-w-0">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#0B132B] truncate">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
                 EMI Management
               </h1>
               <span
                 className={cn(
                   "hidden sm:inline-flex items-center gap-2 pl-1.5 pr-3 py-1 rounded-full text-xs font-bold border shadow-2xs",
                   activeWorkspace.type === "personal"
-                    ? "bg-indigo-50 text-indigo-700 border-indigo-200/80"
-                    : "bg-teal-50 text-teal-700 border-teal-200/80"
+                    ? "bg-emerald-50 text-[#02361B] border-emerald-200/80"
+                    : "bg-teal-50 text-teal-800 border-teal-200/80"
                 )}
                 title="Current Active Workspace Filter"
               >
@@ -741,14 +741,14 @@ export default function EmiManagementPage() {
                         className="min-w-0 flex-1 cursor-pointer"
                       >
                         <div className="flex items-center gap-1.5 truncate">
-                          <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 shrink-0">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 shrink-0">
                             NEXT DUE:
                           </span>
                           <span className="text-xs font-bold text-slate-800 truncate">
                             {currentMobileEmi.loan_name}
                           </span>
                           {mobileTotal > 1 && (
-                            <span className="text-[9px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100/80 px-1.5 py-0.2 rounded-full shrink-0">
+                            <span className="text-[9px] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200/80 px-1.5 py-0.2 rounded-full shrink-0">
                               {safeMobileIndex + 1}/{mobileTotal}
                             </span>
                           )}
@@ -807,7 +807,7 @@ export default function EmiManagementPage() {
                           className={cn(
                             "h-1.5 rounded-full transition-all duration-300 cursor-pointer touch-manipulation",
                             idx === safeMobileIndex
-                              ? "w-5 bg-indigo-600 shadow-2xs"
+                              ? "w-5 bg-[#1C9E30] shadow-2xs"
                               : "w-1.5 bg-slate-300 hover:bg-slate-400"
                           )}
                           aria-label={`Go to EMI ${idx + 1}`}
@@ -823,7 +823,7 @@ export default function EmiManagementPage() {
                 {/* Mobile Only (sm:hidden): Section Title + 3-Dot Dropdown Tab Selector + Add Button */}
                 <div className="sm:hidden flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
-                  <h2 className="text-xl font-black text-[#0B132B] tracking-tight truncate">
+                  <h2 className="text-xl font-black text-[#02361B] tracking-tight truncate">
                     {activeTab === "active"
                       ? "Active Loans"
                       : activeTab === "completed"
@@ -842,7 +842,7 @@ export default function EmiManagementPage() {
                       aria-expanded={isTabMenuOpen}
                       className={cn(
                         "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                        isTabMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
+                        isTabMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
                       )}
                     >
                       <MoreHorizontal className="w-5 h-5 text-slate-700" />
@@ -865,19 +865,19 @@ export default function EmiManagementPage() {
                             className={cn(
                               "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
                               activeTab === "active"
-                                ? "bg-indigo-50/70 text-indigo-700 font-bold"
-                                : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
+                                ? "bg-emerald-50 text-emerald-800 font-bold"
+                                : "text-slate-800 hover:text-emerald-700 hover:bg-slate-50"
                             )}
                           >
                             <div className="flex items-center gap-2.5">
-                              <Layers className={cn("w-4 h-4", activeTab === "active" ? "text-indigo-600" : "text-slate-500")} />
+                              <Layers className={cn("w-4 h-4", activeTab === "active" ? "text-emerald-700" : "text-slate-500")} />
                               <span>Active Loans</span>
                             </div>
                             <span
                               className={cn(
                                 "px-2 py-0.5 rounded-full text-[10px] font-bold",
                                 activeTab === "active"
-                                  ? "bg-indigo-600 text-white"
+                                  ? "bg-[#1C9E30] text-white"
                                   : "bg-slate-100 text-slate-600"
                               )}
                             >
@@ -895,19 +895,19 @@ export default function EmiManagementPage() {
                             className={cn(
                               "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
                               activeTab === "completed"
-                                ? "bg-indigo-50/70 text-indigo-700 font-bold"
-                                : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
+                                ? "bg-emerald-50 text-emerald-800 font-bold"
+                                : "text-slate-800 hover:text-emerald-700 hover:bg-slate-50"
                             )}
                           >
                             <div className="flex items-center gap-2.5">
-                              <CheckCircle2 className={cn("w-4 h-4", activeTab === "completed" ? "text-indigo-600" : "text-slate-500")} />
+                              <CheckCircle2 className={cn("w-4 h-4", activeTab === "completed" ? "text-emerald-700" : "text-slate-500")} />
                               <span>Completed Loans</span>
                             </div>
                             <span
                               className={cn(
                                 "px-2 py-0.5 rounded-full text-[10px] font-bold",
                                 activeTab === "completed"
-                                  ? "bg-indigo-600 text-white"
+                                  ? "bg-[#1C9E30] text-white"
                                   : "bg-slate-100 text-slate-600"
                               )}
                             >
@@ -925,19 +925,19 @@ export default function EmiManagementPage() {
                             className={cn(
                               "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
                               activeTab === "archived"
-                                ? "bg-indigo-50/70 text-indigo-700 font-bold"
-                                : "text-slate-800 hover:text-indigo-600 hover:bg-slate-50"
+                                ? "bg-emerald-50 text-emerald-800 font-bold"
+                                : "text-slate-800 hover:text-emerald-700 hover:bg-slate-50"
                             )}
                           >
                             <div className="flex items-center gap-2.5">
-                              <Archive className={cn("w-4 h-4", activeTab === "archived" ? "text-indigo-600" : "text-slate-500")} />
+                              <Archive className={cn("w-4 h-4", activeTab === "archived" ? "text-emerald-700" : "text-slate-500")} />
                               <span>Archived Loans</span>
                             </div>
                             <span
                               className={cn(
                                 "px-2 py-0.5 rounded-full text-[10px] font-bold",
                                 activeTab === "archived"
-                                  ? "bg-indigo-600 text-white"
+                                  ? "bg-[#1C9E30] text-white"
                                   : "bg-slate-100 text-slate-600"
                               )}
                             >
@@ -1075,7 +1075,7 @@ export default function EmiManagementPage() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search loans, banks..."
-                      className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[12px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400 placeholder:text-xs"
+                      className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[12px] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all placeholder:text-slate-400 placeholder:text-xs"
                     />
                     {searchQuery && (
                       <button
@@ -1096,7 +1096,7 @@ export default function EmiManagementPage() {
                     className={cn(
                       "h-10 px-3 rounded-[12px] border text-xs font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer touch-manipulation active:scale-95",
                       activeFiltersCount > 0
-                        ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-2xs"
+                        ? "bg-emerald-50 border-emerald-200 text-emerald-800 shadow-2xs"
                         : "bg-white border-slate-200/90 text-slate-700 hover:bg-slate-50"
                     )}
                     aria-label="Filter loans"
@@ -1104,7 +1104,7 @@ export default function EmiManagementPage() {
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span>Filters</span>
                     {activeFiltersCount > 0 && (
-                      <span className="w-4.5 h-4.5 rounded-full bg-indigo-600 text-white text-[10px] font-black flex items-center justify-center">
+                      <span className="w-4.5 h-4.5 rounded-full bg-[#1C9E30] text-white text-[10px] font-black flex items-center justify-center">
                         {activeFiltersCount}
                       </span>
                     )}
@@ -1118,7 +1118,7 @@ export default function EmiManagementPage() {
                       className={cn(
                         "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                         viewMode === "list"
-                          ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                          ? "bg-white text-emerald-700 shadow-2xs font-bold"
                           : "text-slate-400 hover:text-slate-700"
                       )}
                       aria-label="List view"
@@ -1132,7 +1132,7 @@ export default function EmiManagementPage() {
                       className={cn(
                         "w-8 h-8 rounded-[8px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                         viewMode === "calendar"
-                          ? "bg-white text-indigo-600 shadow-2xs font-bold"
+                          ? "bg-white text-emerald-700 shadow-2xs font-bold"
                           : "text-slate-400 hover:text-slate-700"
                       )}
                       aria-label="Due calendar view"
@@ -1148,7 +1148,7 @@ export default function EmiManagementPage() {
                   <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       {categoryFilter !== "All" && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                           <span>{categoryFilter}</span>
                           <button type="button" onClick={() => setCategoryFilter("All")}>
                             <X className="w-2.5 h-2.5" />
@@ -1156,7 +1156,7 @@ export default function EmiManagementPage() {
                         </span>
                       )}
                       {bankFilter !== "All" && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                           <span>{bankFilter}</span>
                           <button type="button" onClick={() => setBankFilter("All")}>
                             <X className="w-2.5 h-2.5" />
@@ -1164,7 +1164,7 @@ export default function EmiManagementPage() {
                         </span>
                       )}
                       {statusFilter !== "All" && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                           <span>Status: {statusFilter}</span>
                           <button type="button" onClick={() => setStatusFilter("All")}>
                             <X className="w-2.5 h-2.5" />
@@ -1241,7 +1241,7 @@ export default function EmiManagementPage() {
                               </div>
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-1.5">
-                                  <span className="font-bold text-slate-900 text-[13px] leading-tight truncate group-hover:text-indigo-600 transition-colors">
+                                  <span className="font-bold text-slate-900 text-[13px] leading-tight truncate group-hover:text-emerald-700 transition-colors">
                                     {loan.loan_name}
                                   </span>
                                   {loan.ownership_type === "family_shared" && (
@@ -1298,7 +1298,7 @@ export default function EmiManagementPage() {
                                 className={cn(
                                   "h-full rounded-full transition-all duration-500",
                                   loan.progress_percentage > 0
-                                    ? "bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 shadow-2xs"
+                                    ? "bg-gradient-to-r from-emerald-500 to-[#1C9E30] shadow-2xs"
                                     : "bg-transparent"
                                 )}
                                 style={{ width: `${loan.progress_percentage}%` }}
@@ -1416,9 +1416,9 @@ export default function EmiManagementPage() {
                                           setSelectedEmiForPay(loan);
                                           setActiveActionMenuId(null);
                                         }}
-                                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-black text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer text-left touch-manipulation"
+                                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-black text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer text-left touch-manipulation"
                                       >
-                                        <Check className="w-3.5 h-3.5 text-indigo-600" />
+                                        <Check className="w-3.5 h-3.5 text-emerald-700" />
                                         <span>Mark as Paid</span>
                                       </button>
                                     )}
@@ -1433,7 +1433,7 @@ export default function EmiManagementPage() {
                                     >
                                       {isArchived ? (
                                         <>
-                                          <ArchiveRestore className="w-3.5 h-3.5 text-indigo-600" />
+                                          <ArchiveRestore className="w-3.5 h-3.5 text-emerald-700" />
                                           <span>Reactivate Account</span>
                                         </>
                                       ) : (
@@ -1468,7 +1468,7 @@ export default function EmiManagementPage() {
               </div>
 
               {/* Desktop Unified Loans Management Table Card (hidden sm:block) */}
-              <div className="hidden sm:block bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] border border-slate-200/80 relative">
+              <div className="hidden sm:block bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 relative">
                 {/* Desktop Single-Row Unified Toolbar (100% Locked for Desktop) */}
                 <div className="flex px-4 py-2.5 border-b border-slate-100 flex-wrap items-center justify-between gap-2.5 bg-white rounded-t-[16px]">
                   {/* Left: Search Input & Inline Filter Selects */}
@@ -1485,7 +1485,7 @@ export default function EmiManagementPage() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search loans, banks, account..."
-                        className="w-full h-10 sm:h-8 pl-9 sm:pl-8 pr-8 sm:pr-7 text-xs font-medium text-slate-800 bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200/80 rounded-[8px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400"
+                        className="w-full h-10 sm:h-8 pl-9 sm:pl-8 pr-8 sm:pr-7 text-xs font-medium text-slate-800 bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200/80 rounded-[8px] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 transition-all placeholder:text-slate-400"
                       />
                       {searchQuery && (
                         <button
@@ -1541,7 +1541,7 @@ export default function EmiManagementPage() {
                       className={cn(
                         "w-8 h-8 sm:w-7 sm:h-7 min-w-[32px] min-h-[32px] rounded-[6px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                         viewMode === "list"
-                          ? "bg-white text-indigo-600 shadow-2xs border border-indigo-100/60"
+                          ? "bg-white text-emerald-700 shadow-2xs border border-emerald-200/80"
                           : "text-slate-400 hover:text-slate-700"
                       )}
                       aria-label="List view"
@@ -1555,7 +1555,7 @@ export default function EmiManagementPage() {
                       className={cn(
                         "w-8 h-8 sm:w-7 sm:h-7 min-w-[32px] min-h-[32px] rounded-[6px] transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                         viewMode === "grid"
-                          ? "bg-white text-indigo-600 shadow-2xs border border-indigo-100/60"
+                          ? "bg-white text-emerald-700 shadow-2xs border border-emerald-200/80"
                           : "text-slate-400 hover:text-slate-700"
                       )}
                       aria-label="Grid view"
@@ -1636,7 +1636,7 @@ export default function EmiManagementPage() {
                                       <Link
                                         href={`/emis/${loan.id}`}
                                         onClick={(e) => e.stopPropagation()}
-                                        className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors flex items-center gap-1.5 text-xs truncate"
+                                        className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors flex items-center gap-1.5 text-xs truncate"
                                       >
                                         <span>{loan.loan_name}</span>
                                         {loan.ownership_type === "family_shared" && (
@@ -1748,8 +1748,8 @@ export default function EmiManagementPage() {
                                       Due Soon
                                     </span>
                                   ) : (
-                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-violet-50/80 text-violet-700 border border-violet-200/60">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shadow-2xs" />
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shadow-2xs" />
                                       Upcoming
                                     </span>
                                   )}
@@ -1770,7 +1770,7 @@ export default function EmiManagementPage() {
                                       className={cn(
                                         "h-full rounded-full transition-all duration-500",
                                         loan.progress_percentage > 0
-                                          ? "bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 shadow-2xs"
+                                          ? "bg-gradient-to-r from-emerald-500 to-[#1C9E30] shadow-2xs"
                                           : "bg-transparent"
                                       )}
                                       style={{ width: `${loan.progress_percentage}%` }}
@@ -1845,9 +1845,9 @@ export default function EmiManagementPage() {
                                                 setSelectedEmiForPay(loan);
                                                 setActiveActionMenuId(null);
                                               }}
-                                              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-black text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer text-left touch-manipulation"
+                                              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-black text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer text-left touch-manipulation"
                                             >
-                                              <Check className="w-4 h-4 text-indigo-600" />
+                                              <Check className="w-4 h-4 text-emerald-700" />
                                               <span>Mark as Paid</span>
                                             </button>
                                           )}
@@ -1862,7 +1862,7 @@ export default function EmiManagementPage() {
                                           >
                                             {isArchived ? (
                                               <>
-                                                <ArchiveRestore className="w-4 h-4 text-indigo-600" />
+                                                <ArchiveRestore className="w-4 h-4 text-emerald-700" />
                                                 <span>Reactivate Account</span>
                                               </>
                                             ) : (
@@ -1949,7 +1949,7 @@ export default function EmiManagementPage() {
                                       <Link
                                         href={`/emis/${loan.id}`}
                                         onClick={(e) => e.stopPropagation()}
-                                        className="font-black text-slate-900 group-hover:text-indigo-600 transition-colors block text-sm truncate"
+                                        className="font-black text-slate-900 group-hover:text-emerald-700 transition-colors block text-sm truncate"
                                       >
                                         {loan.loan_name}
                                       </Link>
@@ -1966,7 +1966,7 @@ export default function EmiManagementPage() {
 
                                   <span
                                     suppressHydrationWarning
-                                    className="text-base font-black text-[#0B132B] shrink-0"
+                                    className="text-base font-black text-[#02361B] shrink-0"
                                   >
                                     {formatCurrency(loan.emi_amount, loan.currency || user?.preferred_currency || "INR")}
                                   </span>
@@ -2027,7 +2027,7 @@ export default function EmiManagementPage() {
                                     <span>
                                       {loan.paid_emis} / {loan.total_emis} EMIs
                                     </span>
-                                    <span className="text-indigo-600 font-black">
+                                    <span className="text-emerald-700 font-black">
                                       {loan.progress_percentage}%
                                     </span>
                                   </div>
@@ -2036,7 +2036,7 @@ export default function EmiManagementPage() {
                                       className={cn(
                                         "h-full rounded-full transition-all duration-500",
                                         loan.progress_percentage > 0
-                                          ? "bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 shadow-2xs"
+                                          ? "bg-gradient-to-r from-emerald-500 to-[#1C9E30] shadow-2xs"
                                           : "bg-transparent"
                                       )}
                                       style={{ width: `${loan.progress_percentage}%` }}
@@ -2115,8 +2115,8 @@ export default function EmiManagementPage() {
 
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-indigo-600" />
-                <h3 className="text-base font-black text-[#0B132B]">Filters & Refinements</h3>
+                <SlidersHorizontal className="w-4 h-4 text-emerald-700" />
+                <h3 className="text-base font-black text-[#02361B]">Filters & Refinements</h3>
               </div>
               <button
                 type="button"
@@ -2205,7 +2205,7 @@ export default function EmiManagementPage() {
             </div>
 
             <div className="text-center space-y-1.5 pb-1">
-              <h3 className="text-base sm:text-lg font-black text-[#0B132B]">Delete EMI Commitment?</h3>
+              <h3 className="text-base sm:text-lg font-black text-[#02361B]">Delete EMI Commitment?</h3>
               <p className="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto">
                 Are you sure you want to permanently delete <strong className="text-slate-900 font-bold">{loanToDelete.loan_name}</strong>? This will remove all schedules, payment records, and reminders. This action cannot be undone.
               </p>

@@ -185,7 +185,7 @@ export function AvatarCropModal({
               <Camera className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-[#0B132B]">
+              <h3 className="text-sm font-black text-[#02361B]">
                 {imageSrc ? "Crop & Adjust Profile Photo" : "Upload Profile Photo"}
               </h3>
               <p className="text-xs text-slate-500 font-medium">
@@ -225,7 +225,7 @@ export function AvatarCropModal({
               </div>
 
               <div className="space-y-1">
-                <h4 className="text-sm font-black text-[#0B132B]">
+                <h4 className="text-sm font-black text-[#02361B]">
                   Drag and drop your photo here
                 </h4>
                 <p className="text-xs text-slate-500">

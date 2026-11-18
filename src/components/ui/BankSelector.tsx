@@ -353,7 +353,7 @@ export const BankSelector: React.FC<BankSelectorProps> = ({
                   <Landmark className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B]">
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#02361B]">
                     All Indian Banks & NBFCs Directory
                   </h3>
                   <p className="text-[11px] text-slate-500 font-normal">

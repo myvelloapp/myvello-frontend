@@ -462,7 +462,7 @@ export default function PaymentHistoryPage() {
         {/* Page Header */}
         <div className="flex items-center justify-between gap-3 min-h-[36px]">
           <div className="flex items-center gap-2.5 min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#0B132B] truncate">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
               Payment History
             </h1>
           </div>
@@ -746,7 +746,7 @@ export default function PaymentHistoryPage() {
                       </div>
 
                       <div className="text-right shrink-0">
-                        <span className="text-sm font-black text-[#0B132B] block">
+                        <span className="text-sm font-black text-[#02361B] block">
                           {formatCurrency(amount, item.emi?.currency || currency)}
                         </span>
                         <span className="text-[10px] font-semibold text-slate-400 block mt-0.5">
@@ -907,7 +907,7 @@ export default function PaymentHistoryPage() {
 
                         {/* Amount Paid */}
                         <td className="py-3.5 px-4 whitespace-nowrap">
-                          <span className="text-sm font-black text-[#0B132B]">
+                          <span className="text-sm font-black text-[#02361B]">
                             {formatCurrency(amount, item.emi?.currency || currency)}
                           </span>
                         </td>
@@ -1001,7 +1001,7 @@ export default function PaymentHistoryPage() {
             <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mx-auto mb-3.5">
               <Clock className="w-7 h-7" />
             </div>
-            <h3 className="text-base font-black text-[#0B132B]">No Payment Records Found</h3>
+            <h3 className="text-base font-black text-[#02361B]">No Payment Records Found</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-5 leading-relaxed font-medium">
               {searchQuery || selectedMethod !== "All"
                 ? "No transactions match your current search query or filter criteria. Try resetting your search."
@@ -1048,7 +1048,7 @@ export default function PaymentHistoryPage() {
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-indigo-600" />
-                  <h3 className="text-base font-black text-[#0B132B]">Filters & Refinements</h3>
+                  <h3 className="text-base font-black text-[#02361B]">Filters & Refinements</h3>
                 </div>
                 <button
                   type="button"
@@ -1143,7 +1143,7 @@ export default function PaymentHistoryPage() {
                     )}
                   </div>
                   <div>
-                    <h3 className="text-sm font-black text-[#0B132B]">
+                    <h3 className="text-sm font-black text-[#02361B]">
                       {receiptPayment.emi?.loan_name || receiptPayment.loan_name || "Loan Repayment"}
                     </h3>
                     <p className="text-xs text-slate-400 font-medium">
@@ -1167,7 +1167,7 @@ export default function PaymentHistoryPage() {
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                   Amount Paid
                 </span>
-                <div className="text-2xl sm:text-3xl font-black text-[#0B132B] mt-1 tracking-tight">
+                <div className="text-2xl sm:text-3xl font-black text-[#02361B] mt-1 tracking-tight">
                   {formatCurrency(receiptPayment.amount ?? receiptPayment.paid_amount ?? 0, receiptPayment.emi?.currency || currency)}
                 </div>
                 <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">

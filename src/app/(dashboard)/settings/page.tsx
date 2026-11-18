@@ -622,7 +622,7 @@ function SettingsPageContent() {
           <div className="hidden lg:block space-y-6">
             {/* Header Title & Subtitle */}
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#0B132B]">
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
                 Account Settings
               </h1>
             </div>
@@ -1056,9 +1056,9 @@ function SettingsPageContent() {
               {/* Regional Clock & Currency Snapshot Card */}
               <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[#0B132B]">
+                  <div className="flex items-center gap-2 text-[#02361B]">
                     <Clock className="w-4 h-4 text-indigo-600" />
-                    <h3 className="text-sm font-black tracking-tight text-[#0B132B]">
+                    <h3 className="text-sm font-black tracking-tight text-[#02361B]">
                       Regional Time & Currency
                     </h3>
                   </div>
@@ -1074,7 +1074,7 @@ function SettingsPageContent() {
                     <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mb-1">
                       Local Time ({timezone.replace(/_/g, " ")})
                     </span>
-                    <div className="text-xl sm:text-2xl font-black text-[#0B132B] tracking-tight">
+                    <div className="text-xl sm:text-2xl font-black text-[#02361B] tracking-tight">
                       {liveTime || "Loading..."}
                     </div>
                     <span className="text-[11px] font-semibold text-slate-500 mt-0.5 block">
@@ -1104,9 +1104,9 @@ function SettingsPageContent() {
 
               {/* Third-Party Authentication Card */}
               <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 space-y-3.5">
-                <div className="flex items-center gap-2 text-[#0B132B]">
+                <div className="flex items-center gap-2 text-[#02361B]">
                   <Globe className="w-4 h-4 text-indigo-600" />
-                  <h3 className="text-sm font-black tracking-tight text-[#0B132B]">
+                  <h3 className="text-sm font-black tracking-tight text-[#02361B]">
                     Third-Party Authentication
                   </h3>
                 </div>

@@ -153,7 +153,7 @@ export function NextPaymentCard({
     return (
       <div className="w-full pt-4 pb-2 px-1">
         <div className="bg-white rounded-[26px] p-6 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 text-center space-y-3.5">
-          <div className="w-13 h-13 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-2xs">
+          <div className="w-13 h-13 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs">
             <Calendar className="w-6 h-6" />
           </div>
           <div>
@@ -170,7 +170,7 @@ export function NextPaymentCard({
               variant="outline"
               className="text-xs gap-1.5 border-slate-200 rounded-xl hover:bg-slate-50 font-bold"
             >
-              <Plus className="w-3.5 h-3.5 text-indigo-600" />
+              <Plus className="w-3.5 h-3.5 text-emerald-700" />
               Add New EMI
             </Button>
           </Link>
@@ -202,13 +202,13 @@ export function NextPaymentCard({
               >
                 {getCategoryIcon(cardBehindLeft.loan_category || cardBehindLeft.loan_name, "w-5 h-5")}
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70">
                 Upcoming
               </span>
             </div>
             {/* Peek Bottom Button */}
             <div className="px-5 pt-12 opacity-25">
-              <div className="w-full h-10 bg-[#6366F1] rounded-2xl" />
+              <div className="w-full h-10 bg-[#1C9E30] rounded-2xl" />
             </div>
           </div>
         )}
@@ -225,7 +225,7 @@ export function NextPaymentCard({
             {/* Peek elements: Upcoming badge and lender on the right */}
             <div className="p-5 flex flex-col justify-between h-full opacity-35">
               <div className="flex justify-end">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EEF2FF] text-[#4F46E5]">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70">
                   Upcoming
                 </span>
               </div>
@@ -235,7 +235,7 @@ export function NextPaymentCard({
                 </span>
               </div>
               <div className="pt-2 opacity-30">
-                <div className="w-full h-10 bg-[#6366F1] rounded-2xl" />
+                <div className="w-full h-10 bg-[#1C9E30] rounded-2xl" />
               </div>
             </div>
           </div>
@@ -257,19 +257,19 @@ export function NextPaymentCard({
             <button
               type="button"
               onClick={handleSendToBack}
-              className="absolute -top-3.5 right-11 sm:right-13 z-30 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:bg-slate-50 hover:shadow-lg active:scale-90 transition-all cursor-pointer group"
+              className="absolute -top-3.5 right-11 sm:right-13 z-30 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200/90 flex items-center justify-center text-slate-600 hover:text-emerald-700 hover:bg-slate-50 hover:shadow-lg active:scale-90 transition-all cursor-pointer group"
               title="Next EMI (Cycle deck)"
               aria-label="Next EMI"
             >
-              <ChevronRight className="w-4 h-4 stroke-[2.5] text-slate-600 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all" />
+              <ChevronRight className="w-4 h-4 stroke-[2.5] text-slate-600 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all" />
             </button>
           )}
 
           {/* Card Header matching screenshot */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[#0B132B]">
-              <Calendar className="w-4.5 h-4.5 text-indigo-600" />
-              <h3 className="text-sm sm:text-base font-extrabold tracking-tight text-[#0B132B]">
+            <div className="flex items-center gap-2 text-[#02361B]">
+              <Calendar className="w-4.5 h-4.5 text-emerald-700" />
+              <h3 className="text-sm sm:text-base font-extrabold tracking-tight text-[#02361B]">
                 Next EMI Payment
               </h3>
             </div>
@@ -282,7 +282,7 @@ export function NextPaymentCard({
                     ? "bg-rose-50 text-rose-700 border border-rose-200"
                     : isDueSoon
                     ? "bg-amber-50 text-amber-800 border border-amber-200"
-                    : "bg-[#EEF2FF] text-[#4F46E5]"
+                    : "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
                 )}
               >
                 {isOverdue ? "Overdue" : isDueSoon ? "Due Soon" : "Upcoming"}
@@ -310,14 +310,14 @@ export function NextPaymentCard({
               {activeCard.emi_id ? (
                 <Link
                   href={`/emis/${activeCard.emi_id}`}
-                  className="text-xs sm:text-sm font-extrabold text-[#0B132B] hover:text-indigo-600 transition-colors truncate block"
+                  className="text-xs sm:text-sm font-extrabold text-[#02361B] hover:text-emerald-700 transition-colors truncate block"
                   title={activeCard.loan_name}
                 >
                   {activeCard.loan_name}
                 </Link>
               ) : (
                 <div
-                  className="text-xs sm:text-sm font-extrabold text-[#0B132B] truncate"
+                  className="text-xs sm:text-sm font-extrabold text-[#02361B] truncate"
                   title={activeCard.loan_name}
                 >
                   {activeCard.loan_name}
@@ -328,7 +328,7 @@ export function NextPaymentCard({
               <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                 <span
                   suppressHydrationWarning
-                  className="text-2xl sm:text-[26px] font-black text-[#0B132B] tracking-tight"
+                  className="text-2xl sm:text-[26px] font-black text-[#02361B] tracking-tight"
                 >
                   {formatCurrency(activeCard.amount, currency)}
                 </span>
@@ -399,7 +399,7 @@ export function NextPaymentCard({
                   className={cn(
                     "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
                     idx === safeIndex
-                      ? "w-5 bg-indigo-600"
+                      ? "w-5 bg-[#1C9E30]"
                       : "w-1.5 bg-slate-200 hover:bg-slate-300"
                   )}
                   aria-label={`Go to EMI ${idx + 1}`}

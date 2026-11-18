@@ -248,7 +248,7 @@ export default function LoginPage() {
             </div>
 
             {/* Heading */}
-            <h1 className="text-2xl sm:text-[28px] font-black text-[#0B132B] tracking-tight leading-[1.2] mb-6">
+            <h1 className="text-2xl sm:text-[28px] font-black text-[#02361B] tracking-tight leading-[1.2] mb-6">
               Welcome back to
               <br />
               your account

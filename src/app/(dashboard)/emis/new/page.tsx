@@ -696,7 +696,7 @@ export default function AddNewEmiPage() {
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
               <div className="min-w-0">
-                <h1 className="text-lg font-black tracking-tight text-[#0B132B] truncate">
+                <h1 className="text-lg font-black tracking-tight text-[#02361B] truncate">
                   Add New EMI
                 </h1>
                 <p className="text-[11px] font-bold text-indigo-600 truncate">
@@ -772,7 +772,7 @@ export default function AddNewEmiPage() {
           {/* Desktop Page Heading & Back Action (Hidden on Mobile) */}
           <div className="hidden sm:flex sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#0B132B]">
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
                 Add New EMI
               </h1>
             </div>
@@ -865,7 +865,7 @@ export default function AddNewEmiPage() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block truncate">
                         {formData.bankName || formData.loanCategory || "EMI Estimate"}
                       </span>
-                      <div className="text-sm font-black text-[#0B132B] truncate flex items-baseline gap-1">
+                      <div className="text-sm font-black text-[#02361B] truncate flex items-baseline gap-1">
                         <span>
                           {activeEmiNum > 0
                             ? `${vaultCurrencySymbol}${formatAmount(activeEmiNum, vaultCurrency)}`
@@ -923,7 +923,7 @@ export default function AddNewEmiPage() {
                   <div className="space-y-4.5 animate-in fade-in duration-200">
                     <div className="border-b border-slate-100 pb-3 flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B] truncate">
+                        <h3 className="text-sm sm:text-base font-extrabold text-[#02361B] truncate">
                           Step 1: Loan & Institution Details
                         </h3>
                         {/* <p className="text-xs text-slate-500 font-normal mt-0.5">
@@ -1024,7 +1024,7 @@ export default function AddNewEmiPage() {
                   <div className="space-y-4.5 animate-in fade-in duration-200">
                     <div className="border-b border-slate-100 pb-3 flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B] truncate">
+                        <h3 className="text-sm sm:text-base font-extrabold text-[#02361B] truncate">
                           Step 2: Financials & Smart Amortization
                         </h3>
                         {/* <p className="text-xs text-slate-500 font-normal mt-0.5">
@@ -1298,7 +1298,7 @@ export default function AddNewEmiPage() {
                   <div className="space-y-4.5 animate-in fade-in duration-200">
                     <div className="border-b border-slate-100 pb-3 flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B] truncate">
+                        <h3 className="text-sm sm:text-base font-extrabold text-[#02361B] truncate">
                           Step 3: Schedule & Lifecycle Status
                         </h3>
                         {/* <p className="text-xs text-slate-500 font-normal mt-0.5">
@@ -1522,7 +1522,7 @@ export default function AddNewEmiPage() {
                   <div className="space-y-4.5 animate-in fade-in duration-200">
                     <div className="border-b border-slate-100 pb-3 flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B] truncate">
+                        <h3 className="text-sm sm:text-base font-extrabold text-[#02361B] truncate">
                           Step 4: Payment & Automation Preferences
                         </h3>
                         {/* <p className="text-xs text-slate-500 font-normal mt-0.5">
@@ -1938,7 +1938,7 @@ export default function AddNewEmiPage() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block truncate">
                         {formData.bankName || "Commitment Preview"}
                       </span>
-                      <h4 className="text-xs font-black text-[#0B132B] truncate max-w-[160px] sm:max-w-xs">
+                      <h4 className="text-xs font-black text-[#02361B] truncate max-w-[160px] sm:max-w-xs">
                         {formData.loanName || (formData.bankName ? `${formData.bankName} ${formData.loanCategory}` : "New Commitment")}
                       </h4>
                     </div>
@@ -1987,7 +1987,7 @@ export default function AddNewEmiPage() {
                   <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
                     Monthly Instalment
                   </span>
-                  <div className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight mt-1">
+                  <div className="text-2xl sm:text-3xl font-black text-[#02361B] tracking-tight mt-1">
                     {activeEmiNum > 0 ? `${vaultCurrencySymbol}${formatAmount(activeEmiNum, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                   </div>
                   {hasBrokenPeriod && tenureNum > 1 ? (
@@ -2228,7 +2228,7 @@ export default function AddNewEmiPage() {
                     </span>
                     <h3
                       id="mobile-amortization-sheet-title"
-                      className="text-sm font-black text-[#0B132B] truncate max-w-[200px]"
+                      className="text-sm font-black text-[#02361B] truncate max-w-[200px]"
                     >
                       {formData.loanName || (formData.bankName ? `${formData.bankName} ${formData.loanCategory}` : "New Commitment")}
                     </h3>
@@ -2275,7 +2275,7 @@ export default function AddNewEmiPage() {
                 <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
                   Monthly Instalment
                 </span>
-                <div className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight mt-1">
+                <div className="text-2xl sm:text-3xl font-black text-[#02361B] tracking-tight mt-1">
                   {activeEmiNum > 0 ? `${vaultCurrencySymbol}${formatAmount(activeEmiNum, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                 </div>
                 {hasBrokenPeriod && tenureNum > 1 ? (

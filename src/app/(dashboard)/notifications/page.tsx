@@ -404,7 +404,7 @@ function NotificationsPageContent() {
         {/* Page Header with Native 3-dot Action Popover */}
         <div className="flex items-center justify-between gap-3 min-h-[36px]">
           <div className="flex items-center gap-2.5 min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#0B132B] truncate">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
               Notifications
             </h1>
             {unreadCount > 0 && (
@@ -725,7 +725,7 @@ function NotificationsPageContent() {
                     )}
 
                     {/* Title */}
-                    <h4 className="text-xs sm:text-sm font-extrabold text-[#0B132B] mt-1 leading-snug">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-[#02361B] mt-1 leading-snug">
                       {item.title}
                     </h4>
 
@@ -869,7 +869,7 @@ function NotificationsPageContent() {
                   <Sparkles className="w-7 h-7" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-base font-black text-[#0B132B]">
+                  <h3 className="text-base font-black text-[#02361B]">
                     All caught up!
                   </h3>
                   <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">

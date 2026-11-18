@@ -165,12 +165,12 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   onClick={() => setIsAccountOpen(!isAccountOpen)}
                   className={cn(
                     "w-full flex items-center justify-between p-2 rounded-[14px] bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all cursor-pointer text-left active:scale-[0.98] touch-manipulation",
-                    isAccountOpen && "border-indigo-300 ring-2 ring-indigo-500/10 bg-slate-50/70"
+                    isAccountOpen && "border-emerald-300 ring-2 ring-emerald-500/15 bg-slate-50/70"
                   )}
                   aria-expanded={isAccountOpen}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="relative w-8.5 h-8.5 rounded-full overflow-hidden shrink-0 ring-2 ring-indigo-500/15 border border-white shadow-2xs bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-800 flex items-center justify-center">
+                    <div className="relative w-8.5 h-8.5 rounded-full overflow-hidden shrink-0 ring-2 ring-emerald-500/20 border border-white shadow-2xs bg-gradient-to-tr from-[#1C9E30] to-[#005E35] flex items-center justify-center">
                       {user?.profile_photo ? (
                         <Image
                           src={user.profile_photo}
@@ -200,7 +200,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   <ChevronDown
                     className={cn(
                       "w-4 h-4 text-slate-400 transition-transform duration-200",
-                      isAccountOpen && "rotate-180 text-indigo-600"
+                      isAccountOpen && "rotate-180 text-emerald-700"
                     )}
                   />
                 </button>
@@ -328,7 +328,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={cn(
               "transition-all flex items-center justify-center",
               isEmiActive
-                ? "bg-indigo-50/90 text-indigo-600 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-indigo-100/60 font-bold"
+                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
                 : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
             )}
           >
@@ -346,7 +346,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={cn(
               "transition-all flex items-center justify-center",
               isHistoryActive
-                ? "bg-indigo-50/90 text-indigo-600 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-indigo-100/60 font-bold"
+                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
                 : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
             )}
           >
@@ -364,7 +364,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={cn(
               "transition-all flex items-center justify-center",
               isNotificationActive
-                ? "bg-indigo-50/90 text-indigo-600 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-indigo-100/60 font-bold"
+                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
                 : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
             )}
           >
@@ -387,7 +387,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={cn(
               "transition-all flex items-center justify-center",
               isFamilyActive
-                ? "bg-indigo-50/90 text-indigo-600 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-indigo-100/60 font-bold"
+                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
                 : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
             )}
           >
@@ -405,7 +405,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className={cn(
               "transition-all flex items-center justify-center",
               isAccountActive
-                ? "bg-indigo-50/90 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-indigo-100/60"
+                ? "bg-emerald-50 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60"
                 : "w-11 h-11 rounded-full"
             )}
           >
@@ -413,7 +413,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               className={cn(
                 "w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full overflow-hidden flex items-center justify-center font-bold text-xs transition-all shadow-2xs",
                 isAccountActive
-                  ? "ring-2 ring-indigo-600 ring-offset-2 ring-offset-white scale-105"
+                  ? "ring-2 ring-emerald-600 ring-offset-2 ring-offset-white scale-105"
                   : "opacity-85 hover:opacity-100"
               )}
             >
@@ -431,7 +431,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   className={cn(
                     "w-full h-full flex items-center justify-center",
                     isAccountActive
-                      ? "bg-indigo-600 text-white"
+                      ? "bg-[#1C9E30] text-white"
                       : "bg-slate-200 text-slate-700"
                   )}
                 >

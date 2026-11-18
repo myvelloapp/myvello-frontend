@@ -869,7 +869,7 @@ function EmiDetailContent() {
         <div className="w-16 h-16 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-500 mx-auto mb-4 shadow-2xs">
           <AlertCircle className="w-8 h-8" />
         </div>
-        <h1 className="text-xl sm:text-2xl font-black text-[#0B132B] tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-black text-[#02361B] tracking-tight">
           EMI Record Not Found
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-2 mb-6 leading-relaxed">
@@ -926,7 +926,7 @@ function EmiDetailContent() {
               </div>
               <div className="space-y-1 min-w-0 flex-1">
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                  <h1 className="text-lg sm:text-xl lg:text-2xl font-black text-[#0B132B] tracking-tight break-words">
+                  <h1 className="text-lg sm:text-xl lg:text-2xl font-black text-[#02361B] tracking-tight break-words">
                     {loan.loan_name}
                   </h1>
                   <span
@@ -1705,7 +1705,7 @@ function EmiDetailContent() {
               <div className="bg-white rounded-[16px] border border-slate-200/80 shadow-xs p-5 animate-in fade-in duration-150 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
                   <div>
-                    <h3 className="text-xs font-bold text-[#0B132B]">Complete Loan Specifications</h3>
+                    <h3 className="text-xs font-bold text-[#02361B]">Complete Loan Specifications</h3>
                     <p className="text-[11px] text-slate-400 mt-0.5">Underlying contract parameters and banking terms.</p>
                   </div>
                   <button
@@ -1949,7 +1949,7 @@ function EmiDetailContent() {
             {/* Modal Header */}
             <div className="px-5 sm:px-6 py-3.5 sm:py-4.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
-                <h3 className="text-sm sm:text-base font-extrabold text-[#0B132B]">Edit Loan Commitment</h3>
+                <h3 className="text-sm sm:text-base font-extrabold text-[#02361B]">Edit Loan Commitment</h3>
               </div>
               <button
                 type="button"
@@ -2682,7 +2682,7 @@ function EmiDetailContent() {
             </div>
 
             <div className="text-center space-y-1.5 pb-1">
-              <h3 className="text-base sm:text-lg font-black text-[#0B132B]">Delete EMI Commitment?</h3>
+              <h3 className="text-base sm:text-lg font-black text-[#02361B]">Delete EMI Commitment?</h3>
               <p className="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto">
                 Are you sure you want to permanently delete <strong className="text-slate-900 font-bold">{loan.loan_name}</strong>? This will remove all {schedules.length} schedules, payment records, and calendar alerts. This action cannot be undone.
               </p>

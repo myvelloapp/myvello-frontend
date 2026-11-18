@@ -159,7 +159,7 @@ export function CustomDropdown({
           "w-full flex items-center justify-between gap-2 rounded-[8px] border transition-all cursor-pointer select-none touch-manipulation active:scale-[0.98]",
           isSmall ? "h-9 sm:h-8 min-h-[36px] sm:min-h-[32px] text-xs px-2.5 font-semibold" : "h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs px-3 font-semibold",
           isOpen
-            ? "bg-white border-indigo-500 ring-2 ring-indigo-500/15 shadow-xs text-slate-900"
+            ? "bg-white border-emerald-500 ring-2 ring-emerald-500/20 shadow-xs text-slate-900"
             : "bg-white hover:bg-slate-50 border-slate-200/80 text-slate-700 hover:border-slate-300",
           disabled && "opacity-50 cursor-not-allowed bg-slate-50",
           triggerClassName
@@ -178,7 +178,7 @@ export function CustomDropdown({
         <ChevronDown
           className={cn(
             "w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0 ml-1",
-            isOpen && "rotate-180 text-indigo-600"
+            isOpen && "rotate-180 text-emerald-700"
           )}
         />
       </button>
@@ -211,7 +211,7 @@ export function CustomDropdown({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={searchPlaceholder}
-                  className="w-full h-11 sm:h-8 pl-9 pr-8 text-xs sm:text-sm font-semibold text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-xl sm:rounded-[8px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400 touch-manipulation"
+                  className="w-full h-11 sm:h-8 pl-9 pr-8 text-xs sm:text-sm font-semibold text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-xl sm:rounded-[8px] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400 touch-manipulation"
                   onClick={(e) => e.stopPropagation()}
                 />
                 {searchQuery && (
@@ -248,7 +248,7 @@ export function CustomDropdown({
                     className={cn(
                       "w-full px-3 sm:px-2.5 py-2.5 sm:py-1.5 min-h-[44px] sm:min-h-[32px] rounded-xl sm:rounded-[8px] text-xs font-semibold flex items-center justify-between text-left transition-colors cursor-pointer group touch-manipulation active:scale-[0.99]",
                       isSelected
-                        ? "bg-indigo-50/90 text-indigo-700 font-bold"
+                        ? "bg-emerald-50 text-emerald-800 font-bold"
                         : "text-slate-700 hover:bg-slate-100/70 hover:text-slate-900"
                     )}
                     role="option"
@@ -273,7 +273,7 @@ export function CustomDropdown({
                         </span>
                       )}
                       {isSelected && (
-                        <Check className="w-3.5 h-3.5 text-indigo-600 shrink-0" strokeWidth={2.5} />
+                        <Check className="w-3.5 h-3.5 text-emerald-700 shrink-0" strokeWidth={2.5} />
                       )}
                     </div>
                   </button>

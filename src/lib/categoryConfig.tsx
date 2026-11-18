@@ -30,8 +30,8 @@ export const LOAN_CATEGORY_OPTIONS: DropdownOption[] = [
     value: "Home Loan",
     label: "Home Loan",
     icon: (
-      <div className="w-5 h-5 rounded-[6px] bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">
-        <Home className="w-3 h-3 text-indigo-600" />
+      <div className="w-5 h-5 rounded-[6px] bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0">
+        <Home className="w-3 h-3 text-teal-700" />
       </div>
     ),
   },
@@ -114,8 +114,8 @@ export const PAYMENT_METHOD_OPTIONS: DropdownOption[] = [
     value: "UPI",
     label: "UPI (GPay / PhonePe / Paytm)",
     icon: (
-      <div className="w-5 h-5 rounded-[6px] bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">
-        <Zap className="w-3 h-3 text-indigo-600" />
+      <div className="w-5 h-5 rounded-[6px] bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+        <Zap className="w-3 h-3 text-emerald-600" />
       </div>
     ),
   },
@@ -213,7 +213,7 @@ export function getCategoryIcon(categoryName: string, iconClassName = "w-5 h-5")
     return <Car className={cn(iconClassName, "text-blue-600")} />;
   }
   if (lower.includes("home") || lower.includes("hous") || lower.includes("mortgage")) {
-    return <Home className={cn(iconClassName, "text-indigo-600")} />;
+    return <Home className={cn(iconClassName, "text-teal-700")} />;
   }
   if (
     lower.includes("phone") ||
@@ -260,7 +260,7 @@ export function getCategoryBgClass(categoryName: string): string {
     return "bg-blue-50 border-blue-100 text-blue-600";
   }
   if (lower.includes("home") || lower.includes("hous") || lower.includes("mortgage")) {
-    return "bg-indigo-50 border-indigo-100 text-indigo-600";
+    return "bg-teal-50 border-teal-100 text-teal-700";
   }
   if (
     lower.includes("phone") ||

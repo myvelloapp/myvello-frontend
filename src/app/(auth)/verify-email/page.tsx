@@ -243,7 +243,7 @@ export default function VerifyEmailPage() {
 
               {/* Headings */}
               <div className="space-y-2">
-                <h1 className="text-2xl font-black text-[#0B132B] tracking-tight">
+                <h1 className="text-2xl font-black text-[#02361B] tracking-tight">
                   Enter Verification Code
                 </h1>
                 <p className="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">

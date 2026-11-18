@@ -172,7 +172,7 @@ export function Sidebar() {
             onClick={() => setIsFamilyDropdownOpen(!isFamilyDropdownOpen)}
             className={cn(
               "w-full flex items-center justify-between p-2 rounded-[14px] bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all cursor-pointer group text-left",
-              isFamilyDropdownOpen && "border-indigo-300 ring-2 ring-indigo-500/10 bg-slate-50/70"
+              isFamilyDropdownOpen && "border-emerald-300 ring-2 ring-emerald-500/15 bg-slate-50/70"
             )}
             title="Switch Workspace"
           >
@@ -195,7 +195,7 @@ export function Sidebar() {
             <ChevronDown
               className={cn(
                 "w-4 h-4 text-slate-400 transition-transform shrink-0 ml-1.5",
-                isFamilyDropdownOpen && "rotate-180 text-indigo-600"
+                isFamilyDropdownOpen && "rotate-180 text-emerald-700"
               )}
             />
           </button>
@@ -205,7 +205,7 @@ export function Sidebar() {
             <div className="absolute top-15 left-3.5 right-3.5 z-40 bg-white border border-slate-200/90 rounded-[16px] shadow-[0_16px_36px_-6px_rgba(15,23,42,0.18),0_4px_12px_-2px_rgba(15,23,42,0.08)] p-2 space-y-1 animate-fade-in">
               <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
                 <span>WORKSPACES</span>
-                <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
                   {workspaces.length} ACTIVE
                 </span>
               </div>
@@ -272,13 +272,13 @@ export function Sidebar() {
                 <Link
                   href="/family/setup"
                   onClick={() => setIsFamilyDropdownOpen(false)}
-                  className="w-full flex items-center gap-2.5 p-2 rounded-[10px] text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50/70 transition-all group"
+                  className="w-full flex items-center gap-2.5 p-2 rounded-[10px] text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50/70 transition-all group"
                 >
-                  <div className="w-7 h-7 rounded-[8px] bg-indigo-50 group-hover:bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 border border-indigo-100/80 transition-colors">
+                  <div className="w-7 h-7 rounded-[8px] bg-emerald-50 group-hover:bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200/80 transition-colors">
                     <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   </div>
                   <div className="flex flex-col text-left">
-                    <span className="font-bold text-xs text-indigo-600 group-hover:text-indigo-700">
+                    <span className="font-bold text-xs text-emerald-700 group-hover:text-emerald-800">
                       Create Workspace
                     </span>
                     <span className="text-[10px] font-normal text-slate-400">
@@ -317,7 +317,7 @@ export function Sidebar() {
                   className={cn(
                     "flex items-center justify-between px-3.5 py-2.5 rounded-[8px] text-xs transition-all group",
                     item.active
-                      ? "bg-slate-100 text-slate-900 font-bold"
+                      ? "bg-emerald-50/80 text-[#02361B] font-bold border border-emerald-200/60 shadow-2xs"
                       : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-semibold"
                   )}
                 >
@@ -325,7 +325,7 @@ export function Sidebar() {
                     <Icon
                       className={cn(
                         "w-4 h-4 transition-colors",
-                        item.active ? "text-slate-900" : "text-slate-400 group-hover:text-slate-800"
+                        item.active ? "text-[#02361B]" : "text-slate-400 group-hover:text-slate-800"
                       )}
                     />
                     <span>{item.label}</span>
@@ -356,13 +356,13 @@ export function Sidebar() {
               className={cn(
                 "w-full flex items-center justify-between p-2 rounded-[14px] bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs transition-all cursor-pointer text-left group",
                 (isAccountOpen || isAccountPageActive) &&
-                  "border-indigo-300 ring-2 ring-indigo-500/10 bg-slate-50/70"
+                  "border-emerald-300 ring-2 ring-emerald-500/15 bg-slate-50/70"
               )}
               aria-expanded={isAccountOpen}
               aria-label="Toggle profile and account menu"
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="relative w-8.5 h-8.5 rounded-full overflow-hidden shrink-0 ring-2 ring-indigo-500/15 border border-white shadow-2xs bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-800 flex items-center justify-center">
+                <div className="relative w-8.5 h-8.5 rounded-full overflow-hidden shrink-0 ring-2 ring-emerald-500/20 border border-white shadow-2xs bg-gradient-to-tr from-[#1C9E30] to-[#005E35] flex items-center justify-center">
                   {avatarUrl && !avatarError ? (
                     <Image
                       src={avatarUrl}
@@ -384,7 +384,7 @@ export function Sidebar() {
                   <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 block leading-tight">
                     Account
                   </span>
-                  <span className="text-xs font-black text-slate-800 group-hover:text-indigo-600 transition-colors block truncate leading-tight mt-0.5">
+                  <span className="text-xs font-black text-slate-800 group-hover:text-emerald-700 transition-colors block truncate leading-tight mt-0.5">
                     {displayName}
                   </span>
                 </div>
@@ -394,7 +394,7 @@ export function Sidebar() {
                 <ChevronDown
                   className={cn(
                     "w-4 h-4 text-slate-400 group-hover:text-slate-700 transition-transform duration-200",
-                    isAccountOpen && "rotate-180 text-indigo-600"
+                    isAccountOpen && "rotate-180 text-emerald-700"
                   )}
                 />
               </div>
@@ -412,7 +412,7 @@ export function Sidebar() {
                       className={cn(
                         "flex items-center justify-between px-3 py-2 rounded-[14px] text-xs transition-all group",
                         item.active
-                          ? "bg-slate-100 text-slate-900 font-bold"
+                          ? "bg-emerald-50/80 text-[#02361B] font-bold border border-emerald-200/60 shadow-2xs"
                           : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-semibold"
                       )}
                     >
@@ -420,7 +420,7 @@ export function Sidebar() {
                         <Icon
                           className={cn(
                             "w-4 h-4 transition-colors",
-                            item.active ? "text-slate-900" : "text-slate-400 group-hover:text-slate-800"
+                            item.active ? "text-[#02361B]" : "text-slate-400 group-hover:text-slate-800"
                           )}
                         />
                         <span>{item.label}</span>

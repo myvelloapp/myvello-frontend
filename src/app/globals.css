@@ -5,13 +5,13 @@
   
   /* Brand Theme Variables */
   --navy: #172554;
-  --indigo: #6366F1;
-  --indigo-dark: #4F46E5;
+  --indigo: #1C9E30;
+  --indigo-dark: #0A8537;
   --teal: #14B8A6;
   --bg-slate: #EDF8F2;
   --card-white: #FFFFFF;
-  --text-main: #0F172A;
-  --text-muted: #64748B;
+  --text-main: #02361B;
+  --text-muted: #3D604E;
   --border-slate: #E2E8F0;
   
   --success: #16A34A;
@@ -34,6 +34,17 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   touch-action: manipulation;
+}
+
+/* Global Dark Forest Text (#02361B) Theme Override */
+.text-slate-900,
+.text-\[\#0F172A\],
+.text-\[\#0B132B\] {
+  color: #02361B !important;
+}
+
+.text-slate-800 {
+  color: #034423 !important;
 }
 
 @keyframes fadeIn {
@@ -252,28 +263,28 @@ body {
   padding: 0 0.875rem;
   font-size: 0.875rem; /* 14px standard */
   font-weight: 600;
-  color: #0f172a;
+  color: #02361b;
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem; /* 8px rounded-lg */
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  box-shadow: 0 1px 2px 0 rgba(2, 54, 27, 0.04);
 }
 
 .theme-input::placeholder {
-  color: #94a3b8;
+  color: #648272;
   font-weight: 500;
   font-size: 0.8125rem; /* 13px */
 }
 
 .theme-input:hover {
-  border-color: #cbd5e1;
+  border-color: #a7f3d0;
 }
 
 .theme-input:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
 }
 
 .theme-input-error {

@@ -52,8 +52,8 @@ export function StatCardRow({ stats, isLoading }: StatCardRowProps) {
       value: currentStats.activeEmis,
       subtitle: currentStats.activeEmis === 1 ? "Active commitment" : "Active commitments",
       icon: Layers,
-      iconColor: "text-indigo-600",
-      iconBg: "bg-indigo-50/90 text-indigo-600 border border-indigo-100/70",
+      iconColor: "text-emerald-700",
+      iconBg: "bg-emerald-50/90 text-emerald-700 border border-emerald-200/70",
     },
     {
       title: "MONTHLY EMI",
@@ -107,7 +107,7 @@ export function StatCardRow({ stats, isLoading }: StatCardRowProps) {
               </span>
               <span
                 suppressHydrationWarning
-                className="text-base sm:text-xl xl:text-2xl font-black text-[#0B132B] tracking-tight block truncate mt-0.5"
+                className="text-base sm:text-xl xl:text-2xl font-black text-[#02361B] tracking-tight block truncate mt-0.5"
               >
                 {c.value}
               </span>

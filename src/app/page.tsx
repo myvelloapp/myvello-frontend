@@ -136,7 +136,7 @@ export default function HomePage() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#0B132B] leading-[1.12]">
+              <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#02361B] leading-[1.12]">
                 Never Miss an EMI Again. <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#8B5CF6]">
                   The Smart, Private Loan Manager.
@@ -494,7 +494,7 @@ export default function HomePage() {
               <span className="text-[11px] font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
                 Universal Indian Lender Coverage
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-[#0B132B]">
+              <h2 className="text-xl sm:text-2xl font-black text-[#02361B]">
                 Track EMIs from 75+ Indian Banks &amp; NBFCs
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 font-medium">
@@ -541,7 +541,7 @@ export default function HomePage() {
               <span className="text-xs font-black uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-200/60">
                 Stop Burning Money On Bounce Fees
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-[#0B132B]">
+              <h2 className="text-2xl sm:text-4xl font-black text-[#02361B]">
                 The Chaos of Multiple Loans vs. Clarity with Myvello
               </h2>
               <p className="text-sm sm:text-base text-slate-600 font-medium">
@@ -626,7 +626,7 @@ export default function HomePage() {
               <span className="text-xs font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
                 Engineered for Indian Borrowers
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black text-[#0B132B]">
+              <h2 className="text-2xl sm:text-4xl font-black text-[#02361B]">
                 Everything You Need to Master Your Loan Life
               </h2>
               <p className="text-sm sm:text-base text-slate-600 font-medium">
@@ -640,7 +640,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-indigo-100/80 text-indigo-600 flex items-center justify-center">
                   <CreditCard className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Multi-Bank Centralization</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Multi-Bank Centralization</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Add Home, Auto, Education, and Personal loans from SBI, HDFC, Canara, BoB, or NBFCs in one single clean overview.
                 </p>
@@ -651,7 +651,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-100/80 text-emerald-600 flex items-center justify-center">
                   <Zap className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Auto-Debit Bank Mandate Safeguard</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Auto-Debit Bank Mandate Safeguard</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Tag the source account for each loan. Never wonder which bank is scheduled for auto-debit on the 5th or 10th of the month.
                 </p>
@@ -662,7 +662,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-blue-100/80 text-blue-600 flex items-center justify-center">
                   <Clock className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Live Due Countdowns</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Live Due Countdowns</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Instantly see &ldquo;24d left&rdquo; or &ldquo;Due in 2 days&rdquo; badges. Record payments with 1 tap to advance the schedule smoothly.
                 </p>
@@ -673,7 +673,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-violet-100/80 text-violet-600 flex items-center justify-center">
                   <Users className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Family Workspaces</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Family Workspaces</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Collaborate with co-borrowers, spouses, or parents. Everyone stays synchronized on upcoming due dates and payments.
                 </p>
@@ -684,7 +684,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-amber-100/80 text-amber-600 flex items-center justify-center">
                   <Calendar className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Visual Due Calendar</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Visual Due Calendar</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Toggle into the calendar view to inspect every due date across the month. Auto-normalizes leap years and month-end dates.
                 </p>
@@ -695,7 +695,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-purple-100/80 text-purple-600 flex items-center justify-center">
                   <Building2 className="w-6 h-6 stroke-[2]" />
                 </div>
-                <h3 className="text-base font-bold text-[#0B132B]">Existing Loan Reconciliation</h3>
+                <h3 className="text-base font-bold text-[#02361B]">Existing Loan Reconciliation</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
                   Already halfway through a 10-year home loan? Enter past paid EMIs and Myvello accurately recalculates the remaining balance.
                 </p>
@@ -798,7 +798,7 @@ export default function HomePage() {
               <span className="text-xs font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
                 Quick Setup
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B]">
+              <h2 className="text-2xl sm:text-3xl font-black text-[#02361B]">
                 Get Started in 3 Simple Steps
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 font-medium">
@@ -852,7 +852,7 @@ export default function HomePage() {
               <span className="text-xs font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
                 Got Questions?
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0B132B]">
+              <h2 className="text-2xl sm:text-3xl font-black text-[#02361B]">
                 Frequently Asked Questions
               </h2>
             </div>

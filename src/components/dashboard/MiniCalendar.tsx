@@ -84,8 +84,8 @@ export function MiniCalendar({ onSelectEvent: _onSelectEvent }: MiniCalendarProp
           <ChevronLeft className="w-4 h-4" />
         </button>
         <div className="flex items-center gap-2">
-          <CalendarIcon className="w-4 h-4 text-indigo-600" />
-          <span className="text-xs font-black text-[#0B132B] tracking-tight">
+          <CalendarIcon className="w-4 h-4 text-emerald-700" />
+          <span className="text-xs font-black text-[#02361B] tracking-tight">
             {monthNames[month - 1]} {year}
           </span>
         </div>
@@ -136,11 +136,11 @@ export function MiniCalendar({ onSelectEvent: _onSelectEvent }: MiniCalendarProp
               className={cn(
                 "h-7.5 w-7.5 min-w-[30px] min-h-[30px] mx-auto rounded-full flex items-center justify-center text-[11px] font-semibold transition-all relative cursor-pointer touch-manipulation active:scale-90",
                 isSelected
-                  ? "bg-[#4F46E5] text-white font-black shadow-xs ring-2 ring-indigo-200"
+                  ? "bg-[#1C9E30] text-white font-black shadow-xs ring-2 ring-emerald-200"
                   : isDueSoon
                   ? "bg-rose-50 text-rose-700 font-bold"
                   : isUpcoming
-                  ? "bg-indigo-50 text-indigo-700 font-bold"
+                  ? "bg-emerald-50 text-emerald-800 font-bold"
                   : isPaid
                   ? "bg-emerald-50 text-emerald-700 font-bold"
                   : "text-slate-700 hover:bg-slate-100"
@@ -154,10 +154,10 @@ export function MiniCalendar({ onSelectEvent: _onSelectEvent }: MiniCalendarProp
 
       {/* Selected Day Info Popup */}
       {activeEvent && (
-        <div className="mt-3.5 p-3 rounded-2xl bg-indigo-50/60 border border-indigo-100 text-xs space-y-1 animate-fade-in">
+        <div className="mt-3.5 p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 text-xs space-y-1 animate-fade-in">
           <div className="font-bold text-slate-800 flex items-center justify-between">
             <span className="truncate max-w-[170px]">{activeEvent.loan_name}</span>
-            <span suppressHydrationWarning className="text-indigo-600 font-black">
+            <span suppressHydrationWarning className="text-emerald-700 font-black">
               {formatCurrency(activeEvent.amount, currency)}
             </span>
           </div>
@@ -167,7 +167,7 @@ export function MiniCalendar({ onSelectEvent: _onSelectEvent }: MiniCalendarProp
             </span>
             <Link
               href={`/emis/${activeEvent.emi_id}`}
-              className="text-indigo-600 hover:text-indigo-800 font-extrabold inline-flex items-center gap-0.5"
+              className="text-emerald-700 hover:text-emerald-800 font-extrabold inline-flex items-center gap-0.5"
             >
               <span>View</span>
               <ExternalLink className="w-2.5 h-2.5" />

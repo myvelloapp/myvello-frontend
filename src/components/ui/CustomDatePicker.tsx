@@ -287,7 +287,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <div className="text-xs font-black text-[#0B132B] tracking-tight">
+            <div className="text-xs font-black text-[#02361B] tracking-tight">
               {MONTH_NAMES[viewMonth]} {viewYear}
             </div>
 

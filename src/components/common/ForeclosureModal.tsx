@@ -139,7 +139,7 @@ export function ForeclosureModal({
               <Landmark className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-black text-[#0B132B]">
+              <h3 className="text-sm sm:text-base font-black text-[#02361B]">
                 Loan Foreclosure & Early Pre-Closure
               </h3>
               <p className="text-xs text-slate-500">
@@ -163,7 +163,7 @@ export function ForeclosureModal({
             <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-lg font-black text-[#0B132B]">Loan Successfully Foreclosed!</h4>
+            <h4 className="text-lg font-black text-[#02361B]">Loan Successfully Foreclosed!</h4>
             <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
               All remaining instalments have been marked settled. Your outstanding debt has been reduced to zero and this loan is now 100% completed.
             </p>
@@ -190,7 +190,7 @@ export function ForeclosureModal({
               </div>
 
               <div className="flex items-baseline justify-between">
-                <div className="text-2xl sm:text-3xl font-black text-[#0B132B] tracking-tight">
+                <div className="text-2xl sm:text-3xl font-black text-[#02361B] tracking-tight">
                   {formatCurrency(totalPayable, currency)}
                 </div>
                 <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">

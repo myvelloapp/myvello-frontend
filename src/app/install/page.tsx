@@ -174,7 +174,7 @@ export default function InstallPage() {
                 <span>Next-Generation Progressive Web App (PWA)</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#0B132B] leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[#02361B] leading-tight">
                 Install Myvello on{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6]">
                   Any Device
@@ -244,7 +244,7 @@ export default function InstallPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-xl font-black text-[#0B132B]">Myvello</h2>
+                      <h2 className="text-xl font-black text-[#02361B]">Myvello</h2>
                       <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
                         100% Free
                       </span>
@@ -290,7 +290,7 @@ export default function InstallPage() {
                 <div className="space-y-5">
                   <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-slate-50/40 to-white border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <h3 className="text-base font-bold text-[#0B132B]">
+                      <h3 className="text-base font-bold text-[#02361B]">
                         1-Click Windows Installation
                       </h3>
                       <p className="text-xs text-slate-500 font-medium">
@@ -351,7 +351,7 @@ export default function InstallPage() {
                 <div className="space-y-5">
                   <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-slate-50/40 to-white border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <h3 className="text-base font-bold text-[#0B132B]">
+                      <h3 className="text-base font-bold text-[#02361B]">
                         Chrome, Edge or Brave on Mac
                       </h3>
                       <p className="text-xs text-slate-500 font-medium">
@@ -392,7 +392,7 @@ export default function InstallPage() {
                   <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-slate-50/40 to-white border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base font-bold text-[#0B132B]">
+                        <h3 className="text-base font-bold text-[#02361B]">
                           Direct iOS App Installation (No App Store Needed)
                         </h3>
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
@@ -467,7 +467,7 @@ export default function InstallPage() {
                 <div className="space-y-5">
                   <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-slate-50/40 to-white border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <h3 className="text-base font-bold text-[#0B132B]">
+                      <h3 className="text-base font-bold text-[#02361B]">
                         Android Chrome &amp; Samsung Internet
                       </h3>
                       <p className="text-xs text-slate-500 font-medium">
@@ -500,7 +500,7 @@ export default function InstallPage() {
                 <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
                   <Zap className="w-5 h-5 stroke-[2.5]" />
                 </div>
-                <h3 className="text-sm font-bold text-[#0B132B]">Instant Launch (&lt;0.5s)</h3>
+                <h3 className="text-sm font-bold text-[#02361B]">Instant Launch (&lt;0.5s)</h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   Opens instantaneously without waiting for slow web pages or heavy app frameworks.
                 </p>
@@ -510,7 +510,7 @@ export default function InstallPage() {
                 <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                   <WifiOff className="w-5 h-5 stroke-[2.5]" />
                 </div>
-                <h3 className="text-sm font-bold text-[#0B132B]">Offline Capable</h3>
+                <h3 className="text-sm font-bold text-[#02361B]">Offline Capable</h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   Review your loan schedules and payment history even when your mobile signal drops.
                 </p>
@@ -520,7 +520,7 @@ export default function InstallPage() {
                 <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
                   <Lock className="w-5 h-5 stroke-[2.5]" />
                 </div>
-                <h3 className="text-sm font-bold text-[#0B132B]">Zero Bloatware (&lt;2MB)</h3>
+                <h3 className="text-sm font-bold text-[#02361B]">Zero Bloatware (&lt;2MB)</h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   Saves your phone storage. No 150MB store downloads, automatic background updates.
                 </p>

@@ -62,7 +62,7 @@ function CallbackHandler() {
             </div>
 
             <div>
-              <h2 className="text-lg font-extrabold text-[#0B132B] tracking-tight">
+              <h2 className="text-lg font-extrabold text-[#02361B] tracking-tight">
                 Authentication Failed
               </h2>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{error}</p>
@@ -98,7 +98,7 @@ function CallbackHandler() {
 
             {/* Title & Status */}
             <div>
-              <h2 className="text-lg font-extrabold text-[#0B132B] tracking-tight">
+              <h2 className="text-lg font-extrabold text-[#02361B] tracking-tight">
                 Unlocking your vault...
               </h2>
               <p className="text-xs text-slate-500 mt-1.5 max-w-[260px] mx-auto leading-relaxed">
