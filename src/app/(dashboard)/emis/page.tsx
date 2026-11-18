@@ -1496,7 +1496,7 @@ export default function EmiManagementPage() {
                                   className="h-8 px-3 rounded-full text-[11px] font-extrabold text-white btn-gradient-glow shadow-xs hover:shadow-emerald-500/25 transition-all cursor-pointer active:scale-95 inline-flex items-center gap-1 touch-manipulation"
                                 >
                                   <Check className="w-3 h-3 stroke-[2.5]" />
-                                  <span>Pay</span>
+                                  <span>Paid</span>
                                 </button>
                               )}
 
@@ -1922,9 +1922,10 @@ export default function EmiManagementPage() {
                                           e.stopPropagation();
                                           setSelectedEmiForPay(loan);
                                         }}
-                                        className="h-8 px-3.5 rounded-[6px] text-xs font-bold text-white btn-gradient-glow shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95 inline-flex items-center justify-center touch-manipulation"
+                                        className="h-8 px-3 rounded-[6px] text-xs font-bold text-white btn-gradient-glow shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95 inline-flex items-center gap-1.5 justify-center touch-manipulation"
                                       >
-                                        Pay
+                                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                                        <span>Paid</span>
                                       </button>
                                     )}
 
