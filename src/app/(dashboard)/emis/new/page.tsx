@@ -122,7 +122,7 @@ function NewEmiSkeleton() {
         </div>
 
         {/* Two-Column Form & Real-Time Automation Preview Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
           {/* Left: Multi-Step Interactive Form (7/8 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-4">
             {/* Step Indicator Wizard Bar (Desktop Only) */}
@@ -822,7 +822,7 @@ export default function AddNewEmiPage() {
           </div>
 
           {/* Two-Column Form & Real-Time Automation Preview Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
             {/* Left: Multi-Step Interactive Form (7 of 12 cols / 8 of 12 cols) */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-4">
               {/* Minimal Step Indicator Wizard Bar (Desktop Only) */}

@@ -46,7 +46,7 @@ import { formatCurrency } from "@/lib/formatters";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { BankLogo } from "@/components/ui/BankLogo";
 import {
-  CATEGORY_FILTER_OPTIONS,
+  LOAN_CATEGORY_OPTIONS,
   getCategoryIcon,
   getCategoryBgClass,
 } from "@/lib/categoryConfig";
@@ -239,8 +239,6 @@ function GridSkeleton() {
     </div>
   );
 }
-
-const categoryFilterOptions = CATEGORY_FILTER_OPTIONS;
 
 const statusFilterOptions = [
   {
@@ -512,6 +510,66 @@ export default function EmiManagementPage() {
     setMobileTouchStartX(null);
   };
 
+  // Dynamic category filter options: only show categories present in user's loans (+ All Categories)
+  const categoryFilterOptions = useMemo(() => {
+    const existingCategories = Array.from(
+      new Set(
+        rawRealLoans
+          .map((l) => l.loan_category?.trim())
+          .filter(Boolean) as string[]
+      )
+    );
+
+    // Keep consistent order based on standard category configuration
+    const orderedCategories = LOAN_CATEGORY_OPTIONS
+      .map((opt) => opt.value)
+      .filter((cat) =>
+        existingCategories.some((ec) => ec.toLowerCase() === cat.toLowerCase())
+      );
+
+    const otherCategories = existingCategories.filter(
+      (ec) => !LOAN_CATEGORY_OPTIONS.some((opt) => opt.value.toLowerCase() === ec.toLowerCase())
+    );
+
+    const activeCategoryNames = [...orderedCategories, ...otherCategories];
+
+    const categoryOptions = activeCategoryNames.map((catName) => {
+      const match = LOAN_CATEGORY_OPTIONS.find(
+        (opt) => opt.value.toLowerCase() === catName.toLowerCase()
+      );
+      return {
+        value: match ? match.value : catName,
+        label: match ? match.value : catName,
+        icon: match ? match.icon : getCategoryIcon(catName),
+      };
+    });
+
+    return [
+      {
+        value: "All",
+        label: "All Categories",
+        icon: (
+          <div className="w-4 h-4 rounded-[5px] bg-slate-100 flex items-center justify-center text-slate-500 shrink-0">
+            <Layers className="w-2.5 h-2.5" />
+          </div>
+        ),
+      },
+      ...categoryOptions,
+    ];
+  }, [rawRealLoans]);
+
+  // If the currently selected category is removed or not present in loans, reset filter to 'All'
+  useEffect(() => {
+    if (categoryFilter !== "All" && rawRealLoans.length > 0) {
+      const exists = rawRealLoans.some(
+        (l) => (l.loan_category || "").trim().toLowerCase() === categoryFilter.toLowerCase()
+      );
+      if (!exists) {
+        setCategoryFilter("All");
+      }
+    }
+  }, [rawRealLoans, categoryFilter]);
+
   // Dynamic bank filter options combining any banks in user's loans + popular banks
   const bankFilterOptions = useMemo(() => {
     const popularBanks = [
@@ -548,7 +606,12 @@ export default function EmiManagementPage() {
       if (activeTab === "archived" && loan.status !== "closed") return false;
 
       // 2. Category Filter (0ms instant switch)
-      if (categoryFilter !== "All" && loan.loan_category !== categoryFilter) return false;
+      if (
+        categoryFilter !== "All" &&
+        loan.loan_category?.trim().toLowerCase() !== categoryFilter.toLowerCase()
+      ) {
+        return false;
+      }
 
       // 3. Bank Filter (0ms instant switch)
       if (bankFilter !== "All" && loan.lender_name !== bankFilter) return false;
