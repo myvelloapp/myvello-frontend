@@ -224,7 +224,7 @@ export function Sidebar() {
                       className={cn(
                         "w-full flex items-center justify-between p-2 rounded-[12px] text-xs transition-all cursor-pointer group text-left",
                         isSelected
-                          ? "btn-gradient-glow text-[#042619] shadow-md shadow-emerald-500/25 font-bold"
+                          ? "btn-gradient-glow text-white shadow-md shadow-emerald-500/25 font-bold"
                           : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                       )}
                     >

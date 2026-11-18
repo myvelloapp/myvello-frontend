@@ -166,14 +166,15 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
-/* Premium Lime-to-Emerald Gradient Button with Hover Glow & Shimmer */
+/* Premium Grassy Emerald-to-Forest Gradient Button (with Crisp White Typography) */
 .btn-gradient-glow,
 .bg-btn-gradient {
-  background-image: linear-gradient(135deg, #B0FD01 0%, #01DA81 48%, #026644 100%) !important;
+  background-image: linear-gradient(135deg, #50C22B 0%, #35AD2A 24%, #0F8527 55%, #016535 80%, #004A2A 100%) !important;
   background-size: 200% auto;
-  color: #042619 !important;
+  color: #FFFFFF !important;
   font-weight: 800;
-  box-shadow: 0 4px 14px -2px rgba(1, 218, 129, 0.4), 0 2px 6px -1px rgba(2, 43, 39, 0.15) !important;
+  box-shadow: 0 4px 14px -2px rgba(0, 74, 42, 0.38), 0 2px 6px -1px rgba(0, 0, 0, 0.12) !important;
+  text-shadow: 0 1px 2px rgba(0, 30, 15, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
@@ -181,16 +182,16 @@ body {
 
 .btn-gradient-glow:hover,
 .bg-btn-gradient:hover {
-  background-image: linear-gradient(135deg, #C4FF26 0%, #17EDB9 50%, #038058 100%) !important;
+  background-image: linear-gradient(135deg, #62D536 0%, #42BD31 24%, #14972E 55%, #02753F 80%, #005832 100%) !important;
   background-position: right center;
-  box-shadow: 0 6px 22px -2px rgba(1, 218, 129, 0.6), 0 3px 8px -1px rgba(2, 43, 39, 0.25) !important;
+  box-shadow: 0 6px 22px -2px rgba(16, 133, 39, 0.48), 0 3px 8px -1px rgba(0, 74, 42, 0.28) !important;
   transform: translateY(-1px);
 }
 
 .btn-gradient-glow:active,
 .bg-btn-gradient:active {
   transform: scale(0.98);
-  box-shadow: 0 2px 8px -1px rgba(1, 218, 129, 0.35) !important;
+  box-shadow: 0 2px 8px -1px rgba(0, 74, 42, 0.3) !important;
 }
 
 .btn-gradient-glow:disabled,
@@ -200,7 +201,7 @@ body {
   opacity: 0.55 !important;
   cursor: not-allowed !important;
   transform: none !important;
-  box-shadow: 0 2px 6px -1px rgba(1, 218, 129, 0.2) !important;
+  box-shadow: 0 2px 6px -1px rgba(0, 74, 42, 0.2) !important;
   pointer-events: none;
 }
 
@@ -212,12 +213,12 @@ body {
 .bg-btn-gradient span,
 .bg-btn-gradient p,
 .bg-btn-gradient svg {
-  color: #042619 !important;
+  color: #FFFFFF !important;
 }
 
 .btn-gradient-glow .animate-spin,
 .bg-btn-gradient .animate-spin {
-  border-top-color: #042619 !important;
+  border-top-color: #FFFFFF !important;
 }
 
 .btn-gradient-glow::after,
@@ -228,7 +229,7 @@ body {
   left: -130%;
   width: 65%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
   transform: skewX(-20deg);
   transition: left 0.75s ease;
   pointer-events: none;
