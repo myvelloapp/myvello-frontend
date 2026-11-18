@@ -16,9 +16,9 @@ interface MemberAvatarStackProps {
 }
 
 const GRADIENT_PALETTE = [
-  "from-indigo-500 to-indigo-700",
-  "from-teal-500 to-emerald-600",
-  "from-violet-500 to-purple-600",
+  "from-[#1C9E30] to-[#005E35]",
+  "from-emerald-600 to-teal-800",
+  "from-teal-500 to-emerald-700",
   "from-amber-500 to-orange-600",
   "from-rose-500 to-pink-600",
 ];
@@ -119,11 +119,11 @@ export function MemberAvatarStack({
           config.iconBox,
           ringClass ||
             (type === "personal"
-              ? "ring-[1.5px] ring-indigo-200/50"
+              ? "ring-[1.5px] ring-emerald-300/60"
               : "ring-[1.5px] ring-teal-200/50"),
           type === "personal"
-            ? "bg-gradient-to-tr from-indigo-500 to-indigo-700"
-            : "bg-gradient-to-tr from-teal-500 to-indigo-600",
+            ? "bg-gradient-to-tr from-[#1C9E30] to-[#005E35]"
+            : "bg-gradient-to-tr from-teal-600 to-emerald-700",
           className
         )}
         title={type === "personal" ? "Personal Vault" : "Family Workspace"}

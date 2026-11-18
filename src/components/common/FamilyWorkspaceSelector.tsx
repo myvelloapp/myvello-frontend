@@ -54,7 +54,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
         className={cn(
           "w-full flex items-center justify-between p-2.5 min-h-[48px] rounded-xl border bg-white hover:bg-slate-50/80 transition-all cursor-pointer text-left shadow-2xs group active:scale-[0.99] touch-manipulation",
           isOpen
-            ? "border-indigo-500 ring-2 ring-indigo-500/10 bg-slate-50/60"
+            ? "border-emerald-500 ring-2 ring-emerald-500/15 bg-slate-50/60"
             : error
             ? "border-rose-400 focus:border-rose-500"
             : "border-slate-200/90 hover:border-slate-300"
@@ -81,7 +81,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
         <ChevronDown
           className={cn(
             "w-4 h-4 text-slate-400 transition-transform shrink-0 ml-2 group-hover:text-slate-600",
-            isOpen && "rotate-180 text-indigo-600"
+            isOpen && "rotate-180 text-emerald-700"
           )}
         />
       </button>
@@ -91,7 +91,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
         <div className="absolute top-full left-0 right-0 mt-1.5 z-50 bg-white border border-slate-200/90 rounded-2xl shadow-[0_16px_36px_-6px_rgba(15,23,42,0.18),0_4px_12px_-2px_rgba(15,23,42,0.08)] p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150">
           <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
             <span>Available Households</span>
-            <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
               {families.length} Vault{families.length > 1 ? "s" : ""}
             </span>
           </div>
@@ -110,7 +110,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
                   className={cn(
                     "w-full flex items-center justify-between p-2.5 min-h-[44px] rounded-xl text-xs transition-all cursor-pointer text-left group active:scale-[0.99] touch-manipulation",
                     isSelected
-                      ? "bg-indigo-50 text-indigo-900 border border-indigo-100/80 shadow-2xs"
+                      ? "bg-emerald-50 text-emerald-950 font-bold border border-emerald-200/80 shadow-2xs"
                       : "text-slate-700 hover:bg-slate-50 border border-transparent"
                   )}
                 >
@@ -126,7 +126,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
                         className={cn(
                           "block truncate text-xs",
                           isSelected
-                            ? "font-extrabold text-indigo-950"
+                            ? "font-extrabold text-emerald-950"
                             : "font-bold text-slate-800 group-hover:text-slate-900"
                         )}
                       >
@@ -140,7 +140,7 @@ export const FamilyWorkspaceSelector: React.FC<FamilyWorkspaceSelectorProps> = (
                   </div>
 
                   {isSelected && (
-                    <div className="w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 ml-2 shadow-2xs">
+                    <div className="w-5 h-5 rounded-full bg-[#1C9E30] text-white flex items-center justify-center shrink-0 ml-2 shadow-2xs">
                       <Check className="w-3.5 h-3.5 text-white stroke-[2.5]" />
                     </div>
                   )}
