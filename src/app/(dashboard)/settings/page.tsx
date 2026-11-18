@@ -54,9 +54,7 @@ import {
 function SettingsSkeleton() {
   return (
     <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
-      </div>
+      <div className="absolute inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-4 sm:space-y-6">
         {/* Mobile Skeleton (lg:hidden) */}
@@ -616,9 +614,7 @@ function SettingsPageContent() {
       {/* Living Aurora Gradient Backdrop matching /emis and /emis/[id] */}
       <div className="relative pt-3.5 sm:pt-5 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
         {/* Pure CSS Brand Gradient Backdrop */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
-        </div>
+        <div className="absolute inset-0 pointer-events-none z-0" />
 
         {/* Content Container (Standard 1500px Max-Width matching all core views) */}
         <div className="relative z-10 max-w-[1500px] mx-auto space-y-2 sm:space-y-5">

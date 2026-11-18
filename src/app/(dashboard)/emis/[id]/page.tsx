@@ -172,9 +172,7 @@ function EmiDetailSkeleton() {
   return (
     <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh select-none">
       {/* Living Aurora Gradient Backdrop */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
-      </div>
+      <div className="absolute inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-5 sm:space-y-6 animate-pulse">
         {/* HERO CARD SKELETON */}
@@ -904,9 +902,7 @@ function EmiDetailContent() {
   return (
     <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh select-none">
       {/* Living Aurora Gradient Backdrop */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
-      </div>
+      <div className="absolute inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-6">
         {/* Mobile Top Navigation: Clean, thumb-friendly return link */}

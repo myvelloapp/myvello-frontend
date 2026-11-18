@@ -645,14 +645,8 @@ export default function EmiManagementPage() {
 
   return (
     <DashboardLayout>
-      {/* Unified Main Viewport with Pure CSS Brand Aurora Gradient */}
+      {/* Unified Main Viewport */}
       <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-        {/* Fixed Pure CSS Brand Gradient Backdrop (No Image) */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Smooth downward fade blending into light canvas */}
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#F0F5FF]/80 to-[#F0F5FF]" />
-        </div>
-
         {/* Content Container */}
         <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
           {/* Page Heading */}

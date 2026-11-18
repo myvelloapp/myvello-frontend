@@ -8,7 +8,7 @@
   --indigo: #6366F1;
   --indigo-dark: #4F46E5;
   --teal: #14B8A6;
-  --bg-slate: #F0F5FF;
+  --bg-slate: #EDF8F2;
   --card-white: #FFFFFF;
   --text-main: #0F172A;
   --text-muted: #64748B;
@@ -20,11 +20,11 @@
 }
 
 html, body {
-  background-color: #F0F5FF;
+  background-color: #EDF8F2;
 }
 
 body {
-  background-color: #F0F5FF;
+  background-color: #EDF8F2;
   color: var(--text-main);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

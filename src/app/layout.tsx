@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F0F5FF",
+  themeColor: "#EDF8F2",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -86,12 +86,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} h-full bg-[#F0F5FF]`}>
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} h-full bg-[#EDF8F2]`}>
       <head>
-        <meta name="theme-color" content="#F0F5FF" />
+        <meta name="theme-color" content="#EDF8F2" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-navbutton-color" content="#F0F5FF" />
+        <meta name="msapplication-navbutton-color" content="#EDF8F2" />
         <meta name="apple-mobile-web-app-title" content="Myvello" />
         <script
           dangerouslySetInnerHTML={{
@@ -130,7 +130,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#F0F5FF] text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#EDF8F2] text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
         <AuthProvider>
           <WorkspaceProvider>
             <NotificationProvider>
