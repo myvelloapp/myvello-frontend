@@ -63,12 +63,6 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       icon: CreditCard,
       active: pathname.startsWith("/emis"),
     },
-    {
-      label: "Payment History",
-      href: "/payment-history",
-      icon: Clock,
-      active: pathname === "/payment-history",
-    },
   ];
 
   const accountNav = [
@@ -84,6 +78,12 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       href: "/family",
       icon: Users,
       active: pathname.startsWith("/family"),
+    },
+    {
+      label: "Payment History",
+      href: "/payment-history",
+      icon: Clock,
+      active: pathname === "/payment-history",
     },
     {
       label: "Notifications",

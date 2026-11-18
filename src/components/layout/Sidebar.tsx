@@ -84,6 +84,7 @@ export function Sidebar() {
 
   const isAccountPageActive =
     pathname.startsWith("/family") ||
+    pathname.startsWith("/payment-history") ||
     pathname.startsWith("/notifications") ||
     pathname.startsWith("/settings") ||
     pathname.startsWith("/install");
@@ -120,12 +121,6 @@ export function Sidebar() {
       icon: CreditCard,
       active: pathname.startsWith("/emis"),
     },
-    {
-      label: "Payment History",
-      href: "/payment-history",
-      icon: Clock,
-      active: pathname === "/payment-history",
-    },
   ];
 
   const accountNav: SidebarNavItem[] = [
@@ -141,6 +136,12 @@ export function Sidebar() {
       href: "/family",
       icon: Users,
       active: pathname.startsWith("/family"),
+    },
+    {
+      label: "Payment History",
+      href: "/payment-history",
+      icon: Clock,
+      active: pathname === "/payment-history",
     },
     {
       label: "Notifications",
