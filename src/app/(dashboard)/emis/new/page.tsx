@@ -117,8 +117,9 @@ function NewEmiSkeleton() {
         </div>
 
         {/* Desktop Heading Skeleton */}
-        <div className="hidden sm:block">
+        <div className="hidden sm:flex sm:items-center justify-between gap-3">
           <div className="h-8 w-44 bg-slate-200/80 rounded-xl" />
+          <div className="h-10 w-32 bg-slate-200/70 rounded-xl" />
         </div>
 
         {/* Two-Column Form & Real-Time Automation Preview Layout */}
@@ -713,11 +714,19 @@ export default function AddNewEmiPage() {
                 </p>
               </div>
 
-              {/* Step Completion Badge */}
+              {/* Step Completion Badge & Mobile Close Button */}
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                   {currentStep === 1 ? "25%" : currentStep === 2 ? "50%" : currentStep === 3 ? "75%" : "100%"}
                 </span>
+                <Link
+                  href="/emis"
+                  className="w-8 h-8 rounded-full bg-white/90 border border-slate-200/90 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs active:scale-95"
+                  aria-label="Close popup"
+                  title="Close"
+                >
+                  <X className="w-4 h-4 stroke-[2.2]" />
+                </Link>
               </div>
             </div>
 
@@ -778,11 +787,22 @@ export default function AddNewEmiPage() {
             </div>
           </div>
 
-          {/* Desktop Page Heading (Hidden on Mobile) */}
-          <div className="hidden sm:block">
+          {/* Desktop Page Heading & Close Action (Hidden on Mobile) */}
+          <div className="hidden sm:flex sm:items-center justify-between gap-3">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
               Add New EMI
             </h1>
+
+            <Link href="/emis">
+              <button
+                type="button"
+                className="h-10 min-h-[40px] inline-flex items-center gap-2 px-4 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-[#02361B] text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation group"
+              >
+                <X className="w-4 h-4 text-slate-500 group-hover:text-slate-800 transition-colors" />
+                <span>Close Popup</span>
+                <kbd className="ml-1 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-100 rounded border border-slate-200">ESC</kbd>
+              </button>
+            </Link>
           </div>
 
           {/* Two-Column Form & Real-Time Automation Preview Layout */}
