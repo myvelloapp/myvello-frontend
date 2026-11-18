@@ -94,7 +94,7 @@ const QUICK_DUE_DAYS = ["5", "10", "15", "20", "25", "30"];
 // High-fidelity shimmer skeleton matching exact geometry of the add EMI wizard (CLS = 0)
 function NewEmiSkeleton() {
   return (
-    <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
+    <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
       {/* Living Brand Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
@@ -118,8 +118,10 @@ function NewEmiSkeleton() {
 
         {/* Desktop Heading Skeleton */}
         <div className="hidden sm:flex sm:items-center justify-between gap-3">
-          <div className="h-8 w-44 bg-slate-200/80 rounded-xl" />
-          <div className="h-10 w-32 bg-slate-200/70 rounded-xl" />
+          <div className="space-y-2">
+            <div className="h-8 w-44 bg-slate-200/80 rounded-xl" />
+          </div>
+          <div className="h-9 w-32 bg-slate-200/70 rounded-xl self-start sm:self-auto" />
         </div>
 
         {/* Two-Column Form & Real-Time Automation Preview Layout */}
@@ -696,7 +698,7 @@ export default function AddNewEmiPage() {
 
   return (
     <DashboardLayout>
-      <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
+      <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
         {/* Living Brand Gradient Backdrop matching /emis */}
         <div className="absolute inset-0 pointer-events-none z-0" />
 
@@ -706,6 +708,11 @@ export default function AddNewEmiPage() {
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
               <div className="min-w-0">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
+                    New EMI
+                  </span>
+                </div>
                 <h1 className="text-xl font-black tracking-tight text-[#02361B] truncate">
                   Add New EMI
                 </h1>
@@ -787,11 +794,18 @@ export default function AddNewEmiPage() {
             </div>
           </div>
 
-          {/* Desktop Page Heading & Close Action (Hidden on Mobile) */}
+          {/* Desktop Page Heading & Back Action (Hidden on Mobile) */}
           <div className="hidden sm:flex sm:items-center justify-between gap-3">
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
-              Add New EMI
-            </h1>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
+                  New EMI Entry
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
+                Add New EMI
+              </h1>
+            </div>
 
             <Link href="/emis">
               <button

@@ -85,14 +85,12 @@ export function DashboardLayout({
           !isPopupMode && "lg:pl-64"
         )}
       >
-        {/* Top Header (Omitted in popup modal flow) */}
-        {!isPopupMode && (
-          <Header
-            onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
-            isPopupMode={isPopupMode}
-            hideNotifications={shouldHideNotifications}
-          />
-        )}
+        {/* Top Header */}
+        <Header
+          onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
+          isPopupMode={isPopupMode}
+          hideNotifications={shouldHideNotifications}
+        />
 
         {/* Page Viewport with safe-area padding for bottom mobile nav */}
         <main

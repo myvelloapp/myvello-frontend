@@ -124,123 +124,123 @@ export function Header({
 
       {/* Right side: Workspace Selector & Notification Bell */}
       <div className="flex items-center gap-2 sm:gap-2.5 justify-end pointer-events-auto">
-        {/* Workspace Selector (Omitted in popup mode) */}
+        {/* Workspace Selector (Omitted in popup mode; on normal dashboard: mobile only) */}
         {!isPopupMode && (
           <div ref={workspaceDropdownRef} className="relative lg:hidden">
-            <button
-              type="button"
-              onClick={() => {
-                setIsWorkspaceOpen(!isWorkspaceOpen);
-                if (isNotificationsOpen) setIsNotificationsOpen(false);
-              }}
-              className={cn(
-                "h-11 px-3 sm:px-3.5 rounded-[15px] sm:rounded-[16px] backdrop-blur-md transition-all cursor-pointer flex items-center gap-2 select-none touch-manipulation active:scale-[0.98]",
-                isWorkspaceOpen
-                  ? "bg-white border-emerald-400 ring-2 ring-emerald-500/15 shadow-sm text-slate-900"
-                  : "bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60"
-              )}
-              aria-label="Switch workspace"
-              title="Switch workspace"
-            >
-              <MemberAvatarStack
-                members={activeWorkspace.members_preview}
-                count={activeWorkspace.members_count}
-                type={activeWorkspace.type}
-                size="sm"
-              />
-              <span className="font-extrabold text-[13px] text-slate-800 truncate max-w-[130px] sm:max-w-[170px] text-left">
-                {activeWorkspace.name}
-              </span>
-              <ChevronDown
-                className={cn(
-                  "w-4 h-4 text-slate-400 transition-transform shrink-0",
-                  isWorkspaceOpen && "rotate-180 text-emerald-700"
-                )}
-              />
-            </button>
-
-            {/* Workspace Switcher Popover */}
-            {isWorkspaceOpen && (
-              <div className="absolute right-0 top-[calc(100%+0.5rem)] w-[290px] sm:w-[320px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
-                <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
-                  <span>WORKSPACES</span>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
-                    {workspaces.length} ACTIVE
-                  </span>
-                </div>
-
-                <div className="space-y-1 pt-0.5 max-h-64 overflow-y-auto">
-                  {workspaces.map((w) => {
-                    const isSelected = activeWorkspace.id === w.id;
-                    return (
-                      <button
-                        key={String(w.id)}
-                        type="button"
-                        onClick={() => {
-                          switchWorkspace(w.id);
-                          setIsWorkspaceOpen(false);
-                        }}
-                        className={cn(
-                          "w-full flex items-center justify-between p-2.5 rounded-[12px] text-xs transition-all cursor-pointer group text-left touch-manipulation active:scale-[0.99]",
-                          isSelected
-                            ? "bg-emerald-50 text-emerald-900 font-bold border border-emerald-200/80 shadow-2xs"
-                            : "hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-transparent"
-                        )}
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <MemberAvatarStack
-                            members={w.members_preview}
-                            count={w.members_count}
-                            type={w.type}
-                            size="sm"
-                          />
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="font-extrabold text-xs truncate leading-tight">
-                                {w.name}
-                              </span>
-                              {w.type === "personal" ? (
-                                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-600 shrink-0">
-                                  Private
-                                </span>
-                              ) : (
-                                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-teal-50 text-teal-700 border border-teal-200/60 shrink-0">
-                                  Family
-                                </span>
-                              )}
-                            </div>
-                            <span className="text-[10px] font-medium text-slate-400 block leading-tight mt-0.5 truncate">
-                              {w.subtitle}
-                            </span>
-                          </div>
-                        </div>
-
-                        {isSelected && (
-                          <div className="w-5 h-5 rounded-full bg-[#1C9E30] text-white flex items-center justify-center shrink-0 ml-2 shadow-2xs">
-                            <Check className="w-3 h-3 stroke-[2.5]" />
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="pt-1.5 mt-1 border-t border-slate-100">
-                  <Link
-                    href="/family"
-                    onClick={() => setIsWorkspaceOpen(false)}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition-colors"
-                  >
-                    <span className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5" />
-                      <span>Manage Family Workspaces</span>
-                    </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
-                  </Link>
-                </div>
-              </div>
+          <button
+            type="button"
+            onClick={() => {
+              setIsWorkspaceOpen(!isWorkspaceOpen);
+              if (isNotificationsOpen) setIsNotificationsOpen(false);
+            }}
+            className={cn(
+              "h-11 px-3 sm:px-3.5 rounded-[15px] sm:rounded-[16px] backdrop-blur-md transition-all cursor-pointer flex items-center gap-2 select-none touch-manipulation active:scale-[0.98]",
+              isWorkspaceOpen
+                ? "bg-white border-emerald-400 ring-2 ring-emerald-500/15 shadow-sm text-slate-900"
+                : "bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60"
             )}
-          </div>
+            aria-label="Switch workspace"
+            title="Switch workspace"
+          >
+            <MemberAvatarStack
+              members={activeWorkspace.members_preview}
+              count={activeWorkspace.members_count}
+              type={activeWorkspace.type}
+              size="sm"
+            />
+            <span className="font-extrabold text-[13px] text-slate-800 truncate max-w-[130px] sm:max-w-[170px] text-left">
+              {activeWorkspace.name}
+            </span>
+            <ChevronDown
+              className={cn(
+                "w-4 h-4 text-slate-400 transition-transform shrink-0",
+                isWorkspaceOpen && "rotate-180 text-emerald-700"
+              )}
+            />
+          </button>
+
+          {/* Workspace Switcher Popover */}
+          {isWorkspaceOpen && (
+            <div className="absolute right-0 top-[calc(100%+0.5rem)] w-[290px] sm:w-[320px] max-w-[calc(100vw-24px)] bg-white/98 backdrop-blur-xl rounded-[20px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22)] border border-slate-200/90 overflow-hidden z-50 p-2 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="flex items-center justify-between px-2.5 py-1 text-[10px] uppercase font-black text-slate-400 tracking-wider">
+                <span>WORKSPACES</span>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
+                  {workspaces.length} ACTIVE
+                </span>
+              </div>
+
+              <div className="space-y-1 pt-0.5 max-h-64 overflow-y-auto">
+                {workspaces.map((w) => {
+                  const isSelected = activeWorkspace.id === w.id;
+                  return (
+                    <button
+                      key={String(w.id)}
+                      type="button"
+                      onClick={() => {
+                        switchWorkspace(w.id);
+                        setIsWorkspaceOpen(false);
+                      }}
+                      className={cn(
+                        "w-full flex items-center justify-between p-2.5 rounded-[12px] text-xs transition-all cursor-pointer group text-left touch-manipulation active:scale-[0.99]",
+                        isSelected
+                          ? "bg-emerald-50 text-emerald-900 font-bold border border-emerald-200/80 shadow-2xs"
+                          : "hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-transparent"
+                      )}
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <MemberAvatarStack
+                          members={w.members_preview}
+                          count={w.members_count}
+                          type={w.type}
+                          size="sm"
+                        />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-extrabold text-xs truncate leading-tight">
+                              {w.name}
+                            </span>
+                            {w.type === "personal" ? (
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-600 shrink-0">
+                                Private
+                              </span>
+                            ) : (
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-teal-50 text-teal-700 border border-teal-200/60 shrink-0">
+                                Family
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-[10px] font-medium text-slate-400 block leading-tight mt-0.5 truncate">
+                            {w.subtitle}
+                          </span>
+                        </div>
+                      </div>
+
+                      {isSelected && (
+                        <div className="w-5 h-5 rounded-full bg-[#1C9E30] text-white flex items-center justify-center shrink-0 ml-2 shadow-2xs">
+                          <Check className="w-3 h-3 stroke-[2.5]" />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="pt-1.5 mt-1 border-t border-slate-100">
+                <Link
+                  href="/family"
+                  onClick={() => setIsWorkspaceOpen(false)}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-emerald-700 hover:bg-emerald-50 transition-colors"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Manage Family Workspaces</span>
+                  </span>
+                  <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
         )}
 
         {/* Notification Bell (Desktop only; omitted when hideNotifications is true or in popup mode) */}
