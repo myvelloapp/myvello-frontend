@@ -705,11 +705,6 @@ export default function AddNewEmiPage() {
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
               <div className="min-w-0">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
-                    New EMI
-                  </span>
-                </div>
                 <h1 className="text-xl font-black tracking-tight text-[#02361B] truncate">
                   Add New EMI
                 </h1>
@@ -792,12 +787,7 @@ export default function AddNewEmiPage() {
           </div>
 
           {/* Desktop Page Heading (Hidden on Mobile) */}
-          <div className="hidden sm:block space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
-                New EMI Entry
-              </span>
-            </div>
+          <div className="hidden sm:block">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
               Add New EMI
             </h1>
