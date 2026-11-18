@@ -57,12 +57,45 @@ body {
   to { transform: translateX(0); }
 }
 
+@keyframes popupModalEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.975);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.002);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes popupBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-right {
   animation: slideRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-popup-enter {
+  animation: popupModalEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-popup-backdrop {
+  animation: popupBackdropIn 0.28s ease-out forwards;
 }
 
 /* Fixed Brand Gradient (Pure CSS code - No image) */

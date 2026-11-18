@@ -10,6 +10,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { LogoutConfirmationModal } from "@/components/common/LogoutConfirmationModal";
 import { BrandLogo } from "@/components/common/BrandLogo";
 import { AppWaveBackground } from "@/components/layout/AppWaveBackground";
+import { cn } from "@/lib/utils";
 
 const CurrencyOnboardingModal = dynamic(
   () => import("@/components/common/CurrencyOnboardingModal").then((mod) => mod.CurrencyOnboardingModal),
@@ -18,13 +19,24 @@ const CurrencyOnboardingModal = dynamic(
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  hideSidebar?: boolean;
+  hideNotifications?: boolean;
+  isPopup?: boolean;
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({
+  children,
+  hideSidebar,
+  hideNotifications,
+  isPopup,
+}: DashboardLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isLoading, isAuthenticated, user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const isPopupMode = isPopup ?? (hideSidebar ?? (pathname === "/emis/new"));
+  const shouldHideNotifications = hideNotifications ?? (isPopupMode || pathname === "/emis/new");
 
   useEffect(() => {
     if (!isLoading) {
@@ -59,18 +71,36 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Pure Code Vector Organic Wave Background */}
       <AppWaveBackground />
 
-      {/* Desktop Fixed Sidebar */}
-      <Suspense fallback={<div className="hidden lg:block w-64 bg-white/95 backdrop-blur-md fixed inset-y-0 z-30" />}>
-        <Sidebar />
-      </Suspense>
+      {/* Desktop Fixed Sidebar (Omitted in popup modal flow) */}
+      {!isPopupMode && (
+        <Suspense fallback={<div className="hidden lg:block w-64 bg-white/95 backdrop-blur-md fixed inset-y-0 z-30" />}>
+          <Sidebar />
+        </Suspense>
+      )}
 
       {/* Main Content Area */}
-      <div className="lg:pl-64 flex flex-col min-h-screen min-h-dvh relative z-10">
+      <div
+        className={cn(
+          "flex flex-col min-h-screen min-h-dvh relative z-10 transition-all duration-300",
+          !isPopupMode && "lg:pl-64"
+        )}
+      >
         {/* Top Header */}
-        <Header onOpenMobileMenu={() => setIsMobileMenuOpen(true)} />
+        <Header
+          onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
+          isPopupMode={isPopupMode}
+          hideNotifications={shouldHideNotifications}
+        />
 
         {/* Page Viewport with safe-area padding for bottom mobile nav */}
-        <main className="flex-1 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-12 overflow-x-hidden">
+        <main
+          className={cn(
+            "flex-1 overflow-x-hidden",
+            isPopupMode
+              ? "pb-8 sm:pb-12"
+              : "pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-12"
+          )}
+        >
           {children}
         </main>
       </div>
@@ -81,13 +111,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Global Logout Confirmation Modal */}
       <LogoutConfirmationModal />
 
-      {/* Mobile Navigation Drawer & Bottom Bar */}
-      <Suspense fallback={null}>
-        <MobileNav
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        />
-      </Suspense>
+      {/* Mobile Navigation Drawer & Bottom Bar (Omitted in popup modal flow) */}
+      {!isPopupMode && (
+        <Suspense fallback={null}>
+          <MobileNav
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

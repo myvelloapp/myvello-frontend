@@ -30,9 +30,15 @@ import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   onOpenMobileMenu?: () => void;
+  isPopupMode?: boolean;
+  hideNotifications?: boolean;
 }
 
-export function Header({ onOpenMobileMenu }: HeaderProps) {
+export function Header({
+  onOpenMobileMenu,
+  isPopupMode = false,
+  hideNotifications = false,
+}: HeaderProps) {
   const router = useRouter();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const { activeWorkspace, workspaces, switchWorkspace, refreshWorkspaces } = useWorkspace();
@@ -107,17 +113,17 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-30 h-18 sm:h-18 lg:h-20 pt-2.5 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
-      {/* Left side: Brand Logo on mobile (< lg) */}
+      {/* Left side: Brand Logo (always visible on mobile; also visible on desktop in popup mode where sidebar is hidden) */}
       <div className="flex items-center gap-2 pointer-events-auto">
-        <div className="lg:hidden flex items-center">
-          <BrandLogo iconOnly className="" href="/emis" />
+        <div className={cn("flex items-center", !isPopupMode && "lg:hidden")}>
+          <BrandLogo className="h-8 sm:h-9 w-auto" href="/emis" />
         </div>
       </div>
 
       {/* Right side: Workspace Selector & Notification Bell */}
       <div className="flex items-center gap-2 sm:gap-2.5 justify-end pointer-events-auto">
-        {/* Mobile Workspace Selector (beside notification bell) */}
-        <div ref={workspaceDropdownRef} className="relative lg:hidden">
+        {/* Workspace Selector (Mobile always; on desktop when sidebar is hidden in popup mode) */}
+        <div ref={workspaceDropdownRef} className={cn("relative", !isPopupMode && "lg:hidden")}>
           <button
             type="button"
             onClick={() => {
@@ -233,8 +239,9 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           )}
         </div>
 
-        {/* Notification Bell (Desktop only; on mobile, notification is in the floating bottom navigation bar) */}
-        <div ref={containerRef} className="relative hidden lg:block">
+        {/* Notification Bell (Desktop only; omitted when hideNotifications is true or in popup mode) */}
+        {!hideNotifications && (
+          <div ref={containerRef} className="relative hidden lg:block">
           <button
             onClick={() => {
               setIsNotificationsOpen(!isNotificationsOpen);
@@ -532,17 +539,32 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             </div>
           )}
         </div>
+        )}
 
-        {/* Mobile Menu Trigger (Drawer) */}
-        <button
-          type="button"
-          onClick={onOpenMobileMenu}
-          className="lg:hidden w-11 h-11 rounded-[15px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation"
-          aria-label="Open navigation menu"
-          title="Open menu"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
+        {/* Mobile Menu Trigger (Drawer) - Omitted in popup mode */}
+        {!isPopupMode && (
+          <button
+            type="button"
+            onClick={onOpenMobileMenu}
+            className="lg:hidden w-11 h-11 rounded-[15px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation"
+            aria-label="Open navigation menu"
+            title="Open menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+
+        {/* Popup Close Button (Visible in popup mode) */}
+        {isPopupMode && (
+          <Link
+            href="/emis"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-500 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation hover:border-slate-300"
+            aria-label="Close popup and return to EMIs"
+            title="Close (Esc)"
+          >
+            <X className="w-5 h-5 stroke-[2.2]" />
+          </Link>
+        )}
       </div>
     </header>
   );

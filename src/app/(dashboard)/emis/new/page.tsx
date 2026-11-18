@@ -94,11 +94,11 @@ const QUICK_DUE_DAYS = ["5", "10", "15", "20", "25", "30"];
 // High-fidelity shimmer skeleton matching exact geometry of the add EMI wizard (CLS = 0)
 function NewEmiSkeleton() {
   return (
-    <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
+    <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
       {/* Living Brand Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
-      <div className="relative z-10 max-w-[1500px] mx-auto space-y-5 sm:space-y-6 animate-pulse">
+      <div className="relative z-10 max-w-[1360px] mx-auto space-y-5 sm:space-y-6 animate-pulse">
         {/* Page Heading & Back Action Skeleton */}
         {/* Mobile Skeleton: Single compact row */}
         <div className="sm:hidden flex items-center justify-between gap-3">
@@ -250,6 +250,18 @@ export default function AddNewEmiPage() {
   // Loan Modes
   const [loanMode, setLoanMode] = useState<"new" | "running">("new");
   const [hasBrokenPeriod, setHasBrokenPeriod] = useState(false);
+
+  // Handle ESC key to dismiss popup and navigate back to /emis
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't close if target is an open dropdown or editing an input where Esc might be intended to cancel typing
+      if (e.key === "Escape") {
+        router.push("/emis");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [router]);
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
@@ -665,14 +677,14 @@ export default function AddNewEmiPage() {
 
   // Reusable Theme Input Class with Red Error Styling
   const inputClass =
-    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all text-slate-900 placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
+    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
 
   const getInputClass = (hasError?: boolean, extra?: string) =>
     cn(
       "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
       hasError
         ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
-        : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-900",
+        : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]",
       extra
     );
 
@@ -686,29 +698,42 @@ export default function AddNewEmiPage() {
 
   return (
     <DashboardLayout>
-      <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
+      <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
         {/* Living Brand Gradient Backdrop matching /emis */}
         <div className="absolute inset-0 pointer-events-none z-0" />
 
-        {/* Content Container */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3 sm:space-y-6">
+        {/* Content Container with Entrance Motion */}
+        <div className="relative z-10 max-w-[1360px] mx-auto space-y-3 sm:space-y-6 animate-popup-enter">
           {/* Mobile Header & Progress Track */}
           <div className="sm:hidden space-y-2.5">
             <div className="flex items-center justify-between gap-2.5">
               <div className="min-w-0">
-                <h1 className="text-lg font-black tracking-tight text-[#02361B] truncate">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
+                    New EMI
+                  </span>
+                </div>
+                <h1 className="text-xl font-black tracking-tight text-[#02361B] truncate">
                   Add New EMI
                 </h1>
-                <p className="text-[11px] font-bold text-indigo-600 truncate">
+                <p className="text-[11px] font-bold text-emerald-700 truncate">
                   Step {currentStep} of 4: {steps[currentStep - 1]?.title}
                 </p>
               </div>
 
-              {/* Step Completion Badge */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
+              {/* Step Completion Badge & Mobile Close Button */}
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                   {currentStep === 1 ? "25%" : currentStep === 2 ? "50%" : currentStep === 3 ? "75%" : "100%"}
                 </span>
+                <Link
+                  href="/emis"
+                  className="w-8 h-8 rounded-full bg-white/90 border border-slate-200/90 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs active:scale-95"
+                  aria-label="Close popup"
+                  title="Close"
+                >
+                  <X className="w-4 h-4 stroke-[2.2]" />
+                </Link>
               </div>
             </div>
 
@@ -745,7 +770,7 @@ export default function AddNewEmiPage() {
                       className={cn(
                         "h-1.5 w-full rounded-full transition-all duration-300",
                         isCurrent
-                          ? "bg-gradient-to-r from-violet-600 to-indigo-600 shadow-xs shadow-emerald-500/25"
+                          ? "bg-gradient-to-r from-[#1C9E30] to-[#005E35] shadow-xs shadow-emerald-500/25"
                           : isPassed
                           ? "bg-emerald-500"
                           : "bg-slate-200"
@@ -755,7 +780,7 @@ export default function AddNewEmiPage() {
                       className={cn(
                         "text-[10px] font-bold truncate transition-colors",
                         isCurrent
-                          ? "text-indigo-600 font-black"
+                          ? "text-emerald-700 font-black"
                           : isPassed
                           ? "text-slate-600 font-semibold"
                           : "text-slate-400 font-medium"
@@ -772,6 +797,11 @@ export default function AddNewEmiPage() {
           {/* Desktop Page Heading & Back Action (Hidden on Mobile) */}
           <div className="hidden sm:flex sm:items-center justify-between gap-3">
             <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
+                  New EMI Entry
+                </span>
+              </div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
                 Add New EMI
               </h1>
@@ -780,10 +810,11 @@ export default function AddNewEmiPage() {
             <Link href="/emis">
               <button
                 type="button"
-                className="h-9 min-h-[36px] inline-flex items-center gap-1.5 px-3.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                className="h-10 min-h-[40px] inline-flex items-center gap-2 px-4 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-[#02361B] text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation group"
               >
-                <ArrowLeft className="w-3.5 h-3.5 text-slate-500" />
-                <span>Back to EMIs</span>
+                <X className="w-4 h-4 text-slate-500 group-hover:text-slate-800 transition-colors" />
+                <span>Close Popup</span>
+                <kbd className="ml-1 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-100 rounded border border-slate-200">ESC</kbd>
               </button>
             </Link>
           </div>
@@ -851,10 +882,10 @@ export default function AddNewEmiPage() {
               </div>
 
               {/* Mobile Live EMI Quick-Bar / Capsule */}
-              <div className="lg:hidden bg-white rounded-2xl border border-indigo-100/90 p-3 shadow-xs">
+              <div className="lg:hidden bg-white rounded-2xl border border-emerald-100/90 p-3 shadow-xs">
                 <div className="flex items-center justify-between gap-2.5">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-800 shrink-0">
                       {formData.bankName ? (
                         <BankLogo bankName={formData.bankName} size="sm" />
                       ) : (
@@ -879,11 +910,11 @@ export default function AddNewEmiPage() {
                   <button
                     type="button"
                     onClick={() => setIsMobilePreviewOpen(true)}
-                    className="h-8 min-h-[32px] inline-flex items-center gap-1 px-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition-all cursor-pointer shrink-0 active:scale-95 border border-indigo-100/80"
+                    className="h-8 min-h-[32px] inline-flex items-center gap-1 px-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition-all cursor-pointer shrink-0 active:scale-95 border border-emerald-200/80"
                   >
-                    <Sparkles className="w-3 h-3 text-indigo-600" />
+                    <Sparkles className="w-3 h-3 text-emerald-700" />
                     <span>Breakdown</span>
-                    <ChevronRight className="w-3 h-3 text-indigo-500" />
+                    <ChevronRight className="w-3 h-3 text-emerald-600" />
                   </button>
                 </div>
               </div>
@@ -1923,11 +1954,11 @@ export default function AddNewEmiPage() {
 
             {/* Right: Live Amortization & Smart Preview Card (Desktop Only: hidden lg:block) */}
             <div className="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-24 space-y-4">
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_-4px_rgba(99,102,241,0.06)] space-y-5">
+              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.08)] space-y-5">
                 {/* Header Badge */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 overflow-hidden shadow-2xs">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-800 shrink-0 overflow-hidden shadow-2xs">
                       {formData.bankName ? (
                         <BankLogo bankName={formData.bankName} size="md" />
                       ) : (
@@ -1945,12 +1976,12 @@ export default function AddNewEmiPage() {
                   </div>
 
                   {loanMode === "running" ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200/60">
-                      <History className="w-2.5 h-2.5 text-purple-600" />
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/70">
+                      <History className="w-2.5 h-2.5 text-emerald-700" />
                       <span>Running ({paidCountNum}/{tenureNum || "?"})</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-50 text-violet-700 border border-violet-200/60">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/70">
                       {/* <Sparkles className="w-2.5 h-2.5 text-violet-600" /> */}
                       <span>Auto-Schedule</span>
                     </span>
@@ -1959,7 +1990,7 @@ export default function AddNewEmiPage() {
 
                 {/* Family Shared Workspace Banner in Preview */}
                 {formData.ownershipType === "family_shared" && selectedFamily && (
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50/70 border border-indigo-100/90 animate-in fade-in duration-150">
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-teal-50/70 border border-teal-200/80 animate-in fade-in duration-150">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <MemberAvatarStack
                         members={selectedFamily.members_preview}
@@ -1968,15 +1999,15 @@ export default function AddNewEmiPage() {
                         size="xs"
                       />
                       <div className="min-w-0">
-                        <span className="text-xs font-bold text-indigo-950 truncate block">
+                        <span className="text-xs font-bold text-teal-950 truncate block">
                           {selectedFamily.name}
                         </span>
-                        <span className="text-[10px] font-medium text-indigo-600 block">
+                        <span className="text-[10px] font-medium text-teal-700 block">
                           Shared Family Commitment • {selectedFamily.members_count || 1} members
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] font-extrabold text-indigo-700 bg-white px-2 py-0.5 rounded-full border border-indigo-100 shadow-2xs shrink-0">
+                    <span className="text-[10px] font-extrabold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs shrink-0">
                       Family Vault
                     </span>
                   </div>
@@ -1991,7 +2022,7 @@ export default function AddNewEmiPage() {
                     {activeEmiNum > 0 ? `${vaultCurrencySymbol}${formatAmount(activeEmiNum, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                   </div>
                   {hasBrokenPeriod && tenureNum > 1 ? (
-                    <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                       1st Month: {vaultCurrencySymbol}{formatAmount(firstMonthEmi, vaultCurrency)} ({formData.firstEmiType === "bpi" ? "BPI" : "Custom"}) • then {vaultCurrencySymbol}{formatAmount(activeEmiNum, vaultCurrency)}/mo
                     </div>
                   ) : (
@@ -2003,23 +2034,23 @@ export default function AddNewEmiPage() {
 
                 {/* Running Loan Progress Banner (if running loan selected) */}
                 {loanMode === "running" && (
-                  <div className="p-3 rounded-xl bg-purple-50/60 border border-purple-100/90 space-y-1.5">
+                  <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/70 space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-bold">
-                      <span className="text-purple-900 flex items-center gap-1">
-                        <History className="w-3 h-3 text-purple-600" />
+                      <span className="text-emerald-950 flex items-center gap-1">
+                        <History className="w-3 h-3 text-emerald-700" />
                         Completed EMIs
                       </span>
-                      <span className="text-purple-800">
+                      <span className="text-emerald-800">
                         {paidCountNum} of {tenureNum || 0} ({runningProgressPct}%)
                       </span>
                     </div>
-                    <div className="w-full h-1.5 bg-purple-200/60 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-emerald-200/60 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full transition-all duration-300"
+                        className="h-full bg-gradient-to-r from-[#1C9E30] to-[#005E35] rounded-full transition-all duration-300"
                         style={{ width: `${Math.min(100, runningProgressPct)}%` }}
                       />
                     </div>
-                    <div className="flex items-center justify-between text-[10px] text-purple-700 font-semibold pt-0.5">
+                    <div className="flex items-center justify-between text-[10px] text-emerald-800 font-semibold pt-0.5">
                       <span>{remainingMonths} EMIs remaining</span>
                       <span>Next due: #{paidCountNum + 1}</span>
                     </div>
@@ -2029,12 +2060,12 @@ export default function AddNewEmiPage() {
                 {/* Visual Principal vs Interest Progress Bar */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-[11px] font-bold">
-                    <span className="text-indigo-600 flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-indigo-600 inline-block" />
+                    <span className="text-emerald-800 flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block" />
                       Principal: {principalPct}%
                     </span>
-                    <span className="text-cyan-600 flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" />
+                    <span className="text-teal-600 flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-teal-500 inline-block" />
                       Interest: {interestPct}%
                     </span>
                   </div>
@@ -2043,11 +2074,11 @@ export default function AddNewEmiPage() {
                     {totalPayable > 0 ? (
                       <>
                         <div
-                          className="h-full bg-gradient-to-r from-violet-600 to-indigo-600 transition-all duration-300"
+                          className="h-full bg-gradient-to-r from-emerald-600 to-emerald-700 transition-all duration-300"
                           style={{ width: `${principalPct}%` }}
                         />
                         <div
-                          className="h-full bg-gradient-to-r from-indigo-400 to-cyan-400 transition-all duration-300"
+                          className="h-full bg-gradient-to-r from-teal-400 to-emerald-400 transition-all duration-300"
                           style={{ width: `${interestPct}%` }}
                         />
                       </>
@@ -2071,17 +2102,17 @@ export default function AddNewEmiPage() {
                       <div className="py-2 flex items-center justify-between bg-slate-50/60 -mx-2 px-2 rounded">
                         <span className="text-slate-600 font-medium">Processing Fee</span>
                         <div className="text-right">
-                          <span className="font-bold text-slate-900 block">{vaultCurrencySymbol}{formatAmount(feeNum, vaultCurrency)}</span>
-                          <span className="text-[10px] text-indigo-600 font-semibold block">
+                          <span className="font-bold text-[#02361B] block">{vaultCurrencySymbol}{formatAmount(feeNum, vaultCurrency)}</span>
+                          <span className="text-[10px] text-emerald-700 font-semibold block">
                             {isFeeFinanced ? "Financed into EMIs" : "Deducted upfront"}
                           </span>
                         </div>
                       </div>
 
                       {isFeeFinanced ? (
-                        <div className="py-2 flex items-center justify-between bg-indigo-50/40 -mx-2 px-2 rounded">
-                          <span className="text-indigo-900 font-medium">Total Financed Loan</span>
-                          <span className="font-extrabold text-indigo-700">
+                        <div className="py-2 flex items-center justify-between bg-emerald-50/40 -mx-2 px-2 rounded">
+                          <span className="text-emerald-950 font-medium">Total Financed Loan</span>
+                          <span className="font-extrabold text-emerald-800">
                             {vaultCurrencySymbol}{formatAmount(effectivePrincipal, vaultCurrency)}
                           </span>
                         </div>
@@ -2097,9 +2128,9 @@ export default function AddNewEmiPage() {
                   )}
 
                   {loanMode === "running" && paidCountNum > 0 && (
-                    <div className="py-2 flex items-center justify-between bg-purple-50/40 -mx-2 px-2 rounded">
-                      <span className="text-purple-800 font-medium">Est. Remaining Principal</span>
-                      <span className="font-extrabold text-purple-900">
+                    <div className="py-2 flex items-center justify-between bg-emerald-50/40 -mx-2 px-2 rounded">
+                      <span className="text-emerald-950 font-medium">Est. Remaining Principal</span>
+                      <span className="font-extrabold text-emerald-800">
                         {vaultCurrencySymbol}{formatAmount(estimatedRemainingPrincipal, vaultCurrency)}
                       </span>
                     </div>
@@ -2107,14 +2138,14 @@ export default function AddNewEmiPage() {
 
                   <div className="py-2 flex items-center justify-between">
                     <span className="text-slate-500 font-medium">Total Interest</span>
-                    <span className="font-bold text-cyan-600">
+                    <span className="font-bold text-teal-600">
                       {totalInterest > 0 ? `+${vaultCurrencySymbol}${formatAmount(totalInterest, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                     </span>
                   </div>
 
                   <div className="py-2 flex items-center justify-between">
                     <span className="text-slate-500 font-medium">Total Cost of Loan</span>
-                    <span className="font-extrabold text-slate-900">
+                    <span className="font-extrabold text-[#02361B]">
                       {totalCostOfLoan > 0 ? `${vaultCurrencySymbol}${formatAmount(totalCostOfLoan, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                     </span>
                   </div>
@@ -2130,13 +2161,13 @@ export default function AddNewEmiPage() {
 
                   <div className="py-2 flex items-center justify-between">
                     <span className="text-slate-500 font-medium">Payoff / Maturity</span>
-                    <span className="font-bold text-indigo-600">{tenureNum > 0 ? maturityDateStr : "—"}</span>
+                    <span className="font-bold text-emerald-700">{tenureNum > 0 ? maturityDateStr : "—"}</span>
                   </div>
 
                   {formData.paymentMethod === "Auto Debit" && formData.debitBankName && (
-                    <div className="py-2 flex items-center justify-between bg-indigo-50/50 -mx-2 px-2 rounded">
-                      <span className="text-indigo-900 font-medium shrink-0">Auto-Debit From</span>
-                      <span className="font-bold text-indigo-700 truncate max-w-[150px] sm:max-w-[220px] text-right">
+                    <div className="py-2 flex items-center justify-between bg-emerald-50/50 -mx-2 px-2 rounded">
+                      <span className="text-emerald-950 font-medium shrink-0">Auto-Debit From</span>
+                      <span className="font-bold text-emerald-800 truncate max-w-[150px] sm:max-w-[220px] text-right">
                         {formData.debitBankName}
                         {formData.debitAccountNumber ? ` (${formData.debitAccountNumber})` : ""}
                       </span>
@@ -2297,17 +2328,17 @@ export default function AddNewEmiPage() {
                       <History className="w-3 h-3 text-purple-600" />
                       Completed EMIs
                     </span>
-                    <span className="text-purple-800">
+                    <span className="text-emerald-800">
                       {paidCountNum} of {tenureNum || 0} ({runningProgressPct}%)
                     </span>
                   </div>
-                  <div className="w-full h-1.5 bg-purple-200/60 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-emerald-200/60 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full transition-all duration-300"
+                      className="h-full bg-gradient-to-r from-[#1C9E30] to-[#005E35] rounded-full transition-all duration-300"
                       style={{ width: `${Math.min(100, runningProgressPct)}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-[10px] text-purple-700 font-semibold pt-0.5">
+                  <div className="flex items-center justify-between text-[10px] text-emerald-800 font-semibold pt-0.5">
                     <span>{remainingMonths} EMIs remaining</span>
                     <span>Next due: #{paidCountNum + 1}</span>
                   </div>
@@ -2317,12 +2348,12 @@ export default function AddNewEmiPage() {
               {/* Visual Principal vs Interest Progress Bar */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-[11px] font-bold">
-                  <span className="text-indigo-600 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-indigo-600 inline-block" />
+                  <span className="text-emerald-800 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block" />
                     Principal: {principalPct}%
                   </span>
-                  <span className="text-cyan-600 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" />
+                  <span className="text-teal-600 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-teal-500 inline-block" />
                     Interest: {interestPct}%
                   </span>
                 </div>
@@ -2331,11 +2362,11 @@ export default function AddNewEmiPage() {
                   {totalPayable > 0 ? (
                     <>
                       <div
-                        className="h-full bg-gradient-to-r from-violet-600 to-indigo-600 transition-all duration-300"
+                        className="h-full bg-gradient-to-r from-emerald-600 to-emerald-700 transition-all duration-300"
                         style={{ width: `${principalPct}%` }}
                       />
                       <div
-                        className="h-full bg-gradient-to-r from-indigo-400 to-cyan-400 transition-all duration-300"
+                        className="h-full bg-gradient-to-r from-teal-400 to-emerald-400 transition-all duration-300"
                         style={{ width: `${interestPct}%` }}
                       />
                     </>
@@ -2349,7 +2380,7 @@ export default function AddNewEmiPage() {
               <div className="divide-y divide-slate-100 text-xs">
                 <div className="py-2 flex items-center justify-between">
                   <span className="text-slate-500 font-medium">Sanctioned Principal</span>
-                  <span className="font-bold text-slate-800">
+                  <span className="font-bold text-[#02361B]">
                     {principalNum > 0 ? `${vaultCurrencySymbol}${formatAmount(principalNum, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                   </span>
                 </div>
@@ -2359,17 +2390,17 @@ export default function AddNewEmiPage() {
                     <div className="py-2 flex items-center justify-between bg-slate-50/60 -mx-2 px-2 rounded">
                       <span className="text-slate-600 font-medium">Processing Fee</span>
                       <div className="text-right">
-                        <span className="font-bold text-slate-900 block">{vaultCurrencySymbol}{formatAmount(feeNum, vaultCurrency)}</span>
-                        <span className="text-[10px] text-indigo-600 font-semibold block">
+                        <span className="font-bold text-[#02361B] block">{vaultCurrencySymbol}{formatAmount(feeNum, vaultCurrency)}</span>
+                        <span className="text-[10px] text-emerald-700 font-semibold block">
                           {isFeeFinanced ? "Financed into EMIs" : "Deducted upfront"}
                         </span>
                       </div>
                     </div>
 
                     {isFeeFinanced ? (
-                      <div className="py-2 flex items-center justify-between bg-indigo-50/40 -mx-2 px-2 rounded">
-                        <span className="text-indigo-900 font-medium">Total Financed Loan</span>
-                        <span className="font-extrabold text-indigo-700">
+                      <div className="py-2 flex items-center justify-between bg-emerald-50/40 -mx-2 px-2 rounded">
+                        <span className="text-emerald-950 font-medium">Total Financed Loan</span>
+                        <span className="font-extrabold text-emerald-800">
                           {vaultCurrencySymbol}{formatAmount(effectivePrincipal, vaultCurrency)}
                         </span>
                       </div>
@@ -2385,9 +2416,9 @@ export default function AddNewEmiPage() {
                 )}
 
                 {loanMode === "running" && paidCountNum > 0 && (
-                  <div className="py-2 flex items-center justify-between bg-purple-50/40 -mx-2 px-2 rounded">
-                    <span className="text-purple-800 font-medium">Est. Remaining Principal</span>
-                    <span className="font-extrabold text-purple-900">
+                  <div className="py-2 flex items-center justify-between bg-emerald-50/40 -mx-2 px-2 rounded">
+                    <span className="text-emerald-950 font-medium">Est. Remaining Principal</span>
+                    <span className="font-extrabold text-emerald-800">
                       {vaultCurrencySymbol}{formatAmount(estimatedRemainingPrincipal, vaultCurrency)}
                     </span>
                   </div>
@@ -2395,14 +2426,14 @@ export default function AddNewEmiPage() {
 
                 <div className="py-2 flex items-center justify-between">
                   <span className="text-slate-500 font-medium">Total Interest</span>
-                  <span className="font-bold text-cyan-600">
+                  <span className="font-bold text-teal-600">
                     {totalInterest > 0 ? `+${vaultCurrencySymbol}${formatAmount(totalInterest, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                   </span>
                 </div>
 
                 <div className="py-2 flex items-center justify-between">
                   <span className="text-slate-500 font-medium">Total Cost of Loan</span>
-                  <span className="font-extrabold text-slate-900">
+                  <span className="font-extrabold text-[#02361B]">
                     {totalCostOfLoan > 0 ? `${vaultCurrencySymbol}${formatAmount(totalCostOfLoan, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                   </span>
                 </div>
@@ -2418,13 +2449,13 @@ export default function AddNewEmiPage() {
 
                 <div className="py-2 flex items-center justify-between">
                   <span className="text-slate-500 font-medium">Payoff / Maturity</span>
-                  <span className="font-bold text-indigo-600">{tenureNum > 0 ? maturityDateStr : "—"}</span>
+                  <span className="font-bold text-emerald-700">{tenureNum > 0 ? maturityDateStr : "—"}</span>
                 </div>
 
                 {formData.paymentMethod === "Auto Debit" && formData.debitBankName && (
-                  <div className="py-2 flex items-center justify-between bg-indigo-50/50 -mx-2 px-2 rounded">
-                    <span className="text-indigo-900 font-medium shrink-0">Auto-Debit From</span>
-                    <span className="font-bold text-indigo-700 truncate max-w-[150px] sm:max-w-[220px] text-right">
+                  <div className="py-2 flex items-center justify-between bg-emerald-50/50 -mx-2 px-2 rounded">
+                    <span className="text-emerald-950 font-medium shrink-0">Auto-Debit From</span>
+                    <span className="font-bold text-emerald-800 truncate max-w-[150px] sm:max-w-[220px] text-right">
                       {formData.debitBankName}
                       {formData.debitAccountNumber ? ` (${formData.debitAccountNumber})` : ""}
                     </span>
