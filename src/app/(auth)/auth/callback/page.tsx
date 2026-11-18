@@ -46,6 +46,7 @@ function CallbackHandler() {
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden bg-theme-gradient flex items-center justify-center p-6 select-none">
+      <div className="absolute inset-0 bg-auth-pattern" />
 
       {/* Floating Centered Card */}
       <div className="relative z-10 w-full max-w-[380px] bg-white/95 backdrop-blur-2xl rounded-3xl border border-white/60 p-8 sm:p-10 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.4),0_0_0_1px_rgba(255,255,255,0.4)] text-center animate-fade-in">

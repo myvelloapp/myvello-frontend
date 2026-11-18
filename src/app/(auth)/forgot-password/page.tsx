@@ -122,12 +122,11 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-dvh w-full flex flex-col lg:flex-row bg-white relative overflow-x-hidden select-none">
       {/* Mobile top accent gradient bar */}
-      <div className="lg:hidden fixed top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#8830f6] via-[#4054d1] to-[#0cc9e7] z-50 pointer-events-none" />
+      <div className="lg:hidden fixed top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#b0fd01] via-[#10b981] to-[#02361b] z-50 pointer-events-none" />
 
-      {/* Left Column: Fixed Pure CSS Gradient Background with Security Spotlight (Desktop Only) */}
+      {/* Left Column: Fixed Brand Gradient Background with Pattern Overlay (Desktop Only) */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden min-h-dvh bg-theme-gradient flex-col justify-between p-10 xl:p-14 2xl:p-16 text-white select-none">
- 
-    
+        <div className="absolute inset-0 bg-auth-pattern" />
       </div>
 
       {/* Right Column: Password Recovery Form Section (Native Wrap & Thumb-Friendly Layout) */}
@@ -157,7 +156,7 @@ export default function ForgotPasswordPage() {
             {isSubmitted ? (
               /* Success State (Touch-Optimized for Mobile) */
               <div className="space-y-5 animate-in fade-in duration-200">
-                <div className="w-13 h-13 rounded-2xl bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] text-white flex items-center justify-center shadow-md shadow-emerald-500/25">
+                <div className="w-13 h-13 rounded-2xl btn-gradient-glow text-white flex items-center justify-center shadow-md shadow-emerald-500/25">
                   <CheckCircle2 className="w-7 h-7 text-white stroke-[2.5]" />
                 </div>
 
@@ -230,7 +229,7 @@ export default function ForgotPasswordPage() {
                         "text-[16px] sm:text-[13px] text-slate-900 placeholder:text-slate-400 placeholder:font-normal",
                         emailError
                           ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
-                          : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                          : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                       )}
                     />
                     {emailError && (
@@ -270,7 +269,7 @@ export default function ForgotPasswordPage() {
                   Remember your password?{" "}
                   <Link
                     href="/login"
-                    className="font-bold text-[#01c6e4] hover:text-[#0092a8] active:opacity-75 transition-colors py-2 inline-block touch-manipulation"
+                    className="font-bold text-emerald-600 hover:text-emerald-800 active:opacity-75 transition-colors py-2 inline-block touch-manipulation"
                   >
                     Sign In
                   </Link>

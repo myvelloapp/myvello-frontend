@@ -205,7 +205,7 @@ export default function VerifyEmailPage() {
     <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 bg-[#F8FAFC] relative overflow-hidden select-none">
       {/* Subtle Aurora Ambient Glow */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-teal-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-tr from-[#b0fd01]/10 via-[#10b981]/15 to-[#02361b]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 inset-x-0 h-40 bg-gradient-to-t from-white via-white/60 to-transparent" />
       </div>
 
@@ -231,13 +231,13 @@ export default function VerifyEmailPage() {
                   Your account is activated. Redirecting you to your EMI dashboard...
                 </p>
               </div>
-              <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mt-2" />
+              <div className="w-6 h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mt-2" />
             </div>
           ) : (
             /* Unverified OTP Form State */
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Minimal Key / Mail Icon */}
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-50 to-purple-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mx-auto shadow-2xs">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100/90 flex items-center justify-center text-emerald-700 mx-auto shadow-2xs">
                 <KeyRound className="w-7 h-7 stroke-[1.8]" />
               </div>
 
@@ -250,8 +250,8 @@ export default function VerifyEmailPage() {
                   We&apos;ve sent a 6-digit verification code to:
                 </p>
                 <div className="pt-0.5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50/80 border border-indigo-100 text-indigo-900 text-xs font-bold max-w-full truncate shadow-2xs">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse shrink-0" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-emerald-900 text-xs font-bold max-w-full truncate shadow-2xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
                     <span className="truncate">{displayEmail}</span>
                   </span>
                 </div>
@@ -259,8 +259,8 @@ export default function VerifyEmailPage() {
 
               {/* Status or Error Banner */}
               {statusMessage && (
-                <div className="p-3 rounded-xl bg-indigo-50/90 border border-indigo-200/80 text-indigo-700 text-xs font-medium flex items-center gap-2 text-left animate-in fade-in">
-                  <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
+                <div className="p-3 rounded-xl bg-emerald-50/90 border border-emerald-200/80 text-emerald-800 text-xs font-medium flex items-center gap-2 text-left animate-in fade-in">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>{statusMessage}</span>
                 </div>
               )}
@@ -292,9 +292,9 @@ export default function VerifyEmailPage() {
                       className={cn(
                         "w-11 sm:w-12 h-13 sm:h-14 text-center text-xl sm:text-2xl font-black rounded-xl border transition-all shadow-2xs focus:outline-none touch-manipulation",
                         digit
-                          ? "border-indigo-500 bg-indigo-50/30 text-indigo-950 font-mono shadow-xs"
+                          ? "border-emerald-500 bg-emerald-50/30 text-emerald-950 font-mono shadow-xs"
                           : "border-slate-200 bg-white text-slate-800 hover:border-slate-300",
-                        "focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/15"
+                        "focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/15"
                       )}
                       aria-label={`Digit ${idx + 1}`}
                     />
@@ -334,7 +334,7 @@ export default function VerifyEmailPage() {
                   <RefreshCw
                     className={cn(
                       "w-3.5 h-3.5 text-slate-500",
-                      isResending && "animate-spin text-indigo-600"
+                      isResending && "animate-spin text-emerald-600"
                     )}
                   />
                   <span>
