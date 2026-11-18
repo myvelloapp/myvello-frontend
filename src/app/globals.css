@@ -17,6 +17,11 @@
   --success: #16A34A;
   --warning: #F59E0B;
   --danger: #DC2626;
+
+  /* Button Gradients: Normal (Image 1) & Hover (Image 2) */
+  --btn-gradient: linear-gradient(98deg, #1C9E30 0%, #119230 20%, #0A8537 45%, #02703D 70%, #005E35 100%);
+  --btn-gradient-hover: linear-gradient(98deg, #4CBF2B 0%, #3EB42A 25%, #2DA529 55%, #1F9628 80%, #168D27 100%);
+  --btn-gradient-active: linear-gradient(98deg, #168A29 0%, #0E7F29 20%, #08732E 45%, #015E33 70%, #004D2B 100%);
 }
 
 html, body {
@@ -166,14 +171,14 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
-/* Premium Grassy Emerald-to-Forest Gradient Button (with Crisp White Typography) */
+/* Premium Emerald-to-Spruce Button (Normal: Image 1, Hover: Image 2) */
 .btn-gradient-glow,
 .bg-btn-gradient {
-  background-image: linear-gradient(135deg, #62D536 0%, #42BD31 24%, #14972E 55%, #02753F 80%, #005832 100%) !important;
+  background-image: linear-gradient(98deg, #1C9E30 0%, #119230 20%, #0A8537 45%, #02703D 70%, #005E35 100%) !important;
   background-size: 200% auto;
   color: #FFFFFF !important;
   font-weight: 800;
-  box-shadow: 0 4px 14px -2px rgba(16, 133, 39, 0.42), 0 2px 6px -1px rgba(0, 74, 42, 0.18) !important;
+  box-shadow: 0 4px 14px -2px rgba(0, 94, 53, 0.38), 0 2px 6px -1px rgba(0, 0, 0, 0.12) !important;
   text-shadow: 0 1px 2px rgba(0, 30, 15, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -182,17 +187,16 @@ body {
 
 .btn-gradient-glow:hover,
 .bg-btn-gradient:hover {
-  background-image: linear-gradient(135deg, #50C22B 0%, #35AD2A 24%, #0F8527 55%, #016535 80%, #004A2A 100%) !important;
+  background-image: linear-gradient(98deg, #4CBF2B 0%, #3EB42A 25%, #2DA529 55%, #1F9628 80%, #168D27 100%) !important;
   background-position: right center;
-  box-shadow: 0 6px 22px -2px rgba(0, 74, 42, 0.48), 0 3px 8px -1px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 6px 22px -2px rgba(45, 165, 41, 0.5), 0 3px 8px -1px rgba(22, 141, 39, 0.25) !important;
   transform: translateY(-1px);
 }
 
 .btn-gradient-glow:active,
 .bg-btn-gradient:active {
-  background-image: linear-gradient(135deg, #43AA24 0%, #2D9424 24%, #0B6F20 55%, #01542C 80%, #003B21 100%) !important;
   transform: scale(0.98);
-  box-shadow: 0 2px 8px -1px rgba(0, 74, 42, 0.35) !important;
+  box-shadow: 0 2px 8px -1px rgba(0, 94, 53, 0.3) !important;
 }
 
 .btn-gradient-glow:disabled,
@@ -202,7 +206,7 @@ body {
   opacity: 0.55 !important;
   cursor: not-allowed !important;
   transform: none !important;
-  box-shadow: 0 2px 6px -1px rgba(0, 74, 42, 0.2) !important;
+  box-shadow: 0 2px 6px -1px rgba(0, 94, 53, 0.2) !important;
   pointer-events: none;
 }
 
