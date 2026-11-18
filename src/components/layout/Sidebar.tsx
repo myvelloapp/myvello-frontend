@@ -224,7 +224,7 @@ export function Sidebar() {
                       className={cn(
                         "w-full flex items-center justify-between p-2 rounded-[12px] text-xs transition-all cursor-pointer group text-left",
                         isSelected
-                          ? "bg-theme-gradient text-white shadow-md shadow-indigo-500/20"
+                          ? "btn-gradient-glow text-[#042619] shadow-md shadow-emerald-500/25 font-bold"
                           : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                       )}
                     >
@@ -468,12 +468,12 @@ export function Sidebar() {
         {/* Bottom PWA Install Card Matching Screenshot */}
         {isPwaCardVisible && (
           <div className="p-3 pb-3 animate-in fade-in zoom-in-95 duration-200">
-            <div className="relative p-4 rounded-[8px] bg-theme-gradient text-white shadow-lg shadow-indigo-500/20 space-y-3">
+            <div className="relative p-4 rounded-[14px] card-gradient-vibrant text-[#042619] shadow-lg shadow-emerald-950/20 space-y-3 border border-emerald-400/25">
               {/* Close Button Matching Screenshot */}
               <button
                 type="button"
                 onClick={handleDismissPwaCard}
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white text-slate-500 hover:text-slate-800 shadow-sm border border-slate-200/80 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white text-slate-600 hover:text-slate-900 shadow-sm border border-slate-200/80 flex items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 z-10"
                 aria-label="Dismiss app install banner"
                 title="Dismiss"
               >
@@ -481,14 +481,14 @@ export function Sidebar() {
               </button>
 
               <Link href="/install" className="flex items-start gap-2.5 group/card cursor-pointer">
-                <div className="w-8 h-8 rounded-[10px] bg-white/20 backdrop-blur-xs text-white flex items-center justify-center shrink-0 mt-0.5 group-hover/card:scale-105 transition-transform">
-                  <Smartphone className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-[10px] bg-[#042619]/10 text-[#042619] flex items-center justify-center shrink-0 mt-0.5 group-hover/card:scale-105 transition-transform">
+                  <Smartphone className="w-4 h-4 stroke-[2.2]" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-black text-white leading-tight group-hover/card:underline">
+                  <h4 className="text-xs font-black text-[#042619] leading-tight group-hover/card:underline">
                     Install Myvello App
                   </h4>
-                  <p className="text-[10px] text-white/85 leading-snug mt-0.5">
+                  <p className="text-[10px] text-[#042619]/80 font-semibold leading-snug mt-0.5">
                     Add to your home screen for a faster experience.
                   </p>
                 </div>
@@ -497,9 +497,9 @@ export function Sidebar() {
               <Link href="/install" className="block w-full">
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white hover:bg-slate-50 text-slate-900 font-black text-xs rounded-[8px] shadow-xs transition-all cursor-pointer active:scale-[0.99]"
+                  className="w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white hover:bg-slate-50 text-[#042619] font-black text-xs rounded-[10px] shadow-sm hover:shadow transition-all cursor-pointer active:scale-[0.99]"
                 >
-                  <Download className="w-3.5 h-3.5 text-slate-900" strokeWidth={2.5} />
+                  <Download className="w-3.5 h-3.5 text-[#042619]" strokeWidth={2.5} />
                   <span>Install App</span>
                 </button>
               </Link>

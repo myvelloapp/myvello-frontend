@@ -60,6 +60,12 @@ body {
     linear-gradient(135deg, #8830f6 0%, #4054d1 45%, #132883 100%);
 }
 
+/* Vibrant Lime-to-Emerald Gradient Section Card */
+.card-gradient-vibrant {
+  background-image: linear-gradient(135deg, #B0FD01 0%, #01DA81 44%, #012B27 100%);
+  color: #042619;
+}
+
 /* Living Aurora Animated Gradient */
 @keyframes auroraGradient {
   0% {
