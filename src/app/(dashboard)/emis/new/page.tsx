@@ -935,7 +935,7 @@ export default function AddNewEmiPage() {
                           Specify institution name, loan category, and identifier.
                         </p> */}
                       </div>
-                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
+                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                         1 of 4
                       </span>
                     </div>
@@ -1036,7 +1036,7 @@ export default function AddNewEmiPage() {
                           Enter loan amount, tenure, and rate. EMI calculates automatically.
                         </p> */}
                       </div>
-                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
+                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                         2 of 4
                       </span>
                     </div>
@@ -1105,7 +1105,7 @@ export default function AddNewEmiPage() {
                             <button
                               type="button"
                               onClick={() => handleApplyStandardRate(formData.loanCategory)}
-                              className="text-[10px] font-bold text-indigo-600 hover:underline cursor-pointer py-0.5 active:scale-95 touch-manipulation"
+                              className="text-[10px] font-bold text-emerald-700 hover:underline cursor-pointer py-0.5 active:scale-95 touch-manipulation"
                             >
                               Standard ({standardRatesByCategory[formData.loanCategory]}%)
                             </button>
@@ -1139,11 +1139,11 @@ export default function AddNewEmiPage() {
                             className={cn(
                               "inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-md cursor-pointer transition-all active:scale-95 touch-manipulation",
                               autoCalculateEmi
-                                ? "bg-indigo-50 text-indigo-700 border border-indigo-200/60"
+                                ? "bg-emerald-50 text-emerald-800 border border-emerald-200/70"
                                 : "bg-slate-100 text-slate-600 border border-slate-200/60"
                             )}
                           >
-                            <Zap className="w-2.5 h-2.5 text-indigo-600" />
+                            <Zap className="w-2.5 h-2.5 text-emerald-700" />
                             <span>{autoCalculateEmi ? "Auto" : "Manual"}</span>
                           </button>
                         </div>
@@ -1159,7 +1159,7 @@ export default function AddNewEmiPage() {
                             setFormData({ ...formData, emiAmount: e.target.value });
                             clearError("emiAmount");
                           }}
-                          className={getInputClass(!!errors.emiAmount, "font-extrabold text-indigo-700 text-sm")}
+                          className={getInputClass(!!errors.emiAmount, "font-extrabold text-[#02361B] text-sm")}
                         />
                         {errors.emiAmount && (
                           <p className="text-[11px] font-semibold text-rose-500 mt-1 flex items-center gap-1 animate-in fade-in duration-150">
@@ -1177,7 +1177,7 @@ export default function AddNewEmiPage() {
                             Processing Fee ({vaultCurrencySymbol}) <span className="text-[10px] text-slate-400 font-normal">(Optional)</span>
                           </label>
                           {parseFloat(formData.processingFee) > 0 && (
-                            <label className="inline-flex items-center gap-1.5 text-[10px] font-bold text-indigo-700 cursor-pointer min-h-[24px]">
+                            <label className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-800 cursor-pointer min-h-[24px]">
                               <input
                                 type="checkbox"
                                 checked={formData.processingFeeType === "financed"}
@@ -1187,7 +1187,7 @@ export default function AddNewEmiPage() {
                                     processingFeeType: e.target.checked ? "financed" : "deducted",
                                   }))
                                 }
-                                className="w-3.5 h-3.5 rounded text-indigo-600 accent-indigo-600"
+                                className="w-3.5 h-3.5 rounded text-emerald-600 accent-emerald-600"
                               />
                               <span>Finance into EMIs</span>
                             </label>
@@ -1206,7 +1206,7 @@ export default function AddNewEmiPage() {
                       <div>
                         <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
                           <span>Currency (Vault Baseline)</span>
-                          <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100 flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70 flex items-center gap-1">
                             <Lock className="w-2.5 h-2.5" />
                             Locked
                           </span>
@@ -1241,7 +1241,7 @@ export default function AddNewEmiPage() {
                               setFormData((prev) => ({ ...prev, firstEmiAmount: "" }));
                             }
                           }}
-                          className="mt-0.5 w-4 h-4 rounded text-indigo-600 accent-indigo-600 cursor-pointer"
+                          className="mt-0.5 w-4 h-4 rounded text-emerald-600 accent-emerald-600 cursor-pointer"
                         />
                         <div>
                           <span className="text-xs font-bold text-slate-800 block">
@@ -1271,7 +1271,7 @@ export default function AddNewEmiPage() {
                                   setFormData({ ...formData, firstEmiAmount: e.target.value });
                                   clearError("firstEmiAmount");
                                 }}
-                                className={getInputClass(!!errors.firstEmiAmount, "border-indigo-200 bg-indigo-50/30 font-extrabold text-indigo-900")}
+                                className={getInputClass(!!errors.firstEmiAmount, "border-emerald-200 bg-emerald-50/30 font-extrabold text-[#02361B]")}
                               />
                               {errors.firstEmiAmount && (
                                 <p className="text-[11px] font-semibold text-rose-500 mt-1 flex items-center gap-1 animate-in fade-in duration-150">
@@ -1283,7 +1283,7 @@ export default function AddNewEmiPage() {
                             <div className="text-[11px] text-slate-500 pt-3">
                               {formData.firstEmiAmount && parseFloat(formData.firstEmiAmount) > 0 ? (
                                 <>
-                                  Month 1 is set to <strong className="text-indigo-700 font-bold">{vaultCurrencySymbol}{formatAmount(parseFloat(formData.firstEmiAmount), vaultCurrency)}</strong>. Subsequent months remain standard <strong className="text-slate-800 font-bold">{vaultCurrencySymbol}{formatAmount(activeEmiNum, vaultCurrency)}</strong>.
+                                  Month 1 is set to <strong className="text-emerald-800 font-bold">{vaultCurrencySymbol}{formatAmount(parseFloat(formData.firstEmiAmount), vaultCurrency)}</strong>. Subsequent months remain standard <strong className="text-slate-800 font-bold">{vaultCurrencySymbol}{formatAmount(activeEmiNum, vaultCurrency)}</strong>.
                                 </>
                               ) : (
                                 <>
@@ -1310,7 +1310,7 @@ export default function AddNewEmiPage() {
                           Configure whether this is a brand new loan or an existing running loan.
                         </p> */}
                       </div>
-                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
+                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                         3 of 4
                       </span>
                     </div>
@@ -1327,11 +1327,11 @@ export default function AddNewEmiPage() {
                           className={cn(
                             "flex items-center justify-center gap-1.5 py-2.5 sm:py-2 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap",
                             loanMode === "new"
-                              ? "bg-white text-indigo-700 shadow-2xs border border-slate-200/80"
+                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold"
                               : "text-slate-500 hover:text-slate-800"
                           )}
                         >
-                          <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                          <Sparkles className="w-3.5 h-3.5 shrink-0 text-emerald-700" />
                           <span>Brand New Loan</span>
                         </button>
                         <button
@@ -1340,11 +1340,11 @@ export default function AddNewEmiPage() {
                           className={cn(
                             "flex items-center justify-center gap-1.5 py-2.5 sm:py-2 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap",
                             loanMode === "running"
-                              ? "bg-white text-purple-700 shadow-2xs border border-purple-200/80"
+                              ? "bg-white text-[#02361B] shadow-2xs border border-emerald-300 font-extrabold"
                               : "text-slate-500 hover:text-slate-800"
                           )}
                         >
-                          <History className="w-3.5 h-3.5 shrink-0" />
+                          <History className="w-3.5 h-3.5 shrink-0 text-emerald-700" />
                           <span>Existing Loan</span>
                         </button>
                       </div>
@@ -1352,13 +1352,13 @@ export default function AddNewEmiPage() {
 
                     {/* Running Loan Historical Reconciliation */}
                     {loanMode === "running" && (
-                      <div className="p-3.5 rounded-xl bg-purple-50/60 border border-purple-200/60 space-y-2.5 animate-in fade-in duration-150">
+                      <div className="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/70 space-y-2.5 animate-in fade-in duration-150">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-                            <History className="w-3.5 h-3.5 text-purple-600" />
+                          <span className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+                            <History className="w-3.5 h-3.5 text-emerald-700" />
                             <span>Historical Reconciliation</span>
                           </span>
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200/80">
                             {paidCountNum > 0 ? `${paidCountNum} EMIs Paid` : "Enter past payments"}
                           </span>
                         </div>
@@ -1380,7 +1380,7 @@ export default function AddNewEmiPage() {
                                 setFormData({ ...formData, paidEmisCount: e.target.value });
                                 clearError("paidEmisCount");
                               }}
-                              className={cn(getInputClass(!!errors.paidEmisCount), "border-purple-200 font-bold text-purple-950")}
+                              className={cn(getInputClass(!!errors.paidEmisCount), "border-emerald-200 font-bold text-[#02361B]")}
                             />
                             {errors.paidEmisCount && (
                               <p className="text-[11px] font-semibold text-rose-500 mt-1 flex items-center gap-1 animate-in fade-in duration-150">
@@ -1393,7 +1393,7 @@ export default function AddNewEmiPage() {
                           <div className="text-[11px] text-slate-600 pt-1 sm:pt-4">
                             {paidCountNum > 0 ? (
                               <span>
-                                <strong className="text-purple-700 font-bold">{paidCountNum} of {tenureNum || "?"} EMIs</strong> marked Paid. Reminders begin at installment #{paidCountNum + 1}.
+                                <strong className="text-emerald-800 font-bold">{paidCountNum} of {tenureNum || "?"} EMIs</strong> marked Paid. Reminders begin at installment #{paidCountNum + 1}.
                               </span>
                             ) : (
                               <span>Specify how many EMIs have already been paid before today.</span>
@@ -1432,7 +1432,7 @@ export default function AddNewEmiPage() {
                           <label className="block text-xs font-bold text-slate-700">
                             {loanMode === "running" ? "First EMI Date (Historical)" : "First EMI Due Date"} <span className="text-rose-500 font-bold ml-0.5">*</span>
                           </label>
-                          <span className="text-[10px] text-indigo-600 font-bold flex items-center gap-1">
+                          <span className="text-[10px] text-emerald-700 font-bold flex items-center gap-1">
                             <Zap className="w-2.5 h-2.5" /> Auto-Predicted
                           </span>
                         </div>
@@ -1478,7 +1478,7 @@ export default function AddNewEmiPage() {
                             className={cn(
                               "h-10 text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                               String(formData.dueDay) === String(day)
-                                ? "bg-indigo-600 text-white border-indigo-600 shadow-2xs font-extrabold"
+                                ? "btn-gradient-glow text-white border-transparent shadow-xs font-extrabold"
                                 : "bg-slate-50 text-slate-600 border-slate-200/80 hover:bg-slate-100"
                             )}
                           >
@@ -1534,7 +1534,7 @@ export default function AddNewEmiPage() {
                           Set payment method, mandate, privacy, and notification alerts.
                         </p> */}
                       </div>
-                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-2xs">
+                      <span className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                         4 of 4
                       </span>
                     </div>
@@ -1647,7 +1647,7 @@ export default function AddNewEmiPage() {
                           className={cn(
                             "relative flex items-center gap-3 p-3 min-h-[52px] sm:min-h-[48px] rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none active:scale-[0.99] touch-manipulation",
                             formData.ownershipType === "personal"
-                              ? "bg-indigo-50/60 border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                              ? "bg-emerald-50/70 border-emerald-500 ring-2 ring-emerald-500/15 shadow-2xs"
                               : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
                           )}
                         >
@@ -1655,7 +1655,7 @@ export default function AddNewEmiPage() {
                             <MemberAvatarStack type="personal" size="md" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <span className="font-extrabold text-slate-900 text-xs block truncate leading-tight">
+                            <span className="font-extrabold text-[#02361B] text-xs block truncate leading-tight">
                               Personal Vault
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
@@ -1666,7 +1666,7 @@ export default function AddNewEmiPage() {
                             className={cn(
                               "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                               formData.ownershipType === "personal"
-                                ? "border-indigo-600 bg-indigo-600"
+                                ? "border-emerald-600 bg-emerald-600"
                                 : "border-slate-300 bg-white"
                             )}
                           >
@@ -1689,17 +1689,17 @@ export default function AddNewEmiPage() {
                           className={cn(
                             "relative flex items-center gap-3 p-3 min-h-[52px] sm:min-h-[48px] rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none active:scale-[0.99] touch-manipulation",
                             formData.ownershipType === "family_shared"
-                              ? "bg-indigo-50/60 border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                              ? "bg-teal-50/70 border-teal-500 ring-2 ring-teal-500/15 shadow-2xs"
                               : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
                           )}
                         >
                           <div className="shrink-0">
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-teal-500 to-indigo-600 text-white flex items-center justify-center shadow-2xs">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-600 text-white flex items-center justify-center shadow-2xs">
                               <Users className="w-3.5 h-3.5 stroke-[2.2]" />
                             </div>
                           </div>
                           <div className="min-w-0 flex-1">
-                            <span className="font-extrabold text-slate-900 text-xs block truncate leading-tight">
+                            <span className="font-extrabold text-[#02361B] text-xs block truncate leading-tight">
                               Family Vault
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
@@ -1710,7 +1710,7 @@ export default function AddNewEmiPage() {
                             className={cn(
                               "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                               formData.ownershipType === "family_shared"
-                                ? "border-indigo-600 bg-indigo-600"
+                                ? "border-teal-600 bg-teal-600"
                                 : "border-slate-300 bg-white"
                             )}
                           >
@@ -1726,10 +1726,10 @@ export default function AddNewEmiPage() {
                         <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                              <Users className="w-3.5 h-3.5 text-indigo-600" />
+                              <Users className="w-3.5 h-3.5 text-teal-700" />
                               Select Family Group / Household <span className="text-rose-500">*</span>
                             </span>
-                            <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-0.5 rounded-full border border-indigo-100 shadow-2xs">
+                            <span className="text-[10px] font-semibold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs">
                               {families.length} {families.length === 1 ? "Vault" : "Vaults"}
                             </span>
                           </div>
@@ -1754,7 +1754,7 @@ export default function AddNewEmiPage() {
                                     className={cn(
                                       "relative flex items-center gap-3 p-3 min-h-[52px] sm:min-h-[48px] rounded-xl border text-left cursor-pointer transition-all duration-150 focus:outline-none active:scale-[0.99] touch-manipulation",
                                       isSelected
-                                        ? "bg-white border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                                        ? "bg-white border-teal-500 ring-2 ring-teal-500/15 shadow-2xs"
                                         : "bg-white/80 border-slate-200/90 hover:border-slate-300 shadow-2xs"
                                     )}
                                   >
@@ -1767,7 +1767,7 @@ export default function AddNewEmiPage() {
                                       />
                                     </div>
                                     <div className="min-w-0 flex-1">
-                                      <span className="font-extrabold text-slate-900 text-xs block truncate leading-tight">
+                                      <span className="font-extrabold text-[#02361B] text-xs block truncate leading-tight">
                                         {fam.name}
                                       </span>
                                       <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
@@ -1778,7 +1778,7 @@ export default function AddNewEmiPage() {
                                       className={cn(
                                         "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                                         isSelected
-                                          ? "border-indigo-600 bg-indigo-600"
+                                          ? "border-teal-600 bg-teal-600"
                                           : "border-slate-300 bg-white"
                                       )}
                                     >
@@ -1798,7 +1798,7 @@ export default function AddNewEmiPage() {
                               </div>
                               <p className="text-[11px] text-amber-700 leading-relaxed font-normal">
                                 To share loans with family, you first need to create a household workspace on the{" "}
-                                <Link href="/family/setup" target="_blank" className="font-bold underline text-indigo-700">
+                                <Link href="/family/setup" target="_blank" className="font-bold underline text-emerald-800">
                                   Family page
                                 </Link>
                                 . Until then, keep this loan in your <strong>Personal Vault</strong>.
@@ -1813,10 +1813,10 @@ export default function AddNewEmiPage() {
                     <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 space-y-2.5">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                          <Bell className="w-3.5 h-3.5 text-indigo-600" />
+                          <Bell className="w-3.5 h-3.5 text-emerald-700" />
                           <span>Automated Reminder Alerts</span>
                         </span>
-                        <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                        <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
                           Active
                         </span>
                       </div>
@@ -1827,7 +1827,7 @@ export default function AddNewEmiPage() {
                             type="checkbox"
                             checked={formData.reminder7Days}
                             onChange={(e) => setFormData({ ...formData, reminder7Days: e.target.checked })}
-                            className="rounded text-indigo-600 accent-indigo-600 w-4 h-4"
+                            className="rounded text-emerald-600 accent-emerald-600 w-4 h-4"
                           />
                           <span className="font-semibold text-slate-700 text-xs">7 Days</span>
                         </label>
@@ -1837,7 +1837,7 @@ export default function AddNewEmiPage() {
                             type="checkbox"
                             checked={formData.reminder3Days}
                             onChange={(e) => setFormData({ ...formData, reminder3Days: e.target.checked })}
-                            className="rounded text-indigo-600 accent-indigo-600 w-4 h-4"
+                            className="rounded text-emerald-600 accent-emerald-600 w-4 h-4"
                           />
                           <span className="font-semibold text-slate-700 text-xs">3 Days</span>
                         </label>
@@ -1847,7 +1847,7 @@ export default function AddNewEmiPage() {
                             type="checkbox"
                             checked={formData.reminder1Day}
                             onChange={(e) => setFormData({ ...formData, reminder1Day: e.target.checked })}
-                            className="rounded text-indigo-600 accent-indigo-600 w-4 h-4"
+                            className="rounded text-emerald-600 accent-emerald-600 w-4 h-4"
                           />
                           <span className="font-semibold text-slate-700 text-xs">1 Day</span>
                         </label>
@@ -1857,7 +1857,7 @@ export default function AddNewEmiPage() {
                             type="checkbox"
                             checked={formData.reminderDueDate}
                             onChange={(e) => setFormData({ ...formData, reminderDueDate: e.target.checked })}
-                            className="rounded text-indigo-600 accent-indigo-600 w-4 h-4"
+                            className="rounded text-emerald-600 accent-emerald-600 w-4 h-4"
                           />
                           <span className="font-semibold text-slate-700 text-xs">Due Date</span>
                         </label>
@@ -1874,7 +1874,7 @@ export default function AddNewEmiPage() {
                         placeholder="e.g. Salary account debited automatically on 10th morning"
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all text-slate-900 placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
+                        className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
                       />
                     </div>
                   </div>
@@ -2157,8 +2157,8 @@ export default function AddNewEmiPage() {
                   <div className="space-y-1.5 text-[11px] text-slate-600 font-medium">
                     {loanMode === "running" && paidCountNum > 0 ? (
                       <>
-                        <div className="flex items-center gap-1.5 text-purple-700 font-semibold">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                        <div className="flex items-center gap-1.5 text-emerald-800 font-semibold">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                           <span>{paidCountNum} past EMIs auto-reconciled as Paid</span>
                         </div>
                         <div className="flex items-center gap-1.5 text-emerald-700">
@@ -2185,8 +2185,8 @@ export default function AddNewEmiPage() {
                       <span>Multi-stage reminders tagged automatically</span>
                     </div>
                     {formData.paymentMethod === "Auto Debit" && (
-                      <div className="flex items-center gap-1.5 text-indigo-700 font-semibold">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                      <div className="flex items-center gap-1.5 text-emerald-800 font-semibold">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                         <span>
                           {formData.debitBankName
                             ? `Auto-debit active from ${formData.debitBankName}`
@@ -2220,7 +2220,7 @@ export default function AddNewEmiPage() {
               {/* Modal Header */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-800 shrink-0">
                     {formData.bankName ? (
                       <BankLogo bankName={formData.bankName} size="md" />
                     ) : (
@@ -2252,7 +2252,7 @@ export default function AddNewEmiPage() {
 
               {/* Family Shared Workspace Banner in Preview */}
               {formData.ownershipType === "family_shared" && selectedFamily && (
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-indigo-50/70 border border-indigo-100/90">
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-teal-50/70 border border-teal-200/80">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <MemberAvatarStack
                       members={selectedFamily.members_preview}
@@ -2261,15 +2261,15 @@ export default function AddNewEmiPage() {
                       size="xs"
                     />
                     <div className="min-w-0">
-                      <span className="text-xs font-bold text-indigo-950 truncate block">
+                      <span className="text-xs font-bold text-teal-950 truncate block">
                         {selectedFamily.name}
                       </span>
-                      <span className="text-[10px] font-medium text-indigo-600 block">
+                      <span className="text-[10px] font-medium text-teal-700 block">
                         Shared Family Commitment • {selectedFamily.members_count || 1} members
                       </span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-extrabold text-indigo-700 bg-white px-2 py-0.5 rounded-full border border-indigo-100 shadow-2xs shrink-0">
+                  <span className="text-[10px] font-extrabold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs shrink-0">
                     Family Vault
                   </span>
                 </div>
@@ -2284,7 +2284,7 @@ export default function AddNewEmiPage() {
                   {activeEmiNum > 0 ? `${vaultCurrencySymbol}${formatAmount(activeEmiNum, vaultCurrency)}` : `${vaultCurrencySymbol}0`}
                 </div>
                 {hasBrokenPeriod && tenureNum > 1 ? (
-                  <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  <div className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                     1st Month: {vaultCurrencySymbol}{formatAmount(firstMonthEmi, vaultCurrency)} ({formData.firstEmiType === "bpi" ? "BPI" : "Custom"}) • then {vaultCurrencySymbol}{formatAmount(activeEmiNum, vaultCurrency)}/mo
                   </div>
                 ) : (
@@ -2296,10 +2296,10 @@ export default function AddNewEmiPage() {
 
               {/* Running Loan Progress Banner (if running loan selected) */}
               {loanMode === "running" && (
-                <div className="p-3 rounded-xl bg-purple-50/60 border border-purple-100/90 space-y-1.5">
+                <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/70 space-y-1.5">
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span className="text-purple-900 flex items-center gap-1">
-                      <History className="w-3 h-3 text-purple-600" />
+                    <span className="text-emerald-950 flex items-center gap-1">
+                      <History className="w-3 h-3 text-emerald-700" />
                       Completed EMIs
                     </span>
                     <span className="text-emerald-800">
