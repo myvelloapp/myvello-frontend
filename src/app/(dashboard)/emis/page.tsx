@@ -570,32 +570,37 @@ export default function EmiManagementPage() {
     }
   }, [rawRealLoans, categoryFilter]);
 
-  // Dynamic bank filter options combining any banks in user's loans + popular banks
+  // Dynamic bank filter options: only show banks present in user's loans (+ All Banks)
   const bankFilterOptions = useMemo(() => {
-    const popularBanks = [
-      "Bajaj Finance",
-      "HDFC Bank",
-      "SBI",
-      "ICICI Bank",
-      "Axis Bank",
-      "Kotak Bank",
-      "Bank of Baroda",
-      "Punjab National Bank",
-      "Canara Bank",
-      "Federal Bank",
-    ];
-    const loanBanks = Array.from(new Set(rawRealLoans.map((l) => l.lender_name).filter(Boolean)));
-    const allBankNames = Array.from(new Set([...loanBanks, ...popularBanks]));
+    const loanBanks = Array.from(
+      new Set(
+        rawRealLoans
+          .map((l) => l.lender_name?.trim())
+          .filter(Boolean) as string[]
+      )
+    ).sort((a, b) => a.localeCompare(b));
 
     return [
       { value: "All", label: "All Banks" },
-      ...allBankNames.map((name) => ({
+      ...loanBanks.map((name) => ({
         value: name,
         label: name,
         icon: <BankLogo bankName={name} size="xs" />,
       })),
     ];
   }, [rawRealLoans]);
+
+  // If the currently selected bank is removed or not present in loans, reset filter to 'All'
+  useEffect(() => {
+    if (bankFilter !== "All" && rawRealLoans.length > 0) {
+      const exists = rawRealLoans.some(
+        (l) => (l.lender_name || "").trim().toLowerCase() === bankFilter.toLowerCase()
+      );
+      if (!exists) {
+        setBankFilter("All");
+      }
+    }
+  }, [rawRealLoans, bankFilter]);
 
   // Filter live loans with 0ms in-memory instant tab switches, search and dropdowns
   const filteredRealLoans = useMemo(() => {
@@ -614,7 +619,12 @@ export default function EmiManagementPage() {
       }
 
       // 3. Bank Filter (0ms instant switch)
-      if (bankFilter !== "All" && loan.lender_name !== bankFilter) return false;
+      if (
+        bankFilter !== "All" &&
+        loan.lender_name?.trim().toLowerCase() !== bankFilter.toLowerCase()
+      ) {
+        return false;
+      }
 
       // 4. Search Query filter (0ms instant search)
       if (searchQuery.trim()) {
