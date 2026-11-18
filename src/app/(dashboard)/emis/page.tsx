@@ -240,34 +240,6 @@ function GridSkeleton() {
   );
 }
 
-const statusFilterOptions = [
-  {
-    value: "All",
-    label: "All Status",
-    icon: <span className="w-2 h-2 rounded-full bg-slate-400 inline-block" />,
-  },
-  {
-    value: "Upcoming",
-    label: "Upcoming",
-    icon: <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block ring-2 ring-emerald-500/20" />,
-  },
-  {
-    value: "Due Soon",
-    label: "Due Soon",
-    icon: <span className="w-2 h-2 rounded-full bg-amber-500 inline-block ring-2 ring-amber-500/20" />,
-  },
-  {
-    value: "Overdue",
-    label: "Overdue",
-    icon: <span className="w-2 h-2 rounded-full bg-rose-500 inline-block ring-2 ring-rose-500/20" />,
-  },
-  {
-    value: "Paid",
-    label: "Paid / Completed",
-    icon: <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block ring-2 ring-emerald-500/20" />,
-  },
-];
-
 function areEmiResponsesEqual(
   a: EmiIndexResponse | null,
   b: EmiIndexResponse | null
@@ -601,6 +573,85 @@ export default function EmiManagementPage() {
       }
     }
   }, [rawRealLoans, bankFilter]);
+
+  // Dynamic status filter options: only show payment statuses present in user's loans (+ All Status)
+  const statusFilterOptions = useMemo(() => {
+    const presentStatuses = new Set<string>();
+
+    rawRealLoans.forEach((loan) => {
+      if (loan.status === "completed") {
+        presentStatuses.add("Paid");
+      } else {
+        const isOverdue =
+          loan.next_due_status === "overdue" ||
+          (loan.days_remaining !== null &&
+            loan.days_remaining !== undefined &&
+            loan.days_remaining < 0);
+
+        const isDueSoon =
+          !isOverdue &&
+          (loan.next_due_status === "due_soon" ||
+            (loan.days_remaining !== null &&
+              loan.days_remaining !== undefined &&
+              loan.days_remaining <= 3 &&
+              loan.days_remaining >= 0));
+
+        if (isOverdue) {
+          presentStatuses.add("Overdue");
+        } else if (isDueSoon) {
+          presentStatuses.add("Due Soon");
+        } else {
+          presentStatuses.add("Upcoming");
+        }
+      }
+    });
+
+    const standardStatusOptions = [
+      {
+        value: "Upcoming",
+        label: "Upcoming",
+        icon: <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block ring-2 ring-emerald-500/20" />,
+      },
+      {
+        value: "Due Soon",
+        label: "Due Soon",
+        icon: <span className="w-2 h-2 rounded-full bg-amber-500 inline-block ring-2 ring-amber-500/20" />,
+      },
+      {
+        value: "Overdue",
+        label: "Overdue",
+        icon: <span className="w-2 h-2 rounded-full bg-rose-500 inline-block ring-2 ring-rose-500/20" />,
+      },
+      {
+        value: "Paid",
+        label: "Paid / Completed",
+        icon: <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block ring-2 ring-emerald-500/20" />,
+      },
+    ];
+
+    const activeStatusOptions = standardStatusOptions.filter((opt) =>
+      presentStatuses.has(opt.value)
+    );
+
+    return [
+      {
+        value: "All",
+        label: "All Status",
+        icon: <span className="w-2 h-2 rounded-full bg-slate-400 inline-block" />,
+      },
+      ...activeStatusOptions,
+    ];
+  }, [rawRealLoans]);
+
+  // If the currently selected status is removed or not present in loans, reset filter to 'All'
+  useEffect(() => {
+    if (statusFilter !== "All" && rawRealLoans.length > 0) {
+      const exists = statusFilterOptions.some((opt) => opt.value === statusFilter);
+      if (!exists) {
+        setStatusFilter("All");
+      }
+    }
+  }, [rawRealLoans, statusFilter, statusFilterOptions]);
 
   // Filter live loans with 0ms in-memory instant tab switches, search and dropdowns
   const filteredRealLoans = useMemo(() => {
