@@ -27,26 +27,26 @@ function AppWaveBackgroundComponent() {
         >
           <defs>
             <linearGradient id="trWaveGrad4" x1="100%" y1="0%" x2="0%" y2="70%">
-              <stop offset="0%" stop-color="#C5EAD9" stop-opacity="0.6" />
-              <stop offset="60%" stop-color="#E2F6EE" stop-opacity="0.32" />
-              <stop offset="100%" stop-color="#EDF8F2" stop-opacity="0.0" />
+              <stop offset="0%" stopColor="#C5EAD9" stopOpacity="0.6" />
+              <stop offset="60%" stopColor="#E2F6EE" stopOpacity="0.32" />
+              <stop offset="100%" stopColor="#EDF8F2" stopOpacity="0.0" />
             </linearGradient>
 
             <linearGradient id="trWaveGrad3" x1="100%" y1="0%" x2="10%" y2="60%">
-              <stop offset="0%" stop-color="#B7E5D1" stop-opacity="0.7" />
-              <stop offset="55%" stop-color="#D4F2E5" stop-opacity="0.48" />
-              <stop offset="100%" stop-color="#EBF9F3" stop-opacity="0.1" />
+              <stop offset="0%" stopColor="#B7E5D1" stopOpacity="0.7" />
+              <stop offset="55%" stopColor="#D4F2E5" stopOpacity="0.48" />
+              <stop offset="100%" stopColor="#EBF9F3" stopOpacity="0.1" />
             </linearGradient>
 
             <linearGradient id="trWaveGrad2" x1="100%" y1="10%" x2="25%" y2="50%">
-              <stop offset="0%" stop-color="#AEE1CB" stop-opacity="0.8" />
-              <stop offset="50%" stop-color="#C9EEDD" stop-opacity="0.55" />
-              <stop offset="100%" stop-color="#E2F7EE" stop-opacity="0.15" />
+              <stop offset="0%" stopColor="#AEE1CB" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#C9EEDD" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#E2F7EE" stopOpacity="0.15" />
             </linearGradient>
 
             <linearGradient id="trWaveGrad1" x1="100%" y1="15%" x2="40%" y2="40%">
-              <stop offset="0%" stop-color="#9DDDC2" stop-opacity="0.88" />
-              <stop offset="100%" stop-color="#BEE8D5" stop-opacity="0.45" />
+              <stop offset="0%" stopColor="#9DDDC2" stopOpacity="0.88" />
+              <stop offset="100%" stopColor="#BEE8D5" stopOpacity="0.45" />
             </linearGradient>
           </defs>
 
@@ -102,26 +102,26 @@ function AppWaveBackgroundComponent() {
         >
           <defs>
             <linearGradient id="blWaveGrad4" x1="0%" y1="100%" x2="70%" y2="0%">
-              <stop offset="0%" stop-color="#C5EAD9" stop-opacity="0.6" />
-              <stop offset="60%" stop-color="#E2F6EE" stop-opacity="0.32" />
-              <stop offset="100%" stop-color="#EDF8F2" stop-opacity="0.0" />
+              <stop offset="0%" stopColor="#C5EAD9" stopOpacity="0.6" />
+              <stop offset="60%" stopColor="#E2F6EE" stopOpacity="0.32" />
+              <stop offset="100%" stopColor="#EDF8F2" stopOpacity="0.0" />
             </linearGradient>
 
             <linearGradient id="blWaveGrad3" x1="5%" y1="100%" x2="65%" y2="20%">
-              <stop offset="0%" stop-color="#B7E5D1" stop-opacity="0.7" />
-              <stop offset="55%" stop-color="#D4F2E5" stop-opacity="0.48" />
-              <stop offset="100%" stop-color="#EBF9F3" stop-opacity="0.1" />
+              <stop offset="0%" stopColor="#B7E5D1" stopOpacity="0.7" />
+              <stop offset="55%" stopColor="#D4F2E5" stopOpacity="0.48" />
+              <stop offset="100%" stopColor="#EBF9F3" stopOpacity="0.1" />
             </linearGradient>
 
             <linearGradient id="blWaveGrad2" x1="0%" y1="95%" x2="50%" y2="40%">
-              <stop offset="0%" stop-color="#AEE1CB" stop-opacity="0.8" />
-              <stop offset="50%" stop-color="#C9EEDD" stop-opacity="0.55" />
-              <stop offset="100%" stop-color="#E2F7EE" stop-opacity="0.15" />
+              <stop offset="0%" stopColor="#AEE1CB" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#C9EEDD" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#E2F7EE" stopOpacity="0.15" />
             </linearGradient>
 
             <linearGradient id="blWaveGrad1" x1="0%" y1="90%" x2="40%" y2="60%">
-              <stop offset="0%" stop-color="#9DDDC2" stop-opacity="0.88" />
-              <stop offset="100%" stop-color="#BEE8D5" stop-opacity="0.45" />
+              <stop offset="0%" stopColor="#9DDDC2" stopOpacity="0.88" />
+              <stop offset="100%" stopColor="#BEE8D5" stopOpacity="0.45" />
             </linearGradient>
           </defs>
 
