@@ -117,11 +117,8 @@ function NewEmiSkeleton() {
         </div>
 
         {/* Desktop Heading Skeleton */}
-        <div className="hidden sm:flex sm:items-center justify-between gap-3">
-          <div className="space-y-2">
-            <div className="h-8 w-44 bg-slate-200/80 rounded-xl" />
-          </div>
-          <div className="h-9 w-32 bg-slate-200/70 rounded-xl self-start sm:self-auto" />
+        <div className="hidden sm:block space-y-2">
+          <div className="h-8 w-44 bg-slate-200/80 rounded-xl" />
         </div>
 
         {/* Two-Column Form & Real-Time Automation Preview Layout */}
@@ -794,29 +791,16 @@ export default function AddNewEmiPage() {
             </div>
           </div>
 
-          {/* Desktop Page Heading & Back Action (Hidden on Mobile) */}
-          <div className="hidden sm:flex sm:items-center justify-between gap-3">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
-                  New EMI Entry
-                </span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
-                Add New EMI
-              </h1>
+          {/* Desktop Page Heading (Hidden on Mobile) */}
+          <div className="hidden sm:block space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-[#02361B] border border-emerald-300/60">
+                New EMI Entry
+              </span>
             </div>
-
-            <Link href="/emis">
-              <button
-                type="button"
-                className="h-10 min-h-[40px] inline-flex items-center gap-2 px-4 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-[#02361B] text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation group"
-              >
-                <X className="w-4 h-4 text-slate-500 group-hover:text-slate-800 transition-colors" />
-                <span>Close Popup</span>
-                <kbd className="ml-1 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-100 rounded border border-slate-200">ESC</kbd>
-              </button>
-            </Link>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
+              Add New EMI
+            </h1>
           </div>
 
           {/* Two-Column Form & Real-Time Automation Preview Layout */}
