@@ -131,8 +131,8 @@ body {
 .bg-auth-pattern {
   background-image: url('/images/patern.png');
   background-repeat: repeat;
-  background-size: 550px auto;
-  opacity: 0.55;
+  background-size: 1372px;
+  opacity: 0.33;
   pointer-events: none;
 }
 
