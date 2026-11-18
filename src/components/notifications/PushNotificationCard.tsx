@@ -197,7 +197,7 @@ export function PushNotificationCard({
               type="button"
               onClick={handleEnablePush}
               disabled={isLoading}
-              className="min-h-[42px] px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="min-h-[42px] px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

@@ -474,7 +474,7 @@ export const BankSelector: React.FC<BankSelectorProps> = ({
                       onChange(modalSearchQuery);
                       setIsModalOpen(false);
                     }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[40px] rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-all active:scale-95 touch-manipulation"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[40px] rounded-xl btn-gradient-glow text-xs font-bold transition-all active:scale-95 touch-manipulation"
                   >
                     <span>Use &ldquo;{modalSearchQuery}&rdquo; as custom lender</span>
                   </button>

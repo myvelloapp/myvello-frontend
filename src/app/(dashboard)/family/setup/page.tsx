@@ -161,7 +161,7 @@ export default function FamilySetupPage() {
               className={cn(
                 "min-h-[40px] sm:min-h-[34px] px-3.5 py-2 sm:py-1.5 rounded-lg sm:rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap",
                 activeTab === "create"
-                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                   : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
               )}
             >
@@ -175,7 +175,7 @@ export default function FamilySetupPage() {
               className={cn(
                 "min-h-[40px] sm:min-h-[34px] px-3.5 py-2 sm:py-1.5 rounded-lg sm:rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap",
                 activeTab === "join"
-                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                   : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
               )}
             >
@@ -295,7 +295,7 @@ export default function FamilySetupPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting || !workspaceName.trim()}
-                      className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <>
@@ -393,7 +393,7 @@ export default function FamilySetupPage() {
                     <button
                       type="submit"
                       disabled={isJoining || !inviteCode.trim()}
-                      className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isJoining ? (
                         <>

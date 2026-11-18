@@ -636,7 +636,7 @@ function SettingsPageContent() {
                 className={cn(
                   "min-h-[42px] sm:min-h-[36px] px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2 active:scale-95 touch-manipulation select-none",
                   activeTab === "profile"
-                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                     : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                 )}
               >
@@ -650,7 +650,7 @@ function SettingsPageContent() {
                 className={cn(
                   "min-h-[42px] sm:min-h-[36px] px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2 active:scale-95 touch-manipulation select-none",
                   activeTab === "security"
-                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                     : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                 )}
               >
@@ -865,7 +865,7 @@ function SettingsPageContent() {
                     <button
                       type="submit"
                       disabled={isSavingProfile}
-                      className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-7 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
+                      className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-7 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
                     >
                       {isSavingProfile ? (
                         <>
@@ -977,7 +977,7 @@ function SettingsPageContent() {
                       <button
                         type="submit"
                         disabled={isSavingPassword}
-                        className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-7 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
+                        className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-7 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
                       >
                         {isSavingPassword ? (
                           <>
@@ -1347,7 +1347,7 @@ function SettingsPageContent() {
 
               <Link
                 href="/install"
-                className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all"
+                className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all"
               >
                 <Download className="w-4 h-4" />
                 <span>Open Installation Guide</span>
@@ -1380,7 +1380,7 @@ function SettingsPageContent() {
 
               <Link
                 href="/family"
-                className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all"
+                className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all"
               >
                 <Users className="w-4 h-4" />
                 <span>Go to Family Workspace</span>
@@ -1400,7 +1400,7 @@ function SettingsPageContent() {
                   className={cn(
                     "min-h-[40px] px-3 py-2 rounded-lg text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation select-none font-bold",
                     activeTab === "profile"
-                      ? "btn-gradient-glow text-white shadow-xs shadow-indigo-500/25"
+                      ? "btn-gradient-glow text-white shadow-xs shadow-emerald-500/25"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                   )}
                 >
@@ -1414,7 +1414,7 @@ function SettingsPageContent() {
                   className={cn(
                     "min-h-[40px] px-3 py-2 rounded-lg text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation select-none font-bold",
                     activeTab === "security"
-                      ? "btn-gradient-glow text-white shadow-xs shadow-indigo-500/25"
+                      ? "btn-gradient-glow text-white shadow-xs shadow-emerald-500/25"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                   )}
                 >
@@ -1534,7 +1534,7 @@ function SettingsPageContent() {
                       <button
                         type="submit"
                         disabled={isSavingProfile}
-                        className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
+                        className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
                       >
                         {isSavingProfile ? (
                           <>
@@ -1625,7 +1625,7 @@ function SettingsPageContent() {
                       <button
                         type="submit"
                         disabled={isSavingPassword}
-                        className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all disabled:opacity-60"
+                        className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all disabled:opacity-60"
                       >
                         {isSavingPassword ? "Updating..." : "Update Password"}
                       </button>

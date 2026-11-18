@@ -530,7 +530,7 @@ export default function PaymentHistoryPage() {
             <Link href="/emis">
               <button
                 type="button"
-                className="h-9 px-4 rounded-xl btn-gradient-glow text-white font-bold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                className="h-9 px-4 rounded-xl btn-gradient-glow text-white font-bold text-xs shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
               >
                 <span>Manage EMIs</span>
                 <ChevronRight className="w-3.5 h-3.5" />

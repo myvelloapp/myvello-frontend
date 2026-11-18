@@ -147,7 +147,7 @@ export function Navbar() {
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full h-10 rounded-xl btn-gradient-glow text-white text-xs font-bold flex items-center justify-center gap-1 shadow-md shadow-indigo-500/20"
+                  className="w-full h-10 rounded-xl btn-gradient-glow text-white text-xs font-bold flex items-center justify-center gap-1 shadow-md shadow-emerald-500/25"
                 >
                   <span>Create Free Account</span>
                   <ChevronRight className="w-3.5 h-3.5" />

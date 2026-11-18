@@ -157,7 +157,7 @@ export default function ForgotPasswordPage() {
             {isSubmitted ? (
               /* Success State (Touch-Optimized for Mobile) */
               <div className="space-y-5 animate-in fade-in duration-200">
-                <div className="w-13 h-13 rounded-2xl bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] text-white flex items-center justify-center shadow-md shadow-indigo-500/25">
+                <div className="w-13 h-13 rounded-2xl bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] text-white flex items-center justify-center shadow-md shadow-emerald-500/25">
                   <CheckCircle2 className="w-7 h-7 text-white stroke-[2.5]" />
                 </div>
 
@@ -176,7 +176,7 @@ export default function ForgotPasswordPage() {
                 <div className="pt-2 space-y-3">
                   <Link
                     href="/login"
-                    className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-indigo-500/20 active:scale-[0.98] transition-all touch-manipulation"
+                    className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-emerald-500/25 active:scale-[0.98] transition-all touch-manipulation"
                   >
                     Return to Sign In
                   </Link>
@@ -254,7 +254,7 @@ export default function ForgotPasswordPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] transition-all touch-manipulation shadow-md shadow-indigo-500/20"
+                      className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] transition-all touch-manipulation shadow-md shadow-emerald-500/25"
                     >
                       {isLoading ? (
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

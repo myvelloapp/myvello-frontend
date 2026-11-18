@@ -170,7 +170,7 @@ export const TenureInput: React.FC<TenureInputProps> = ({
               <button
                 type="button"
                 onClick={handleApplyYears}
-                className="h-8 sm:h-7 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold transition-all cursor-pointer shrink-0 active:scale-95 touch-manipulation"
+                className="h-8 sm:h-7 px-3 rounded-lg btn-gradient-glow text-[11px] font-bold transition-all cursor-pointer shrink-0 active:scale-95 touch-manipulation"
               >
                 Apply
               </button>

@@ -888,7 +888,7 @@ function EmiDetailContent() {
           <Link href="/emis/new" className="w-full sm:w-auto">
             <button
               type="button"
-              className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-1.5 px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 cursor-pointer active:scale-95 touch-manipulation transition-all"
+              className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-1.5 px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95 touch-manipulation transition-all"
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Add New EMI</span>
@@ -996,7 +996,7 @@ function EmiDetailContent() {
                       familyMembers: loan.family?.members,
                     })
                   }
-                  className="w-full min-h-[44px] inline-flex items-center justify-center gap-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs shadow-emerald-600/20 active:scale-95 touch-manipulation cursor-pointer transition-all"
+                  className="w-full min-h-[44px] inline-flex items-center justify-center gap-2 px-4 rounded-xl btn-gradient-glow text-xs font-extrabold active:scale-95 touch-manipulation cursor-pointer transition-all"
                 >
                   <Check className="w-4 h-4 stroke-[3]" />
                   <span>Mark Next Due as Paid ({formatCurrency(nextPendingSchedule.due_amount, currency)})</span>
@@ -1180,7 +1180,7 @@ function EmiDetailContent() {
                       familyMembers: loan.family?.members,
                     })
                   }
-                  className="min-h-[38px] inline-flex items-center gap-1.5 px-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs shadow-emerald-600/20 cursor-pointer active:scale-95 touch-manipulation transition-all"
+                  className="min-h-[38px] inline-flex items-center gap-1.5 px-3.5 rounded-xl btn-gradient-glow text-xs font-extrabold cursor-pointer active:scale-95 touch-manipulation transition-all"
                 >
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                   <span>Mark Next Due as Paid</span>
@@ -1262,7 +1262,7 @@ function EmiDetailContent() {
                   className={cn(
                     "min-h-[42px] sm:min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-[10px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 touch-manipulation",
                     activeTab === "schedule"
-                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                       : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                   )}
                 >
@@ -1285,7 +1285,7 @@ function EmiDetailContent() {
                   className={cn(
                     "min-h-[42px] sm:min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-[10px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 touch-manipulation",
                     activeTab === "history"
-                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                       : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                   )}
                 >
@@ -1308,7 +1308,7 @@ function EmiDetailContent() {
                   className={cn(
                     "min-h-[42px] sm:min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-[10px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 active:scale-95 touch-manipulation",
                     activeTab === "terms"
-                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                       : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                   )}
                 >
@@ -2658,7 +2658,7 @@ function EmiDetailContent() {
                     type="button"
                     disabled={isSaving}
                     onClick={() => handleSaveChanges()}
-                    className="min-h-[44px] px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 cursor-pointer active:scale-95 touch-manipulation disabled:opacity-60 flex items-center gap-1.5"
+                    className="min-h-[44px] px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95 touch-manipulation disabled:opacity-60 flex items-center gap-1.5"
                   >
                     <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>{isSaving ? "Saving..." : "Save Changes"}</span>

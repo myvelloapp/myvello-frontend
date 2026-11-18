@@ -880,7 +880,7 @@ function NotificationsPageContent() {
                 <Link href="/emis">
                   <button
                     type="button"
-                    className="h-9 px-4.5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
+                    className="h-9 px-4.5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
                   >
                     <span>View EMI Dashboard</span>
                     <ArrowRight className="w-3.5 h-3.5" />

@@ -91,7 +91,7 @@ function EmptyEmiState({
         <Link href="/emis/new" className="inline-block">
           <button
             type="button"
-            className="h-9 px-4 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center gap-1.5 cursor-pointer active:scale-[0.99] transition-all"
+            className="h-9 px-4 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center gap-1.5 cursor-pointer active:scale-[0.99] transition-all"
           >
             <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Add Your First EMI</span>
@@ -780,7 +780,7 @@ export default function EmiManagementPage() {
                             scheduleId: currentMobileEmi.schedule_id,
                           })
                         }
-                        className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full border border-indigo-200/90 bg-white hover:bg-indigo-50/80 text-indigo-600 text-xs font-extrabold shadow-2xs active:scale-95 transition-all cursor-pointer"
+                        className="shrink-0 flex items-center gap-1 px-3.5 py-1.5 rounded-full btn-gradient-glow text-xs font-extrabold active:scale-95 transition-all cursor-pointer"
                       >
                         <span>Paid</span>
                         <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -953,7 +953,7 @@ export default function EmiManagementPage() {
                   <Link href="/emis/new" className="inline-block shrink-0">
                     <button
                       type="button"
-                      className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation active:scale-95"
+                      className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation active:scale-95"
                     >
                       <Plus className="w-4 h-4 stroke-[2.5]" />
                       <span>Add</span>
@@ -972,7 +972,7 @@ export default function EmiManagementPage() {
                     className={cn(
                       "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                       activeTab === "active"
-                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                         : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                     )}
                   >
@@ -999,7 +999,7 @@ export default function EmiManagementPage() {
                     className={cn(
                       "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                       activeTab === "completed"
-                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                         : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                     )}
                   >
@@ -1026,7 +1026,7 @@ export default function EmiManagementPage() {
                     className={cn(
                       "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                       activeTab === "archived"
-                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                        ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                         : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                     )}
                   >
@@ -1052,7 +1052,7 @@ export default function EmiManagementPage() {
                 <Link href="/emis/new" className="inline-block shrink-0">
                   <button
                     type="button"
-                    className="h-9 min-h-[36px] px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation active:scale-95"
+                    className="h-9 min-h-[36px] px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation active:scale-95"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>Add New EMI</span>
@@ -1369,7 +1369,7 @@ export default function EmiManagementPage() {
                                     e.stopPropagation();
                                     setSelectedEmiForPay(loan);
                                   }}
-                                  className="h-8 px-3 rounded-full text-[11px] font-extrabold text-white btn-gradient-glow shadow-xs hover:shadow-indigo-500/25 transition-all cursor-pointer active:scale-95 inline-flex items-center gap-1 touch-manipulation"
+                                  className="h-8 px-3 rounded-full text-[11px] font-extrabold text-white btn-gradient-glow shadow-xs hover:shadow-emerald-500/25 transition-all cursor-pointer active:scale-95 inline-flex items-center gap-1 touch-manipulation"
                                 >
                                   <Check className="w-3 h-3 stroke-[2.5]" />
                                   <span>Pay</span>
@@ -2063,7 +2063,7 @@ export default function EmiManagementPage() {
                                           e.stopPropagation();
                                           setSelectedEmiForPay(loan);
                                         }}
-                                        className="flex-1 h-10 sm:h-9 min-h-[40px] sm:min-h-[36px] rounded-[12px] sm:rounded-[10px] btn-gradient-glow text-white text-xs font-black shadow-xs hover:shadow-indigo-500/25 flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-95 touch-manipulation"
+                                        className="flex-1 h-10 sm:h-9 min-h-[40px] sm:min-h-[36px] rounded-[12px] sm:rounded-[10px] btn-gradient-glow text-white text-xs font-black shadow-xs hover:shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-95 touch-manipulation"
                                       >
                                         <Check className="w-3.5 h-3.5" />
                                         <span>Mark Paid</span>

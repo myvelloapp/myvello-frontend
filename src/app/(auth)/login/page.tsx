@@ -391,7 +391,7 @@ export default function LoginPage() {
                       className={cn(
                         "w-4 h-4 rounded-[5px] flex items-center justify-center transition-all duration-200",
                         rememberMe
-                          ? "bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] shadow-xs shadow-indigo-500/30"
+                          ? "bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#06B6D4] shadow-xs shadow-emerald-500/25"
                           : "border border-slate-300 bg-white group-hover:border-slate-400 group-hover:bg-slate-50/50"
                       )}
                     >
@@ -423,7 +423,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] transition-all touch-manipulation shadow-md shadow-indigo-500/20"
+                  className="w-full min-h-[48px] h-12 btn-gradient-glow text-white text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] transition-all touch-manipulation shadow-md shadow-emerald-500/25"
                 >
                   {isLoading ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

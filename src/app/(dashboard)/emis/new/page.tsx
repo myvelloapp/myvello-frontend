@@ -745,7 +745,7 @@ export default function AddNewEmiPage() {
                       className={cn(
                         "h-1.5 w-full rounded-full transition-all duration-300",
                         isCurrent
-                          ? "bg-gradient-to-r from-violet-600 to-indigo-600 shadow-xs shadow-indigo-500/30"
+                          ? "bg-gradient-to-r from-violet-600 to-indigo-600 shadow-xs shadow-emerald-500/25"
                           : isPassed
                           ? "bg-emerald-500"
                           : "bg-slate-200"
@@ -823,7 +823,7 @@ export default function AddNewEmiPage() {
                         className={cn(
                           "flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5 px-2 sm:px-3 py-2.5 sm:py-2 min-h-[44px] sm:min-h-[40px] rounded-xl text-xs transition-all cursor-pointer select-none active:scale-95 touch-manipulation",
                           isCurrent
-                            ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                            ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                             : isPassed
                             ? "bg-emerald-50 text-emerald-700 font-bold border border-emerald-200/60"
                             : "text-slate-400 hover:text-slate-700 hover:bg-slate-50 font-semibold"
@@ -1898,7 +1898,7 @@ export default function AddNewEmiPage() {
                         e.stopPropagation();
                         handleNext();
                       }}
-                      className="h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] inline-flex items-center justify-center gap-1.5 px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 cursor-pointer active:scale-95 transition-all touch-manipulation"
+                      className="h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] inline-flex items-center justify-center gap-1.5 px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95 transition-all touch-manipulation"
                     >
                       <span>Next Step</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -1911,7 +1911,7 @@ export default function AddNewEmiPage() {
                         e.preventDefault();
                         handleSubmit();
                       }}
-                      className="h-12 sm:h-10 min-h-[48px] sm:min-h-[40px] inline-flex items-center justify-center gap-2 px-6 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-indigo-500/20 cursor-pointer active:scale-95 transition-all disabled:opacity-60 touch-manipulation"
+                      className="h-12 sm:h-10 min-h-[48px] sm:min-h-[40px] inline-flex items-center justify-center gap-2 px-6 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95 transition-all disabled:opacity-60 touch-manipulation"
                     >
                       <Check className="w-4 h-4 stroke-[2.5]" />
                       <span>{isSubmitting ? "Generating Amortization..." : "Auto-Generate Schedule & Save EMI"}</span>
@@ -2436,7 +2436,7 @@ export default function AddNewEmiPage() {
               <button
                 type="button"
                 onClick={() => setIsMobilePreviewOpen(false)}
-                className="w-full h-11 min-h-[44px] rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 transition-all cursor-pointer flex items-center justify-center touch-manipulation"
+                className="w-full h-11 min-h-[44px] rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer flex items-center justify-center touch-manipulation"
               >
                 <span>Done</span>
               </button>

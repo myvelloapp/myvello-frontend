@@ -132,7 +132,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-theme-gradient text-white flex items-center justify-center font-bold shadow-2xs shadow-indigo-500/20 shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-theme-gradient text-white flex items-center justify-center font-bold shadow-2xs shadow-emerald-500/25 shrink-0">
               <Bell className="w-4.5 h-4.5" />
             </div>
             <div>
@@ -247,7 +247,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
             <button
               type="submit"
               disabled={isSaving || isLoading}
-              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
+              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
             >
               {isSaving ? (
                 <>

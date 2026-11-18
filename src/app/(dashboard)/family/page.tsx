@@ -829,7 +829,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   setLastGeneratedToken(null);
                   setIsInviteModalOpen(true);
                 }}
-                className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
+                className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
               >
                 <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Invite</span>
@@ -838,7 +838,7 @@ _Myvello — Your Life. Your Records. One Place._`
               <Link href="/emis/new" className="inline-block shrink-0">
                 <button
                   type="button"
-                  className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Share Loan</span>
@@ -877,7 +877,7 @@ _Myvello — Your Life. Your Records. One Place._`
                       className={cn(
                         "min-h-[34px] px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap active:scale-95 touch-manipulation",
                         isSelected
-                          ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                          ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                           : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                       )}
                     >
@@ -916,7 +916,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   setLastGeneratedToken(null);
                   setIsInviteModalOpen(true);
                 }}
-                className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
               >
                 <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Invite Member</span>
@@ -1095,7 +1095,7 @@ _Myvello — Your Life. Your Records. One Place._`
               <Link href="/family/setup" className="w-full sm:w-auto">
                 <button
                   type="button"
-                  className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
+                  className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Create Workspace</span>
@@ -1564,7 +1564,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   <button
                     type="submit"
                     disabled={isSendingInvite}
-                    className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                    className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                   >
                     {isSendingInvite ? "Sending..." : "Send Invite"}
                   </button>
@@ -1640,7 +1640,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 <button
                   type="submit"
                   disabled={isJoining}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                 >
                   {isJoining ? "Joining..." : "Join Workspace"}
                 </button>
@@ -1699,7 +1699,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 <button
                   type="submit"
                   disabled={isRenaming}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                 >
                   {isRenaming ? "Saving..." : "Save"}
                 </button>

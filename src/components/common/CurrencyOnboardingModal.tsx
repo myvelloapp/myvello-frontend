@@ -248,7 +248,7 @@ export function CurrencyOnboardingModal() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 px-5 rounded-[14px] bg-theme-gradient text-white font-extrabold text-sm shadow-md shadow-indigo-500/25 hover:shadow-lg hover:shadow-indigo-500/35 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full h-11 px-5 rounded-[14px] btn-gradient-glow font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>

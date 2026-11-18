@@ -374,7 +374,7 @@ export function NextPaymentCard({
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="w-full h-12 bg-gradient-to-r from-[#6366F1] to-[#4F46E5] hover:from-[#4F46E5] hover:to-[#4338CA] text-white rounded-2xl text-sm font-bold shadow-md hover:shadow-indigo-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] touch-manipulation mt-4"
+            className="w-full h-12 btn-gradient-glow rounded-2xl text-sm font-extrabold flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] touch-manipulation mt-4"
           >
             <CheckCircle2 className="w-4.5 h-4.5 stroke-[2.2]" />
             <span>Mark as Paid</span>

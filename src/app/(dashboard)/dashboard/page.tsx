@@ -344,7 +344,7 @@ function DashboardPageContent() {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl shadow-xs gap-1.5 text-xs font-semibold"
+                  className="btn-gradient-glow rounded-xl gap-1.5 text-xs font-extrabold"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Add Loan
@@ -484,7 +484,7 @@ function DashboardPageContent() {
                     <p className="text-xs text-slate-400 mt-0.5">Add your first loan to generate payment schedules and reminders.</p>
                   </div>
                   <Link href="/emis/new">
-                    <Button variant="secondary" size="sm" className="bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl text-xs font-semibold px-4 py-2">
+                    <Button variant="secondary" size="sm" className="btn-gradient-glow rounded-xl text-xs font-extrabold px-4 py-2">
                       <Plus className="w-3.5 h-3.5 mr-1" />
                       Add Loan
                     </Button>

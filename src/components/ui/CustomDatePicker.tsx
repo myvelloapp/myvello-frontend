@@ -323,7 +323,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
                   className={cn(
                     "h-9 sm:h-7 w-full rounded-lg flex items-center justify-center text-xs font-semibold transition-all cursor-pointer active:scale-95 touch-manipulation",
                     cell.isSelected
-                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25 scale-[1.02]"
+                      ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25 scale-[1.02]"
                       : isCurrentMonth
                       ? cell.isToday
                         ? "bg-indigo-50/80 text-indigo-700 font-black border border-indigo-200/80"

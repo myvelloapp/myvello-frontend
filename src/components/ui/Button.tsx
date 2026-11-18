@@ -25,9 +25,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        "bg-[#172554] text-white hover:bg-[#1e3a8a] focus:ring-[#172554] shadow-sm",
+        "btn-gradient-glow font-extrabold focus:ring-emerald-400",
       secondary:
-        "bg-[#6366F1] text-white hover:bg-[#4F46E5] focus:ring-[#6366F1] shadow-sm",
+        "btn-gradient-glow font-extrabold focus:ring-emerald-400",
       outline:
         "border border-slate-200 bg-white text-slate-800 hover:bg-slate-50 focus:ring-slate-300 shadow-xs",
       ghost:
@@ -35,7 +35,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       danger:
         "bg-red-600 text-white hover:bg-red-700 focus:ring-red-600 shadow-sm",
       teal:
-        "bg-[#14B8A6] text-white hover:bg-[#0D9488] focus:ring-[#14B8A6] shadow-sm",
+        "btn-gradient-glow font-extrabold focus:ring-emerald-400",
     };
 
     const sizes = {

@@ -200,7 +200,7 @@ export default function InstallPage() {
                         className={cn(
                           "min-h-[40px] px-4 py-2 rounded-xl text-xs transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap active:scale-95 touch-manipulation",
                           isSelected
-                            ? "btn-gradient-glow text-white font-bold shadow-xs shadow-indigo-500/25"
+                            ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                             : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
                         )}
                       >
@@ -300,7 +300,7 @@ export default function InstallPage() {
                     <button
                       type="button"
                       onClick={handleInstallClick}
-                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
+                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
                     >
                       <Download className="w-4 h-4 stroke-[2.5]" />
                       <span>Install on Windows</span>
@@ -361,7 +361,7 @@ export default function InstallPage() {
                     <button
                       type="button"
                       onClick={handleInstallClick}
-                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
+                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
                     >
                       <Download className="w-4 h-4 stroke-[2.5]" />
                       <span>Install on Mac</span>
@@ -406,7 +406,7 @@ export default function InstallPage() {
 
                     <a
                       href="/api/ios-profile"
-                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
+                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
                     >
                       <Download className="w-4 h-4 stroke-[2.5]" />
                       <span>Download iOS App Profile</span>
@@ -477,7 +477,7 @@ export default function InstallPage() {
                     <button
                       type="button"
                       onClick={handleInstallClick}
-                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-indigo-500/20 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
+                      className="min-h-[44px] px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-2 shrink-0"
                     >
                       <Download className="w-4 h-4 stroke-[2.5]" />
                       <span>Install on Android</span>
@@ -540,7 +540,7 @@ export default function InstallPage() {
               <div className="flex items-center gap-3">
                 <Link
                   href={isAuthenticated ? "/emis" : "/register"}
-                  className="h-11 px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-lg shadow-indigo-500/25 flex items-center gap-1.5 transition-all hover:scale-102 active:scale-95 touch-manipulation"
+                  className="h-11 px-6 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-lg shadow-emerald-500/25 flex items-center gap-1.5 transition-all hover:scale-102 active:scale-95 touch-manipulation"
                 >
                   <span>{isAuthenticated ? "Open Dashboard" : "Get Started Free"}</span>
                   <ArrowRight className="w-4 h-4" />

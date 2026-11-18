@@ -152,7 +152,7 @@ export default function HomePage() {
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
                 <Link
                   href={isAuthenticated ? "/emis" : "/register"}
-                  className="min-h-[46px] px-6 sm:px-8 rounded-xl btn-gradient-glow text-white text-sm font-bold shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all hover:scale-102 active:scale-95 touch-manipulation"
+                  className="min-h-[46px] px-6 sm:px-8 rounded-xl btn-gradient-glow text-white text-sm font-bold shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all hover:scale-102 active:scale-95 touch-manipulation"
                 >
                   <span>{isAuthenticated ? "Open Your Loans Dashboard" : "Get Started Free – It's Free"}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -912,7 +912,7 @@ export default function HomePage() {
                 <div className="pt-4 flex flex-wrap items-center justify-center gap-3.5">
                   <Link
                     href={isAuthenticated ? "/emis" : "/register"}
-                    className="min-h-[46px] px-8 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-500/25 flex items-center gap-2 hover:scale-102 active:scale-95 transition-all touch-manipulation"
+                    className="min-h-[46px] px-8 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-lg shadow-emerald-500/25 flex items-center gap-2 hover:scale-102 active:scale-95 transition-all touch-manipulation"
                   >
                     <span>{isAuthenticated ? "Open Your Dashboard" : "Create Free Account"}</span>
                     <ArrowRight className="w-4 h-4" />
