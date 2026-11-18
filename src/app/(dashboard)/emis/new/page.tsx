@@ -94,7 +94,7 @@ const QUICK_DUE_DAYS = ["5", "10", "15", "20", "25", "30"];
 // High-fidelity shimmer skeleton matching exact geometry of the add EMI wizard (CLS = 0)
 function NewEmiSkeleton() {
   return (
-    <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
+    <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
       {/* Living Brand Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
@@ -698,7 +698,7 @@ export default function AddNewEmiPage() {
 
   return (
     <DashboardLayout>
-      <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
+      <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none">
         {/* Living Brand Gradient Backdrop matching /emis */}
         <div className="absolute inset-0 pointer-events-none z-0" />
 
