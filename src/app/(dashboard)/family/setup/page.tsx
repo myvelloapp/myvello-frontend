@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Users,
-  Plus,
   ShieldCheck,
   ArrowLeft,
   ArrowRight,
@@ -14,24 +13,11 @@ import {
   AlertCircle,
   Lock,
   X,
-  Home,
-  Car,
-  Briefcase,
-  Building,
-  Folder,
 } from "lucide-react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { familyService } from "@/services/familyService";
 import { useWorkspace } from "@/context/WorkspaceContext";
 import { cn } from "@/lib/utils";
-
-const GROUP_TYPES = [
-  { id: "household", label: "Household & Family", icon: Home, defaultName: "Household & Family" },
-  { id: "vehicle", label: "Vehicle & Fleet", icon: Car, defaultName: "Swift Car Co-owners" },
-  { id: "business", label: "Business Partners", icon: Briefcase, defaultName: "Business Partners" },
-  { id: "rental", label: "Flatmates & Rent", icon: Building, defaultName: "Flatmates & Rent" },
-  { id: "custom", label: "Other / Custom", icon: Folder, defaultName: "" },
-];
 
 const SUGGESTED_NAMES = [
   "Household & Family",
@@ -47,7 +33,6 @@ export default function FamilySetupPage() {
   const { refreshWorkspaces, switchWorkspace } = useWorkspace();
 
   const [groupName, setGroupName] = useState("");
-  const [selectedType, setSelectedType] = useState<string>("household");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPopupExiting, setIsPopupExiting] = useState(false);
@@ -84,14 +69,6 @@ export default function FamilySetupPage() {
     };
   }, [handleClosePopup]);
 
-  // Handle Group Type Selection
-  const handleSelectType = (typeId: string, defaultName: string) => {
-    setSelectedType(typeId);
-    if (!groupName.trim() && defaultName) {
-      setGroupName(defaultName);
-    }
-  };
-
   // Handle Create Group Submission
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,12 +101,6 @@ export default function FamilySetupPage() {
       setIsSubmitting(false);
     }
   };
-
-  // Get active type icon
-  const ActiveTypeIcon = useMemo(() => {
-    const found = GROUP_TYPES.find((t) => t.id === selectedType);
-    return found ? found.icon : Users;
-  }, [selectedType]);
 
   return (
     <DashboardLayout isPopup={true}>
@@ -218,58 +189,13 @@ export default function FamilySetupPage() {
                   </div>
                 )}
 
-                {/* Group Type Selector (Minimal Visual Pills) */}
-                <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-800">
-                    Group Category
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {GROUP_TYPES.map((type) => {
-                      const IconComp = type.icon;
-                      const isSelected = selectedType === type.id;
-                      return (
-                        <button
-                          key={type.id}
-                          type="button"
-                          onClick={() => handleSelectType(type.id, type.defaultName)}
-                          className={cn(
-                            "flex items-center gap-2 p-2.5 rounded-xl border text-left transition-all cursor-pointer active:scale-95 touch-manipulation select-none",
-                            isSelected
-                              ? "bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-500/15 shadow-2xs"
-                              : "bg-slate-50/60 hover:bg-slate-100/80 border-slate-200/80 text-slate-600 hover:text-slate-900"
-                          )}
-                        >
-                          <div
-                            className={cn(
-                              "w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors",
-                              isSelected
-                                ? "bg-white text-emerald-800 shadow-2xs"
-                                : "bg-white text-slate-500"
-                            )}
-                          >
-                            <IconComp className="w-3.5 h-3.5" />
-                          </div>
-                          <span
-                            className={cn(
-                              "text-xs truncate",
-                              isSelected ? "font-bold text-[#02361B]" : "font-medium"
-                            )}
-                          >
-                            {type.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 {/* Group Name Input */}
                 <div className="space-y-2">
                   <label className="block text-xs font-bold text-slate-800">
                     Group Name <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
-                    <ActiveTypeIcon className="w-4 h-4 text-emerald-700 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Users className="w-4 h-4 text-emerald-700 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
                       type="text"
                       required
