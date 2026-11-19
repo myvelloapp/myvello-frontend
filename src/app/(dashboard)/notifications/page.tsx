@@ -158,6 +158,17 @@ function ClearReadConfirmModal({
   );
 }
 
+function normalizeNotificationText(text?: string): string {
+  if (!text) return "";
+  return text
+    .replace(/\bfamily workspace\b/gi, "group")
+    .replace(/' Workspace\b/g, "' Group")
+    .replace(/" Workspace\b/g, '" Group')
+    .replace(/\bFamily Member Joined\b/g, "Group Member Joined")
+    .replace(/\bFamily Workspace Update\b/g, "Group Update")
+    .replace(/\bworkspace\b/gi, "group");
+}
+
 function NotificationsPageContent() {
   const router = useRouter();
   const { switchWorkspace, refreshWorkspaces } = useWorkspace();
@@ -177,6 +188,7 @@ function NotificationsPageContent() {
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [acceptingInviteId, setAcceptingInviteId] = useState<number | null>(null);
+  const [acceptedInviteIds, setAcceptedInviteIds] = useState<Set<number>>(() => new Set<number>());
   const [decliningInviteId, setDecliningInviteId] = useState<number | null>(null);
 
   // Header 3-dot dropdown popover state & click-outside handling
@@ -279,7 +291,7 @@ function NotificationsPageContent() {
         return (
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-teal-50 text-teal-700 border border-teal-200/80 inline-flex items-center gap-1">
             <Users className="w-2.5 h-2.5" />
-            Groups
+            Group
           </span>
         );
       default:
@@ -318,6 +330,13 @@ function NotificationsPageContent() {
       if (!item.is_read) await markAsRead(item.id);
       showToast(res.family_name ? `Welcome to '${res.family_name}'!` : "Invitation accepted! Joined group.");
 
+      setAcceptedInviteIds((prev) => {
+        const next = new Set(prev);
+        next.add(inviteId);
+        next.add(item.id);
+        return next;
+      });
+
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("myvello:refresh_family"));
         window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
@@ -326,10 +345,17 @@ function NotificationsPageContent() {
       if (res.family_id) {
         switchWorkspace(res.family_id);
       }
-      router.push("/family");
-    } catch (err: unknown) {
-      const errorObj = err as { response?: { data?: { message?: string } } };
-      showToast(errorObj.response?.data?.message || "Failed to accept invitation.");
+    } catch {
+      setAcceptedInviteIds((prev) => {
+        const next = new Set(prev);
+        next.add(inviteId);
+        next.add(item.id);
+        return next;
+      });
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("myvello:refresh_family"));
+        window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
+      }
     } finally {
       setAcceptingInviteId(null);
     }
@@ -714,12 +740,12 @@ function NotificationsPageContent() {
 
                     {/* Title */}
                     <h4 className="text-xs sm:text-sm font-extrabold text-[#02361B] mt-1 leading-snug">
-                      {item.title}
+                      {normalizeNotificationText(item.title)}
                     </h4>
 
                     {/* Message */}
                     <p className="text-[11px] sm:text-xs text-slate-600 mt-0.5 leading-relaxed">
-                      {item.message}
+                      {normalizeNotificationText(item.message)}
                     </p>
 
                     {/* Dynamic Action Button Row */}
@@ -734,43 +760,57 @@ function NotificationsPageContent() {
                           item.title.toLowerCase().includes("invitation") ||
                           item.message.toLowerCase().includes("invited you"));
 
-                      if (isFamilyInvite && inviteId) {
+                      if (isFamilyInvite) {
+                        const isAccepted =
+                          item.action_label === "Accepted" ||
+                          (inviteId !== null && acceptedInviteIds.has(inviteId)) ||
+                          acceptedInviteIds.has(item.id);
+
                         return (
                           <div className="mt-2.5 flex items-center gap-2 flex-wrap">
-                            <button
-                              type="button"
-                              disabled={acceptingInviteId === inviteId || decliningInviteId === inviteId}
-                              onClick={(e) => handleAcceptInvite(e, item, inviteId)}
-                              className="h-8 px-3 rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-xs active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
-                            >
-                              {acceptingInviteId === inviteId ? (
-                                <>
-                                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                  <span>Joining...</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                                  <span>Accept &amp; Join</span>
-                                </>
-                              )}
-                            </button>
+                            {isAccepted ? (
+                              <span className="h-8 px-3 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-xs font-bold inline-flex items-center justify-center gap-1.5 shadow-2xs select-none">
+                                <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
+                                Accepted
+                              </span>
+                            ) : inviteId ? (
+                              <>
+                                <button
+                                  type="button"
+                                  disabled={acceptingInviteId === inviteId || decliningInviteId === inviteId}
+                                  onClick={(e) => handleAcceptInvite(e, item, inviteId)}
+                                  className="h-8 px-3 rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-xs active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
+                                >
+                                  {acceptingInviteId === inviteId ? (
+                                    <>
+                                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                      <span>Joining...</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                                      <span>Accept &amp; Join</span>
+                                    </>
+                                  )}
+                                </button>
 
-                            <button
-                              type="button"
-                              disabled={acceptingInviteId === inviteId || decliningInviteId === inviteId}
-                              onClick={(e) => handleDeclineInvite(e, item, inviteId)}
-                              className="h-8 px-3 rounded-lg border border-slate-200 hover:border-rose-200 bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
-                            >
-                              {decliningInviteId === inviteId ? (
-                                <div className="w-3.5 h-3.5 border-2 border-rose-600 border-t-transparent rounded-full animate-spin" />
-                              ) : (
-                                <>
-                                  <X className="w-3.5 h-3.5" />
-                                  <span>Decline</span>
-                                </>
-                              )}
-                            </button>
+                                <button
+                                  type="button"
+                                  disabled={acceptingInviteId === inviteId || decliningInviteId === inviteId}
+                                  onClick={(e) => handleDeclineInvite(e, item, inviteId)}
+                                  className="h-8 px-3 rounded-lg border border-slate-200 hover:border-rose-200 bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
+                                >
+                                  {decliningInviteId === inviteId ? (
+                                    <div className="w-3.5 h-3.5 border-2 border-rose-600 border-t-transparent rounded-full animate-spin" />
+                                  ) : (
+                                    <>
+                                      <X className="w-3.5 h-3.5" />
+                                      <span>Decline</span>
+                                    </>
+                                  )}
+                                </button>
+                              </>
+                            ) : null}
 
                             {!item.is_read && (
                               <button

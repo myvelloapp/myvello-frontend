@@ -23,6 +23,17 @@ interface NotificationContextType {
   clearRead: () => Promise<void>;
 }
 
+function normalizeNotificationText(text?: string): string {
+  if (!text) return "";
+  return text
+    .replace(/\bfamily workspace\b/gi, "group")
+    .replace(/' Workspace\b/g, "' Group")
+    .replace(/" Workspace\b/g, '" Group')
+    .replace(/\bFamily Member Joined\b/g, "Group Member Joined")
+    .replace(/\bFamily Workspace Update\b/g, "Group Update")
+    .replace(/\bworkspace\b/gi, "group");
+}
+
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
 // Helper for deep equality checking of notifications to avoid unnecessary virtual DOM re-renders & page flicker
@@ -401,10 +412,10 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
                 <span className="text-[11px] text-slate-400 font-medium">Just now</span>
               </div>
               <h4 className="text-xs font-black text-[#02361B] group-hover:text-emerald-700 transition-colors line-clamp-1">
-                {incomingToast.title}
+                {normalizeNotificationText(incomingToast.title)}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium line-clamp-2 mt-0.5 leading-snug">
-                {incomingToast.message}
+                {normalizeNotificationText(incomingToast.message)}
               </p>
             </div>
 

@@ -28,6 +28,17 @@ import { getCategoryIcon, getCategoryBgClass } from "@/lib/categoryConfig";
 import { BankLogo } from "@/components/ui/BankLogo";
 import { cn } from "@/lib/utils";
 
+function normalizeNotificationText(text?: string): string {
+  if (!text) return "";
+  return text
+    .replace(/\bfamily workspace\b/gi, "group")
+    .replace(/' Workspace\b/g, "' Group")
+    .replace(/" Workspace\b/g, '" Group')
+    .replace(/\bFamily Member Joined\b/g, "Group Member Joined")
+    .replace(/\bFamily Workspace Update\b/g, "Group Update")
+    .replace(/\bworkspace\b/gi, "group");
+}
+
 interface HeaderProps {
   onOpenMobileMenu?: () => void;
   isPopupMode?: boolean;
@@ -46,6 +57,7 @@ export function Header({
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
   const [acceptingInviteId, setAcceptingInviteId] = useState<number | null>(null);
+  const [acceptedInviteIds, setAcceptedInviteIds] = useState<Set<number>>(() => new Set<number>());
   const [isPopupExiting, setIsPopupExiting] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const workspaceDropdownRef = useRef<HTMLDivElement>(null);
@@ -426,7 +438,7 @@ export function Header({
                                   : "bg-slate-100 text-slate-700"
                               )}
                             >
-                              {n.type}
+                              {n.type === "family" ? "GROUP" : n.type}
                             </span>
                           )}
 
@@ -440,12 +452,12 @@ export function Header({
 
                         {/* Title */}
                         <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 leading-snug">
-                          {n.title}
+                          {normalizeNotificationText(n.title)}
                         </h4>
 
                         {/* Message */}
                         <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
-                          {n.message}
+                          {normalizeNotificationText(n.message)}
                         </p>
 
                         {/* Direct 1-Click Action for Workspace Invitations */}
@@ -462,52 +474,83 @@ export function Header({
 
                           if (!isFamilyInvite) return null;
 
+                          const isAccepted =
+                            n.action_label === "Accepted" ||
+                            (inviteId !== null && acceptedInviteIds.has(inviteId)) ||
+                            acceptedInviteIds.has(n.id);
+
                           return (
                             <div className="mt-2.5 flex items-center gap-2 pt-1 border-t border-slate-100/80">
-                              <button
-                                type="button"
-                                disabled={acceptingInviteId === inviteId}
-                                onClick={async (e) => {
-                                  e.stopPropagation();
-                                  if (!n.is_read) await markAsRead(n.id);
-                                  setIsNotificationsOpen(false);
+                              {isAccepted ? (
+                                <span className="h-7 px-2.5 rounded-[6px] bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-[11px] font-bold inline-flex items-center gap-1 shadow-2xs select-none">
+                                  <Check className="w-3 h-3 text-emerald-600 stroke-[2.5]" />
+                                  Accepted
+                                </span>
+                              ) : (
+                                <button
+                                  type="button"
+                                  disabled={acceptingInviteId === (inviteId || n.id)}
+                                  onClick={async (e) => {
+                                    e.stopPropagation();
+                                    const currentInviteId = inviteId || n.id;
+                                    setAcceptingInviteId(currentInviteId);
 
-                                  if (inviteId) {
-                                    setAcceptingInviteId(inviteId);
+                                    if (!n.is_read) {
+                                      await markAsRead(n.id);
+                                    }
+
                                     try {
-                                      const res = await familyService.acceptInvitationById(inviteId);
+                                      let resFamilyId: number | null = null;
+                                      if (inviteId) {
+                                        const res = await familyService.acceptInvitationById(inviteId);
+                                        if (res?.family_id) resFamilyId = res.family_id;
+                                      }
+
+                                      setAcceptedInviteIds((prev) => {
+                                        const next = new Set(prev);
+                                        if (inviteId) next.add(inviteId);
+                                        next.add(n.id);
+                                        return next;
+                                      });
+
                                       if (typeof window !== "undefined") {
                                         window.dispatchEvent(new CustomEvent("myvello:refresh_family"));
                                         window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
                                       }
                                       await refreshWorkspaces();
-                                      if (res.family_id) {
-                                        switchWorkspace(res.family_id);
+                                      if (resFamilyId) {
+                                        switchWorkspace(resFamilyId);
                                       }
-                                      router.push("/family");
                                     } catch {
-                                      router.push(n.action_url || "/family");
+                                      setAcceptedInviteIds((prev) => {
+                                        const next = new Set(prev);
+                                        if (inviteId) next.add(inviteId);
+                                        next.add(n.id);
+                                        return next;
+                                      });
+                                      if (typeof window !== "undefined") {
+                                        window.dispatchEvent(new CustomEvent("myvello:refresh_family"));
+                                        window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
+                                      }
                                     } finally {
                                       setAcceptingInviteId(null);
                                     }
-                                  } else {
-                                    router.push(n.action_url || "/family");
-                                  }
-                                }}
-                                className="px-2.5 py-1 rounded-[6px] btn-gradient-glow text-white text-[11px] font-bold shadow-xs active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer"
-                              >
-                                {acceptingInviteId === inviteId ? (
-                                  <>
-                                    <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                    <span>Joining...</span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Check className="w-3 h-3 stroke-[3]" />
-                                    <span>Accept &amp; Join</span>
-                                  </>
-                                )}
-                              </button>
+                                  }}
+                                  className="h-7 px-2.5 rounded-[6px] btn-gradient-glow text-white text-[11px] font-bold shadow-xs active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer"
+                                >
+                                  {acceptingInviteId === (inviteId || n.id) ? (
+                                    <>
+                                      <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                      <span>Joining...</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Check className="w-3 h-3 stroke-[3]" />
+                                      <span>Accept &amp; Join</span>
+                                    </>
+                                  )}
+                                </button>
+                              )}
 
                               <button
                                 type="button"
@@ -520,7 +563,7 @@ export function Header({
                                   }
                                   router.push(n.action_url || "/family");
                                 }}
-                                className="px-2 py-1 rounded-[6px] border border-slate-200 hover:bg-slate-100 text-slate-600 text-[11px] font-semibold transition-all cursor-pointer"
+                                className="h-7 px-2.5 rounded-[6px] border border-slate-200 hover:bg-slate-100 text-slate-600 text-[11px] font-semibold transition-all cursor-pointer inline-flex items-center"
                               >
                                 View Details
                               </button>
