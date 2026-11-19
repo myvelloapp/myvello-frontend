@@ -1,17 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Users,
   ShieldCheck,
-  ArrowLeft,
   ArrowRight,
   Sparkles,
   CheckCircle2,
   AlertCircle,
-  Lock,
   X,
 } from "lucide-react";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
@@ -136,25 +133,14 @@ export default function FamilySetupPage() {
             </button>
           </div>
 
-          {/* Desktop Page Heading & Back Action */}
-          <div className="hidden sm:flex items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
-                Create New Group
-              </h1>
-              <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
-                Set up a shared space for joint vehicle loans, household EMIs, and collaborative records.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleClosePopup}
-              className="min-h-[38px] h-9.5 px-3.5 rounded-xl border border-slate-200/90 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs inline-flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95 touch-manipulation shrink-0"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 text-slate-500" />
-              <span>Back to Groups</span>
-            </button>
+          {/* Desktop Page Heading */}
+          <div className="hidden sm:block">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
+              Create New Group
+            </h1>
+            <p className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
+              Set up a shared space for joint vehicle loans, household EMIs, and collaborative records.
+            </p>
           </div>
 
           {/* Two-Column Form & Real-Time Group Preview Layout matching /emis/new */}
