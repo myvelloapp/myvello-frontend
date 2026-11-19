@@ -170,12 +170,13 @@ export function AvatarCropModal({
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl sm:max-w-[620px] bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh] animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
-        {/* Mobile Pull Handle */}
-        <div className="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mt-2.5 -mb-1 sm:hidden shrink-0" />
-
-        {/* Hidden permanent file input - accessible by dropzone AND Change Photo footer button */}
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-emerald-100/90 overflow-hidden flex flex-col max-h-[92dvh] animate-in zoom-in-95 duration-200">
+        {/* Hidden permanent file input - accessible by dropzone AND Change Photo button */}
         <input
           ref={fileInputRef}
           type="file"
@@ -184,33 +185,35 @@ export function AvatarCropModal({
           className="hidden"
         />
 
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-slate-100 bg-white shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-theme-gradient text-white flex items-center justify-center shrink-0 shadow-2xs shadow-emerald-500/25">
-              <Camera className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-sm font-black text-[#02361B]">
-                {imageSrc ? "Crop & Adjust Profile Photo" : "Upload Profile Photo"}
-              </h3>
-              <p className="text-xs text-slate-500 font-medium">
+        {/* Modal Top Header Banner with Brand Emerald Gradient & Aurora Glow */}
+        <div className="p-5 sm:p-6 bg-gradient-to-br from-[#02361B] via-[#014421] to-[#012513] text-white relative overflow-hidden border-b border-emerald-800/40 shrink-0">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-8 -left-8 w-36 h-36 bg-[#7CE617]/15 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative z-10 flex items-center justify-between gap-3">
+            <div className="space-y-0.5">
+              <h2 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
+                <Camera className="w-4 h-4 text-emerald-300 stroke-[2.2]" />
+                <span>{imageSrc ? "Crop & Adjust Profile Photo" : "Upload Profile Photo"}</span>
+              </h2>
+              <p className="text-xs text-emerald-100/80 font-medium">
                 Centered circular avatar with precision zoom and rotation
               </p>
             </div>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 active:scale-95 touch-manipulation"
+              aria-label="Close dialog"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
-            aria-label="Close dialog"
-          >
-            <X className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
+        <div className="p-4 sm:p-5 overflow-y-auto space-y-3.5 flex-1">
           {errorMessage && (
             <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -224,10 +227,10 @@ export function AvatarCropModal({
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-slate-200 hover:border-emerald-400 bg-slate-50/50 hover:bg-emerald-50/25 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all space-y-3 group touch-manipulation"
+              className="border-2 border-dashed border-emerald-200/90 hover:border-emerald-500 bg-emerald-50/20 hover:bg-emerald-50/50 rounded-2xl p-8 sm:p-10 text-center cursor-pointer transition-all space-y-3 group touch-manipulation"
             >
-              <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-100/80 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs group-hover:scale-105 transition-transform">
-                <Upload className="w-7 h-7" />
+              <div className="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-100/80 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs group-hover:scale-105 transition-transform">
+                <Upload className="w-6 h-6" />
               </div>
 
               <div className="space-y-1">
@@ -239,18 +242,18 @@ export function AvatarCropModal({
                 </p>
               </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[10px] text-slate-500 font-semibold">
-                Supports JPG, PNG, WEBP up to 8MB • Auto-centered 1:1 circular crop
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200/80 text-[10px] text-slate-500 font-semibold shadow-2xs">
+                Supports JPG, PNG, WEBP up to 8MB
               </div>
             </div>
           ) : (
             /* State 2: Interactive Cropper with Centered Circular Mask */
-            <div className="space-y-3.5">
-              {/* Cropper Viewport Container (also supports dropping a replacement image) */}
+            <div className="space-y-3">
+              {/* Cropper Viewport Container */}
               <div
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="relative w-full h-64 sm:h-80 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-inner"
+                className="relative w-full h-64 sm:h-72 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner"
               >
                 <Cropper
                   image={imageSrc}
@@ -265,77 +268,79 @@ export function AvatarCropModal({
                   onRotationChange={setRotation}
                   onCropComplete={onCropComplete}
                   classes={{
-                    containerClassName: "rounded-xl",
+                    containerClassName: "rounded-2xl",
                   }}
                 />
               </div>
 
-              {/* Spacious & Modern Controls Toolbar */}
-              <div className="bg-slate-50/70 border border-slate-200/80 rounded-xl p-3.5 sm:p-4 space-y-3">
-                {/* 1. Zoom Slider Row */}
-                <div className="flex items-center gap-2.5 sm:gap-3">
+              {/* Minimal Single-Row Controls Toolbar */}
+              <div className="bg-slate-50/90 border border-slate-200/80 rounded-2xl px-3.5 py-2.5 flex items-center justify-between gap-3">
+                {/* Left: Zoom Controls */}
+                <div className="flex items-center gap-2 flex-1 min-w-0">
                   <button
                     type="button"
-                    onClick={() => setZoom(Math.max(1, zoom - 0.2))}
-                    className="w-10 h-10 sm:w-8 sm:h-8 min-w-[40px] sm:min-w-[32px] rounded-xl sm:rounded-[8px] border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation shrink-0"
+                    onClick={() => setZoom(Math.max(1, Number((zoom - 0.2).toFixed(2))))}
+                    className="w-7 h-7 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-white flex items-center justify-center transition-all cursor-pointer active:scale-90 shrink-0"
                     title="Zoom out"
                     aria-label="Zoom out"
                   >
                     <ZoomOut className="w-3.5 h-3.5" />
                   </button>
-                  <div className="flex-1 relative flex items-center">
-                    <input
-                      type="range"
-                      min={1}
-                      max={3}
-                      step={0.05}
-                      value={zoom}
-                      onChange={(e) => setZoom(Number(e.target.value))}
-                      className="w-full accent-[#1C9E30] cursor-pointer h-2 sm:h-1.5 bg-slate-200 rounded-lg touch-manipulation"
-                    />
-                  </div>
+                  <input
+                    type="range"
+                    min={1}
+                    max={3}
+                    step={0.05}
+                    value={zoom}
+                    onChange={(e) => setZoom(Number(e.target.value))}
+                    className="w-full accent-[#1C9E30] cursor-pointer h-1.5 bg-slate-200 rounded-lg touch-manipulation"
+                    aria-label="Avatar zoom level"
+                  />
                   <button
                     type="button"
-                    onClick={() => setZoom(Math.min(3, zoom + 0.2))}
-                    className="w-10 h-10 sm:w-8 sm:h-8 min-w-[40px] sm:min-w-[32px] rounded-xl sm:rounded-[8px] border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation shrink-0"
+                    onClick={() => setZoom(Math.min(3, Number((zoom + 0.2).toFixed(2))))}
+                    className="w-7 h-7 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-white flex items-center justify-center transition-all cursor-pointer active:scale-90 shrink-0"
                     title="Zoom in"
                     aria-label="Zoom in"
                   >
                     <ZoomIn className="w-3.5 h-3.5" />
                   </button>
-                  <span className="font-mono text-xs font-bold text-slate-700 bg-white border border-slate-200/80 px-2 py-1 sm:py-0.5 rounded-lg sm:rounded-[6px] min-w-[48px] text-center shadow-2xs shrink-0">
+                  <span className="font-mono text-[11px] font-bold text-slate-700 bg-white border border-slate-200/80 px-2 py-0.5 rounded-md text-center shadow-2xs shrink-0 min-w-[42px]">
                     {Math.round(zoom * 100)}%
                   </span>
                 </div>
 
-                {/* 2. Orientation & Reset Row */}
-                <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-slate-200/70">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setRotation((prev) => (prev - 90) % 360)}
-                      className="min-h-[40px] sm:min-h-[32px] px-3 sm:px-2.5 rounded-xl sm:rounded-[8px] bg-white border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-2xs inline-flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>Rotate -90°</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setRotation((prev) => (prev + 90) % 360)}
-                      className="min-h-[40px] sm:min-h-[32px] px-3 sm:px-2.5 rounded-xl sm:rounded-[8px] bg-white border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-2xs inline-flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap"
-                    >
-                      <RotateCw className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>Rotate +90°</span>
-                    </button>
-                  </div>
+                {/* Vertical Divider */}
+                <div className="w-px h-5 bg-slate-200 shrink-0" />
 
+                {/* Right: Compact Rotate & Reset Icon Buttons */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setRotation((prev) => (prev - 90) % 360)}
+                    className="w-8 h-8 rounded-xl bg-white border border-slate-200/90 text-slate-600 hover:text-[#02361B] hover:border-emerald-300 hover:bg-emerald-50/40 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-90"
+                    title="Rotate left 90°"
+                    aria-label="Rotate left 90°"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-emerald-700" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRotation((prev) => (prev + 90) % 360)}
+                    className="w-8 h-8 rounded-xl bg-white border border-slate-200/90 text-slate-600 hover:text-[#02361B] hover:border-emerald-300 hover:bg-emerald-50/40 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-90"
+                    title="Rotate right 90°"
+                    aria-label="Rotate right 90°"
+                  >
+                    <RotateCw className="w-3.5 h-3.5 text-emerald-700" />
+                  </button>
                   <button
                     type="button"
                     onClick={handleResetCenter}
-                    className="min-h-[40px] sm:min-h-[32px] px-3.5 sm:px-3 rounded-xl sm:rounded-[8px] bg-white border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 shadow-2xs inline-flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap"
+                    className="w-8 h-8 rounded-xl bg-white border border-slate-200/90 text-slate-500 hover:text-slate-800 hover:border-slate-300 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-90"
+                    title="Reset position & zoom"
+                    aria-label="Reset position & zoom"
                   >
-                    <Maximize2 className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>Reset</span>
+                    <Maximize2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -343,14 +348,14 @@ export function AvatarCropModal({
           )}
         </div>
 
-        {/* Clean, Non-Congested Modal Footer with Safe-Area clearance */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-3.5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pb-3.5 border-t border-slate-100 bg-slate-50/50 shrink-0 gap-3">
+        {/* Minimal Modal Footer with Safe-Area clearance */}
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-3.5 border-t border-slate-100 bg-slate-50/50 shrink-0 gap-2">
           {imageSrc ? (
-            <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] px-3.5 rounded-xl sm:rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 transition-all cursor-pointer shadow-2xs inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                className="h-9 px-3 rounded-xl border border-slate-200/90 hover:border-emerald-500/50 bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-800 text-xs font-bold transition-all cursor-pointer shadow-2xs inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
               >
                 <Upload className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Change</span>
@@ -358,7 +363,7 @@ export function AvatarCropModal({
               <button
                 type="button"
                 onClick={handleRemove}
-                className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] px-3.5 rounded-xl sm:rounded-[8px] border border-rose-200 hover:border-rose-300 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600 transition-all cursor-pointer shadow-2xs inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                className="h-9 px-3 rounded-xl border border-rose-200/80 hover:border-rose-300 bg-white hover:bg-rose-50 text-xs font-bold text-rose-600 transition-all cursor-pointer shadow-2xs inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
               >
                 <Trash2 className="w-3.5 h-3.5 text-rose-500" />
                 <span>Remove</span>
@@ -370,11 +375,11 @@ export function AvatarCropModal({
             </div>
           )}
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] px-4 rounded-xl sm:rounded-[8px] border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap flex items-center justify-center"
+              className="h-9 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap flex items-center justify-center"
             >
               Cancel
             </button>
@@ -383,7 +388,7 @@ export function AvatarCropModal({
                 type="button"
                 disabled={isSaving}
                 onClick={handleSaveCroppedImage}
-                className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 touch-manipulation whitespace-nowrap"
+                className="h-9 px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 touch-manipulation whitespace-nowrap"
               >
                 {isSaving ? (
                   <>
