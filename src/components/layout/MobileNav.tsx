@@ -95,7 +95,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       active: pathname === "/payment-history",
     },
     {
-      label: "Notifications",
+      label: "Reminders",
       href: "/notifications",
       icon: Bell,
       active: pathname === "/notifications",

@@ -111,6 +111,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "recharts"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/reminders",
+        destination: "/notifications",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

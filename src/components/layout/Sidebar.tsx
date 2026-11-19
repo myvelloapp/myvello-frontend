@@ -144,7 +144,7 @@ export function Sidebar() {
       active: pathname === "/payment-history",
     },
     {
-      label: "Notifications",
+      label: "Reminders",
       href: "/notifications",
       icon: Bell,
       active: pathname === "/notifications",

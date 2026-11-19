@@ -594,7 +594,7 @@ export function Header({
                   onClick={() => setIsNotificationsOpen(false)}
                   className="font-bold text-emerald-700 hover:text-emerald-800 inline-flex items-center gap-1 text-[11px] transition-all hover:gap-1.5"
                 >
-                  <span>Open Notification Center</span>
+                  <span>Open Reminders</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
 
