@@ -639,8 +639,10 @@ _Myvello — Your Life. Your Records. One Place._`
   if (isLoading && !activeFamily && !error) {
     return (
       <DashboardLayout>
-        <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 px-3.5 sm:px-6 lg:px-8 xl:px-10 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 space-y-2 sm:space-y-5">
-          <FamilyWorkspaceSkeleton />
+        <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+          <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+            <FamilyWorkspaceSkeleton />
+          </div>
         </div>
       </DashboardLayout>
     );
@@ -648,8 +650,11 @@ _Myvello — Your Life. Your Records. One Place._`
 
   return (
     <DashboardLayout>
-      <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 px-3.5 sm:px-6 lg:px-8 xl:px-10 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 space-y-2 sm:space-y-5">
-        {/* Floating Toast Feedback - positioned safely above floating mobile capsule nav */}
+      {/* Unified Main Viewport */}
+      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+        {/* Content Container */}
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+          {/* Floating Toast Feedback - positioned safely above floating mobile capsule nav */}
         {toastMessage && (
           <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -1428,6 +1433,7 @@ _Myvello — Your Life. Your Records. One Place._`
             </div>
           </div>
         )}
+        </div>
       </div>
 
       {/* Invite Member Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
@@ -1766,8 +1772,10 @@ export default function FamilyPage() {
     <Suspense
       fallback={
         <DashboardLayout>
-          <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto py-4 sm:py-6 px-3.5 sm:px-6 lg:px-8 xl:px-10 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 space-y-5 sm:space-y-6">
-            <FamilyWorkspaceSkeleton />
+          <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+            <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+              <FamilyWorkspaceSkeleton />
+            </div>
           </div>
         </DashboardLayout>
       }
