@@ -315,6 +315,7 @@ function EmiDetailContent() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
+  const [isDesktopMoreOpen, setIsDesktopMoreOpen] = useState(false);
 
   // Edit Wizard Step
   const [currentStep, setCurrentStep] = useState(1);
@@ -818,14 +819,14 @@ function EmiDetailContent() {
   };
 
   const inputClass =
-    "w-full h-11 sm:h-10 text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all text-slate-900 placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
+    "w-full h-11 sm:h-10 text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-slate-900 placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
 
   const getInputClass = (hasError?: boolean, extra?: string) =>
     cn(
       "w-full h-11 sm:h-10 text-xs sm:text-sm px-3.5 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
       hasError
         ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
-        : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-900",
+        : "border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-slate-900",
       extra
     );
 
@@ -947,8 +948,8 @@ function EmiDetailContent() {
                       <span>Family Shared {loan.family ? `(${loan.family.name})` : ""}</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
-                      <Lock className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200/90 shrink-0">
+                      <Lock className="w-3 h-3 text-slate-500" />
                       <span>Personal Vault</span>
                     </span>
                   )}
@@ -1011,9 +1012,9 @@ function EmiDetailContent() {
                     setCurrentStep(1);
                     setIsEditModalOpen(true);
                   }}
-                  className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3 rounded-xl border border-indigo-200/80 bg-indigo-50/70 hover:bg-indigo-100 text-indigo-700 text-xs font-bold shadow-2xs active:scale-95 touch-manipulation cursor-pointer transition-all"
+                  className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3 rounded-xl border border-emerald-200/80 bg-emerald-50/60 hover:bg-emerald-100 text-[#02361B] text-xs font-bold shadow-2xs active:scale-95 touch-manipulation cursor-pointer transition-all"
                 >
-                  <Pencil className="w-3.5 h-3.5 text-indigo-600" />
+                  <Pencil className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Edit Details</span>
                 </button>
 
@@ -1035,7 +1036,7 @@ function EmiDetailContent() {
                     onClick={() => setIsMobileMoreOpen((prev) => !prev)}
                     className={cn(
                       "w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-2xs transition-all active:scale-95 touch-manipulation cursor-pointer",
-                      isMobileMoreOpen && "bg-slate-100 border-indigo-300 text-indigo-700 ring-2 ring-indigo-500/10"
+                      isMobileMoreOpen && "bg-emerald-50/60 border-emerald-300 text-emerald-800 ring-2 ring-emerald-500/10"
                     )}
                     aria-label="More actions"
                   >
@@ -1049,7 +1050,19 @@ function EmiDetailContent() {
                         className="fixed inset-0 z-40"
                         onClick={() => setIsMobileMoreOpen(false)}
                       />
-                      <div className="absolute right-0 top-full mt-1.5 z-50 w-52 bg-white rounded-2xl shadow-xl border border-slate-200 p-1.5 text-left space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
+                      <div className="absolute right-0 top-full mt-1.5 z-50 w-52 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 text-left space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsMobileMoreOpen(false);
+                            handleExportCsv();
+                          }}
+                          className="w-full min-h-[40px] px-3 rounded-xl hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-2.5 transition-colors cursor-pointer touch-manipulation text-left"
+                        >
+                          <Download className="w-4 h-4 text-slate-500" />
+                          <span>Export Schedule (CSV)</span>
+                        </button>
+
                         <button
                           type="button"
                           disabled={isArchiving}
@@ -1061,7 +1074,7 @@ function EmiDetailContent() {
                         >
                           {isClosed ? (
                             <>
-                              <ArchiveRestore className="w-4 h-4 text-indigo-600" />
+                              <ArchiveRestore className="w-4 h-4 text-emerald-700" />
                               <span>Reactivate Commitment</span>
                             </>
                           ) : (
@@ -1071,6 +1084,8 @@ function EmiDetailContent() {
                             </>
                           )}
                         </button>
+
+                        <div className="my-1 border-t border-slate-100" />
 
                         <button
                           type="button"
@@ -1090,7 +1105,7 @@ function EmiDetailContent() {
               </div>
             </div>
 
-            {/* Desktop Actions Bar */}
+            {/* Desktop Actions Bar: Minimalist & Focused */}
             <div className="hidden lg:flex items-center gap-2 flex-wrap self-start lg:self-auto">
               <Link href="/emis">
                 <button
@@ -1110,59 +1125,10 @@ function EmiDetailContent() {
                   setCurrentStep(1);
                   setIsEditModalOpen(true);
                 }}
-                className="min-h-[38px] inline-flex items-center gap-1.5 px-3 rounded-xl border border-indigo-200/80 bg-indigo-50/70 hover:bg-indigo-100 text-indigo-700 text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer"
+                className="min-h-[38px] inline-flex items-center gap-1.5 px-3.5 rounded-xl border border-emerald-200/80 bg-emerald-50/50 hover:bg-emerald-100/70 text-[#02361B] text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer"
               >
-                <Pencil className="w-3.5 h-3.5 text-indigo-600" />
+                <Pencil className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Edit Details</span>
-              </button>
-
-              {/* Foreclose Loan Button */}
-              {!isClosed && !isCompleted && Number(loan.outstanding_principal) > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setIsForecloseModalOpen(true)}
-                  className="min-h-[38px] inline-flex items-center gap-1.5 px-3 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer"
-                  title="Pre-close or foreclose this loan ahead of schedule"
-                >
-                  <Landmark className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Foreclose Loan</span>
-                </button>
-              )}
-
-              {/* Archive / Reactivate */}
-              <button
-                type="button"
-                disabled={isArchiving}
-                onClick={handleToggleArchive}
-                className={cn(
-                  "min-h-[38px] inline-flex items-center gap-1.5 px-3 rounded-xl border text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer",
-                  isClosed
-                    ? "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100"
-                    : "bg-white border-slate-200/90 hover:bg-slate-50 text-slate-700"
-                )}
-              >
-                {isClosed ? (
-                  <>
-                    <ArchiveRestore className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>Reactivate</span>
-                  </>
-                ) : (
-                  <>
-                    <Archive className="w-3.5 h-3.5 text-slate-500" />
-                    <span>Archive</span>
-                  </>
-                )}
-              </button>
-
-              {/* Delete */}
-              <button
-                type="button"
-                onClick={() => setIsDeleteModalOpen(true)}
-                className="min-h-[38px] inline-flex items-center gap-1.5 px-3 rounded-xl border border-rose-200/80 bg-rose-50/60 hover:bg-rose-100/70 text-rose-700 text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer"
-                title="Delete loan commitment"
-              >
-                <Trash2 className="w-3.5 h-3.5 text-rose-600" />
-                <span>Delete</span>
               </button>
 
               {/* Pay Next Due Button */}
@@ -1180,30 +1146,117 @@ function EmiDetailContent() {
                       familyMembers: loan.family?.members,
                     })
                   }
-                  className="min-h-[38px] inline-flex items-center gap-1.5 px-3.5 rounded-xl btn-gradient-glow text-xs font-extrabold cursor-pointer active:scale-95 touch-manipulation transition-all"
+                  className="min-h-[38px] inline-flex items-center gap-1.5 px-4 rounded-xl btn-gradient-glow text-xs font-extrabold cursor-pointer active:scale-95 touch-manipulation shadow-md shadow-emerald-500/20 transition-all"
                 >
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                   <span>Mark Next Due as Paid</span>
                 </button>
               )}
+
+              {/* Minimalist 3-Dot More Actions Menu */}
+              <div className="relative inline-block text-left">
+                <button
+                  type="button"
+                  onClick={() => setIsDesktopMoreOpen((prev) => !prev)}
+                  className={cn(
+                    "w-9 h-9 min-w-[36px] min-h-[36px] rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-2xs transition-all active:scale-95 cursor-pointer",
+                    isDesktopMoreOpen && "bg-emerald-50 border-emerald-300 text-emerald-800 ring-2 ring-emerald-500/10"
+                  )}
+                  aria-label="More actions"
+                >
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+
+                {isDesktopMoreOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setIsDesktopMoreOpen(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-1.5 z-50 w-52 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 text-left space-y-0.5 animate-in fade-in zoom-in-95 duration-150">
+                      {!isClosed && !isCompleted && Number(loan.outstanding_principal) > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsDesktopMoreOpen(false);
+                            setIsForecloseModalOpen(true);
+                          }}
+                          className="w-full h-9 px-3 rounded-xl hover:bg-amber-50 text-amber-900 text-xs font-semibold flex items-center gap-2.5 transition-colors cursor-pointer text-left"
+                        >
+                          <Landmark className="w-4 h-4 text-amber-600" />
+                          <span>Foreclose Loan</span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsDesktopMoreOpen(false);
+                          handleExportCsv();
+                        }}
+                        className="w-full h-9 px-3 rounded-xl hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-2.5 transition-colors cursor-pointer text-left"
+                      >
+                        <Download className="w-4 h-4 text-slate-500" />
+                        <span>Export Schedule (CSV)</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isArchiving}
+                        onClick={() => {
+                          setIsDesktopMoreOpen(false);
+                          handleToggleArchive();
+                        }}
+                        className="w-full h-9 px-3 rounded-xl hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-2.5 transition-colors cursor-pointer text-left"
+                      >
+                        {isClosed ? (
+                          <>
+                            <ArchiveRestore className="w-4 h-4 text-emerald-700" />
+                            <span>Reactivate Commitment</span>
+                          </>
+                        ) : (
+                          <>
+                            <Archive className="w-4 h-4 text-slate-500" />
+                            <span>Archive Commitment</span>
+                          </>
+                        )}
+                      </button>
+
+                      <div className="my-1 border-t border-slate-100" />
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsDesktopMoreOpen(false);
+                          setIsDeleteModalOpen(true);
+                        }}
+                        className="w-full h-9 px-3 rounded-xl hover:bg-rose-50 text-rose-600 text-xs font-semibold flex items-center gap-2.5 transition-colors cursor-pointer text-left"
+                      >
+                        <Trash2 className="w-4 h-4 text-rose-600" />
+                        <span>Delete Commitment</span>
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
           {/* 4 Financial KPI Overview Cards - Scaled & Touch Friendly */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-3.5 border-t border-slate-100">
-            <div className="p-3 sm:p-3.5 rounded-xl bg-indigo-50/50 border border-indigo-100/70">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+            <div className="p-3 sm:p-3.5 rounded-xl bg-gradient-to-br from-emerald-50/70 via-teal-50/30 to-emerald-50/50 border border-emerald-200/70 shadow-2xs">
+              <span className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider block">
                 Monthly Instalment
               </span>
-              <span className="text-base sm:text-lg lg:text-xl font-black text-indigo-700 mt-0.5 block tracking-tight truncate">
+              <span className="text-base sm:text-lg lg:text-xl font-black text-[#02361B] mt-0.5 block tracking-tight truncate">
                 {formatCurrency(loan.emi_amount, currency)}
               </span>
-              <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block mt-0.5 truncate">
+              <span className="text-[10px] sm:text-[11px] text-emerald-700/80 font-medium block mt-0.5 truncate">
                 Due on {loan.due_day}th of every month
               </span>
             </div>
 
-            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
+            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/70 shadow-2xs">
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                 Outstanding Principal
               </span>
@@ -1215,7 +1268,7 @@ function EmiDetailContent() {
               </span>
             </div>
 
-            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
+            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/70 shadow-2xs">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                   Repayment Progress
@@ -1229,13 +1282,13 @@ function EmiDetailContent() {
               </span>
               <div className="w-full h-1.5 bg-slate-200/80 rounded-full mt-2 overflow-hidden">
                 <div
-                  className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
 
-            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
+            <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/70 shadow-2xs">
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
                 Interest & Timeline
               </span>
@@ -1357,8 +1410,8 @@ function EmiDetailContent() {
                           className={cn(
                             "min-h-[36px] px-2.5 py-1 rounded-[8px] text-[11px] font-bold capitalize transition-all cursor-pointer shrink-0 active:scale-95 touch-manipulation",
                             scheduleFilter === filter
-                              ? "bg-indigo-600 text-white shadow-2xs"
-                              : "text-slate-500 hover:text-slate-900 hover:bg-white"
+                              ? "bg-[#02361B] text-white shadow-2xs font-extrabold"
+                              : "text-slate-600 hover:text-slate-900 hover:bg-white"
                           )}
                         >
                           {filter} ({count})
@@ -1422,8 +1475,8 @@ function EmiDetailContent() {
                                   <td className="py-2.5 px-4 whitespace-nowrap">
                                     {isPaid ? (
                                       item.payment?.user ? (
-                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs">
-                                          <div className="relative w-4 h-4 rounded-full bg-indigo-200 text-indigo-700 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
+                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-850 border border-emerald-200/80 shadow-2xs">
+                                          <div className="relative w-4 h-4 rounded-full bg-emerald-200 text-emerald-800 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
                                             {item.payment.user.profile_photo ? (
                                               <Image
                                                 src={item.payment.user.profile_photo}
@@ -1484,7 +1537,7 @@ function EmiDetailContent() {
                                           familyMembers: loan.family?.members,
                                         })
                                       }
-                                      className="min-h-[34px] px-3 rounded-lg text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 active:scale-95 touch-manipulation transition-all cursor-pointer"
+                                      className="min-h-[32px] px-3 rounded-lg text-xs font-extrabold text-[#02361B] bg-emerald-50/90 hover:bg-emerald-100 border border-emerald-200/80 active:scale-95 touch-manipulation transition-all cursor-pointer shadow-2xs"
                                     >
                                       Mark Paid
                                     </button>
@@ -1509,7 +1562,7 @@ function EmiDetailContent() {
                             {/* Card Header: Installment # + Due Date + Status */}
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2 min-w-0">
-                                <span className="px-2 py-0.5 rounded-md text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-100 shrink-0">
+                                <span className="px-2 py-0.5 rounded-md text-xs font-black bg-slate-100 text-slate-700 border border-slate-200/80 shrink-0">
                                   #{item.installment_number}
                                 </span>
                                 <span className="text-xs font-semibold text-slate-700 flex items-center gap-1 truncate">
@@ -1565,8 +1618,8 @@ function EmiDetailContent() {
                             {loan.ownership_type === "family_shared" && isPaid && item.payment?.user && (
                               <div className="pt-0.5 flex items-center gap-1.5 text-xs">
                                 <span className="text-[11px] text-slate-400 font-medium">Paid by:</span>
-                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs">
-                                  <div className="relative w-3.5 h-3.5 rounded-full bg-indigo-200 text-indigo-700 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
+                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                                  <div className="relative w-3.5 h-3.5 rounded-full bg-emerald-200 text-emerald-800 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
                                     {item.payment.user.profile_photo ? (
                                       <Image
                                         src={item.payment.user.profile_photo}
@@ -1603,7 +1656,7 @@ function EmiDetailContent() {
                                     familyMembers: loan.family?.members,
                                   })
                                 }
-                                className="w-full min-h-[44px] rounded-xl bg-theme-gradient text-white text-xs font-bold shadow-xs active:scale-95 touch-manipulation flex items-center justify-center gap-2 cursor-pointer mt-1"
+                                className="w-full min-h-[44px] rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-xs active:scale-95 touch-manipulation flex items-center justify-center gap-2 cursor-pointer mt-1"
                               >
                                 <Check className="w-4 h-4 stroke-[3]" />
                                 <span>Mark Paid ({formatCurrency(item.due_amount, currency)})</span>
@@ -1649,8 +1702,8 @@ function EmiDetailContent() {
                                 Payment for EMI #{schedules.find((s) => s.id === p.emi_schedule_id)?.installment_number || p.emi_schedule_id || "—"}
                               </span>
                               {p.user && (
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs">
-                                  <div className="relative w-3.5 h-3.5 rounded-full bg-indigo-200 text-indigo-700 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                                  <div className="relative w-3.5 h-3.5 rounded-full bg-emerald-200 text-emerald-800 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
                                     {p.user.profile_photo ? (
                                       <Image
                                         src={p.user.profile_photo}
@@ -1714,9 +1767,9 @@ function EmiDetailContent() {
                       setCurrentStep(1);
                       setIsEditModalOpen(true);
                     }}
-                    className="h-7 px-2.5 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 text-xs font-bold hover:bg-indigo-100 transition-colors cursor-pointer flex items-center gap-1.5"
+                    className="h-7 px-2.5 rounded-lg border border-emerald-200/80 bg-emerald-50 text-[#02361B] text-xs font-bold hover:bg-emerald-100 transition-colors cursor-pointer flex items-center gap-1.5"
                   >
-                    <Pencil className="w-3 h-3" />
+                    <Pencil className="w-3 h-3 text-emerald-700" />
                     <span>Edit Terms</span>
                   </button>
                 </div>
@@ -1761,13 +1814,13 @@ function EmiDetailContent() {
 
                   <div className="p-3 rounded-xl bg-slate-50/70 border border-slate-100 space-y-0.5">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Monthly Due Day</span>
-                    <span className="font-bold text-indigo-700 text-xs block">Every month on the {loan.due_day}th</span>
+                    <span className="font-bold text-[#02361B] text-xs block">Every month on the {loan.due_day}th</span>
                   </div>
 
                   {loan.first_emi_amount && Number(loan.first_emi_amount) > 0 && (
-                    <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 space-y-0.5">
-                      <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider block">1st Month Custom / BPI EMI</span>
-                      <span className="font-bold text-indigo-900 text-xs block">{formatCurrency(loan.first_emi_amount, currency)}</span>
+                    <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-0.5">
+                      <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">1st Month Custom / BPI EMI</span>
+                      <span className="font-bold text-[#02361B] text-xs block">{formatCurrency(loan.first_emi_amount, currency)}</span>
                     </div>
                   )}
 
@@ -1788,23 +1841,25 @@ function EmiDetailContent() {
           <div className="lg:col-span-4 space-y-4">
             {/* Next Due Payment Action Card - Desktop Only (handled cleanly in hero banner on mobile) */}
             {nextPendingSchedule && !isClosed ? (
-              <div className="hidden lg:block bg-gradient-to-br from-indigo-600 to-indigo-800 text-white rounded-2xl p-4.5 sm:p-5 shadow-xs space-y-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/20 text-white backdrop-blur-xs">
+              <div className="hidden lg:block relative overflow-hidden bg-gradient-to-br from-[#02361B] via-[#044422] to-[#012211] text-white rounded-2xl p-5 shadow-md border border-emerald-800/40 space-y-4">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-400/10 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="flex items-center justify-between relative z-10">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-white/15 text-emerald-200 border border-white/10 backdrop-blur-xs tracking-wide uppercase">
                     Next Due Payment
                   </span>
-                  <span className="text-xs font-semibold text-indigo-200">
+                  <span className="text-xs font-bold text-emerald-200/90 font-mono">
                     Instalment #{nextPendingSchedule.installment_number}
                   </span>
                 </div>
 
-                <div>
-                  <span className="text-[11px] text-indigo-200 block font-medium">Amount Payable</span>
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white mt-0.5 block">
+                <div className="relative z-10">
+                  <span className="text-[11px] text-emerald-200/80 block font-semibold">Amount Payable</span>
+                  <span className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-0.5 block">
                     {formatCurrency(nextPendingSchedule.due_amount, currency)}
                   </span>
-                  <span className="text-xs text-indigo-100 font-semibold mt-1 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-indigo-200" />
+                  <span className="text-xs text-emerald-100/90 font-semibold mt-1.5 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-emerald-300" />
                     <span>Due on {formatDate(nextPendingSchedule.due_date)}</span>
                   </span>
                 </div>
@@ -1822,9 +1877,9 @@ function EmiDetailContent() {
                       familyMembers: loan.family?.members,
                     })
                   }
-                  className="w-full h-9 inline-flex items-center justify-center gap-1.5 rounded-xl bg-white text-indigo-700 hover:bg-indigo-50 text-xs font-bold shadow-xs transition-all cursor-pointer active:scale-[0.99]"
+                  className="relative z-10 w-full h-10 inline-flex items-center justify-center gap-2 rounded-xl bg-white text-[#02361B] hover:bg-emerald-50 text-xs font-black shadow-sm transition-all cursor-pointer active:scale-[0.98]"
                 >
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  <Check className="w-4 h-4 stroke-[3] text-emerald-700" />
                   <span>Mark This EMI as Paid</span>
                 </button>
               </div>
@@ -1880,7 +1935,7 @@ function EmiDetailContent() {
                   <span className="text-[11px] text-slate-500 block">
                     Method: {loan.payment_method}
                   </span>
-                  <span className="text-[10px] text-indigo-600 font-semibold block pt-0.5">
+                  <span className="text-[10px] text-emerald-700 font-semibold block pt-0.5">
                     Reminders active on 7d, 3d, 1d & due date
                   </span>
                 </div>
@@ -1901,7 +1956,7 @@ function EmiDetailContent() {
                 }}
                 className="w-full min-h-[44px] inline-flex items-center justify-start gap-2.5 px-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold active:scale-95 touch-manipulation transition-colors cursor-pointer"
               >
-                <Pencil className="w-3.5 h-3.5 text-indigo-600" />
+                <Pencil className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Edit Loan Details & Parameters</span>
               </button>
 
@@ -1976,7 +2031,7 @@ function EmiDetailContent() {
                     className={cn(
                       "min-h-[38px] sm:min-h-[36px] py-1.5 px-1 sm:px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 sm:gap-1.5 transition-all cursor-pointer active:scale-95 touch-manipulation",
                       currentStep === s.id
-                        ? "bg-indigo-600 text-white shadow-2xs"
+                        ? "bg-[#02361B] text-white shadow-2xs font-extrabold"
                         : currentStep > s.id
                         ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                         : "text-slate-400 hover:bg-slate-50"
@@ -2110,7 +2165,7 @@ function EmiDetailContent() {
                           className={cn(
                             "relative flex items-center gap-3 p-3 rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none",
                             formData.ownershipType === "personal"
-                              ? "bg-indigo-50/60 border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                              ? "bg-emerald-50/60 border-emerald-500 ring-2 ring-emerald-500/15 shadow-2xs"
                               : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
                           )}
                         >
@@ -2129,7 +2184,7 @@ function EmiDetailContent() {
                             className={cn(
                               "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                               formData.ownershipType === "personal"
-                                ? "border-indigo-600 bg-indigo-600"
+                                ? "border-emerald-600 bg-emerald-600"
                                 : "border-slate-300 bg-white"
                             )}
                           >
@@ -2155,12 +2210,12 @@ function EmiDetailContent() {
                           className={cn(
                             "relative flex items-center gap-3 p-3 rounded-2xl border text-left cursor-pointer transition-all duration-150 focus:outline-none",
                             formData.ownershipType === "family_shared"
-                              ? "bg-indigo-50/60 border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                              ? "bg-emerald-50/60 border-emerald-500 ring-2 ring-emerald-500/15 shadow-2xs"
                               : "bg-white border-slate-200/90 hover:border-slate-300 hover:bg-slate-50/60 shadow-2xs"
                           )}
                         >
                           <div className="shrink-0">
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-teal-500 to-indigo-600 text-white flex items-center justify-center shadow-2xs">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-700 text-white flex items-center justify-center shadow-2xs">
                               <Users className="w-3.5 h-3.5 stroke-[2.2]" />
                             </div>
                           </div>
@@ -2176,7 +2231,7 @@ function EmiDetailContent() {
                             className={cn(
                               "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                               formData.ownershipType === "family_shared"
-                                ? "border-indigo-600 bg-indigo-600"
+                                ? "border-emerald-600 bg-emerald-600"
                                 : "border-slate-300 bg-white"
                             )}
                           >
@@ -2192,10 +2247,10 @@ function EmiDetailContent() {
                         <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                              <Users className="w-3.5 h-3.5 text-indigo-600" />
+                              <Users className="w-3.5 h-3.5 text-emerald-700" />
                               Select Family Group / Household <span className="text-rose-500">*</span>
                             </span>
-                            <span className="text-[10px] font-semibold text-indigo-600 bg-white px-2 py-0.5 rounded-full border border-indigo-100 shadow-2xs">
+                            <span className="text-[10px] font-semibold text-emerald-800 bg-white px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs">
                               {families.length} {families.length === 1 ? "Vault" : "Vaults"}
                             </span>
                           </div>
@@ -2221,7 +2276,7 @@ function EmiDetailContent() {
                                     className={cn(
                                       "relative flex items-center gap-3 p-3 rounded-xl border text-left cursor-pointer transition-all duration-150 focus:outline-none",
                                       isSelected
-                                        ? "bg-white border-indigo-500 ring-2 ring-indigo-500/15 shadow-2xs"
+                                        ? "bg-white border-emerald-500 ring-2 ring-emerald-500/15 shadow-2xs"
                                         : "bg-white/80 border-slate-200/90 hover:border-slate-300 shadow-2xs"
                                     )}
                                   >
@@ -2245,7 +2300,7 @@ function EmiDetailContent() {
                                       className={cn(
                                         "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-1 transition-colors",
                                         isSelected
-                                          ? "border-indigo-600 bg-indigo-600"
+                                          ? "border-emerald-600 bg-emerald-600"
                                           : "border-slate-300 bg-white"
                                       )}
                                     >
@@ -2265,7 +2320,7 @@ function EmiDetailContent() {
                               </div>
                               <p className="text-[11px] text-amber-700 leading-relaxed font-normal">
                                 To share loans with family, you first need to create a household workspace on the{" "}
-                                <Link href="/family/setup" target="_blank" className="font-bold underline text-indigo-700">
+                                <Link href="/family/setup" target="_blank" className="font-bold underline text-emerald-700">
                                   Family page
                                 </Link>
                                 . Until then, keep this loan in your <strong>Personal Vault</strong>.
@@ -2348,7 +2403,7 @@ function EmiDetailContent() {
                           <button
                             type="button"
                             onClick={() => handleApplyStandardRate(formData.loanCategory)}
-                            className="text-[10px] font-bold text-indigo-600 hover:underline cursor-pointer"
+                            className="text-[10px] font-bold text-emerald-700 hover:underline cursor-pointer"
                           >
                             Standard ({standardRatesByCategory[formData.loanCategory]}%)
                           </button>
@@ -2381,7 +2436,7 @@ function EmiDetailContent() {
                           setFormData({ ...formData, emiAmount: e.target.value });
                           clearError("emiAmount");
                         }}
-                        className={getInputClass(!!errors.emiAmount, "font-extrabold text-indigo-700 text-sm")}
+                        className={getInputClass(!!errors.emiAmount, "font-extrabold text-[#02361B] text-sm")}
                       />
                       {errors.emiAmount && (
                         <p className="text-[11px] font-semibold text-rose-500 mt-1 flex items-center gap-1">
@@ -2494,7 +2549,7 @@ function EmiDetailContent() {
                           className={cn(
                             "h-10 sm:h-9 min-h-[40px] sm:min-h-[36px] text-xs font-bold rounded-xl border transition-all cursor-pointer flex items-center justify-center touch-manipulation active:scale-95",
                             String(formData.dueDay) === String(day)
-                              ? "bg-indigo-600 text-white border-indigo-600 shadow-2xs font-extrabold"
+                              ? "bg-[#02361B] text-white border-[#02361B] shadow-2xs font-extrabold"
                               : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
                           )}
                         >

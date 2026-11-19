@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   X,
@@ -63,6 +64,11 @@ export function ForeclosureModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Available family members for shared commitments
   const membersList = useMemo(() => {
@@ -86,13 +92,25 @@ export function ForeclosureModal({
     }
   }, [emi, outstanding, user]);
 
+  // Handle ESC key press
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !isSubmitting) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, isSubmitting, onClose]);
+
   const totalPayable = useMemo(() => {
     const s = parseFloat(settlementAmount) || 0;
     const c = parseFloat(foreclosureCharges) || 0;
     return Math.max(0, s + c);
   }, [settlementAmount, foreclosureCharges]);
 
-  if (!isOpen || !emi) return null;
+  if (!isOpen || !emi || !mounted) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,23 +144,33 @@ export function ForeclosureModal({
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs transition-opacity animate-in fade-in select-none">
-      <div className="relative w-full max-w-lg bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh] pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pb-0 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs transition-opacity animate-fade-in select-none"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && !isSubmitting) {
+          onClose();
+        }
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="foreclosure-title"
+    >
+      <div className="relative w-full max-w-lg bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh] pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pb-0 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
         {/* Mobile Pull Handle */}
         <div className="w-10 h-1 bg-slate-300 rounded-full mx-auto mt-2.5 sm:hidden shrink-0" />
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 bg-slate-50/60">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-amber-100/80 bg-gradient-to-r from-amber-50/60 via-slate-50 to-white">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 border border-amber-200/80 flex items-center justify-center shrink-0 shadow-2xs">
               <Landmark className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-black text-[#02361B]">
+              <h3 id="foreclosure-title" className="text-base sm:text-lg font-black text-[#02361B] tracking-tight">
                 Loan Foreclosure & Early Pre-Closure
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Settle and close <span className="font-bold text-slate-700">{emi.loan_name}</span> ({emi.lender_name})
               </p>
             </div>
@@ -150,7 +178,7 @@ export function ForeclosureModal({
           <button
             type="button"
             onClick={onClose}
-            className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 active:scale-95 transition-all cursor-pointer touch-manipulation"
+            className="w-9 h-9 rounded-[12px] bg-white border border-slate-200/90 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-50 shadow-2xs active:scale-95 transition-all cursor-pointer touch-manipulation shrink-0"
             aria-label="Close dialog"
           >
             <X className="w-4 h-4" />
@@ -179,7 +207,7 @@ export function ForeclosureModal({
             )}
 
             {/* Foreclosure Overview Card */}
-            <div className="p-4 bg-gradient-to-br from-amber-50/70 via-indigo-50/40 to-slate-50 rounded-2xl border border-amber-200/70 space-y-3">
+            <div className="p-4 bg-gradient-to-br from-amber-50/70 via-emerald-50/30 to-slate-50 rounded-2xl border border-amber-200/70 space-y-3 shadow-2xs">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                   Remaining Principal Balance
@@ -204,7 +232,7 @@ export function ForeclosureModal({
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-indigo-600" />
+                    <User className="w-3.5 h-3.5 text-emerald-700" />
                     <span>Who Is Paying the Foreclosure Settlement?</span>
                   </label>
                   <span className="text-[10px] text-slate-400 font-medium">
@@ -226,14 +254,14 @@ export function ForeclosureModal({
                         className={cn(
                           "p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-2.5",
                           isSelected
-                            ? "bg-indigo-50/80 border-indigo-400 ring-2 ring-indigo-500/20 shadow-2xs"
+                            ? "bg-emerald-50/80 border-emerald-500 ring-2 ring-emerald-500/20 shadow-2xs"
                             : "bg-white border-slate-200 hover:border-slate-300"
                         )}
                       >
-                        <div className="relative w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden shadow-2xs">
+                        <div className="relative w-7 h-7 rounded-full bg-gradient-to-br from-[#1C9E30] to-[#005E35] text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden shadow-2xs">
                           {m.user?.profile_photo ? (
                             <Image
-                              src={m.user.profile_photo}
+                              src={m.user?.profile_photo}
                               alt={name}
                               fill
                               unoptimized
@@ -255,7 +283,7 @@ export function ForeclosureModal({
                         </div>
 
                         {isSelected && (
-                          <div className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+                          <div className="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
                             <Check className="w-2.5 h-2.5 stroke-[3]" />
                           </div>
                         )}
@@ -279,7 +307,7 @@ export function ForeclosureModal({
                   required
                   value={settlementAmount}
                   onChange={(e) => setSettlementAmount(e.target.value)}
-                  className="w-full text-xs font-semibold px-3 h-11 sm:h-9 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                  className="w-full text-xs font-semibold px-3 h-11 sm:h-9 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white shadow-2xs transition-all"
                 />
               </div>
 
@@ -295,7 +323,7 @@ export function ForeclosureModal({
                   value={foreclosureCharges}
                   onChange={(e) => setForeclosureCharges(e.target.value)}
                   placeholder="0.00 (or waived)"
-                  className="w-full text-xs font-semibold px-3 h-11 sm:h-9 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                  className="w-full text-xs font-semibold px-3 h-11 sm:h-9 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white shadow-2xs transition-all"
                 />
               </div>
             </div>
@@ -330,7 +358,7 @@ export function ForeclosureModal({
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                <Hash className="w-3.5 h-3.5 text-slate-400" />
+                <Hash className="w-3.5 h-3.5 text-emerald-700" />
                 Foreclosure Receipt / UTR Ref
               </label>
               <input
@@ -338,7 +366,7 @@ export function ForeclosureModal({
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 placeholder="e.g. UTR-FORECLOSE-9821420"
-                className="w-full text-xs px-3 h-11 sm:h-9 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white font-mono"
+                className="w-full text-xs px-3 h-11 sm:h-9 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-mono shadow-2xs transition-all"
               />
             </div>
 
@@ -351,7 +379,7 @@ export function ForeclosureModal({
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="e.g. Foreclosed early with annual savings"
-                className="w-full text-xs px-3 h-11 sm:h-9 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                className="w-full text-xs px-3 h-11 sm:h-9 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white shadow-2xs transition-all"
               />
             </div>
 
@@ -393,6 +421,7 @@ export function ForeclosureModal({
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
