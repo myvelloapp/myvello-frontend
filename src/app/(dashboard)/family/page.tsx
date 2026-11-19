@@ -662,20 +662,19 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 1. Page Header */}
-
-        {/* Mobile Header (sm:hidden): Sleek single compact row with 3-dot dropdown popover & primary action */}
-        <div className="sm:hidden flex items-center justify-between gap-2.5 min-h-[36px]">
-          <div className="flex items-center gap-2 min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-              {activeFamily ? activeFamily.name : "Groups"}
-            </h1>
-            {activeFamily && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-black capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
-                {activeFamily.my_role}
-              </span>
-            )}
-          </div>
+        {/* 1. Page Header (shown when active group exists) */}
+        {activeFamily && (
+          <>
+            {/* Mobile Header (sm:hidden): Sleek single compact row with 3-dot dropdown popover & primary action */}
+            <div className="sm:hidden flex items-center justify-between gap-2.5 min-h-[36px]">
+              <div className="flex items-center gap-2 min-w-0">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
+                  {activeFamily.name}
+                </h1>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
+                  {activeFamily.my_role}
+                </span>
+              </div>
 
           <div className="flex items-center gap-2 shrink-0">
             {/* 3-Dot Options & Groups Menu Trigger */}
@@ -858,15 +857,13 @@ _Myvello — Your Life. Your Records. One Place._`
           <div className="space-y-2.5 min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
               <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-                {activeFamily ? activeFamily.name : "Groups"}
+                {activeFamily.name}
               </h1>
 
               {/* Role Badge */}
-              {activeFamily && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
-                  {activeFamily.my_role}
-                </span>
-              )}
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
+                {activeFamily.my_role}
+              </span>
             </div>
 
             {/* Segmented Workspace Tabs on Desktop */}
@@ -1023,6 +1020,8 @@ _Myvello — Your Life. Your Records. One Place._`
             )}
           </div>
         </div>
+          </>
+        )}
 
         {/* 2. Pending Incoming Invitations Banner (if any) */}
         {myInvitations.length > 0 && (
