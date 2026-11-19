@@ -57,11 +57,11 @@ function NotificationsSkeleton() {
         <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden">
           {/* Attached Toolbar Skeleton */}
           <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
-            <div className="flex items-center gap-1.5 overflow-x-auto py-0.5">
-              <div className="h-8 w-16 rounded-lg bg-slate-200/80 shrink-0" />
-              <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
-              <div className="h-8 w-24 rounded-lg bg-slate-200/50 shrink-0" />
-              <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
+            <div className="p-1 rounded-[8px] bg-slate-100/80 border border-slate-200/70 inline-flex items-center gap-1">
+              <div className="h-7 w-16 rounded-[6px] bg-slate-200/80 shrink-0" />
+              <div className="h-7 w-20 rounded-[6px] bg-slate-200/50 shrink-0" />
+              <div className="h-7 w-24 rounded-[6px] bg-slate-200/50 shrink-0" />
+              <div className="h-7 w-20 rounded-[6px] bg-slate-200/50 shrink-0" />
             </div>
           </div>
 
@@ -553,27 +553,27 @@ function NotificationsPageContent() {
 
         {/* Unified Reminders Feed Card (Exact EMI rounded-[16px] Geometry) */}
         <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
-          {/* Attached Minimal Toolbar Header (Segmented Filter Pills) */}
+          {/* Attached Minimal Toolbar Header (Segmented Filter Pills matching EMI page) */}
           <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
-            {/* Segmented Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth -webkit-overflow-scrolling-touch py-0.5">
+            {/* Themed Segmented Tab Control matching EMI Management */}
+            <div className="p-1 rounded-[8px] bg-slate-100/80 border border-slate-200/70 inline-flex items-center gap-1 overflow-x-auto no-scrollbar max-w-full">
               <button
                 type="button"
                 onClick={() => setFilter("all")}
                 className={cn(
-                  "h-8 px-3 rounded-[8px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
+                  "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                   filter === "all"
-                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
-                    : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
+                    : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-200/50"
                 )}
               >
-                <Layers className="w-3 h-3" />
+                <Layers className="w-3.5 h-3.5" />
                 <span>All</span>
                 <span
                   className={cn(
-                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold",
+                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold transition-colors min-w-[18px] text-center",
                     filter === "all"
-                      ? "bg-white/20 text-white"
+                      ? "bg-white/25 text-white"
                       : "bg-white text-slate-600 border border-slate-200/60"
                   )}
                 >
@@ -585,19 +585,21 @@ function NotificationsPageContent() {
                 type="button"
                 onClick={() => setFilter("unread")}
                 className={cn(
-                  "h-8 px-3 rounded-[8px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
+                  "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                   filter === "unread"
-                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
-                    : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
+                    : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-200/50"
                 )}
               >
-                <AlertCircle className="w-3 h-3" />
+                <AlertCircle className="w-3.5 h-3.5" />
                 <span>Unread</span>
                 {unreadItemsCount > 0 && (
                   <span
                     className={cn(
-                      "px-1.5 py-0.2 rounded-full text-[10px] font-bold",
-                      filter === "unread" ? "bg-white text-emerald-800" : "bg-rose-500 text-white"
+                      "px-1.5 py-0.2 rounded-full text-[10px] font-bold transition-colors min-w-[18px] text-center",
+                      filter === "unread"
+                        ? "bg-white/25 text-white"
+                        : "bg-rose-500 text-white"
                     )}
                   >
                     {unreadItemsCount}
@@ -609,19 +611,19 @@ function NotificationsPageContent() {
                 type="button"
                 onClick={() => setFilter("reminders")}
                 className={cn(
-                  "h-8 px-3 rounded-[8px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
+                  "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                   filter === "reminders"
-                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
-                    : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
+                    : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-200/50"
                 )}
               >
-                <Clock className="w-3 h-3" />
+                <Clock className="w-3.5 h-3.5" />
                 <span>EMI Dues</span>
                 <span
                   className={cn(
-                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold",
+                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold transition-colors min-w-[18px] text-center",
                     filter === "reminders"
-                      ? "bg-white/20 text-white"
+                      ? "bg-white/25 text-white"
                       : "bg-white text-slate-600 border border-slate-200/60"
                   )}
                 >
@@ -633,19 +635,19 @@ function NotificationsPageContent() {
                 type="button"
                 onClick={() => setFilter("family")}
                 className={cn(
-                  "h-8 px-3 rounded-[8px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
+                  "px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 min-h-[32px] touch-manipulation active:scale-95",
                   filter === "family"
                     ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
-                    : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
+                    : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-200/50"
                 )}
               >
-                <Users className="w-3 h-3" />
+                <Users className="w-3.5 h-3.5" />
                 <span>Groups</span>
                 <span
                   className={cn(
-                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold",
+                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold transition-colors min-w-[18px] text-center",
                     filter === "family"
-                      ? "bg-white/20 text-white"
+                      ? "bg-white/25 text-white"
                       : "bg-white text-slate-600 border border-slate-200/60"
                   )}
                 >
