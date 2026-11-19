@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -178,6 +179,11 @@ export default function PaymentHistoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const activeFiltersCount =
     (selectedMethod !== "All" ? 1 : 0) +
@@ -413,30 +419,30 @@ export default function PaymentHistoryPage() {
     const m = (method || "").toLowerCase();
     if (m.includes("auto") || m.includes("mandate") || m.includes("nach")) {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
-          <Zap className="w-3 h-3 text-indigo-500" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80">
+          <Zap className="w-3 h-3 text-emerald-600" />
           Auto Debit
         </span>
       );
     }
     if (m.includes("upi")) {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-100">
-          <Smartphone className="w-3 h-3 text-purple-500" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-teal-50 text-teal-800 border border-teal-200/80">
+          <Smartphone className="w-3 h-3 text-teal-600" />
           UPI Transfer
         </span>
       );
     }
     if (m.includes("net") || m.includes("internet") || m.includes("online")) {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100">
-          <Landmark className="w-3 h-3 text-blue-500" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-sky-50 text-sky-800 border border-sky-200/80">
+          <Landmark className="w-3 h-3 text-sky-600" />
           NetBanking
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200/80">
         <Building2 className="w-3 h-3 text-slate-500" />
         {method || "Bank Transfer"}
       </span>
@@ -445,91 +451,93 @@ export default function PaymentHistoryPage() {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-[1500px] pt-3.5 sm:pt-5 space-y-2 sm:space-y-5 min-h-dvh overflow-x-hidden pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10">
-        {/* Page Header */}
-        <div className="flex items-center justify-between gap-3 min-h-[36px]">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-              Payment History
-            </h1>
-          </div>
+      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3 sm:space-y-5">
+          {/* Page Header */}
+          <div className="flex items-center justify-between gap-3 min-h-[36px]">
+            <div className="space-y-0.5 min-w-0">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
+                Payment History
+              </h1>
+            
+            </div>
 
-          {/* Mobile Only: 3-Dot Dropdown Popover */}
-          <div className="sm:hidden relative shrink-0" ref={headerMenuRef}>
-            <button
-              type="button"
-              onClick={() => setIsHeaderMenuOpen((prev) => !prev)}
-              aria-label="More actions"
-              aria-expanded={isHeaderMenuOpen}
-              className={cn(
-                "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                isHeaderMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
-              )}
-            >
-              <MoreHorizontal className="w-5 h-5 text-slate-700" />
-            </button>
-
-            {/* Dropdown Menu Popover matching Screenshot */}
-            {isHeaderMenuOpen && (
-              <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
-                {/* Pointer Tip Arrow */}
-                <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
-
-                <div className="relative z-20 space-y-0.5">
-                  {/* Export CSV */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsHeaderMenuOpen(false);
-                      handleExportCSV();
-                    }}
-                    className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-indigo-600 hover:bg-indigo-50/50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                  >
-                    <Download className="w-4 h-4 text-indigo-600 shrink-0" />
-                    <span>Export CSV</span>
-                  </button>
-
-                  {/* Manage EMIs */}
-                  <Link
-                    href="/emis"
-                    onClick={() => setIsHeaderMenuOpen(false)}
-                    className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                  >
-                    <ExternalLink className="w-4 h-4 text-slate-500 shrink-0" />
-                    <span>Manage EMIs</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Desktop Only: Classic Action Buttons Row */}
-          <div className="hidden sm:flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleExportCSV}
-              className="h-9 px-3.5 rounded-xl border border-slate-200/90 hover:border-indigo-300 bg-white hover:bg-indigo-50/50 text-slate-700 hover:text-indigo-600 font-bold text-xs shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
-            >
-              <Download className="w-3.5 h-3.5 text-indigo-600" />
-              <span>Export CSV</span>
-            </button>
-
-            <Link href="/emis">
+            {/* Mobile Only: 3-Dot Dropdown Popover */}
+            <div className="sm:hidden relative shrink-0" ref={headerMenuRef}>
               <button
                 type="button"
-                className="h-9 px-4 rounded-xl btn-gradient-glow text-white font-bold text-xs shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                onClick={() => setIsHeaderMenuOpen((prev) => !prev)}
+                aria-label="More actions"
+                aria-expanded={isHeaderMenuOpen}
+                className={cn(
+                  "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
+                  isHeaderMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
+                )}
               >
-                <span>Manage EMIs</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <MoreHorizontal className="w-5 h-5 text-slate-700" />
               </button>
-            </Link>
+
+              {/* Dropdown Menu Popover */}
+              {isHeaderMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
+                  {/* Pointer Tip Arrow */}
+                  <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
+
+                  <div className="relative z-20 space-y-0.5">
+                    {/* Export CSV */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsHeaderMenuOpen(false);
+                        handleExportCSV();
+                      }}
+                      className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-emerald-800 hover:bg-emerald-50/50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                    >
+                      <Download className="w-4 h-4 text-emerald-700 shrink-0" />
+                      <span>Export CSV</span>
+                    </button>
+
+                    {/* Manage EMIs */}
+                    <Link
+                      href="/emis"
+                      onClick={() => setIsHeaderMenuOpen(false)}
+                      className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-emerald-800 hover:bg-emerald-50/50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                    >
+                      <ExternalLink className="w-4 h-4 text-slate-500 shrink-0" />
+                      <span>Manage EMIs</span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Only: Classic Action Buttons Row */}
+            <div className="hidden sm:flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleExportCSV}
+                className="h-9 px-3.5 rounded-[10px] border border-slate-200/90 hover:border-emerald-300 bg-white hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-800 font-bold text-xs shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+              >
+                <Download className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Export CSV</span>
+              </button>
+
+              <Link href="/emis">
+                <button
+                  type="button"
+                  className="h-9 px-4 rounded-[12px] btn-gradient-glow text-white font-bold text-xs shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                >
+                  <span>Manage EMIs</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
 
         {/* Unified Payment Ledger Card (Attached Minimal Toolbar + Table / Cards) */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+        <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
           {/* Mobile Minimal Unified Toolbar (sm:hidden - Search + Filters Popup Trigger) */}
-          <div className="sm:hidden p-3 border-b border-slate-100 bg-white space-y-2.5">
+          <div className="sm:hidden p-3 border-b border-slate-100 bg-white space-y-2.5 rounded-t-[16px]">
             <div className="flex items-center gap-2">
               {/* Search Input */}
               <div className="relative flex-1 min-w-0">
@@ -543,7 +551,7 @@ export default function PaymentHistoryPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search loans, lenders, UTR..."
-                  className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[12px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400"
+                  className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[10px] focus:outline-none focus:border-[#1C9E30] focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400"
                 />
                 {searchQuery && (
                   <button
@@ -562,9 +570,9 @@ export default function PaymentHistoryPage() {
                 type="button"
                 onClick={() => setIsMobileFilterOpen(true)}
                 className={cn(
-                  "h-10 px-3 rounded-[12px] border text-xs font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer touch-manipulation active:scale-95",
+                  "h-10 px-3 rounded-[10px] border text-xs font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer touch-manipulation active:scale-95",
                   activeFiltersCount > 0
-                    ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-2xs"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-800 shadow-2xs"
                     : "bg-white border-slate-200/90 text-slate-700 hover:bg-slate-50"
                 )}
                 aria-label="Filter payments"
@@ -572,7 +580,7 @@ export default function PaymentHistoryPage() {
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Filters</span>
                 {activeFiltersCount > 0 && (
-                  <span className="w-4.5 h-4.5 rounded-full bg-indigo-600 text-white text-[10px] font-black flex items-center justify-center">
+                  <span className="w-4.5 h-4.5 rounded-full bg-[#02361B] text-white text-[10px] font-black flex items-center justify-center">
                     {activeFiltersCount}
                   </span>
                 )}
@@ -584,12 +592,12 @@ export default function PaymentHistoryPage() {
               <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   {selectedMethod !== "All" && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                       <span>{selectedMethod}</span>
                       <button
                         type="button"
                         onClick={() => setSelectedMethod("All")}
-                        className="p-0.5 hover:text-indigo-900 touch-manipulation cursor-pointer"
+                        className="p-0.5 hover:text-emerald-950 touch-manipulation cursor-pointer"
                         aria-label="Remove payment method filter"
                       >
                         <X className="w-2.5 h-2.5" />
@@ -597,12 +605,12 @@ export default function PaymentHistoryPage() {
                     </span>
                   )}
                   {selectedSort !== "newest" && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
                       <span>{sortOptions.find((o) => o.value === selectedSort)?.label}</span>
                       <button
                         type="button"
                         onClick={() => setSelectedSort("newest")}
-                        className="p-0.5 hover:text-indigo-900 touch-manipulation cursor-pointer"
+                        className="p-0.5 hover:text-emerald-950 touch-manipulation cursor-pointer"
                         aria-label="Reset sort"
                       >
                         <X className="w-2.5 h-2.5" />
@@ -623,7 +631,7 @@ export default function PaymentHistoryPage() {
           </div>
 
           {/* Desktop Single-Row Unified Toolbar (hidden sm:flex) */}
-          <div className="hidden sm:flex px-4 py-2.5 border-b border-slate-100 flex-wrap items-center justify-between gap-2.5 bg-white">
+          <div className="hidden sm:flex px-4 py-2.5 border-b border-slate-100 flex-wrap items-center justify-between gap-2.5 bg-white rounded-t-[16px]">
             {/* Search Box */}
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -636,7 +644,7 @@ export default function PaymentHistoryPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search loan, lender, or UTR..."
-                className="w-full h-9 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50/80 hover:bg-slate-100/70 focus:bg-white border border-slate-200/80 rounded-[8px] focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 transition-all placeholder:text-slate-400"
+                className="w-full h-9 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50/80 hover:bg-slate-100/70 focus:bg-white border border-slate-200/80 rounded-[8px] focus:outline-none focus:border-[#1C9E30] focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400"
               />
               {searchQuery && (
                 <button
@@ -720,7 +728,7 @@ export default function PaymentHistoryPage() {
                             {item.user && (
                               <>
                                 <span>•</span>
-                                <span className="inline-flex items-center gap-1 text-indigo-600 font-bold">
+                                <span className="inline-flex items-center gap-1 text-emerald-800 font-bold">
                                   <span>Paid by {item.user.name}</span>
                                   {item.user.id === user?.id && (
                                     <span className="opacity-70 text-[9px] font-semibold">(You)</span>
@@ -761,7 +769,7 @@ export default function PaymentHistoryPage() {
                           e.stopPropagation();
                           setReceiptPayment(item);
                         }}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 min-h-[36px] rounded-lg text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50/70 border border-indigo-100/80 active:scale-95 touch-manipulation shrink-0"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 min-h-[36px] rounded-lg text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-50/80 border border-emerald-200/80 active:scale-95 touch-manipulation shrink-0"
                       >
                         <Receipt className="w-3.5 h-3.5" />
                         <span>Receipt</span>
@@ -775,7 +783,7 @@ export default function PaymentHistoryPage() {
                         <button
                           type="button"
                           onClick={(e) => handleCopyUtr(e, utr)}
-                          className="inline-flex items-center gap-1 font-mono font-bold text-slate-700 hover:text-indigo-600 active:scale-95 touch-manipulation cursor-pointer"
+                          className="inline-flex items-center gap-1 font-mono font-bold text-slate-700 hover:text-emerald-800 active:scale-95 touch-manipulation cursor-pointer"
                           title="Click to copy UTR"
                         >
                           <span>{utr}</span>
@@ -843,7 +851,7 @@ export default function PaymentHistoryPage() {
                               )}
                             </div>
                             <div className="min-w-0">
-                              <div className="font-black text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[200px]">
+                              <div className="font-black text-slate-900 group-hover:text-[#1C9E30] transition-colors truncate max-w-[200px]">
                                 {loanName}
                               </div>
                               <div className="text-[11px] text-slate-400 font-medium truncate flex items-center gap-1.5 flex-wrap">
@@ -853,8 +861,8 @@ export default function PaymentHistoryPage() {
                                 {item.user && (
                                   <>
                                     <span>•</span>
-                                    <span className="inline-flex items-center gap-1.5 text-indigo-600 font-bold">
-                                      <div className="relative w-4 h-4 rounded-full bg-indigo-100 text-indigo-700 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-indigo-200">
+                                    <span className="inline-flex items-center gap-1.5 text-emerald-800 font-bold">
+                                      <div className="relative w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-emerald-200">
                                         {item.user.profile_photo ? (
                                           <Image
                                             src={item.user.profile_photo}
@@ -910,14 +918,14 @@ export default function PaymentHistoryPage() {
                             <button
                               type="button"
                               onClick={(e) => handleCopyUtr(e, utr)}
-                              className="group/utr inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-slate-50 hover:bg-indigo-50/70 border border-slate-200 text-[11px] font-mono text-slate-600 hover:text-indigo-700 transition-all cursor-pointer active:scale-95 touch-manipulation"
+                              className="group/utr inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-slate-50 hover:bg-emerald-50/80 border border-slate-200 text-[11px] font-mono text-slate-600 hover:text-emerald-800 transition-all cursor-pointer active:scale-95 touch-manipulation"
                               title="Click to copy UTR"
                             >
                               <span>{utr}</span>
                               {copiedUtr === utr ? (
                                 <Check className="w-3 h-3 text-emerald-600" />
                               ) : (
-                                <Copy className="w-3 h-3 text-slate-400 group-hover/utr:text-indigo-600" />
+                                <Copy className="w-3 h-3 text-slate-400 group-hover/utr:text-emerald-700" />
                               )}
                             </button>
                           ) : (
@@ -941,7 +949,7 @@ export default function PaymentHistoryPage() {
                               e.stopPropagation();
                               setReceiptPayment(item);
                             }}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 border border-transparent hover:border-indigo-100 transition-all cursor-pointer active:scale-95 touch-manipulation"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200/80 transition-all cursor-pointer active:scale-95 touch-manipulation shadow-2xs"
                           >
                             <Receipt className="w-3.5 h-3.5" />
                             <span>Receipt</span>
@@ -956,7 +964,7 @@ export default function PaymentHistoryPage() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="px-4 sm:px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 text-xs text-slate-500 font-medium">
+              <div className="px-4 sm:px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 text-xs text-slate-500 font-medium rounded-b-[16px]">
                 <div>
                   Showing page <span className="font-bold text-slate-800">{currentPage}</span> of{" "}
                   <span className="font-bold text-slate-800">{totalPages}</span> ({totalCount} total)
@@ -966,7 +974,7 @@ export default function PaymentHistoryPage() {
                     type="button"
                     disabled={currentPage <= 1}
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="h-10 sm:h-8 min-h-[40px] sm:min-h-[32px] px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-slate-700 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
+                    className="h-10 sm:h-8 min-h-[40px] sm:min-h-[32px] px-3.5 py-1.5 rounded-[10px] sm:rounded-[8px] border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-slate-700 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                   >
                     Previous
                   </button>
@@ -974,7 +982,7 @@ export default function PaymentHistoryPage() {
                     type="button"
                     disabled={currentPage >= totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="h-10 sm:h-8 min-h-[40px] sm:min-h-[32px] px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-slate-700 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
+                    className="h-10 sm:h-8 min-h-[40px] sm:min-h-[32px] px-3.5 py-1.5 rounded-[10px] sm:rounded-[8px] border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-semibold text-slate-700 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                   >
                     Next
                   </button>
@@ -985,8 +993,8 @@ export default function PaymentHistoryPage() {
         ) : (
           /* Empty State */
           <div className="p-8 sm:p-12 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mx-auto mb-3.5">
-              <Clock className="w-7 h-7" />
+            <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-700 mx-auto mb-4 shadow-2xs">
+              <Clock className="w-8 h-8 stroke-[2.2]" />
             </div>
             <h3 className="text-base font-black text-[#02361B]">No Payment Records Found</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-5 leading-relaxed font-medium">
@@ -1002,14 +1010,14 @@ export default function PaymentHistoryPage() {
                   setSearchQuery("");
                   setSelectedMethod("All");
                 }}
-                className="h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center"
+                className="h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-[10px] transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center"
               >
                 Reset Filters
               </button>
             ) : (
               <Link
                 href="/emis"
-                className="h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] bg-[#4F46E5] hover:bg-[#4338CA] text-white rounded-xl shadow-xs text-xs font-semibold px-5 py-2.5 cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center"
+                className="h-11 px-6 rounded-[12px] btn-gradient-glow text-white text-xs sm:text-sm font-bold shadow-md shadow-emerald-500/25 cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center gap-2"
               >
                 Go to EMI Management
               </Link>
@@ -1034,7 +1042,7 @@ export default function PaymentHistoryPage() {
 
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-4 h-4 text-indigo-600" />
+                  <SlidersHorizontal className="w-4 h-4 text-emerald-700" />
                   <h3 className="text-base font-black text-[#02361B]">Filters & Refinements</h3>
                 </div>
                 <button
@@ -1100,27 +1108,34 @@ export default function PaymentHistoryPage() {
         )}
 
         {/* Modern Repayment Receipt Modal / Mobile Bottom Sheet */}
-        {receiptPayment && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-            <div className="bg-white rounded-t-[24px] sm:rounded-3xl max-w-md w-full shadow-2xl border-t sm:border border-slate-200 max-h-[90dvh] sm:max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom sm:zoom-in-95 duration-200 pb-[env(safe-area-inset-bottom)] sm:pb-0">
+        {receiptPayment && mounted && createPortal(
+          <div
+            className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="bg-white rounded-t-[28px] sm:rounded-[24px] max-w-md w-full shadow-2xl border-t sm:border border-emerald-100/90 max-h-[90dvh] sm:max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom sm:zoom-in-95 duration-200 pb-[env(safe-area-inset-bottom)] sm:pb-0">
               {/* Mobile Sheet Drag Handle */}
               <div className="flex sm:hidden justify-center pt-2.5 pb-1">
                 <div className="w-10 h-1 bg-slate-300 rounded-full" />
               </div>
 
-              {/* Receipt Header */}
-              <div className="p-4 sm:p-6 bg-gradient-to-r from-slate-50 via-white to-indigo-50/40 border-b border-slate-100 flex items-start justify-between">
-                <div className="flex items-center gap-3">
+              {/* Receipt Header Banner with Brand Emerald Gradient */}
+              <div className="p-5 sm:p-6 bg-gradient-to-br from-[#02361B] via-[#014421] to-[#012513] text-white relative overflow-hidden border-b border-emerald-800/40 flex items-start justify-between shrink-0">
+                <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-6 -left-6 w-28 h-28 bg-[#7CE617]/15 rounded-full blur-xl pointer-events-none" />
+
+                <div className="relative z-10 flex items-center gap-3">
                   <div className="relative">
                     <div
                       className={cn(
-                        "w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center border border-slate-200/80 shadow-2xs",
+                        "w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center border border-white/20 bg-white/10 backdrop-blur-xs shadow-2xs text-white",
                         getCategoryBgClass(receiptPayment.emi?.loan_category || "Personal Loan")
                       )}
                     >
                       {getCategoryIcon(
                         receiptPayment.emi?.loan_category || "Personal Loan",
-                        "w-5 h-5 sm:w-6 sm:h-6"
+                        "w-5 h-5 sm:w-6 sm:h-6 text-white"
                       )}
                     </div>
                     {receiptPayment.emi?.lender_name && (
@@ -1130,10 +1145,10 @@ export default function PaymentHistoryPage() {
                     )}
                   </div>
                   <div>
-                    <h3 className="text-sm font-black text-[#02361B]">
+                    <h3 className="text-sm sm:text-base font-black text-white">
                       {receiptPayment.emi?.loan_name || receiptPayment.loan_name || "Loan Repayment"}
                     </h3>
-                    <p className="text-xs text-slate-400 font-medium">
+                    <p className="text-xs text-emerald-100/80 font-medium">
                       {receiptPayment.emi?.lender_name || "Verified Creditor"} •{" "}
                       {receiptPayment.emi?.loan_category || "EMI"}
                     </p>
@@ -1143,9 +1158,10 @@ export default function PaymentHistoryPage() {
                 <button
                   type="button"
                   onClick={() => setReceiptPayment(null)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all cursor-pointer active:scale-95 touch-manipulation"
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation relative z-10 shrink-0"
+                  aria-label="Close dialog"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
@@ -1157,7 +1173,7 @@ export default function PaymentHistoryPage() {
                 <div className="text-2xl sm:text-3xl font-black text-[#02361B] mt-1 tracking-tight">
                   {formatCurrency(receiptPayment.amount ?? receiptPayment.paid_amount ?? 0, receiptPayment.emi?.currency || currency)}
                 </div>
-                <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Settled & Reconciled</span>
                 </div>
@@ -1177,10 +1193,10 @@ export default function PaymentHistoryPage() {
                         onClick={(e) =>
                           handleCopyUtr(e, receiptPayment.transaction_reference!)
                         }
-                        className="text-indigo-600 hover:text-indigo-800 p-1 rounded active:scale-95 touch-manipulation cursor-pointer"
+                        className="text-emerald-700 hover:text-emerald-900 p-1 rounded active:scale-95 touch-manipulation cursor-pointer"
                         title="Copy Reference"
                       >
-                        <Copy className="w-3 h-3" />
+                        <Copy className="w-3.5 h-3.5" />
                       </button>
                     )}
                   </div>
@@ -1209,7 +1225,7 @@ export default function PaymentHistoryPage() {
                   <div className="flex items-center justify-between py-1 border-b border-slate-100">
                     <span className="text-slate-400 font-medium">Paid By</span>
                     <span className="font-bold text-slate-800 flex items-center gap-1.5">
-                      <div className="relative w-4 h-4 rounded-full bg-indigo-100 text-indigo-700 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-indigo-200">
+                      <div className="relative w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 font-black text-[9px] flex items-center justify-center shrink-0 overflow-hidden ring-1 ring-emerald-200">
                         {receiptPayment.user.profile_photo ? (
                           <Image
                             src={receiptPayment.user.profile_photo}
@@ -1233,19 +1249,19 @@ export default function PaymentHistoryPage() {
 
                 <div className="flex items-center justify-between py-1">
                   <span className="text-slate-400 font-medium">Audit Status</span>
-                  <span className="font-semibold text-emerald-600 flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5" />
+                  <span className="font-semibold text-emerald-700 flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                     Immutable Log
                   </span>
                 </div>
               </div>
 
               {/* Receipt Footer Actions */}
-              <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2.5">
+              <div className="p-4 bg-slate-50/80 border-t border-slate-100 flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
+                  className="h-10 px-4 rounded-[10px] border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95 touch-manipulation"
                 >
                   <Printer className="w-3.5 h-3.5 text-slate-500" />
                   <span>Print Receipt</span>
@@ -1254,14 +1270,16 @@ export default function PaymentHistoryPage() {
                 <button
                   type="button"
                   onClick={() => setReceiptPayment(null)}
-                  className="h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] px-5 py-2 rounded-xl bg-[#0B132B] hover:bg-slate-800 text-white font-bold text-xs inline-flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
+                  className="h-10 px-5 rounded-[12px] btn-gradient-glow text-white font-bold text-xs inline-flex items-center justify-center transition-all cursor-pointer shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation"
                 >
                   Close
                 </button>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
+        </div>
       </div>
     </DashboardLayout>
   );
