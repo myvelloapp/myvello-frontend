@@ -1841,7 +1841,7 @@ function EmiDetailContent() {
           <div className="lg:col-span-4 space-y-4">
             {/* Next Due Payment Action Card - Desktop Only (handled cleanly in hero banner on mobile) */}
             {nextPendingSchedule && !isClosed ? (
-              <div className="hidden lg:block relative overflow-hidden card-gradient-vibrant text-white rounded-2xl p-5 shadow-[0_8px_24px_-4px_rgba(16,185,129,0.28)] border border-white/40 space-y-4">
+              <div className="hidden lg:block relative overflow-hidden card-gradient-vibrant text-white rounded-2xl p-5 shadow-[0_8px_24px_-4px_rgba(16,185,129,0.28)] space-y-4">
                 <div className="flex items-center justify-between relative z-10">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white border border-white/30 backdrop-blur-xs tracking-wide uppercase drop-shadow-[0_1px_2px_rgba(0,35,20,0.4)]">
                     Next Due Payment
