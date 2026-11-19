@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, Bell, Check, AlertCircle, Loader2 } from "lucide-react";
 import { profileService, NotificationPreferences } from "@/services/profileService";
 import { useAuth } from "@/modules/authentication/AuthContext";
@@ -28,11 +29,16 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
   onSaved,
 }) => {
   const { user } = useAuth();
+  const [mounted, setMounted] = useState(false);
   const [preferences, setPreferences] = useState<NotificationPreferences>(DEFAULT_PREFERENCES);
   const [email, setEmail] = useState<string>(user?.email || "");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,11 +53,25 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
         if (!isMounted) return;
         if (data.email) setEmail(data.email);
         if (data.notification_preferences) {
-          setPreferences(data.notification_preferences);
+          const np = data.notification_preferences as Partial<NotificationPreferences>;
+          // Default all cadences to true initially if missing or undefined
+          setPreferences({
+            email_enabled: np.email_enabled !== undefined ? Boolean(np.email_enabled) : true,
+            rem_7_days: np.rem_7_days !== undefined ? Boolean(np.rem_7_days) : true,
+            rem_3_days: np.rem_3_days !== undefined ? Boolean(np.rem_3_days) : true,
+            rem_1_day: np.rem_1_day !== undefined ? Boolean(np.rem_1_day) : true,
+            rem_due_date: np.rem_due_date !== undefined ? Boolean(np.rem_due_date) : true,
+            rem_overdue: np.rem_overdue !== undefined ? Boolean(np.rem_overdue) : true,
+          });
+        } else {
+          // If no preferences record exists, ensure all are filled true initially
+          setPreferences(DEFAULT_PREFERENCES);
         }
       })
       .catch((err) => {
         console.warn("Could not load latest preferences:", err);
+        // Fallback to default filled state on network error
+        setPreferences(DEFAULT_PREFERENCES);
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);
@@ -62,7 +82,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,37 +141,47 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
     },
   ];
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reminder-cadence-title"
+    >
       <div className="bg-white rounded-t-[28px] sm:rounded-[20px] shadow-2xl border-t sm:border border-slate-200/90 max-w-lg w-full overflow-hidden animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 flex flex-col max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
         {/* Native Mobile Drag Handle */}
         <div className="sm:hidden pt-3 pb-1 flex justify-center shrink-0">
           <div className="w-10 h-1.5 rounded-full bg-slate-300" />
         </div>
 
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-theme-gradient text-white flex items-center justify-center font-bold shadow-2xs shadow-emerald-500/25 shrink-0">
-              <Bell className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h3 className="text-base font-black text-slate-900 leading-tight">
-                Automated Notification Cadence
+        {/* Themed Header Banner matching Signature Modals */}
+        <div className="p-4.5 sm:p-5 bg-gradient-to-br from-[#02361B] via-[#014421] to-[#012513] text-white relative overflow-hidden border-b border-emerald-800/40 shrink-0">
+          <div className="absolute top-0 right-0 w-44 h-44 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-[#7CE617]/15 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative z-10 flex items-center justify-between gap-3">
+            <div className="space-y-0.5">
+              <h3
+                id="reminder-cadence-title"
+                className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2"
+              >
+                <Bell className="w-4.5 h-4.5 text-emerald-300 stroke-[2.2]" />
+                <span>Automated Reminder Cadence</span>
               </h3>
-              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+              <p className="text-xs text-emerald-100/80 font-medium">
                 Configure when Myvello alerts you about loan repayment deadlines.
               </p>
             </div>
-          </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer active:scale-95 touch-manipulation"
-          >
-            <X className="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 active:scale-95 touch-manipulation"
+              aria-label="Close dialog"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Body Form */}
@@ -165,7 +195,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
 
           {isLoading ? (
             <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
+              <Loader2 className="w-6 h-6 animate-spin text-emerald-700" />
               <span className="text-xs font-semibold">Loading reminder preferences...</span>
             </div>
           ) : (
@@ -173,8 +203,8 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
               {/* Device Lock-Screen Push Notifications Activation */}
               <PushNotificationCard compact className="mb-2" />
 
-              {/* Master Email Toggle */}
-              <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-center justify-between min-h-[52px]">
+              {/* Master Email Toggle with Emerald Brand Accents */}
+              <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/50 border border-emerald-200/80 flex items-center justify-between min-h-[52px]">
                 <div>
                   <span className="text-xs font-bold text-slate-900 block">Email Reminders</span>
                   <span className="text-[11px] text-slate-600 font-medium block mt-0.5">
@@ -187,7 +217,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                   onChange={(e) =>
                     setPreferences((prev) => ({ ...prev, email_enabled: e.target.checked }))
                   }
-                  className="w-5 h-5 rounded text-indigo-600 cursor-pointer accent-indigo-600 shrink-0 ml-3"
+                  className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-3"
                 />
               </div>
 
@@ -204,8 +234,8 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                       className={cn(
                         "flex items-start justify-between p-3.5 sm:p-3 rounded-xl border transition-all cursor-pointer text-xs min-h-[52px] active:scale-[0.99] touch-manipulation",
                         item.checked
-                          ? "bg-slate-50/60 border-indigo-200/80 hover:bg-slate-50"
-                          : "bg-white border-slate-100 hover:bg-slate-50/60 text-slate-400"
+                          ? "bg-emerald-50/25 border-emerald-300/80 hover:bg-emerald-50/40"
+                          : "bg-white border-slate-200/80 hover:bg-slate-50/60 text-slate-400"
                       )}
                     >
                       <div className="pr-3 min-w-0">
@@ -225,7 +255,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                         type="checkbox"
                         checked={item.checked}
                         onChange={(e) => item.onChange(e.target.checked)}
-                        className="w-5 h-5 rounded text-indigo-600 mt-0.5 cursor-pointer shrink-0 accent-indigo-600 ml-2"
+                        className="w-5 h-5 rounded-md text-emerald-700 mt-0.5 cursor-pointer shrink-0 accent-[#1C9E30] ml-2"
                       />
                     </label>
                   ))}
@@ -240,14 +270,14 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
               type="button"
               onClick={onClose}
               disabled={isSaving}
-              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-[8px] border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 active:scale-95 touch-manipulation inline-flex items-center justify-center"
+              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-[10px] border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition-all cursor-pointer disabled:opacity-50 active:scale-95 touch-manipulation inline-flex items-center justify-center"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSaving || isLoading}
-              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
+              className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 touch-manipulation transition-all disabled:opacity-60"
             >
               {isSaving ? (
                 <>
@@ -264,6 +294,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

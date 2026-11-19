@@ -121,7 +121,7 @@ export function PushNotificationCard({
         "rounded-2xl border transition-all select-none overflow-hidden",
         isSubscribed
           ? "bg-gradient-to-br from-emerald-50/50 via-white to-slate-50/40 border-emerald-200/70 shadow-xs"
-          : "bg-gradient-to-br from-indigo-50/60 via-white to-slate-50/50 border-indigo-200/70 shadow-xs",
+          : "bg-gradient-to-br from-emerald-50/30 via-white to-slate-50/50 border-emerald-200/70 shadow-xs",
         compact ? "p-3.5 sm:p-4" : "p-4 sm:p-5",
         className
       )}
@@ -134,7 +134,7 @@ export function PushNotificationCard({
               "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-2xs",
               isSubscribed
                 ? "bg-emerald-100/80 text-emerald-700 border border-emerald-200"
-                : "bg-indigo-100/80 text-indigo-700 border border-indigo-200"
+                : "bg-emerald-50 text-emerald-800 border border-emerald-200/80"
             )}
           >
             {isSubscribed ? (
@@ -156,7 +156,7 @@ export function PushNotificationCard({
                   "text-[10px] font-bold px-2 py-0.5 rounded-full border",
                   isSubscribed
                     ? "bg-emerald-50 text-emerald-700 border-emerald-200/80"
-                    : "bg-indigo-50 text-indigo-700 border-indigo-200/80"
+                    : "bg-emerald-50 text-emerald-800 border-emerald-200/80"
                 )}
               >
                 {isSubscribed ? "Active" : "iOS & Android"}
@@ -182,12 +182,12 @@ export function PushNotificationCard({
             >
               {isSendingTest ? (
                 <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-600" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-700" />
                   <span>Sending Alert...</span>
                 </>
               ) : (
                 <>
-                  <Send className="w-3.5 h-3.5 text-indigo-600" />
+                  <Send className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Send Test Notification</span>
                 </>
               )}
