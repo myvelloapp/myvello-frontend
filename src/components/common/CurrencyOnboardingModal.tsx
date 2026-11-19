@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { profileService } from "@/services/profileService";
@@ -28,6 +29,11 @@ export function CurrencyOnboardingModal() {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Auto-detect geo currency and timezone on mount
   useEffect(() => {
@@ -116,23 +122,34 @@ export function CurrencyOnboardingModal() {
     }
   };
 
-  // Only render if user is logged in, email is verified, and has NOT completed onboarding yet
-  if (!user || user.has_completed_onboarding) {
+  // Only render if user is logged in, email is verified, mounted on client, and has NOT completed onboarding yet
+  if (!mounted || !user || user.has_completed_onboarding) {
     return null;
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg bg-white rounded-[24px] shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Modal Top Header Banner */}
-        <div className="p-6 bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-emerald-100/90 overflow-hidden animate-in zoom-in-95 duration-200">
+        {/* Modal Top Header Banner with Brand Emerald Gradient & Aurora Glow */}
+        <div className="p-6 bg-gradient-to-br from-[#02361B] via-[#014421] to-[#012513] text-white relative overflow-hidden border-b border-emerald-800/40">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[#7CE617]/15 rounded-full blur-2xl pointer-events-none" />
 
-          <div className="relative z-10">
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight leading-snug">
+          <div className="relative z-10 space-y-1">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[10px] font-extrabold uppercase tracking-wider">
+                <Coins className="w-3 h-3 text-emerald-300" />
+                Vault Baseline
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight leading-snug text-white">
               Set Up Your Vault Currency
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium mt-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-100/85 font-medium leading-relaxed">
               Choose your primary currency and time zone. This baseline powers all loan amortizations,
               monthly summaries, and calendar alerts.
             </p>
@@ -143,24 +160,26 @@ export function CurrencyOnboardingModal() {
         <form onSubmit={handleSave} className="p-6 space-y-5">
           {/* Toast Notification for Auto-alignment */}
           {toastMessage && (
-            <div className="flex items-center gap-2 p-2.5 rounded-[10px] bg-indigo-50 text-indigo-700 text-xs font-semibold border border-indigo-100 animate-in fade-in slide-in-from-top-1">
-              <Clock className="w-4 h-4 shrink-0 text-indigo-600" />
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200/80 animate-in fade-in slide-in-from-top-1">
+              <Clock className="w-4 h-4 shrink-0 text-emerald-700" />
               <span>{toastMessage}</span>
             </div>
           )}
 
           {/* Geo Auto-detection Region Notification */}
           {detectedGeo && (
-            <div className="flex items-start gap-2.5 p-3 rounded-[12px] bg-indigo-50/70 border border-indigo-100/90 text-indigo-950 text-xs">
-              <MapPin className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
-              <div className="leading-snug">
-                <span className="font-extrabold text-indigo-950">Auto-detected for your location:</span>{" "}
-                <span className="font-semibold text-indigo-800">
-                  {detectedGeo.country ? `${detectedGeo.country} — ` : ""}{detectedGeo.currency} ({getCurrencySymbol(detectedGeo.currency)}) & {detectedGeo.timezone.replace(/_/g, " ")}.
-                </span>
-                <span className="text-[11px] text-indigo-600 block mt-0.5">
+            <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/70 text-emerald-950 text-xs">
+              <MapPin className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+              <div className="leading-snug space-y-0.5">
+                <div>
+                  <span className="font-extrabold text-[#02361B]">Auto-detected for your location:</span>{" "}
+                  <span className="font-bold text-emerald-900">
+                    {detectedGeo.country ? `${detectedGeo.country} — ` : ""}{detectedGeo.currency} ({getCurrencySymbol(detectedGeo.currency)}) & {detectedGeo.timezone.replace(/_/g, " ")}.
+                  </span>
+                </div>
+                <p className="text-[11px] text-emerald-700 font-medium">
                   Confirm below or freely customize to another standard.
-                </span>
+                </p>
               </div>
             </div>
           )}
@@ -169,10 +188,10 @@ export function CurrencyOnboardingModal() {
           <div>
             <label className="block text-xs font-extrabold text-slate-800 mb-1.5 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <Coins className="w-3.5 h-3.5 text-indigo-600" />
+                <Coins className="w-3.5 h-3.5 text-emerald-700" />
                 Preferred Currency (World ISO Currencies)
               </span>
-              <span className="text-[10px] text-slate-400 font-medium">160+ Currencies</span>
+              <span className="text-[10px] text-slate-400 font-semibold">160+ Currencies</span>
             </label>
             <CustomDropdown
               size="md"
@@ -182,7 +201,7 @@ export function CurrencyOnboardingModal() {
               onChange={handleCurrencyChange}
               options={currencyOptions}
               className="w-full"
-              triggerClassName="h-11 rounded-[12px] border-slate-200/90 shadow-2xs font-semibold text-xs"
+              triggerClassName="h-11 rounded-xl border-slate-200/90 hover:border-emerald-300 focus:border-emerald-600 shadow-2xs font-semibold text-xs"
             />
           </div>
 
@@ -190,10 +209,10 @@ export function CurrencyOnboardingModal() {
           <div>
             <label className="block text-xs font-extrabold text-slate-800 mb-1.5 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-indigo-600" />
+                <Clock className="w-3.5 h-3.5 text-emerald-700" />
                 Regional Time Zone (Auto-Aligned)
               </span>
-              <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+              <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80">
                 Suggested
               </span>
             </label>
@@ -205,16 +224,16 @@ export function CurrencyOnboardingModal() {
               onChange={(val) => setSelectedTimezone(val)}
               options={timezoneOptions}
               className="w-full"
-              triggerClassName="h-11 rounded-[12px] border-slate-200/90 shadow-2xs font-semibold text-xs"
+              triggerClassName="h-11 rounded-xl border-slate-200/90 hover:border-emerald-300 focus:border-emerald-600 shadow-2xs font-semibold text-xs"
             />
           </div>
 
           {/* Real-time Preview Pill */}
-          <div className="flex items-center justify-between p-3.5 rounded-[14px] bg-slate-50 border border-slate-200/80">
-            <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50/40 border border-emerald-100/90 shadow-2xs">
+            <div className="flex items-center gap-3 min-w-0">
               <span className="text-2xl select-none">{currencyInfo?.flag}</span>
               <div className="min-w-0">
-                <div className="text-xs font-black text-slate-900 leading-tight">
+                <div className="text-xs font-black text-[#02361B] leading-tight">
                   {currencyInfo?.code} ({currencyInfo?.symbol})
                 </div>
                 <div className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
@@ -227,14 +246,14 @@ export function CurrencyOnboardingModal() {
               <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
                 Local Time
               </div>
-              <div className="text-xs font-extrabold text-indigo-600 font-mono mt-0.5">
+              <div className="text-xs font-black text-emerald-700 font-mono mt-0.5">
                 {currentTime || "—"}
               </div>
             </div>
           </div>
 
           {/* First-EMI Lock Rule Disclosure */}
-          <div className="flex items-start gap-2.5 p-3 rounded-[12px] bg-amber-50/70 border border-amber-200/60 text-amber-900">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-amber-50/80 border border-amber-200/70 text-amber-900">
             <Lock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div className="text-[11px] leading-relaxed text-amber-900/90">
               <strong className="font-bold text-amber-950">First-EMI Lock Rule:</strong> Once your
@@ -248,7 +267,7 @@ export function CurrencyOnboardingModal() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 px-5 rounded-[14px] btn-gradient-glow font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full h-11.5 sm:h-12 px-5 rounded-xl btn-gradient-glow font-extrabold text-xs sm:text-sm text-white shadow-md shadow-emerald-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed touch-manipulation"
             >
               {isSubmitting ? (
                 <>
@@ -259,14 +278,15 @@ export function CurrencyOnboardingModal() {
                 <>
                   <ShieldCheck className="w-4 h-4" />
                   <span>Confirm Vault Preferences</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
+                  <ArrowRight className="w-4 h-4 ml-0.5" />
                 </>
               )}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
