@@ -324,21 +324,7 @@ function SettingsPageContent() {
   const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
-  // Floating Toast State
-  const [toast, setToast] = useState<{ type: "success" | "error" | "info"; message: string } | null>(null);
-
-  const showToast = useCallback((message: string, type: "success" | "error" | "info" = "success") => {
-    setToast({ message, type });
-  }, []);
-
-  useEffect(() => {
-    if (toast) {
-      const timer = setTimeout(() => {
-        setToast(null);
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [toast]);
+  const showToast = useCallback((_message: string, _type?: "success" | "error" | "info") => {}, []);
 
   // Live Timezone Clock
   const [liveTime, setLiveTime] = useState("");
@@ -1782,46 +1768,6 @@ function SettingsPageContent() {
         onConfirm={handleConfirmRemoveAvatar}
         isRemoving={isRemovingAvatar}
       />
-
-      {/* Floating Modern Toast Notification */}
-      {toast && (
-        <div
-          className={cn(
-            "fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] sm:bottom-6 right-4 sm:right-6 left-4 sm:left-auto z-50 flex items-center justify-between gap-3 px-4 py-3 rounded-2xl shadow-2xl border transition-all duration-300 animate-in fade-in slide-in-from-bottom-5 max-w-md",
-            toast.type === "success" && "bg-[#0B132B]/95 text-white border-slate-700/60 backdrop-blur-md shadow-indigo-500/10",
-            toast.type === "error" && "bg-rose-950/95 text-white border-rose-800 backdrop-blur-md shadow-rose-500/10",
-            toast.type === "info" && "bg-[#0B132B]/95 text-white border-indigo-500/50 backdrop-blur-md shadow-indigo-500/10"
-          )}
-        >
-          <div className="flex items-center gap-2.5 min-w-0">
-            {toast.type === "success" && (
-              <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-              </div>
-            )}
-            {toast.type === "error" && (
-              <div className="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
-                <AlertCircle className="w-3.5 h-3.5 stroke-[2.5]" />
-              </div>
-            )}
-            {toast.type === "info" && (
-              <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
-                <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
-              </div>
-            )}
-            <span className="text-xs sm:text-sm font-semibold text-slate-100 truncate">{toast.message}</span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setToast(null)}
-            className="w-9 h-9 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors shrink-0 cursor-pointer active:scale-95 touch-manipulation"
-            aria-label="Dismiss toast"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      )}
     </DashboardLayout>
   );
 }

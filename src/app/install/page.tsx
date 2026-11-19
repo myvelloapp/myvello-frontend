@@ -37,12 +37,8 @@ export default function InstallPage() {
   const [currentDevice, setCurrentDevice] = useState<DeviceType | null>(null);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3500);
-  };
+  const showToast = (_msg?: string) => {};
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -157,14 +153,6 @@ export default function InstallPage() {
 
       {/* Main Content */}
       <main className="flex-1">
-        {/* Toast Notification */}
-        {toastMessage && (
-          <div className="fixed bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-indigo-500/30 backdrop-blur-md">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{toastMessage}</span>
-          </div>
-        )}
-
         {/* Hero Section */}
         <section className="relative overflow-hidden py-10 sm:py-16 border-b border-slate-200/60 bg-gradient-to-b from-white via-indigo-50/20 to-[#F8FAFC]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

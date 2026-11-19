@@ -238,7 +238,6 @@ function FamilyPageContent() {
   const [activeFamily, setActiveFamily] = useState<FamilyDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Dropdown options menu state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -323,10 +322,7 @@ function FamilyPageContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isJoinModalOpen, isJoining, isInviteModalOpen, isSendingInvite, isRenameModalOpen, isRenaming, isDeleteModalOpen, isDeletingFamily]);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
+  const showToast = (_msg?: string) => {};
 
 
   // Check URL query parameters for invitation token or workspace code
@@ -675,14 +671,6 @@ _Myvello — Your Life. Your Records. One Place._`
       <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
         {/* Content Container */}
         <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
-          {/* Floating Toast Feedback - positioned safely above floating mobile capsule nav */}
-        {toastMessage && (
-          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#02361B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{toastMessage}</span>
-          </div>
-        )}
-
         {/* 1. Page Header (shown when active group exists) */}
         {activeFamily && (
           <>

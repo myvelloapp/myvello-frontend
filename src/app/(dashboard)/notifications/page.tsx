@@ -173,7 +173,6 @@ function NotificationsPageContent() {
     clearRead,
   } = useNotifications();
 
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
@@ -220,10 +219,7 @@ function NotificationsPageContent() {
     }
   }, []);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
+  const showToast = (_msg?: string) => {};
 
   const readCount = React.useMemo(
     () => notifications.filter((n) => n.is_read).length,
@@ -393,14 +389,6 @@ function NotificationsPageContent() {
   return (
     <DashboardLayout>
       <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 space-y-2 sm:space-y-5">
-        {/* Floating Modern Toast Feedback - positioned safely above floating mobile capsule nav */}
-        {toastMessage && (
-          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#02361B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{toastMessage}</span>
-          </div>
-        )}
-
         {/* Page Header with Native 3-dot Action Popover */}
         <div className="flex items-center justify-between gap-3 min-h-[36px]">
           <div className="flex items-center gap-2.5 min-w-0">
