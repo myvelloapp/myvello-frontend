@@ -140,12 +140,6 @@ export function CurrencyOnboardingModal() {
           <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[#7CE617]/15 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 space-y-1">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[10px] font-extrabold uppercase tracking-wider">
-                <Coins className="w-3 h-3 text-emerald-300" />
-                Vault Baseline
-              </span>
-            </div>
             <h2 className="text-xl sm:text-2xl font-black tracking-tight leading-snug text-white">
               Set Up Your Vault Currency
             </h2>
