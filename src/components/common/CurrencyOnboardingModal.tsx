@@ -17,7 +17,7 @@ import {
   fetchGeoIpPreferences,
   DetectedGeoInfo,
 } from "@/lib/currencyTimezoneData";
-import { Coins, Clock, Lock, ArrowRight, ShieldCheck, MapPin } from "lucide-react";
+import { Coins, Clock, ArrowRight, ShieldCheck, MapPin } from "lucide-react";
 
 export function CurrencyOnboardingModal() {
   const router = useRouter();
@@ -252,15 +252,6 @@ export function CurrencyOnboardingModal() {
             </div>
           </div>
 
-          {/* First-EMI Lock Rule Disclosure */}
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-amber-50/80 border border-amber-200/70 text-amber-900">
-            <Lock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-            <div className="text-[11px] leading-relaxed text-amber-900/90">
-              <strong className="font-bold text-amber-950">First-EMI Lock Rule:</strong> Once your
-              first EMI loan is created, this currency permanently locks to prevent calculation
-              mismatches across your dashboard metrics.
-            </div>
-          </div>
 
           {/* Submit Action */}
           <div className="pt-2">
