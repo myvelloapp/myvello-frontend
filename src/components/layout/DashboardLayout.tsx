@@ -81,7 +81,7 @@ export function DashboardLayout({
       {/* Main Content Area */}
       <div
         className={cn(
-          "flex flex-col min-h-screen min-h-dvh relative z-10 transition-all duration-300",
+          "flex flex-col min-h-screen min-h-dvh relative transition-all duration-300",
           !isPopupMode && "lg:pl-64"
         )}
       >

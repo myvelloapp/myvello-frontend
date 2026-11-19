@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Cropper, { Point, Area } from "react-easy-crop";
 import {
   X,
@@ -43,8 +44,13 @@ export function AvatarCropModal({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Sync initial state when modal opens or closes
   useEffect(() => {
@@ -70,7 +76,7 @@ export function AvatarCropModal({
     []
   );
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   // Handle file selection from input
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,8 +169,8 @@ export function AvatarCropModal({
     setRotation(0);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="relative w-full max-w-xl sm:max-w-[620px] bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh] animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
         {/* Mobile Pull Handle */}
         <div className="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mt-2.5 -mb-1 sm:hidden shrink-0" />
@@ -395,6 +401,7 @@ export function AvatarCropModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
