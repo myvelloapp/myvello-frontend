@@ -6,7 +6,6 @@ import {
   Users,
   ShieldCheck,
   ArrowRight,
-  Sparkles,
   CheckCircle2,
   AlertCircle,
   X,
@@ -251,10 +250,7 @@ export default function FamilySetupPage() {
               <div className="bg-white rounded-2xl border border-emerald-100/90 p-5 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.07)] space-y-5">
                 {/* Header Badge */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-emerald-700" />
-                    <span className="text-xs font-black uppercase tracking-wider text-[#02361B]">Group Preview</span>
-                  </div>
+                  <span className="text-xs font-black uppercase tracking-wider text-[#02361B]">Group Preview</span>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200/80">
                     Live
                   </span>
