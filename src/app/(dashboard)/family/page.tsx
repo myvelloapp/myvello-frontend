@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, Suspense, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -279,6 +280,12 @@ function FamilyPageContent() {
   const [isAcceptingInviteId, setIsAcceptingInviteId] = useState<number | null>(null);
   const [isDecliningInviteId, setIsDecliningInviteId] = useState<number | null>(null);
 
+  // Client mounting for Portal modals
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Modal states
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
@@ -300,6 +307,21 @@ function FamilyPageContent() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeletingFamily, setIsDeletingFamily] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  // Close modals on Escape key
+  useEffect(() => {
+    if (!isJoinModalOpen && !isInviteModalOpen && !isRenameModalOpen && !isDeleteModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (isJoinModalOpen && !isJoining) setIsJoinModalOpen(false);
+        if (isInviteModalOpen && !isSendingInvite) setIsInviteModalOpen(false);
+        if (isRenameModalOpen && !isRenaming) setIsRenameModalOpen(false);
+        if (isDeleteModalOpen && !isDeletingFamily) setIsDeleteModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isJoinModalOpen, isJoining, isInviteModalOpen, isSendingInvite, isRenameModalOpen, isRenaming, isDeleteModalOpen, isDeletingFamily]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -1114,7 +1136,6 @@ _Myvello — Your Life. Your Records. One Place._`
                 <span>Join with Code</span>
               </button>
             </div>
-
             <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>Zero Personal Exposure: Only loans and documents you explicitly share become visible.</span>
@@ -1436,28 +1457,37 @@ _Myvello — Your Life. Your Records. One Place._`
       </div>
 
       {/* Invite Member Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
-      {isInviteModalOpen && activeFamily && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      {mounted && isInviteModalOpen && activeFamily && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isSendingInvite) {
+              setIsInviteModalOpen(false);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
           <div className="relative w-full max-w-md bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
             {/* Native Mobile Drag Handle */}
             <div className="sm:hidden pt-3 pb-1 flex justify-center shrink-0">
               <div className="w-10 h-1.5 rounded-full bg-slate-300" />
             </div>
 
-            <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
+            <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-emerald-100/70 bg-gradient-to-r from-emerald-50/50 via-teal-50/20 to-white shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <UserPlus className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <UserPlus className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#02361B]">Invite Group Member</h3>
-                  <p className="text-xs text-slate-500">Collaborate in {activeFamily.name}</p>
+                  <h3 className="text-base font-black text-[#02361B] tracking-tight">Invite Group Member</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">Collaborate in <span className="font-bold text-emerald-800">{activeFamily.name}</span></p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsInviteModalOpen(false)}
-                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
+                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1502,7 +1532,7 @@ _Myvello — Your Life. Your Records. One Place._`
               ) : (
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-[#02361B] mb-1.5">
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">
                       Email Address *
                     </label>
                     <div className="relative">
@@ -1517,13 +1547,13 @@ _Myvello — Your Life. Your Records. One Place._`
                         placeholder="spouse@gmail.com"
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
-                        className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white"
+                        className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#02361B] mb-1.5">Role</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Role</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
@@ -1532,11 +1562,11 @@ _Myvello — Your Life. Your Records. One Place._`
                           "min-h-[52px] p-3 rounded-xl border text-left transition-all cursor-pointer active:scale-[0.98] touch-manipulation",
                           inviteRole === "member"
                             ? "bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-500/20"
-                            : "bg-white border-slate-200 hover:border-slate-300"
+                            : "bg-white border-slate-200/90 hover:border-slate-300"
                         )}
                       >
                         <span className="font-bold text-xs text-[#02361B] block">Member</span>
-                        <span className="text-[10px] text-slate-500 block">Can view & share loans</span>
+                        <span className="text-[10px] text-slate-500 block">Can view &amp; share loans</span>
                       </button>
 
                       <button
@@ -1546,7 +1576,7 @@ _Myvello — Your Life. Your Records. One Place._`
                           "min-h-[52px] p-3 rounded-xl border text-left transition-all cursor-pointer active:scale-[0.98] touch-manipulation",
                           inviteRole === "admin"
                             ? "bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-500/20"
-                            : "bg-white border-slate-200 hover:border-slate-300"
+                            : "bg-white border-slate-200/90 hover:border-slate-300"
                         )}
                       >
                         <span className="font-bold text-xs text-[#02361B] block">Admin</span>
@@ -1557,11 +1587,12 @@ _Myvello — Your Life. Your Records. One Place._`
                 </>
               )}
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
                 <button
                   type="button"
+                  disabled={isSendingInvite}
                   onClick={() => setIsInviteModalOpen(false)}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200/90 text-xs font-bold text-slate-600 hover:text-slate-800 hover:bg-slate-50 hover:border-slate-300 shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
                 >
                   {inviteSuccessMessage ? "Done" : "Cancel"}
                 </button>
@@ -1569,40 +1600,60 @@ _Myvello — Your Life. Your Records. One Place._`
                   <button
                     type="submit"
                     disabled={isSendingInvite}
-                    className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                    className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                   >
-                    {isSendingInvite ? "Sending..." : "Send Invite"}
+                    {isSendingInvite ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <UserPlus className="w-3.5 h-3.5 stroke-[2.4]" />
+                        <span>Send Invite</span>
+                      </>
+                    )}
                   </button>
                 )}
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Join Group Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
-      {isJoinModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      {mounted && isJoinModalOpen && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isJoining) {
+              setIsJoinModalOpen(false);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
           <div className="relative w-full max-w-md bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
             {/* Native Mobile Drag Handle */}
             <div className="sm:hidden pt-3 pb-1 flex justify-center shrink-0">
               <div className="w-10 h-1.5 rounded-full bg-slate-300" />
             </div>
 
-            <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
+            <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-emerald-100/70 bg-gradient-to-r from-emerald-50/50 via-teal-50/20 to-white shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <LinkIcon className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <LinkIcon className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#02361B]">Join Group</h3>
-                  <p className="text-xs text-slate-500">Enter code or paste invite link</p>
+                  <h3 className="text-base font-black text-[#02361B] tracking-tight">Join Group</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">Enter 6-character code or paste invite link</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsJoinModalOpen(false)}
-                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
+                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1617,8 +1668,9 @@ _Myvello — Your Life. Your Records. One Place._`
               )}
 
               <div>
-                <label className="block text-xs font-bold text-[#02361B] mb-1.5">
-                  Group Code or Link *
+                <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+                  <LinkIcon className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Group Code or Link *</span>
                 </label>
                 <input
                   type="text"
@@ -1630,51 +1682,82 @@ _Myvello — Your Life. Your Records. One Place._`
                   placeholder="e.g. FAM-TI6FSK"
                   value={joinToken}
                   onChange={(e) => setJoinToken(e.target.value)}
-                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] font-mono uppercase px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white placeholder:normal-case"
+                  className="w-full text-xs font-mono uppercase font-bold tracking-wider h-11 px-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white text-slate-900 shadow-2xs transition-all placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-slate-400"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-200/70 flex items-start gap-2.5 text-[11px] font-medium text-emerald-900">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>
+                  Your personal loans and vault records remain private. Connecting a group only pools commitments you explicitly choose to share.
+                </span>
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
                 <button
                   type="button"
+                  disabled={isJoining}
                   onClick={() => setIsJoinModalOpen(false)}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200/90 text-xs font-bold text-slate-600 hover:text-slate-800 hover:bg-slate-50 hover:border-slate-300 shadow-2xs active:scale-95 transition-all touch-manipulation cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isJoining}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer active:scale-95 disabled:opacity-50 inline-flex items-center justify-center gap-1.5 touch-manipulation"
                 >
-                  {isJoining ? "Joining..." : "Join Group"}
+                  {isJoining ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Connecting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.4]" />
+                      <span>Join Group</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Rename Group Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
-      {isRenameModalOpen && activeFamily && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      {mounted && isRenameModalOpen && activeFamily && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isRenaming) {
+              setIsRenameModalOpen(false);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
           <div className="relative w-full max-w-md bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
             {/* Native Mobile Drag Handle */}
             <div className="sm:hidden pt-3 pb-1 flex justify-center shrink-0">
               <div className="w-10 h-1.5 rounded-full bg-slate-300" />
             </div>
 
-            <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
+            <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-emerald-100/70 bg-gradient-to-r from-emerald-50/50 via-teal-50/20 to-white shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
+                <div className="w-9 h-9 rounded-xl btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
                   <Edit2 className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-black text-[#02361B]">Rename Group</h3>
+                <div>
+                  <h3 className="text-base font-black text-[#02361B] tracking-tight">Rename Group</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">Update group display name</p>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsRenameModalOpen(false)}
-                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
+                className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 flex items-center justify-center transition-colors cursor-pointer active:scale-95 touch-manipulation"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1682,41 +1765,59 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <form onSubmit={handleRenameFamily} className="p-5 sm:p-6 space-y-4 overflow-y-auto">
               <div>
-                <label className="block text-xs font-bold text-[#02361B] mb-1.5">Group Name *</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1.5">Group Name *</label>
                 <input
                   type="text"
                   required
                   autoCapitalize="words"
                   value={newFamilyName}
                   onChange={(e) => setNewFamilyName(e.target.value)}
-                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white"
+                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
                 <button
                   type="button"
+                  disabled={isRenaming}
                   onClick={() => setIsRenameModalOpen(false)}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200/90 text-xs font-bold text-slate-600 hover:text-slate-800 hover:bg-slate-50 hover:border-slate-300 shadow-2xs active:scale-95 transition-all touch-manipulation cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isRenaming}
-                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+                  className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                 >
-                  {isRenaming ? "Saving..." : "Save"}
+                  {isRenaming ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save Changes</span>
+                  )}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Delete Group Confirmation Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
-      {isDeleteModalOpen && activeFamily && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      {mounted && isDeleteModalOpen && activeFamily && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isDeletingFamily) {
+              setIsDeleteModalOpen(false);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
           <div className="relative w-full max-w-sm bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 space-y-4 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
             {/* Native Mobile Drag Handle */}
             <div className="sm:hidden -mt-2 pb-2 flex justify-center w-full">
@@ -1746,7 +1847,7 @@ _Myvello — Your Life. Your Records. One Place._`
                 type="button"
                 disabled={isDeletingFamily}
                 onClick={() => setIsDeleteModalOpen(false)}
-                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
               >
                 Cancel
               </button>
@@ -1760,7 +1861,8 @@ _Myvello — Your Life. Your Records. One Place._`
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </DashboardLayout>
   );
