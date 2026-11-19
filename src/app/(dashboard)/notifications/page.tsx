@@ -267,7 +267,7 @@ function NotificationsPageContent() {
         );
       case "reminder":
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-indigo-50 text-indigo-700 border border-indigo-200/80 inline-flex items-center gap-1">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-emerald-800 border border-emerald-200/80 inline-flex items-center gap-1">
             <Clock className="w-2.5 h-2.5" />
             EMI Reminder
           </span>
@@ -395,7 +395,7 @@ function NotificationsPageContent() {
       <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 space-y-2 sm:space-y-5">
         {/* Floating Modern Toast Feedback - positioned safely above floating mobile capsule nav */}
         {toastMessage && (
-          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-indigo-500/30 backdrop-blur-md">
+          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#02361B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{toastMessage}</span>
           </div>
@@ -425,7 +425,7 @@ function NotificationsPageContent() {
                 aria-expanded={isHeaderMenuOpen}
                 className={cn(
                   "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                  isHeaderMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
+                  isHeaderMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
                 )}
               >
                 <MoreHorizontal className="w-5 h-5 text-slate-700" />
@@ -449,7 +449,7 @@ function NotificationsPageContent() {
                       className={cn(
                         "w-full px-3.5 py-2.5 text-left text-xs font-semibold rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
                         unreadCount > 0
-                          ? "text-slate-800 hover:text-indigo-600 hover:bg-indigo-50/50"
+                          ? "text-slate-800 hover:text-emerald-700 hover:bg-emerald-50/60"
                           : "text-slate-400 opacity-60 cursor-not-allowed"
                       )}
                     >
@@ -464,7 +464,7 @@ function NotificationsPageContent() {
                         setIsHeaderMenuOpen(false);
                         setIsPreferencesOpen(true);
                       }}
-                      className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                      className="w-full px-3.5 py-2.5 text-left text-xs font-semibold text-slate-800 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-3 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                     >
                       <Settings className="w-4 h-4 text-slate-600 shrink-0" />
                       <span>Notification settings</span>
@@ -500,9 +500,9 @@ function NotificationsPageContent() {
               <button
                 type="button"
                 onClick={handleMarkAll}
-                className="h-9 px-3.5 rounded-xl border border-slate-200/90 hover:border-slate-300 bg-white hover:bg-indigo-50/50 text-slate-700 hover:text-indigo-600 font-bold text-xs shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                className="h-9 px-3.5 rounded-xl border border-slate-200/90 hover:border-emerald-300 bg-white hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-bold text-xs shadow-2xs transition-all cursor-pointer inline-flex items-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
               >
-                <CheckCheck className="w-3.5 h-3.5 text-indigo-600" />
+                <CheckCheck className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Mark all read</span>
               </button>
             )}
@@ -542,7 +542,7 @@ function NotificationsPageContent() {
                 className={cn(
                   "h-8 px-3 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
                   filter === "all"
-                    ? "bg-indigo-600 text-white font-bold shadow-2xs"
+                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
                     : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
                 )}
               >
@@ -566,7 +566,7 @@ function NotificationsPageContent() {
                 className={cn(
                   "h-8 px-3 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
                   filter === "unread"
-                    ? "bg-indigo-600 text-white font-bold shadow-2xs"
+                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
                     : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
                 )}
               >
@@ -576,7 +576,7 @@ function NotificationsPageContent() {
                   <span
                     className={cn(
                       "px-1.5 py-0.2 rounded-full text-[10px] font-bold",
-                      filter === "unread" ? "bg-white text-indigo-700" : "bg-rose-500 text-white"
+                      filter === "unread" ? "bg-white text-emerald-800" : "bg-rose-500 text-white"
                     )}
                   >
                     {unreadItemsCount}
@@ -590,7 +590,7 @@ function NotificationsPageContent() {
                 className={cn(
                   "h-8 px-3 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
                   filter === "reminders"
-                    ? "bg-indigo-600 text-white font-bold shadow-2xs"
+                    ? "bg-[#02361B] text-white font-bold shadow-2xs"
                     : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
                 )}
               >
@@ -648,7 +648,7 @@ function NotificationsPageContent() {
                   className={cn(
                     "p-3.5 sm:p-4.5 transition-colors cursor-pointer flex items-start gap-3 sm:gap-3.5 relative group active:scale-[0.99] touch-manipulation select-none",
                     !item.is_read
-                      ? "bg-indigo-50/25 hover:bg-indigo-50/40"
+                      ? "bg-emerald-50/25 hover:bg-emerald-50/40"
                       : "bg-white hover:bg-slate-50/70"
                   )}
                 >
@@ -673,10 +673,10 @@ function NotificationsPageContent() {
                             : item.type === "success"
                             ? "bg-emerald-50 border-emerald-100 text-emerald-600"
                             : item.type === "family"
-                            ? "bg-teal-50 border-teal-100 text-teal-600"
+                            ? "bg-emerald-50 border-emerald-100 text-emerald-800"
                             : item.type === "system"
                             ? "bg-slate-100 border-slate-200 text-slate-700"
-                            : "bg-indigo-50 border-indigo-100 text-indigo-600"
+                            : "bg-emerald-50 border-emerald-100 text-emerald-700"
                         )}
                       >
                         {item.type === "urgent" && <AlertTriangle className="w-5 h-5" />}
@@ -702,8 +702,8 @@ function NotificationsPageContent() {
                       <div className="flex items-center gap-1.5 flex-wrap">
                         {getTypeBadge(item.type)}
                         {!item.is_read && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-black text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded-full border border-indigo-200/60">
-                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-600" />
+                          <span className="inline-flex items-center gap-1 text-[10px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.2 rounded-full border border-emerald-200/80 shadow-2xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
                             New
                           </span>
                         )}
@@ -791,7 +791,7 @@ function NotificationsPageContent() {
                                   e.stopPropagation();
                                   markAsRead(item.id);
                                 }}
-                                className="h-8 px-2.5 inline-flex items-center text-xs text-slate-500 hover:text-indigo-600 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
+                                className="h-8 px-2.5 inline-flex items-center text-xs text-slate-500 hover:text-emerald-700 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
                               >
                                 Mark as read
                               </button>
@@ -819,7 +819,7 @@ function NotificationsPageContent() {
                                   e.stopPropagation();
                                   markAsRead(item.id);
                                 }}
-                                className="h-8 px-2.5 inline-flex items-center text-xs text-slate-500 hover:text-indigo-600 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
+                                className="h-8 px-2.5 inline-flex items-center text-xs text-slate-500 hover:text-emerald-700 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
                               >
                                 Mark as read
                               </button>
@@ -837,7 +837,7 @@ function NotificationsPageContent() {
                                 e.stopPropagation();
                                 markAsRead(item.id);
                               }}
-                              className="h-7 px-2 inline-flex items-center text-[11px] text-slate-500 hover:text-indigo-600 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
+                              className="h-7 px-2 inline-flex items-center text-[11px] text-slate-500 hover:text-emerald-700 font-bold cursor-pointer transition-colors active:scale-95 touch-manipulation"
                             >
                               Mark as read
                             </button>
@@ -865,7 +865,7 @@ function NotificationsPageContent() {
             {/* Empty State */}
             {filteredNotifications.length === 0 && (
               <div className="p-8 sm:p-12 text-center text-slate-400 space-y-3">
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto text-indigo-600 shadow-2xs">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/70 flex items-center justify-center mx-auto text-emerald-700 shadow-2xs">
                   <Sparkles className="w-7 h-7" />
                 </div>
                 <div className="space-y-1">

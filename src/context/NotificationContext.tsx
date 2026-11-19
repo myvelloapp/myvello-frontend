@@ -380,12 +380,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
       {/* Instant Floating Live Notification Popup Banner */}
       {incomingToast && (
-        <div className="fixed top-[max(0.75rem,calc(0.5rem+env(safe-area-inset-top)))] inset-x-3.5 max-w-[420px] mx-auto sm:top-20 sm:right-8 sm:left-auto sm:max-w-sm sm:w-full sm:mx-0 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+        <div className="fixed top-[max(0.75rem,calc(0.5rem+env(safe-area-inset-top)))] inset-x-3.5 max-w-[420px] mx-auto sm:top-20 sm:right-8 sm:left-auto sm:max-w-sm sm:w-full sm:mx-0 z-[100] animate-in fade-in slide-in-from-top-4 duration-300 select-none">
           <div
             onClick={handleToastClick}
-            className="p-3.5 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md shadow-2xl border border-indigo-200/90 hover:border-indigo-400 transition-all cursor-pointer flex items-start gap-3 sm:gap-3.5 group ring-4 ring-indigo-500/10"
+            className="p-3.5 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md shadow-[0_12px_36px_-6px_rgba(2,54,27,0.18)] border border-emerald-100/90 hover:border-emerald-300 transition-all cursor-pointer flex items-start gap-3 sm:gap-3.5 group ring-4 ring-emerald-500/10"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5 group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-xl btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5 group-hover:scale-105 transition-transform">
               {incomingToast.type === "family" ? (
                 <Users className="w-4 h-4 text-white" />
               ) : (
@@ -395,12 +395,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
             <div className="flex-1 min-w-0 pr-2">
               <div className="flex items-center gap-1.5 mb-0.5">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs">
                   New Alert
                 </span>
                 <span className="text-[11px] text-slate-400 font-medium">Just now</span>
               </div>
-              <h4 className="text-xs font-black text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
+              <h4 className="text-xs font-black text-[#02361B] group-hover:text-emerald-700 transition-colors line-clamp-1">
                 {incomingToast.title}
               </h4>
               <p className="text-[11px] text-slate-500 font-medium line-clamp-2 mt-0.5 leading-snug">
