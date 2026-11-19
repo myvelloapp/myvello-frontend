@@ -1841,25 +1841,25 @@ function EmiDetailContent() {
           <div className="lg:col-span-4 space-y-4">
             {/* Next Due Payment Action Card - Desktop Only (handled cleanly in hero banner on mobile) */}
             {nextPendingSchedule && !isClosed ? (
-              <div className="hidden lg:block relative overflow-hidden bg-gradient-to-br from-[#02361B] via-[#044422] to-[#012211] text-white rounded-2xl p-5 shadow-md border border-emerald-800/40 space-y-4">
-                <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-400/10 rounded-full blur-2xl pointer-events-none" />
-
+              <div className="hidden lg:block relative overflow-hidden card-gradient-vibrant text-white rounded-2xl p-5 shadow-[0_8px_24px_-4px_rgba(16,185,129,0.28)] border border-white/40 space-y-4">
                 <div className="flex items-center justify-between relative z-10">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-white/15 text-emerald-200 border border-white/10 backdrop-blur-xs tracking-wide uppercase">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-white border border-white/30 backdrop-blur-xs tracking-wide uppercase drop-shadow-[0_1px_2px_rgba(0,35,20,0.4)]">
                     Next Due Payment
                   </span>
-                  <span className="text-xs font-bold text-emerald-200/90 font-mono">
+                  <span className="text-xs font-bold text-white/95 font-mono drop-shadow-[0_1px_2px_rgba(0,35,20,0.4)]">
                     Instalment #{nextPendingSchedule.installment_number}
                   </span>
                 </div>
 
                 <div className="relative z-10">
-                  <span className="text-[11px] text-emerald-200/80 block font-semibold">Amount Payable</span>
-                  <span className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-0.5 block">
+                  <span className="text-[11px] text-white/90 block font-semibold drop-shadow-[0_1px_2px_rgba(0,35,20,0.3)]">
+                    Amount Payable
+                  </span>
+                  <span className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-0.5 block drop-shadow-[0_1px_3px_rgba(0,35,20,0.5)]">
                     {formatCurrency(nextPendingSchedule.due_amount, currency)}
                   </span>
-                  <span className="text-xs text-emerald-100/90 font-semibold mt-1.5 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-emerald-300" />
+                  <span className="text-xs text-white/95 font-semibold mt-1.5 flex items-center gap-1.5 drop-shadow-[0_1px_2px_rgba(0,35,20,0.3)]">
+                    <Clock className="w-3.5 h-3.5 text-white/90" />
                     <span>Due on {formatDate(nextPendingSchedule.due_date)}</span>
                   </span>
                 </div>
@@ -1877,9 +1877,9 @@ function EmiDetailContent() {
                       familyMembers: loan.family?.members,
                     })
                   }
-                  className="relative z-10 w-full h-10 inline-flex items-center justify-center gap-2 rounded-xl bg-white text-[#02361B] hover:bg-emerald-50 text-xs font-black shadow-sm transition-all cursor-pointer active:scale-[0.98]"
+                  className="relative z-10 w-full h-10 inline-flex items-center justify-center gap-2 rounded-xl bg-white text-[#02361B] hover:bg-emerald-50 text-xs font-black shadow-md shadow-emerald-950/20 transition-all cursor-pointer active:scale-[0.98]"
                 >
-                  <Check className="w-4 h-4 stroke-[3] text-emerald-700" />
+                  <Check className="w-4 h-4 stroke-[3] text-[#1C9E30]" />
                   <span>Mark This EMI as Paid</span>
                 </button>
               </div>
