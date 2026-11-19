@@ -614,7 +614,7 @@ function EmiDetailContent() {
         newErrors.loanName = "Please enter the loan commitment name.";
       }
       if (formData.ownershipType === "family_shared" && families.length === 0) {
-        newErrors.ownershipType = "Please create a Family Workspace first, or choose Personal Vault.";
+        newErrors.ownershipType = "Please create a Group first, or choose Personal Vault.";
       }
     } else if (step === 2) {
       delete newErrors.originalAmount;
@@ -945,7 +945,7 @@ function EmiDetailContent() {
                   {loan.ownership_type === "family_shared" ? (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-700 border border-teal-200 shrink-0">
                       <Share2 className="w-3 h-3" />
-                      <span>Family Shared {loan.family ? `(${loan.family.name})` : ""}</span>
+                      <span>Group Shared {loan.family ? `(${loan.family.name})` : ""}</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200/90 shrink-0">
@@ -2194,7 +2194,7 @@ function EmiDetailContent() {
                           </div>
                         </button>
 
-                        {/* 2. Family Vault Card */}
+                        {/* 2. Group Vault Card */}
                         <button
                           type="button"
                           onClick={() => {
@@ -2221,10 +2221,10 @@ function EmiDetailContent() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <span className="font-extrabold text-slate-900 text-xs block truncate leading-tight">
-                              Family Vault
+                              Group Vault
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
-                              Shared • Household budgeting
+                              Shared • Vehicle, business & household
                             </span>
                           </div>
                           <div
@@ -2242,16 +2242,16 @@ function EmiDetailContent() {
                         </button>
                       </div>
 
-                      {/* ONLY SHOW GROUPS WHEN FAMILY VAULT IS CLICKED / SELECTED */}
+                      {/* ONLY SHOW GROUPS WHEN GROUP VAULT IS CLICKED / SELECTED */}
                       {formData.ownershipType === "family_shared" && (
                         <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                               <Users className="w-3.5 h-3.5 text-emerald-700" />
-                              Select Family Group / Household <span className="text-rose-500">*</span>
+                              Select Shared Group <span className="text-rose-500">*</span>
                             </span>
                             <span className="text-[10px] font-semibold text-emerald-800 bg-white px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs">
-                              {families.length} {families.length === 1 ? "Vault" : "Vaults"}
+                              {families.length} {families.length === 1 ? "Group" : "Groups"}
                             </span>
                           </div>
 
@@ -2293,7 +2293,7 @@ function EmiDetailContent() {
                                         {fam.name}
                                       </span>
                                       <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
-                                        Family Vault • {fam.members_count || 1} member{(fam.members_count || 1) > 1 ? "s" : ""}
+                                        Group Vault • {fam.members_count || 1} member{(fam.members_count || 1) > 1 ? "s" : ""}
                                       </span>
                                     </div>
                                     <div
@@ -2316,12 +2316,12 @@ function EmiDetailContent() {
                             <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs space-y-1">
                               <div className="flex items-center gap-1.5 font-bold">
                                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                                <span>No Family Workspace Created Yet</span>
+                                <span>No Group Created Yet</span>
                               </div>
                               <p className="text-[11px] text-amber-700 leading-relaxed font-normal">
-                                To share loans with family, you first need to create a household workspace on the{" "}
+                                To share loans with co-borrowers, partners, or family, create a group on the{" "}
                                 <Link href="/family/setup" target="_blank" className="font-bold underline text-emerald-700">
-                                  Family page
+                                  Groups page
                                 </Link>
                                 . Until then, keep this loan in your <strong>Personal Vault</strong>.
                               </p>

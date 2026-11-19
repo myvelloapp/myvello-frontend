@@ -227,7 +227,7 @@ export function Header({
                               </span>
                             ) : (
                               <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-teal-50 text-teal-700 border border-teal-200/60 shrink-0">
-                                Family
+                                Group
                               </span>
                             )}
                           </div>
@@ -255,7 +255,7 @@ export function Header({
                 >
                   <span className="flex items-center gap-1.5">
                     <Users className="w-3.5 h-3.5" />
-                    <span>Manage Family Workspaces</span>
+                    <span>Manage Groups</span>
                   </span>
                   <ChevronRight className="w-3.5 h-3.5 text-emerald-500" />
                 </Link>

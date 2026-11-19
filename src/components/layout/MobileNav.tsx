@@ -83,7 +83,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
   const accountNav: MobileNavItem[] = [
     {
-      label: "Family Members",
+      label: "Groups",
       href: "/family",
       icon: Users,
       active: pathname.startsWith("/family"),
@@ -397,11 +397,11 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           </div>
         </Link>
 
-        {/* 4th Icon: Family Workspace */}
+        {/* 4th Icon: Groups Workspace */}
         <Link
           href="/family"
           className="flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
-          aria-label="Family Workspace"
+          aria-label="Groups"
         >
           <div
             className={cn(

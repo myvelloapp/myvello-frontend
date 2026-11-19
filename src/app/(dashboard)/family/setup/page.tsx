@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Home,
   Users,
   Plus,
   Link as LinkIcon,
@@ -24,10 +23,11 @@ import { useWorkspace } from "@/context/WorkspaceContext";
 import { cn } from "@/lib/utils";
 
 const SUGGESTED_NAMES = [
-  "Family Vault",
-  "Home & Loans",
+  "Family & Home",
+  "Vehicle & Fleet",
+  "Business Partners",
   "Household Finance",
-  "Primary Residence",
+  "Flatmates & Rent",
 ];
 
 export default function FamilySetupPage() {
@@ -47,11 +47,11 @@ export default function FamilySetupPage() {
   const [isJoining, setIsJoining] = useState(false);
   const [joinErrorMessage, setJoinErrorMessage] = useState<string | null>(null);
 
-  // Handle Create Workspace
+  // Handle Create Workspace / Group
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!workspaceName.trim()) {
-      setErrorMessage("Please enter a name for your household workspace.");
+      setErrorMessage("Please enter a name for your group.");
       return;
     }
 
@@ -73,14 +73,14 @@ export default function FamilySetupPage() {
       const error = err as { response?: { data?: { message?: string } } };
       setErrorMessage(
         error.response?.data?.message ||
-          "Failed to create household workspace. Please try again."
+          "Failed to create group. Please try again."
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Handle Join Workspace with Code
+  // Handle Join Workspace / Group with Code
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inviteCode.trim()) {
@@ -115,7 +115,7 @@ export default function FamilySetupPage() {
       const error = err as { response?: { data?: { message?: string } } };
       setJoinErrorMessage(
         error.response?.data?.message ||
-          "Invalid or expired invitation code. Please verify with the workspace owner."
+          "Invalid or expired invitation code. Please verify with the group owner."
       );
     } finally {
       setIsJoining(false);
@@ -135,10 +135,10 @@ export default function FamilySetupPage() {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
             <div className="space-y-1">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
-                Household Workspace Setup
+                Create or Join a Group
               </h1>
               <p className="text-xs sm:text-sm font-medium text-slate-500">
-                Coordinate joint home loans, pooled repayments, and household commitments with your family.
+                Coordinate shared vehicle loans, household EMIs, partner commitments, and joint documents.
               </p>
             </div>
 
@@ -148,7 +148,7 @@ export default function FamilySetupPage() {
                 className="min-h-[44px] sm:min-h-[36px] h-11 sm:h-8.5 px-3.5 rounded-xl sm:rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs inline-flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer active:scale-95 touch-manipulation shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5 text-slate-500" />
-                <span>Back to Workspaces</span>
+                <span>Back to Groups</span>
               </button>
             </Link>
           </div>
@@ -166,7 +166,7 @@ export default function FamilySetupPage() {
               )}
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>Create Workspace</span>
+              <span>Create Group</span>
             </button>
 
             <button
@@ -188,7 +188,7 @@ export default function FamilySetupPage() {
           <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-6">
             {/* Left Column: Active Tab Main Content */}
             <div className="flex-1 min-w-0 space-y-5 w-full">
-              {/* TAB 1: Create New Workspace */}
+              {/* TAB 1: Create New Group */}
               {activeTab === "create" && (
                 <form
                   onSubmit={handleCreate}
@@ -197,11 +197,11 @@ export default function FamilySetupPage() {
                   {/* Card Section Header */}
                   <div className="border-b border-slate-100 pb-4">
                     <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                      <Home className="w-4 h-4 text-indigo-600" />
-                      <span>Workspace Details</span>
+                      <Users className="w-4 h-4 text-emerald-700" />
+                      <span>Group Details</span>
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                      Enter a recognizable name for your shared household group.
+                      Enter a recognizable name for your shared group or vault.
                     </p>
                   </div>
 
@@ -213,10 +213,10 @@ export default function FamilySetupPage() {
                     </div>
                   )}
 
-                  {/* Workspace Name Input */}
+                  {/* Group Name Input */}
                   <div className="space-y-2">
                     <label className="block text-xs font-bold text-slate-800">
-                      Household or Family Name <span className="text-rose-500">*</span>
+                      Group Name <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Users className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -225,10 +225,10 @@ export default function FamilySetupPage() {
                         required
                         autoFocus
                         autoCapitalize="words"
-                        placeholder="e.g. Abdullah Family or Sunset Villa"
+                        placeholder="e.g. Household & Family, Swift Car Co-owners, or Business Team"
                         value={workspaceName}
                         onChange={(e) => setWorkspaceName(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl sm:rounded-[8px] border border-slate-200 text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs bg-slate-50/50 focus:bg-white"
+                        className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl sm:rounded-[8px] border border-slate-200 text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-2xs bg-slate-50/50 focus:bg-white"
                       />
                     </div>
 
@@ -243,7 +243,7 @@ export default function FamilySetupPage() {
                           className={cn(
                             "min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-full text-xs sm:text-[11px] font-semibold border transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center",
                             workspaceName === name
-                              ? "bg-indigo-50 border-indigo-200 text-indigo-700 font-bold"
+                              ? "bg-emerald-50 border-emerald-300 text-emerald-800 font-bold"
                               : "bg-white border-slate-200/80 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                           )}
                         >
@@ -255,15 +255,15 @@ export default function FamilySetupPage() {
 
                   {/* Role & Permissions Note */}
                   <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
                       <Sparkles className="w-4 h-4" />
                     </div>
                     <div className="space-y-0.5">
                       <span className="text-xs font-bold text-slate-800 block">
-                        Your Role: Workspace Owner
+                        Your Role: Group Owner
                       </span>
                       <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
-                        As the creator, you retain full owner permissions to invite members, assign admin privileges, rename the workspace, or link family loans at any time.
+                        As the creator, you retain full owner permissions to invite members, assign admin privileges, rename the group, or link shared EMIs and documents at any time.
                       </p>
                     </div>
                   </div>
@@ -276,7 +276,7 @@ export default function FamilySetupPage() {
                         Privacy Guarantee
                       </span>
                       <p className="text-[11px] text-emerald-700/90 leading-relaxed font-medium">
-                        Personal commitments in your Private Vault remain completely confidential. Only loans you explicitly link to this workspace will be shared with invited family members.
+                        Personal commitments in your Private Vault remain completely confidential. Only loans and documents you explicitly link to this group will be visible to invited members.
                       </p>
                     </div>
                   </div>
@@ -304,7 +304,7 @@ export default function FamilySetupPage() {
                         </>
                       ) : (
                         <>
-                          <span>Create Workspace</span>
+                          <span>Create Group</span>
                           <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
                         </>
                       )}
@@ -313,7 +313,7 @@ export default function FamilySetupPage() {
                 </form>
               )}
 
-              {/* TAB 2: Join Existing Workspace */}
+              {/* TAB 2: Join Existing Group */}
               {activeTab === "join" && (
                 <form
                   onSubmit={handleJoin}
@@ -322,11 +322,11 @@ export default function FamilySetupPage() {
                   {/* Card Section Header */}
                   <div className="border-b border-slate-100 pb-4">
                     <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
-                      <LinkIcon className="w-4 h-4 text-indigo-600" />
-                      <span>Join with Workspace Code</span>
+                      <LinkIcon className="w-4 h-4 text-emerald-700" />
+                      <span>Join with Group Code</span>
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                      Enter the 6-character workspace code (e.g. FAM-TI6FSK) or paste an invitation link.
+                      Enter the group code (e.g. FAM-TI6FSK) or paste an invitation link.
                     </p>
                   </div>
 
@@ -341,7 +341,7 @@ export default function FamilySetupPage() {
                   {/* Invite Code Input */}
                   <div className="space-y-2">
                     <label className="block text-xs font-bold text-slate-800">
-                      Workspace Code or Link <span className="text-rose-500">*</span>
+                      Group Code or Link <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <LinkIcon className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -356,17 +356,17 @@ export default function FamilySetupPage() {
                         placeholder="e.g. FAM-TI6FSK or paste invite link"
                         value={inviteCode}
                         onChange={(e) => setInviteCode(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl sm:rounded-[8px] border border-slate-200 text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-2xs bg-slate-50/50 focus:bg-white font-mono uppercase"
+                        className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl sm:rounded-[8px] border border-slate-200 text-sm font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-2xs bg-slate-50/50 focus:bg-white font-mono uppercase"
                       />
                     </div>
                     <p className="text-[11px] text-slate-400 font-medium">
-                      Ask your household administrator for their workspace code (displayed directly on their Family dashboard).
+                      Ask your group administrator for their invite code (displayed directly on their Groups dashboard).
                     </p>
                   </div>
 
                   {/* How it works banner */}
                   <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div className="space-y-0.5">
@@ -402,7 +402,7 @@ export default function FamilySetupPage() {
                         </>
                       ) : (
                         <>
-                          <span>Join Workspace</span>
+                          <span>Join Group</span>
                           <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
                         </>
                       )}
@@ -414,23 +414,23 @@ export default function FamilySetupPage() {
 
             {/* Right Column: Informational Sidebar Cards matching Settings page */}
             <div className="w-full lg:w-[360px] xl:w-[380px] shrink-0 space-y-5">
-              {/* Workspace Architecture Overview Card */}
+              {/* Group Features Overview Card */}
               <div className="bg-white rounded-[16px] p-5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100 space-y-3.5">
                 <div className="flex items-center justify-between pb-1 border-b border-slate-100/80">
                   <div className="flex items-center gap-2 text-[#02361B]">
-                    <Layers className="w-4 h-4 text-indigo-600" />
+                    <Layers className="w-4 h-4 text-emerald-700" />
                     <h3 className="text-sm font-black tracking-tight text-[#02361B]">
-                      Workspace Features
+                      Group Features
                     </h3>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80">
                     Collaborative
                   </span>
                 </div>
 
                 <div className="space-y-3 text-xs text-slate-600">
                   <div className="flex items-start gap-2.5">
-                    <div className="w-5 h-5 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     </div>
                     <div>
@@ -440,7 +440,7 @@ export default function FamilySetupPage() {
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <div className="w-5 h-5 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     </div>
                     <div>
@@ -450,33 +450,33 @@ export default function FamilySetupPage() {
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <div className="w-5 h-5 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     </div>
                     <div>
                       <span className="font-bold text-slate-800 block">Instant Live Sync</span>
-                      <span className="text-[11px] text-slate-500">Payments made by any family member update your dashboard in real time without refreshing.</span>
+                      <span className="text-[11px] text-slate-500">Payments made by any member update your dashboard in real time without refreshing.</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Data Isolation Guarantee Card */}
-              <div className="p-4.5 rounded-[16px] bg-gradient-to-br from-indigo-50/50 via-white to-slate-50 border border-indigo-100/70 shadow-2xs space-y-2.5">
-                <div className="flex items-center gap-2 text-indigo-700 font-bold text-xs">
-                  <Lock className="w-4 h-4 text-indigo-600 shrink-0" />
+              <div className="p-4.5 rounded-[16px] bg-gradient-to-br from-emerald-50/50 via-white to-slate-50 border border-emerald-100/80 shadow-2xs space-y-2.5">
+                <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
+                  <Lock className="w-4 h-4 text-emerald-700 shrink-0" />
                   <span>Confidential Vault Isolation</span>
                 </div>
                 <p className="text-[11px] text-slate-500 leading-relaxed font-normal">
-                  Your Personal Vault is isolated from all family workspaces. Personal credit cards, vehicle loans, and personal commitments remain strictly visible to you alone.
+                  Your Private Vault is isolated from all shared groups. Personal credit cards, vehicle loans, and personal commitments remain strictly visible to you alone.
                 </p>
               </div>
 
               {/* Quick Help Card */}
               <div className="p-4 rounded-[14px] bg-slate-50/80 border border-slate-200/80 space-y-1.5 text-xs">
-                <span className="font-bold text-slate-800 block">Need multiple workspaces?</span>
+                <span className="font-bold text-slate-800 block">Need multiple groups?</span>
                 <p className="text-[11px] text-slate-500 leading-relaxed">
-                  You can create and belong to multiple households (e.g. Parental Home and Personal Family) and switch seamlessly anytime from the top-left dropdown.
+                  You can create and belong to multiple groups (e.g. Family & Home, Swift Car Fleet, Tech Partners) and switch seamlessly anytime from the top-left dropdown.
                 </p>
               </div>
             </div>

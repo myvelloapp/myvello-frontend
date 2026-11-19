@@ -283,7 +283,7 @@ function NotificationsPageContent() {
         return (
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-teal-50 text-teal-700 border border-teal-200/80 inline-flex items-center gap-1">
             <Users className="w-2.5 h-2.5" />
-            Family Workspace
+            Groups
           </span>
         );
       default:
@@ -320,7 +320,7 @@ function NotificationsPageContent() {
     try {
       const res = await familyService.acceptInvitationById(inviteId);
       if (!item.is_read) await markAsRead(item.id);
-      showToast(res.family_name ? `Welcome to '${res.family_name}'!` : "Invitation accepted! Joined workspace.");
+      showToast(res.family_name ? `Welcome to '${res.family_name}'!` : "Invitation accepted! Joined group.");
 
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("myvello:refresh_family"));
@@ -614,12 +614,12 @@ function NotificationsPageContent() {
                 className={cn(
                   "h-8 px-3 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 touch-manipulation",
                   filter === "family"
-                    ? "bg-indigo-600 text-white font-bold shadow-2xs"
+                    ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                     : "bg-slate-100 hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 font-semibold"
                 )}
               >
                 <Users className="w-3 h-3" />
-                <span>Family</span>
+                <span>Groups</span>
                 <span
                   className={cn(
                     "px-1.5 py-0.2 rounded-full text-[10px] font-bold",

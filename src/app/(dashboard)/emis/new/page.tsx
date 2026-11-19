@@ -1717,7 +1717,7 @@ export default function AddNewEmiPage() {
                           </div>
                         </button>
 
-                        {/* 2. Family Vault Card */}
+                        {/* 2. Group Vault Card */}
                         <button
                           type="button"
                           onClick={() => {
@@ -1741,10 +1741,10 @@ export default function AddNewEmiPage() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <span className="font-extrabold text-[#02361B] text-xs block truncate leading-tight">
-                              Family Vault
+                              Group Vault
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
-                              Shared • Household budgeting
+                              Shared • Vehicle, business & household
                             </span>
                           </div>
                           <div
@@ -1762,16 +1762,16 @@ export default function AddNewEmiPage() {
                         </button>
                       </div>
 
-                      {/* ONLY SHOW GROUPS WHEN FAMILY VAULT IS CLICKED / SELECTED */}
+                      {/* ONLY SHOW GROUPS WHEN GROUP VAULT IS CLICKED / SELECTED */}
                       {formData.ownershipType === "family_shared" && (
                         <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                               <Users className="w-3.5 h-3.5 text-teal-700" />
-                              Select Family Group / Household <span className="text-rose-500">*</span>
+                              Select Shared Group <span className="text-rose-500">*</span>
                             </span>
                             <span className="text-[10px] font-semibold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs">
-                              {families.length} {families.length === 1 ? "Vault" : "Vaults"}
+                              {families.length} {families.length === 1 ? "Group" : "Groups"}
                             </span>
                           </div>
 
@@ -1812,7 +1812,7 @@ export default function AddNewEmiPage() {
                                         {fam.name}
                                       </span>
                                       <span className="text-[10px] font-semibold text-slate-400 block leading-tight mt-0.5 truncate">
-                                        Family Vault • {fam.members_count || 1} member{(fam.members_count || 1) > 1 ? "s" : ""}
+                                        Group Vault • {fam.members_count || 1} member{(fam.members_count || 1) > 1 ? "s" : ""}
                                       </span>
                                     </div>
                                     <div
@@ -1835,12 +1835,12 @@ export default function AddNewEmiPage() {
                             <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs space-y-1">
                               <div className="flex items-center gap-1.5 font-bold">
                                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                                <span>No Family Workspace Created Yet</span>
+                                <span>No Group Created Yet</span>
                               </div>
                               <p className="text-[11px] text-amber-700 leading-relaxed font-normal">
-                                To share loans with family, you first need to create a household workspace on the{" "}
+                                To share loans with co-borrowers, partners, or family, create a group on the{" "}
                                 <Link href="/family/setup" target="_blank" className="font-bold underline text-emerald-800">
-                                  Family page
+                                  Groups page
                                 </Link>
                                 . Until then, keep this loan in your <strong>Personal Vault</strong>.
                               </p>
@@ -2018,12 +2018,12 @@ export default function AddNewEmiPage() {
                           {selectedFamily.name}
                         </span>
                         <span className="text-[10px] font-medium text-teal-700 block">
-                          Shared Family Commitment • {selectedFamily.members_count || 1} members
+                          Shared Group Commitment • {selectedFamily.members_count || 1} members
                         </span>
                       </div>
                     </div>
                     <span className="text-[10px] font-extrabold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs shrink-0">
-                      Family Vault
+                      Group Vault
                     </span>
                   </div>
                 )}
@@ -2306,12 +2306,12 @@ export default function AddNewEmiPage() {
                         {selectedFamily.name}
                       </span>
                       <span className="text-[10px] font-medium text-teal-700 block">
-                        Shared Family Commitment • {selectedFamily.members_count || 1} members
+                        Shared Group Commitment • {selectedFamily.members_count || 1} members
                       </span>
                     </div>
                   </div>
                   <span className="text-[10px] font-extrabold text-teal-800 bg-white px-2 py-0.5 rounded-full border border-teal-200 shadow-2xs shrink-0">
-                    Family Vault
+                    Group Vault
                   </span>
                 </div>
               )}

@@ -56,7 +56,7 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
     { label: "EMI Management", href: "/emis", icon: CreditCard },
     { label: "Add New EMI", href: "/emis/new", icon: PlusCircle },
     { label: "Payment History", href: "/payment-history", icon: Clock },
-    { label: "Family Members", href: "/family", icon: Users },
+    { label: "Groups", href: "/family", icon: Users },
     { label: "Notifications", href: "/notifications", icon: Bell },
     { label: "User Settings", href: "/settings", icon: Settings },
   ].filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));

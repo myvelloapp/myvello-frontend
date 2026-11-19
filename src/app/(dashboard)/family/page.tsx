@@ -651,7 +651,7 @@ _Myvello — Your Life. Your Records. One Place._`
       <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 px-3.5 sm:px-6 lg:px-8 xl:px-10 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 space-y-2 sm:space-y-5">
         {/* Floating Toast Feedback - positioned safely above floating mobile capsule nav */}
         {toastMessage && (
-          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-indigo-500/30 backdrop-blur-md">
+          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{toastMessage}</span>
           </div>
@@ -663,27 +663,27 @@ _Myvello — Your Life. Your Records. One Place._`
         <div className="sm:hidden flex items-center justify-between gap-2.5 min-h-[36px]">
           <div className="flex items-center gap-2 min-w-0">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-              {activeFamily ? activeFamily.name : "Family Workspace"}
+              {activeFamily ? activeFamily.name : "Groups"}
             </h1>
             {activeFamily && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-black capitalize bg-indigo-50 text-indigo-700 border border-indigo-200/80 shrink-0">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-black capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
                 {activeFamily.my_role}
               </span>
             )}
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            {/* 3-Dot Options & Households Menu Trigger */}
+            {/* 3-Dot Options & Groups Menu Trigger */}
             {activeFamily && (
               <div ref={mobileMenuRef} className="relative shrink-0">
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  aria-label="Workspace options and households"
+                  aria-label="Group options"
                   aria-expanded={isMobileMenuOpen}
                   className={cn(
                     "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                    isMobileMenuOpen && "bg-slate-100 border-indigo-300 ring-2 ring-indigo-500/20"
+                    isMobileMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
                   )}
                 >
                   <MoreHorizontal className="w-5 h-5 text-slate-700" />
@@ -696,11 +696,11 @@ _Myvello — Your Life. Your Records. One Place._`
                     <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
 
                     <div className="relative z-20 space-y-0.5">
-                      {/* Households Switcher (if user belongs to multiple families) */}
+                      {/* Groups Switcher (if user belongs to multiple groups) */}
                       {families.length > 1 && (
                         <>
                           <div className="px-3 pt-1.5 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400">
-                            Switch Household
+                            Switch Group
                           </div>
                           {families.map((f) => {
                             const isSelected = f.id === activeFamilyId;
@@ -715,18 +715,18 @@ _Myvello — Your Life. Your Records. One Place._`
                                 className={cn(
                                   "w-full px-3 py-2 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
                                   isSelected
-                                    ? "bg-indigo-50/70 text-indigo-700 font-bold"
-                                    : "text-slate-700 hover:text-indigo-600 hover:bg-slate-50"
+                                    ? "bg-emerald-50 text-emerald-800 font-bold"
+                                    : "text-slate-700 hover:text-emerald-700 hover:bg-slate-50"
                                 )}
                               >
                                 <div className="flex items-center gap-2 min-w-0 truncate">
-                                  <Users className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-indigo-600" : "text-slate-400")} />
+                                  <Users className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-emerald-700" : "text-slate-400")} />
                                   <span className="truncate">{f.name}</span>
                                 </div>
                                 <span
                                   className={cn(
                                     "px-1.5 py-0.2 rounded-full text-[10px] font-bold shrink-0",
-                                    isSelected ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-500"
+                                    isSelected ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-500"
                                   )}
                                 >
                                   {f.members_count}
@@ -742,13 +742,13 @@ _Myvello — Your Life. Your Records. One Place._`
                       <Link
                         href="/emis/new"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                       >
-                        <Plus className="w-4 h-4 text-indigo-600 shrink-0" />
+                        <Plus className="w-4 h-4 text-emerald-700 shrink-0" />
                         <span>Share a Loan</span>
                       </Link>
 
-                      {/* Rename Workspace (owner only) */}
+                      {/* Rename Group (owner only) */}
                       {activeFamily.is_owner && (
                         <button
                           type="button"
@@ -756,21 +756,21 @@ _Myvello — Your Life. Your Records. One Place._`
                             setIsMobileMenuOpen(false);
                             setIsRenameModalOpen(true);
                           }}
-                          className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                          className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                         >
                           <Edit2 className="w-4 h-4 text-slate-500 shrink-0" />
-                          <span>Rename Workspace</span>
+                          <span>Rename Group</span>
                         </button>
                       )}
 
-                      {/* Create New Workspace */}
+                      {/* Create New Group */}
                       <Link
                         href="/family/setup"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                       >
-                        <Sparkles className="w-4 h-4 text-indigo-500 shrink-0" />
-                        <span>Create New Household</span>
+                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span>Create New Group</span>
                       </Link>
 
                       {/* Join with Code */}
@@ -780,7 +780,7 @@ _Myvello — Your Life. Your Records. One Place._`
                           setIsMobileMenuOpen(false);
                           setIsJoinModalOpen(true);
                         }}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-indigo-600 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                       >
                         <LinkIcon className="w-4 h-4 text-slate-500 shrink-0" />
                         <span>Join with Code</span>
@@ -798,7 +798,7 @@ _Myvello — Your Life. Your Records. One Place._`
                           className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                         >
                           <LogOut className="w-4 h-4 text-rose-500 shrink-0" />
-                          <span>Leave Workspace</span>
+                          <span>Leave Group</span>
                         </button>
                       ) : (
                         <button
@@ -811,7 +811,7 @@ _Myvello — Your Life. Your Records. One Place._`
                           className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                         >
                           <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
-                          <span>Delete Workspace</span>
+                          <span>Delete Group</span>
                         </button>
                       )}
                     </div>
@@ -853,12 +853,12 @@ _Myvello — Your Life. Your Records. One Place._`
           <div className="space-y-2.5 min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
               <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-                {activeFamily ? activeFamily.name : "Family Workspace"}
+                {activeFamily ? activeFamily.name : "Groups"}
               </h1>
 
               {/* Role Badge */}
               {activeFamily && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-indigo-50 text-indigo-700 border border-indigo-200/80 shrink-0">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
                   {activeFamily.my_role}
                 </span>
               )}
@@ -896,8 +896,8 @@ _Myvello — Your Life. Your Records. One Place._`
                 })}
                 <Link
                   href="/family/setup"
-                  className="min-h-[34px] px-3 py-1.5 rounded-[6px] text-xs font-semibold text-indigo-600 hover:bg-indigo-50/80 transition-all flex items-center gap-1 whitespace-nowrap ml-0.5 cursor-pointer active:scale-95 touch-manipulation shrink-0"
-                  title="Create a new household workspace"
+                  className="min-h-[34px] px-3 py-1.5 rounded-[6px] text-xs font-semibold text-emerald-700 hover:bg-emerald-50/80 transition-all flex items-center gap-1 whitespace-nowrap ml-0.5 cursor-pointer active:scale-95 touch-manipulation shrink-0"
+                  title="Create a new group"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>New</span>
@@ -929,7 +929,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   type="button"
                   className="min-h-[38px] h-9.5 px-4 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
                 >
-                  <Plus className="w-3.5 h-3.5 text-indigo-600" />
+                  <Plus className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Share a Loan</span>
                 </button>
               </Link>
@@ -942,7 +942,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   type="button"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="min-h-[38px] min-w-[38px] h-9.5 w-9.5 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-600 flex items-center justify-center shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
-                  title="Workspace settings & options"
+                  title="Group settings & options"
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
@@ -959,7 +959,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         className="w-full px-4 py-2.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors cursor-pointer active:bg-slate-100 touch-manipulation"
                       >
                         <Edit2 className="w-4 h-4 text-slate-400" />
-                        <span>Rename Workspace</span>
+                        <span>Rename Group</span>
                       </button>
                     )}
 
@@ -969,7 +969,7 @@ _Myvello — Your Life. Your Records. One Place._`
                       className="w-full px-4 py-2.5 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors active:bg-slate-100 touch-manipulation"
                     >
                       <Plus className="w-4 h-4 text-slate-400" />
-                      <span>Create New Workspace</span>
+                      <span>Create New Group</span>
                     </Link>
 
                     <button
@@ -996,7 +996,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         className="w-full px-4 py-2.5 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors cursor-pointer active:bg-rose-100 touch-manipulation"
                       >
                         <LogOut className="w-4 h-4" />
-                        <span>Leave Workspace</span>
+                        <span>Leave Group</span>
                       </button>
                     ) : (
                       <button
@@ -1009,7 +1009,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         className="w-full px-4 py-2.5 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors cursor-pointer active:bg-rose-100 touch-manipulation"
                       >
                         <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
-                        <span>Delete Workspace</span>
+                        <span>Delete Group</span>
                       </button>
                     )}
                   </div>
@@ -1021,9 +1021,9 @@ _Myvello — Your Life. Your Records. One Place._`
 
         {/* 2. Pending Incoming Invitations Banner (if any) */}
         {myInvitations.length > 0 && (
-          <div className="bg-white rounded-2xl border border-indigo-200/90 p-4 sm:p-5 shadow-xs space-y-3">
+          <div className="bg-white rounded-2xl border border-emerald-200/80 p-4 sm:p-5 shadow-xs space-y-3">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
+              <Sparkles className="w-4 h-4 text-emerald-700" />
               <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
                 Pending Invitations ({myInvitations.length})
               </h3>
@@ -1033,12 +1033,12 @@ _Myvello — Your Life. Your Records. One Place._`
               {myInvitations.map((inv) => (
                 <div
                   key={inv.id}
-                  className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/40 border border-indigo-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/40 border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="space-y-0.5 min-w-0">
                     <p className="text-xs font-bold text-slate-800">
                       <strong>{inv.invited_by_name}</strong> invited you to join{" "}
-                      <strong className="text-indigo-600">&apos;{inv.family_name}&apos;</strong>
+                      <strong className="text-emerald-700">&apos;{inv.family_name}&apos;</strong> group
                     </p>
                     <p className="text-[11px] text-slate-500 font-medium">Role: {inv.role}</p>
                   </div>
@@ -1075,19 +1075,19 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 3. Empty State: No Family Workspace Created Yet */}
+        {/* 3. Empty State: No Group Created Yet */}
         {!isLoading && !activeFamily && !error && (
           <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-12 text-center max-w-xl mx-auto shadow-2xs space-y-5">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto text-indigo-600 shadow-2xs">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-700 shadow-2xs">
               <Users className="w-7 h-7" />
             </div>
 
             <div className="space-y-1.5">
               <h2 className="text-lg sm:text-xl font-black text-[#02361B]">
-                Start a Household Workspace
+                Start a Shared Group
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
-                Coordinate joint home loans, shared vehicle EMIs, and pooled commitments with your spouse or family. Your personal loans remain completely confidential in your Private Vault.
+                Coordinate joint car loans, shared family EMIs, partner commitments, and joint documents. Your personal records remain completely confidential in your Private Vault.
               </p>
             </div>
 
@@ -1098,7 +1098,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-5 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                  <span>Create Workspace</span>
+                  <span>Create Group</span>
                 </button>
               </Link>
               <button
@@ -1113,7 +1113,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Zero Personal Exposure: Only loans you explicitly share become visible.</span>
+              <span>Zero Personal Exposure: Only loans and documents you explicitly share become visible.</span>
             </div>
           </div>
         )}
@@ -1154,7 +1154,7 @@ _Myvello — Your Life. Your Records. One Place._`
               <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs p-4 sm:p-5 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-indigo-600" />
+                    <CreditCard className="w-4 h-4 text-emerald-700" />
                     <h3 className="text-sm font-black text-[#02361B]">
                       Shared Loans ({stats.loanCount})
                     </h3>
@@ -1162,7 +1162,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
                   <Link
                     href="/emis/new"
-                    className="min-h-[44px] px-2.5 py-1.5 -mr-2.5 text-xs font-bold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 transition-colors active:scale-95 touch-manipulation cursor-pointer"
+                    className="min-h-[44px] px-2.5 py-1.5 -mr-2.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 inline-flex items-center gap-1 transition-colors active:scale-95 touch-manipulation cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Loan</span>
@@ -1175,7 +1175,7 @@ _Myvello — Your Life. Your Records. One Place._`
                       <Link
                         key={loan.id}
                         href={`/emis/${loan.id}`}
-                        className="p-3.5 sm:p-4 rounded-xl border border-slate-100 hover:border-indigo-300 hover:bg-indigo-50/20 bg-slate-50/50 transition-all flex items-center justify-between gap-3 group cursor-pointer active:scale-[0.98] touch-manipulation"
+                        className="p-3.5 sm:p-4 rounded-xl border border-slate-100 hover:border-emerald-300 hover:bg-emerald-50/20 bg-slate-50/50 transition-all flex items-center justify-between gap-3 group cursor-pointer active:scale-[0.98] touch-manipulation"
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div
@@ -1189,7 +1189,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
                           <div className="min-w-0">
                             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                              <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-indigo-600 transition-colors truncate">
+                              <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-700 transition-colors truncate">
                                 {loan.loan_name}
                               </h4>
                               <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-semibold border border-slate-200/60 shrink-0">
@@ -1212,7 +1212,7 @@ _Myvello — Your Life. Your Records. One Place._`
                               Bal: {formatCurrency(loan.outstanding_principal)}
                             </div>
                           </div>
-                          <ChevronRight className="w-4 h-4 text-slate-300 sm:hidden shrink-0 group-hover:text-indigo-500 transition-colors" />
+                          <ChevronRight className="w-4 h-4 text-slate-300 sm:hidden shrink-0 group-hover:text-emerald-700 transition-colors" />
                         </div>
                       </Link>
                     ))}
@@ -1222,7 +1222,7 @@ _Myvello — Your Life. Your Records. One Place._`
                     <CreditCard className="w-8 h-8 text-slate-300 mx-auto" />
                     <p className="text-xs font-bold text-slate-700">No shared loans yet</p>
                     <p className="text-[11px] text-slate-400 max-w-xs mx-auto leading-relaxed">
-                      Loans you mark as &quot;Family Shared&quot; will appear here for all household members to monitor together.
+                      Loans you mark as &quot;Group Shared&quot; will appear here for all group members to monitor together.
                     </p>
                     <div className="pt-1">
                       <Link href="/emis/new">
@@ -1240,22 +1240,22 @@ _Myvello — Your Life. Your Records. One Place._`
               </div>
             </div>
 
-            {/* Right Column (4 cols): Members & Direct Workspace Code */}
+            {/* Right Column (4 cols): Members & Direct Group Code */}
             <div className="lg:col-span-4 space-y-4">
-              {/* Direct Workspace Code Card */}
+              {/* Direct Group Code Card */}
               {activeFamily.invite_code && (
                 <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-2xs space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Workspace Invite Code
+                      Group Invite Code
                     </span>
-                    <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/80">
                       Instant Join
                     </span>
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <code className="font-mono font-black text-base sm:text-sm text-indigo-600 tracking-wider select-all text-center sm:text-left py-0.5">
+                    <code className="font-mono font-black text-base sm:text-sm text-emerald-800 tracking-wider select-all text-center sm:text-left py-0.5">
                       {activeFamily.invite_code}
                     </code>
                     <div className="flex items-center gap-2 sm:gap-1.5 w-full sm:w-auto">
@@ -1291,18 +1291,18 @@ _Myvello — Your Life. Your Records. One Place._`
                   </div>
 
                   <p className="text-[10px] text-slate-400 leading-snug">
-                    Share this code with your spouse or family to join this workspace instantly.
+                    Share this code with co-borrowers, partners, or family to join this group instantly.
                   </p>
                 </div>
               )}
 
-              {/* Household Members Card */}
+              {/* Group Members Card */}
               <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-2xs space-y-3.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-indigo-600" />
+                    <Users className="w-4 h-4 text-emerald-700" />
                     <h3 className="text-sm font-black text-[#02361B]">
-                      Members ({activeFamily.members.length})
+                      Group Members ({activeFamily.members.length})
                     </h3>
                   </div>
 
@@ -1314,7 +1314,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         setLastGeneratedToken(null);
                         setIsInviteModalOpen(true);
                       }}
-                      className="min-h-[44px] px-2 py-1.5 -mr-2 text-xs font-bold text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1 cursor-pointer active:scale-95 touch-manipulation"
+                      className="min-h-[44px] px-2 py-1.5 -mr-2 text-xs font-bold text-emerald-700 hover:text-emerald-800 inline-flex items-center gap-1 cursor-pointer active:scale-95 touch-manipulation"
                     >
                       <UserPlus className="w-3.5 h-3.5" />
                       <span>Invite</span>
@@ -1330,7 +1330,7 @@ _Myvello — Your Life. Your Records. One Place._`
                       className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between gap-2.5"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-[#1C9E30] to-[#005E35] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
                           {member.profile_photo ? (
                             <Image
                               src={member.profile_photo}
@@ -1366,9 +1366,9 @@ _Myvello — Your Life. Your Records. One Place._`
                           className={cn(
                             "text-[10px] font-bold px-2 py-0.5 rounded-full capitalize",
                             member.role === "owner"
-                              ? "bg-indigo-50 text-indigo-700 border border-indigo-100"
+                              ? "bg-emerald-50 text-emerald-800 border border-emerald-200/80"
                               : member.role === "admin"
-                              ? "bg-purple-50 text-purple-700 border border-purple-100"
+                              ? "bg-teal-50 text-teal-800 border border-teal-200/80"
                               : "bg-slate-100 text-slate-600 border border-slate-200"
                           )}
                         >
@@ -1441,11 +1441,11 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
                   <UserPlus className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#02361B]">Invite Family Member</h3>
+                  <h3 className="text-sm font-black text-[#02361B]">Invite Group Member</h3>
                   <p className="text-xs text-slate-500">Collaborate in {activeFamily.name}</p>
                 </div>
               </div>
@@ -1512,7 +1512,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         placeholder="spouse@gmail.com"
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
-                        className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                        className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white"
                       />
                     </div>
                   </div>
@@ -1526,7 +1526,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         className={cn(
                           "min-h-[52px] p-3 rounded-xl border text-left transition-all cursor-pointer active:scale-[0.98] touch-manipulation",
                           inviteRole === "member"
-                            ? "bg-indigo-50/70 border-indigo-400 ring-2 ring-indigo-500/20"
+                            ? "bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-500/20"
                             : "bg-white border-slate-200 hover:border-slate-300"
                         )}
                       >
@@ -1540,7 +1540,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         className={cn(
                           "min-h-[52px] p-3 rounded-xl border text-left transition-all cursor-pointer active:scale-[0.98] touch-manipulation",
                           inviteRole === "admin"
-                            ? "bg-indigo-50/70 border-indigo-400 ring-2 ring-indigo-500/20"
+                            ? "bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-500/20"
                             : "bg-white border-slate-200 hover:border-slate-300"
                         )}
                       >
@@ -1575,7 +1575,7 @@ _Myvello — Your Life. Your Records. One Place._`
         </div>
       )}
 
-      {/* Join Workspace Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
+      {/* Join Group Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
       {isJoinModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="relative w-full max-w-md bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
@@ -1586,11 +1586,11 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
                   <LinkIcon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#02361B]">Join Household Workspace</h3>
+                  <h3 className="text-sm font-black text-[#02361B]">Join Group</h3>
                   <p className="text-xs text-slate-500">Enter code or paste invite link</p>
                 </div>
               </div>
@@ -1613,7 +1613,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
               <div>
                 <label className="block text-xs font-bold text-[#02361B] mb-1.5">
-                  Workspace Code or Link *
+                  Group Code or Link *
                 </label>
                 <input
                   type="text"
@@ -1625,7 +1625,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   placeholder="e.g. FAM-TI6FSK"
                   value={joinToken}
                   onChange={(e) => setJoinToken(e.target.value)}
-                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] font-mono uppercase px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white placeholder:normal-case"
+                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] font-mono uppercase px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white placeholder:normal-case"
                 />
               </div>
 
@@ -1642,7 +1642,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   disabled={isJoining}
                   className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] h-11 sm:h-9.5 px-5 rounded-xl sm:rounded-lg btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
                 >
-                  {isJoining ? "Joining..." : "Join Workspace"}
+                  {isJoining ? "Joining..." : "Join Group"}
                 </button>
               </div>
             </form>
@@ -1650,7 +1650,7 @@ _Myvello — Your Life. Your Records. One Place._`
         </div>
       )}
 
-      {/* Rename Workspace Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
+      {/* Rename Group Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
       {isRenameModalOpen && activeFamily && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="relative w-full max-w-md bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pb-0">
@@ -1661,10 +1661,10 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg btn-gradient-glow text-white flex items-center justify-center shrink-0 shadow-xs">
                   <Edit2 className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-black text-[#02361B]">Rename Workspace</h3>
+                <h3 className="text-sm font-black text-[#02361B]">Rename Group</h3>
               </div>
               <button
                 type="button"
@@ -1677,14 +1677,14 @@ _Myvello — Your Life. Your Records. One Place._`
 
             <form onSubmit={handleRenameFamily} className="p-5 sm:p-6 space-y-4 overflow-y-auto">
               <div>
-                <label className="block text-xs font-bold text-[#02361B] mb-1.5">Workspace Name *</label>
+                <label className="block text-xs font-bold text-[#02361B] mb-1.5">Group Name *</label>
                 <input
                   type="text"
                   required
                   autoCapitalize="words"
                   value={newFamilyName}
                   onChange={(e) => setNewFamilyName(e.target.value)}
-                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white"
+                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white"
                 />
               </div>
 
@@ -1709,7 +1709,7 @@ _Myvello — Your Life. Your Records. One Place._`
         </div>
       )}
 
-      {/* Delete Workspace Confirmation Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
+      {/* Delete Group Confirmation Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
       {isDeleteModalOpen && activeFamily && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="relative w-full max-w-sm bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 space-y-4 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
@@ -1723,7 +1723,7 @@ _Myvello — Your Life. Your Records. One Place._`
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-base font-black text-[#02361B]">Delete Household Workspace?</h3>
+              <h3 className="text-base font-black text-[#02361B]">Delete Group?</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
                 Permanently delete <strong>&apos;{activeFamily.name}&apos;</strong>? Shared loans will safely revert to each owner&apos;s personal vault.
               </p>

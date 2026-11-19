@@ -1033,7 +1033,7 @@ function SettingsPageContent() {
                       <span>Danger Zone: Account Deletion</span>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-                      Permanently delete your personal Myvello account and records. If you are the owner of family workspaces, please transfer ownership before proceeding.
+                      Permanently delete your personal Myvello account and records. If you are the owner of shared groups, please transfer ownership before proceeding.
                     </p>
                     <button
                       type="button"
@@ -1356,25 +1356,25 @@ function SettingsPageContent() {
             </div>
           )}
 
-          {/* TAB 3: Family Members */}
+          {/* TAB 3: Groups */}
           {mobileTab === "family" && (
             <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-4 animate-in fade-in duration-200">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-2xs shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 shadow-2xs shrink-0">
                   <Users className="w-6 h-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-base font-black text-slate-900">Family Workspace</h3>
+                  <h3 className="text-base font-black text-slate-900">Groups</h3>
                   <p className="text-xs text-slate-500 mt-0.5 truncate">
-                    Manage shared loans & household commitments together.
+                    Manage shared loans & group commitments together.
                   </p>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-indigo-50/50 border border-indigo-100/70 text-xs text-indigo-900 space-y-1">
+              <div className="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-100/70 text-xs text-emerald-900 space-y-1">
                 <span className="font-bold block">Collaborative Financial Tracking</span>
-                <p className="text-[11px] text-indigo-700/80 leading-relaxed">
-                  Invite family members to share EMI visibility, split monthly obligations, and record payment proofs.
+                <p className="text-[11px] text-emerald-700/90 leading-relaxed">
+                  Invite members to share EMI visibility, coordinate joint vehicle loans, and record payment proofs.
                 </p>
               </div>
 
@@ -1383,7 +1383,7 @@ function SettingsPageContent() {
                 className="w-full min-h-[44px] h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all"
               >
                 <Users className="w-4 h-4" />
-                <span>Go to Family Workspace</span>
+                <span>Go to Groups</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

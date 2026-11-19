@@ -132,7 +132,7 @@ export function Sidebar() {
 
   const accountNav: SidebarNavItem[] = [
     {
-      label: "Family Members",
+      label: "Groups",
       href: "/family",
       icon: Users,
       active: pathname.startsWith("/family"),
@@ -280,10 +280,10 @@ export function Sidebar() {
                   </div>
                   <div className="flex flex-col text-left">
                     <span className="font-bold text-xs text-emerald-700 group-hover:text-emerald-800">
-                      Create Workspace
+                      Create Group
                     </span>
                     <span className="text-[10px] font-normal text-slate-400">
-                      Add family or team vault
+                      Add shared group vault
                     </span>
                   </div>
                 </Link>
@@ -297,7 +297,7 @@ export function Sidebar() {
                     <Users className="w-3.5 h-3.5" />
                   </div>
                   <span className="font-semibold text-xs text-slate-600 group-hover:text-slate-900">
-                    Manage Family Members
+                    Manage Groups
                   </span>
                 </Link>
               </div>

@@ -128,7 +128,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
           id: f.id,
           name: f.name,
           type: "family",
-          subtitle: `Family Vault • ${f.members_count || 1} member${(f.members_count || 1) > 1 ? "s" : ""}`,
+          subtitle: `Group Vault • ${f.members_count || 1} member${(f.members_count || 1) > 1 ? "s" : ""}`,
           members_count: f.members_count,
           members_preview: f.members_preview,
           is_owner: f.is_owner,
