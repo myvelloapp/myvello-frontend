@@ -478,7 +478,6 @@ function FamilyPageContent() {
       setLastGeneratedToken(result.invitation_token);
       setLastInvitedEmail(result.email);
       setInviteEmail("");
-      showToast(`Invitation sent to ${result.email}`);
 
       const refreshed = await familyService.getFamily(activeFamily.id);
       setActiveFamily(refreshed);
@@ -678,7 +677,7 @@ _Myvello — Your Life. Your Records. One Place._`
         <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
           {/* Floating Toast Feedback - positioned safely above floating mobile capsule nav */}
         {toastMessage && (
-          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#0B132B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
+          <div className="fixed bottom-[max(5.5rem,calc(4.5rem+env(safe-area-inset-bottom)))] sm:bottom-6 right-4 sm:right-6 z-50 bg-[#02361B]/95 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-200 border border-emerald-500/30 backdrop-blur-md">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{toastMessage}</span>
           </div>
