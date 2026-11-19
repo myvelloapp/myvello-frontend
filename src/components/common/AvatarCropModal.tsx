@@ -218,9 +218,9 @@ export function AvatarCropModal({
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-slate-200 hover:border-indigo-400 bg-slate-50/50 hover:bg-indigo-50/25 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all space-y-3 group touch-manipulation"
+              className="border-2 border-dashed border-slate-200 hover:border-emerald-400 bg-slate-50/50 hover:bg-emerald-50/25 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all space-y-3 group touch-manipulation"
             >
-              <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100/80 text-indigo-600 flex items-center justify-center mx-auto shadow-2xs group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-100/80 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs group-hover:scale-105 transition-transform">
                 <Upload className="w-7 h-7" />
               </div>
 
@@ -229,7 +229,7 @@ export function AvatarCropModal({
                   Drag and drop your photo here
                 </h4>
                 <p className="text-xs text-slate-500">
-                  or <span className="font-bold text-indigo-600 underline">browse files</span> from your device
+                  or <span className="font-bold text-emerald-700 underline">browse files</span> from your device
                 </p>
               </div>
 
@@ -285,7 +285,7 @@ export function AvatarCropModal({
                       step={0.05}
                       value={zoom}
                       onChange={(e) => setZoom(Number(e.target.value))}
-                      className="w-full accent-indigo-600 cursor-pointer h-2 sm:h-1.5 bg-slate-200 rounded-lg touch-manipulation"
+                      className="w-full accent-[#1C9E30] cursor-pointer h-2 sm:h-1.5 bg-slate-200 rounded-lg touch-manipulation"
                     />
                   </div>
                   <button
@@ -346,7 +346,7 @@ export function AvatarCropModal({
                 onClick={() => fileInputRef.current?.click()}
                 className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[36px] px-3.5 rounded-xl sm:rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 transition-all cursor-pointer shadow-2xs inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
               >
-                <Upload className="w-3.5 h-3.5 text-indigo-600" />
+                <Upload className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Change</span>
               </button>
               <button
