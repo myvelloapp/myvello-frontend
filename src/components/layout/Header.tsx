@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Bell,
   Menu,
@@ -40,6 +40,7 @@ export function Header({
   hideNotifications = false,
 }: HeaderProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const { activeWorkspace, workspaces, switchWorkspace, refreshWorkspaces } = useWorkspace();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -66,9 +67,10 @@ export function Header({
       window.dispatchEvent(new CustomEvent("myvello:popup_closing"));
     }
     setTimeout(() => {
-      router.push("/emis");
+      const returnPath = pathname.startsWith("/family") ? "/family" : "/emis";
+      router.push(returnPath);
     }, 220);
-  }, [isPopupExiting, router]);
+  }, [isPopupExiting, router, pathname]);
 
   // Close notifications dropdown when clicking outside or pressing Escape
   useEffect(() => {

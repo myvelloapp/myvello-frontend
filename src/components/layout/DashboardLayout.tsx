@@ -35,8 +35,8 @@ export function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  const isPopupMode = isPopup ?? (hideSidebar ?? (pathname === "/emis/new"));
-  const shouldHideNotifications = hideNotifications ?? (isPopupMode || pathname === "/emis/new");
+  const isPopupMode = isPopup ?? (hideSidebar ?? (pathname === "/emis/new" || pathname === "/family/setup"));
+  const shouldHideNotifications = hideNotifications ?? (isPopupMode || pathname === "/emis/new" || pathname === "/family/setup");
 
   useEffect(() => {
     if (!isLoading) {
