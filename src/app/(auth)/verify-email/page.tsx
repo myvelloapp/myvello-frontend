@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Mail,
   CheckCircle2,
   ArrowRight,
   RefreshCw,
@@ -14,6 +13,7 @@ import {
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { authService } from "@/services/authService";
 import { BrandLogo } from "@/components/common/BrandLogo";
+import { AppWaveBackground } from "@/components/layout/AppWaveBackground";
 import { cn } from "@/lib/utils";
 
 export default function VerifyEmailPage() {
@@ -202,12 +202,12 @@ export default function VerifyEmailPage() {
   const isOtpComplete = otp.every((digit) => digit.length === 1);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 bg-[#F8FAFC] relative overflow-hidden select-none">
-      {/* Subtle Aurora Ambient Glow */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-tr from-[#b0fd01]/10 via-[#10b981]/15 to-[#02361b]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 inset-x-0 h-40 bg-gradient-to-t from-white via-white/60 to-transparent" />
-      </div>
+    <div className="min-h-screen min-h-dvh w-full flex items-center justify-center p-4 sm:p-6 bg-[#EDF8F2] relative overflow-hidden select-none">
+      {/* Mobile top accent gradient bar */}
+      <div className="sm:hidden fixed top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#b0fd01] via-[#10b981] to-[#02361b] z-50 pointer-events-none" />
+
+      {/* Pure Code Vector Organic Wave Background */}
+      <AppWaveBackground />
 
       <div className="relative z-10 w-full max-w-[440px] mx-auto space-y-6">
         {/* Official Brand Logo */}
@@ -216,15 +216,15 @@ export default function VerifyEmailPage() {
         </div>
 
         {/* Minimal Main Card */}
-        <div className="bg-white rounded-3xl border border-slate-200/80 p-7 sm:p-9 shadow-[0_10px_35px_-10px_rgba(15,23,42,0.06)] text-center relative overflow-hidden space-y-6 backdrop-blur-sm">
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl border border-emerald-100/90 p-7 sm:p-9 shadow-[0_12px_40px_-8px_rgba(2,54,27,0.08)] text-center relative overflow-hidden space-y-6">
           {isVerified ? (
             /* Verified Success State */
             <div className="space-y-4 py-4 animate-in fade-in zoom-in-95 duration-200">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-2xs">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs">
                 <CheckCircle2 className="w-9 h-9 stroke-[2.2]" />
               </div>
               <div className="space-y-1.5">
-                <h2 className="text-xl font-black text-slate-900 tracking-tight">
+                <h2 className="text-xl font-black text-[#02361B] tracking-tight">
                   Email Verified!
                 </h2>
                 <p className="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
@@ -236,8 +236,8 @@ export default function VerifyEmailPage() {
           ) : (
             /* Unverified OTP Form State */
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Minimal Key / Mail Icon */}
-              <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100/90 flex items-center justify-center text-emerald-700 mx-auto shadow-2xs">
+              {/* Minimal Key Icon */}
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/70 flex items-center justify-center text-emerald-800 mx-auto shadow-2xs">
                 <KeyRound className="w-7 h-7 stroke-[1.8]" />
               </div>
 
@@ -250,7 +250,7 @@ export default function VerifyEmailPage() {
                   We&apos;ve sent a 6-digit verification code to:
                 </p>
                 <div className="pt-0.5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-emerald-900 text-xs font-bold max-w-full truncate shadow-2xs">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-emerald-950 text-xs font-bold max-w-full truncate shadow-2xs">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
                     <span className="truncate">{displayEmail}</span>
                   </span>
@@ -292,15 +292,15 @@ export default function VerifyEmailPage() {
                       className={cn(
                         "w-11 sm:w-12 h-13 sm:h-14 text-center text-xl sm:text-2xl font-black rounded-xl border transition-all shadow-2xs focus:outline-none touch-manipulation",
                         digit
-                          ? "border-emerald-500 bg-emerald-50/30 text-emerald-950 font-mono shadow-xs"
-                          : "border-slate-200 bg-white text-slate-800 hover:border-slate-300",
+                          ? "border-emerald-600 bg-emerald-50/40 text-[#02361B] font-mono shadow-xs ring-2 ring-emerald-500/20"
+                          : "border-slate-200 bg-white text-slate-800 hover:border-emerald-300",
                         "focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/15"
                       )}
                       aria-label={`Digit ${idx + 1}`}
                     />
                   ))}
                 </div>
-                <p className="text-[11px] text-slate-400 mt-2.5">
+                <p className="text-[11px] text-slate-400 mt-2.5 font-medium">
                   Type or paste the 6-digit code from your email
                 </p>
               </div>
@@ -310,7 +310,7 @@ export default function VerifyEmailPage() {
                 <button
                   type="submit"
                   disabled={!isOtpComplete || isVerifying}
-                  className="w-full h-11 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full h-11.5 sm:h-12 rounded-xl btn-gradient-glow text-white text-xs sm:text-sm font-extrabold shadow-md shadow-emerald-500/25 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                 >
                   {isVerifying ? (
                     <>
@@ -329,7 +329,7 @@ export default function VerifyEmailPage() {
                   type="button"
                   disabled={cooldown > 0 || isResending}
                   onClick={handleResend}
-                  className="w-full h-9.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-2xs active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full h-10 sm:h-10.5 rounded-xl border border-slate-200/90 hover:border-emerald-300 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-900 text-xs font-bold shadow-2xs active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <RefreshCw
                     className={cn(
@@ -355,7 +355,7 @@ export default function VerifyEmailPage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="text-slate-500 hover:text-slate-800 font-semibold transition-colors inline-flex items-center gap-1 cursor-pointer"
+            className="text-slate-500 hover:text-[#02361B] font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Wrong email? Sign out</span>
