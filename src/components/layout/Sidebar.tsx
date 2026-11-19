@@ -121,9 +121,6 @@ export function Sidebar() {
       icon: CreditCard,
       active: pathname.startsWith("/emis"),
     },
-  ];
-
-  const accountNav: SidebarNavItem[] = [
     {
       label: "Documents",
       href: "#",
@@ -131,6 +128,9 @@ export function Sidebar() {
       active: false,
       badge: "Coming Soon",
     },
+  ];
+
+  const accountNav: SidebarNavItem[] = [
     {
       label: "Family Members",
       href: "/family",
@@ -315,6 +315,11 @@ export function Sidebar() {
                 <Link
                   key={item.label}
                   href={item.href}
+                  onClick={(e) => {
+                    if (item.href === "#") {
+                      e.preventDefault();
+                    }
+                  }}
                   className={cn(
                     "flex items-center justify-between px-3.5 py-2.5 rounded-[8px] text-xs transition-all group",
                     item.active

@@ -28,6 +28,15 @@ interface MobileNavProps {
   onClose: () => void;
 }
 
+interface MobileNavItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  active: boolean;
+  badge?: string;
+  badgeCount?: number;
+}
+
 export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const pathname = usePathname();
   const { unreadCount } = useNotifications();
@@ -56,16 +65,13 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     }
   };
 
-  const mainNav = [
+  const mainNav: MobileNavItem[] = [
     {
       label: "EMI Management",
       href: "/emis",
       icon: CreditCard,
       active: pathname.startsWith("/emis"),
     },
-  ];
-
-  const accountNav = [
     {
       label: "Documents",
       href: "#",
@@ -73,6 +79,9 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       active: false,
       badge: "Coming Soon",
     },
+  ];
+
+  const accountNav: MobileNavItem[] = [
     {
       label: "Family Members",
       href: "/family",
@@ -141,7 +150,12 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     <Link
                       key={item.label}
                       href={item.href}
-                      onClick={onClose}
+                      onClick={(e) => {
+                        if (item.href === "#") {
+                          e.preventDefault();
+                        }
+                        onClose();
+                      }}
                       className={cn(
                         "flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-xs transition-all active:scale-[0.98] touch-manipulation",
                         item.active
@@ -153,6 +167,12 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         <Icon className={cn("w-4 h-4 transition-colors", item.active ? "text-slate-900" : "text-slate-400")} />
                         <span>{item.label}</span>
                       </div>
+
+                      {item.badge && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500">
+                          {item.badge}
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
