@@ -229,17 +229,6 @@ export default function FamilySetupPage() {
                   </div>
                 </div>
 
-                {/* Confidential Vault Isolation Banner */}
-                <div className="p-3.5 bg-emerald-50/60 rounded-xl border border-emerald-200/70 flex items-start gap-2.5 text-xs font-medium text-emerald-950">
-                  <ShieldCheck className="w-4.5 h-4.5 text-emerald-700 shrink-0 mt-0.5" />
-                  <div className="space-y-0.5">
-                    <span className="font-bold text-[#02361B] block">Confidential Vault Isolation</span>
-                    <p className="text-[11px] text-emerald-900/80 leading-relaxed font-normal">
-                      Your personal commitments, private credit cards, and records remain completely confidential in your Private Vault. Group members only see commitments you explicitly choose to share.
-                    </p>
-                  </div>
-                </div>
-
                 {/* Form Action Buttons */}
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
                   <button
