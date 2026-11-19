@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { X, CheckCircle2, CreditCard, Hash, AlertCircle, User, Check } from "lucide-react";
+import { X, CheckCircle2, CreditCard, Hash, User, Check } from "lucide-react";
 import { MockEmi } from "@/lib/mockData";
 import { formatCurrency, getCurrencySymbol } from "@/lib/formatters";
 import { useAuth } from "@/modules/authentication/AuthContext";
@@ -411,13 +411,6 @@ export function MarkAsPaidModal({
                 placeholder="e.g. Debited from salary account"
                 className="w-full text-xs h-10 sm:h-9 px-3 py-2 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
               />
-            </div>
-
-            <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-200/70 flex items-start gap-2.5 text-[11px] font-medium text-emerald-900">
-              <AlertCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-              <span>
-                This logs your payment in Myvello for schedule reconciliation and reminder updates.
-              </span>
             </div>
 
             {/* Modal Actions */}
