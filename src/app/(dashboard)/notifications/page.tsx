@@ -36,49 +36,51 @@ import { NotificationPreferencesModal } from "@/components/common/NotificationPr
 ------------------------------------------------------------------------- */
 function NotificationsSkeleton() {
   return (
-    <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto py-3.5 sm:py-5 px-3.5 sm:px-6 lg:px-8 xl:px-10 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 space-y-3.5 sm:space-y-5 animate-pulse">
-      {/* Header Skeleton */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="h-7 sm:h-8 w-40 sm:w-52 rounded-xl bg-slate-200/80" />
-          <div className="h-5 w-16 rounded-full bg-slate-200/60" />
-        </div>
-        {/* Mobile Skeleton: Circular 3-dot trigger */}
-        <div className="sm:hidden w-9 h-9 rounded-full bg-slate-200/70 shrink-0" />
-        {/* Desktop Skeleton: Action buttons */}
-        <div className="hidden sm:flex items-center gap-2">
-          <div className="h-9 w-28 rounded-[10px] bg-slate-200/70" />
-          <div className="h-9 w-24 rounded-[10px] bg-slate-200/70" />
-        </div>
-      </div>
-
-      {/* Unified Card Skeleton */}
-      <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden">
-        {/* Attached Toolbar Skeleton */}
-        <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
-          <div className="flex items-center gap-1.5 overflow-x-auto py-0.5">
-            <div className="h-8 w-16 rounded-lg bg-slate-200/80 shrink-0" />
-            <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
-            <div className="h-8 w-24 rounded-lg bg-slate-200/50 shrink-0" />
-            <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
+    <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+      <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5 animate-pulse">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-7 sm:h-8 w-40 sm:w-52 rounded-xl bg-slate-200/80" />
+            <div className="h-5 w-16 rounded-full bg-slate-200/60" />
+          </div>
+          {/* Mobile Skeleton: Circular 3-dot trigger */}
+          <div className="sm:hidden w-9 h-9 rounded-full bg-slate-200/70 shrink-0" />
+          {/* Desktop Skeleton: Action buttons */}
+          <div className="hidden sm:flex items-center gap-2">
+            <div className="h-9 w-28 rounded-[10px] bg-slate-200/70" />
+            <div className="h-9 w-24 rounded-[10px] bg-slate-200/70" />
           </div>
         </div>
 
-        {/* Items Skeleton */}
-        <div className="divide-y divide-slate-100">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="p-3.5 sm:p-4 flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-200/80 shrink-0" />
-              <div className="flex-1 space-y-2 min-w-0">
-                <div className="flex items-center justify-between">
-                  <div className="h-4 w-28 bg-slate-200/70 rounded-full" />
-                  <div className="h-3 w-16 bg-slate-200/50 rounded" />
-                </div>
-                <div className="h-4 w-3/4 bg-slate-200/80 rounded" />
-                <div className="h-3 w-full bg-slate-200/50 rounded" />
-              </div>
+        {/* Unified Card Skeleton */}
+        <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden">
+          {/* Attached Toolbar Skeleton */}
+          <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
+            <div className="flex items-center gap-1.5 overflow-x-auto py-0.5">
+              <div className="h-8 w-16 rounded-lg bg-slate-200/80 shrink-0" />
+              <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
+              <div className="h-8 w-24 rounded-lg bg-slate-200/50 shrink-0" />
+              <div className="h-8 w-20 rounded-lg bg-slate-200/50 shrink-0" />
             </div>
-          ))}
+          </div>
+
+          {/* Items Skeleton */}
+          <div className="divide-y divide-slate-100">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="p-3.5 sm:p-4 flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-slate-200/80 shrink-0" />
+                <div className="flex-1 space-y-2 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <div className="h-4 w-28 bg-slate-200/70 rounded-full" />
+                    <div className="h-3 w-16 bg-slate-200/50 rounded" />
+                  </div>
+                  <div className="h-4 w-3/4 bg-slate-200/80 rounded" />
+                  <div className="h-3 w-full bg-slate-200/50 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -413,8 +415,11 @@ function NotificationsPageContent() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-dvh overflow-x-hidden max-w-[1500px] mx-auto pt-3.5 sm:pt-5 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 space-y-2 sm:space-y-5">
-        {/* Page Header with Minimal Clean Actions */}
+      {/* Unified Main Viewport */}
+      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+        {/* Content Container */}
+        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+          {/* Page Header with Minimal Clean Actions */}
         <div className="flex items-start sm:items-center justify-between gap-3 min-h-[36px]">
           <div className="min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
@@ -919,6 +924,7 @@ function NotificationsPageContent() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
 
