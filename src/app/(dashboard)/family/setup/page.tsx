@@ -24,6 +24,113 @@ const SUGGESTED_NAMES = [
   "Flatmates & Rent",
 ];
 
+// High-fidelity shimmer skeleton matching exact 2-column popup geometry to guarantee zero layout shift (CLS = 0)
+export function FamilySetupSkeleton() {
+  return (
+    <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 min-h-dvh overflow-x-hidden select-none animate-popup-enter">
+      {/* Living Brand Gradient Backdrop */}
+      <div className="absolute inset-0 pointer-events-none z-0" />
+
+      <div className="relative z-10 max-w-[1360px] mx-auto space-y-4 sm:space-y-6 animate-pulse">
+        {/* Mobile Header Skeleton: Sleek compact row with close button placeholder */}
+        <div className="sm:hidden flex items-center justify-between gap-3">
+          <div className="space-y-1 min-w-0">
+            <div className="h-6 w-44 bg-slate-200/80 rounded-md" />
+            <div className="h-3.5 w-48 bg-slate-200/50 rounded" />
+          </div>
+          <div className="w-9 h-9 rounded-full bg-slate-200/60 shrink-0" />
+        </div>
+
+        {/* Desktop Page Heading Skeleton */}
+        <div className="hidden sm:block space-y-1.5">
+          <div className="h-8 w-56 bg-slate-200/80 rounded-xl" />
+          <div className="h-4 w-96 bg-slate-200/50 rounded" />
+        </div>
+
+        {/* Two-Column Form & Real-Time Group Preview Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
+          {/* Left Column (8 cols): Form Card Skeleton */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+            <div className="bg-white rounded-2xl border border-emerald-100/90 p-5 sm:p-7 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.06)] space-y-6">
+              {/* Card Section Header */}
+              <div className="border-b border-slate-100 pb-3.5 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-slate-200/80 shrink-0" />
+                  <div className="space-y-1">
+                    <div className="h-4 w-28 bg-slate-200/80 rounded" />
+                    <div className="h-3 w-40 bg-slate-200/50 rounded" />
+                  </div>
+                </div>
+                <div className="h-5 w-20 bg-slate-200/60 rounded-full" />
+              </div>
+
+              {/* Group Name Input Skeleton */}
+              <div className="space-y-2">
+                <div className="h-3.5 w-24 bg-slate-200/70 rounded" />
+                <div className="h-11 sm:h-10 w-full bg-slate-100 rounded-xl" />
+                {/* Suggestions row skeleton */}
+                <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                  <div className="h-3 w-16 bg-slate-200/40 rounded" />
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-7 w-24 bg-slate-100 rounded-full" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Form Action Buttons Skeleton */}
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                <div className="flex-1 sm:flex-none h-11 sm:h-9.5 px-6 sm:w-24 bg-slate-100 rounded-xl sm:rounded-lg" />
+                <div className="flex-1 sm:flex-none h-11 sm:h-9.5 px-6 sm:w-32 bg-slate-200/80 rounded-xl sm:rounded-lg" />
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column (4 cols): Real-Time Live Preview Skeleton */}
+          <div className="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-24 space-y-4">
+            <div className="bg-white rounded-2xl border border-emerald-100/90 p-5 shadow-[0_4px_24px_-4px_rgba(2,54,27,0.07)] space-y-5">
+              <div className="flex items-center justify-between">
+                <div className="h-4 w-28 bg-slate-200/70 rounded" />
+                <div className="h-5 w-12 bg-slate-200/60 rounded-full" />
+              </div>
+
+              {/* Main Visual Preview Card Skeleton */}
+              <div className="p-4.5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-3.5">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-200/80 shrink-0" />
+                  <div className="space-y-1.5 flex-1">
+                    <div className="h-4 w-36 bg-slate-200/80 rounded" />
+                    <div className="h-3 w-28 bg-slate-200/50 rounded" />
+                  </div>
+                </div>
+                <div className="pt-2.5 border-t border-slate-200/60 grid grid-cols-2 gap-2">
+                  <div className="h-10 bg-white/80 rounded-lg" />
+                  <div className="h-10 bg-white/80 rounded-lg" />
+                </div>
+              </div>
+
+              {/* Capabilities Checklist Skeleton */}
+              <div className="space-y-2.5">
+                <div className="h-3 w-24 bg-slate-200/50 rounded" />
+                <div className="space-y-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-4 w-full bg-slate-100 rounded" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Privacy Footer Skeleton */}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="h-3 w-32 bg-slate-200/50 rounded" />
+                <div className="h-3 w-24 bg-slate-200/60 rounded" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function FamilySetupPage() {
   const router = useRouter();
   const { refreshWorkspaces, switchWorkspace } = useWorkspace();
@@ -124,7 +231,7 @@ export default function FamilySetupPage() {
             <button
               type="button"
               onClick={handleClosePopup}
-              className="w-8 h-8 rounded-full bg-white/90 border border-slate-200/90 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs active:scale-95 shrink-0"
+              className="w-9 h-9 rounded-full bg-white/90 border border-slate-200/90 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs active:scale-95 shrink-0 touch-manipulation cursor-pointer"
               aria-label="Close"
               title="Close (Esc)"
             >
@@ -202,7 +309,7 @@ export default function FamilySetupPage() {
                         type="button"
                         onClick={() => setGroupName(name)}
                         className={cn(
-                          "min-h-[32px] sm:min-h-[26px] px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-semibold border transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center",
+                          "min-h-[36px] sm:min-h-[28px] px-3 py-1 rounded-full text-xs sm:text-[11px] font-semibold border transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center",
                           groupName === name
                             ? "bg-emerald-50 border-emerald-300 text-emerald-800 font-bold shadow-2xs"
                             : "bg-white border-slate-200/80 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
@@ -219,7 +326,7 @@ export default function FamilySetupPage() {
                   <button
                     type="button"
                     onClick={handleClosePopup}
-                    className="w-full sm:w-auto min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200/90 hover:bg-slate-50 text-slate-600 hover:text-slate-800 text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation shadow-2xs"
+                    className="flex-1 sm:flex-none min-h-[44px] sm:min-h-[38px] h-11 sm:h-9.5 px-4 rounded-xl sm:rounded-lg border border-slate-200/90 hover:bg-slate-50 text-slate-600 hover:text-slate-800 text-xs font-bold transition-all cursor-pointer active:scale-95 touch-manipulation shadow-2xs inline-flex items-center justify-center"
                   >
                     Cancel
                   </button>
