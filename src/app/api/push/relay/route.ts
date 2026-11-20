@@ -34,9 +34,18 @@ export async function POST(req: Request) {
       subsList.push(subscription);
     }
 
-    if (subsList.length === 0) {
+    // Deduplicate subscriptions by unique endpoint to avoid duplicate toasts on the client
+    const seenEndpoints = new Set<string>();
+    const uniqueSubs = subsList.filter((sub) => {
+      const ep = sub?.endpoint;
+      if (!ep || seenEndpoints.has(ep)) return false;
+      seenEndpoints.add(ep);
+      return true;
+    });
+
+    if (uniqueSubs.length === 0) {
       return NextResponse.json(
-        { success: false, error: "No subscriptions provided" },
+        { success: false, error: "No valid subscriptions provided" },
         { status: 400 }
       );
     }
@@ -54,7 +63,7 @@ export async function POST(req: Request) {
     let sentCount = 0;
 
     await Promise.allSettled(
-      subsList.map(async (sub) => {
+      uniqueSubs.map(async (sub) => {
         try {
           const endpoint = sub.endpoint;
           const p256dh = sub.p256dh || (sub.keys && sub.keys.p256dh);

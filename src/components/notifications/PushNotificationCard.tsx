@@ -93,14 +93,18 @@ export function PushNotificationCard({
     setIsError(false);
 
     try {
-      // 1. Direct local display test (triggers Windows toast immediately)
-      if ("serviceWorker" in navigator) {
+      // Deduplicated test dispatch: trigger EXACTLY ONE notification
+      if (subscription) {
+        // Dispatch via remote server push relay (which delivers via the background service worker)
+        await sendTestNotification(subscription);
+      } else if ("serviceWorker" in navigator) {
+        // Local fallback only when not yet subscribed to push service
         const reg = await navigator.serviceWorker.ready;
         await reg.showNotification("Myvello: EMI Due Alert", {
           body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
           icon: "/icons/icon-192x192.png",
           badge: "/icons/icon-192x192.png",
-          tag: "myvello-direct-test",
+          tag: "myvello-test-alert",
           requireInteraction: true,
           silent: false,
         });
@@ -110,11 +114,6 @@ export function PushNotificationCard({
           icon: "/icons/icon-192x192.png",
           requireInteraction: true,
         });
-      }
-
-      // 2. Also dispatch remote server push
-      if (subscription) {
-        await sendTestNotification(subscription);
       }
 
       setStatusMessage(
