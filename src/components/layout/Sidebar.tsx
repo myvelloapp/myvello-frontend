@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   CreditCard,
   Clock,
@@ -131,31 +131,49 @@ export function Sidebar() {
     },
   ];
 
+  const searchParams = useSearchParams();
+  const activeTabParam = searchParams?.get("tab");
+
+  const isAccountRoot = pathname.startsWith("/account");
+  const isGroupActive =
+    pathname.startsWith("/family") ||
+    (isAccountRoot && (!activeTabParam || activeTabParam === "group"));
+
+  const isHistoryActive =
+    pathname === "/payment-history" ||
+    (isAccountRoot && activeTabParam === "history");
+
+  const isRemindersActive = pathname === "/notifications";
+
+  const isSettingsActive =
+    pathname === "/settings" ||
+    (isAccountRoot && activeTabParam === "settings");
+
   const accountNav: SidebarNavItem[] = [
     {
       label: "My Group",
       href: "/account?tab=group",
       icon: Users,
-      active: pathname.startsWith("/family") || (pathname.startsWith("/account") && !pathname.includes("history") && !pathname.includes("settings")),
+      active: isGroupActive,
     },
     {
       label: "Payment History",
       href: "/account?tab=history",
       icon: Clock,
-      active: pathname === "/payment-history" || (pathname.startsWith("/account") && pathname.includes("history")),
+      active: isHistoryActive,
     },
     {
       label: "Reminders",
       href: "/notifications",
       icon: Bell,
-      active: pathname === "/notifications",
+      active: isRemindersActive,
       badgeCount: unreadCount > 0 ? unreadCount : undefined,
     },
     {
       label: "Settings",
       href: "/account?tab=settings",
       icon: Settings,
-      active: pathname === "/settings" || (pathname.startsWith("/account") && pathname.includes("settings")),
+      active: isSettingsActive,
     },
   ];
 

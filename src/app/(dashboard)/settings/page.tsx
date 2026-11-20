@@ -476,14 +476,15 @@ function SettingsPageContent({ embedded = false }: { embedded?: boolean } = {}) 
           !embedded && "relative z-10"
         )}
       >
-        {/* Page Header (Hidden when embedded in Account section) */}
-        {!embedded && (
-          <div className="space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
-              Settings
-            </h1>
-          </div>
-        )}
+        {/* Page Header (Hidden when embedded in Account section on mobile, shown on desktop) */}
+        <div className={cn("space-y-1", embedded && "hidden lg:block")}>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
+            Settings
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            Manage your personal profile, security credentials, and preferences
+          </p>
+        </div>
 
           {/* Native App-Style Compact Sub-Segmented Control */}
           <div className="flex items-center">

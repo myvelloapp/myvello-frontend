@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   CreditCard,
   Clock,
@@ -123,18 +123,34 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     },
   ];
 
+  const searchParams = useSearchParams();
+  const activeTabParam = searchParams?.get("tab");
+
+  const isAccountRoot = pathname.startsWith("/account");
+  const isGroupActive =
+    pathname.startsWith("/family") ||
+    (isAccountRoot && (!activeTabParam || activeTabParam === "group"));
+
+  const isHistoryTabActive =
+    pathname === "/payment-history" ||
+    (isAccountRoot && activeTabParam === "history");
+
+  const isSettingsTabActive =
+    pathname === "/settings" ||
+    (isAccountRoot && activeTabParam === "settings");
+
   const accountNav: MobileNavItem[] = [
     {
       label: "My Group",
       href: "/account?tab=group",
       icon: Users,
-      active: pathname.startsWith("/family") || (pathname.startsWith("/account") && !pathname.includes("history") && !pathname.includes("settings")),
+      active: isGroupActive,
     },
     {
       label: "Payment History",
       href: "/account?tab=history",
       icon: Clock,
-      active: pathname === "/payment-history",
+      active: isHistoryTabActive,
     },
     {
       label: "Reminders",
@@ -147,7 +163,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       label: "Settings",
       href: "/account?tab=settings",
       icon: Settings,
-      active: pathname === "/settings" || (pathname.startsWith("/account") && pathname.includes("settings")),
+      active: isSettingsTabActive,
     },
   ];
 

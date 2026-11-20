@@ -510,15 +510,17 @@ export default function PaymentHistoryPage({
         {/* Page Header */}
         <div className="flex items-center justify-between gap-3 min-h-[36px]">
           <div className="space-y-0.5 min-w-0">
-            {!embedded ? (
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-                Payment History
-              </h1>
-            ) : (
-              <p className="text-xs sm:text-sm text-slate-500 font-medium">
-                Detailed transaction records and settlement history
-              </p>
-            )}
+            <h1
+              className={cn(
+                "text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate",
+                embedded && "hidden lg:block"
+              )}
+            >
+              Payment History
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium">
+              Detailed transaction records and settlement history
+            </p>
           </div>
 
             {/* Mobile Only: 3-Dot Dropdown Popover */}
