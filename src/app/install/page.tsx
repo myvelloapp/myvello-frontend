@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Monitor,
   Smartphone,
@@ -32,6 +33,7 @@ import { cn } from "@/lib/utils";
 type DeviceType = "windows" | "mac" | "ios" | "android";
 
 export default function InstallPage() {
+  const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [selectedDevice, setSelectedDevice] = useState<DeviceType>("windows");
   const [currentDevice, setCurrentDevice] = useState<DeviceType | null>(null);
@@ -43,11 +45,18 @@ export default function InstallPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Detect standalone PWA mode
+    // Detect standalone PWA / desktop app mode
     const isStandalone =
       window.matchMedia("(display-mode: standalone)").matches ||
+      window.matchMedia("(display-mode: window-controls-overlay)").matches ||
+      window.matchMedia("(display-mode: minimal-ui)").matches ||
       (window.navigator as any).standalone === true;
     setIsInstalled(isStandalone);
+
+    if (isStandalone) {
+      router.replace(isAuthenticated ? "/emis" : "/register");
+      return;
+    }
 
     // Detect User Operating System
     const ua = window.navigator.userAgent.toLowerCase();
@@ -73,7 +82,7 @@ export default function InstallPage() {
 
     window.addEventListener("beforeinstallprompt", handlePrompt);
     return () => window.removeEventListener("beforeinstallprompt", handlePrompt);
-  }, []);
+  }, [isAuthenticated, router]);
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
@@ -82,6 +91,7 @@ export default function InstallPage() {
       if (outcome === "accepted") {
         setIsInstalled(true);
         showToast("Myvello application installed successfully!");
+        router.push(isAuthenticated ? "/emis" : "/register");
       }
       setDeferredPrompt(null);
     } else {
@@ -97,6 +107,14 @@ export default function InstallPage() {
   ];
 
   const isCurrentDevice = currentDevice === selectedDevice;
+
+  if (isInstalled) {
+    return (
+      <div className="min-h-screen bg-[#EDF8F2] flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC]">

@@ -104,8 +104,8 @@ export default function RootLayout({
                   document.cookie = 'myvello_token=' + encodeURIComponent(token) + '; path=/; max-age=' + maxAge + '; expires=' + expires + '; SameSite=Lax';
                 }
 
-                // If running in installed app / desktop software mode (standalone) on root path '/', immediately bypass landing page
-                if (window.location.pathname === '/') {
+                // If running in installed app / desktop software mode (standalone) on root path '/' or '/install', immediately bypass landing page
+                if (window.location.pathname === '/' || window.location.pathname === '/install') {
                   var isApp = window.matchMedia('(display-mode: standalone)').matches ||
                               window.matchMedia('(display-mode: window-controls-overlay)').matches ||
                               window.matchMedia('(display-mode: minimal-ui)').matches ||
