@@ -22,14 +22,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://myvello.life"
   ),
-  title: "Myvello | Your Life. Your Records. One Place.",
-  description:
-    "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
+  title: "myvello",
+  description: "myvello",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Myvello",
+    title: "myvello",
   },
   icons: {
     icon: [
@@ -45,17 +44,16 @@ export const metadata: Metadata = {
     shortcut: "/images/favicon.svg",
   },
   openGraph: {
-    title: "Myvello | Your Life. Your Records. One Place.",
-    description:
-      "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
+    title: "myvello",
+    description: "myvello",
     url: "https://myvello.life",
-    siteName: "Myvello",
+    siteName: "myvello",
     images: [
       {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "Myvello - Your Life. Your Records. One Place.",
+        alt: "myvello",
       },
     ],
     locale: "en_US",
@@ -63,9 +61,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Myvello | Your Life. Your Records. One Place.",
-    description:
-      "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
+    title: "myvello",
+    description: "myvello",
     images: ["/images/og.png"],
   },
 };
