@@ -196,7 +196,7 @@ export function Sidebar() {
       <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 left-0 z-30 bg-white text-slate-800 border-r border-slate-100 shadow-xs select-none">
         {/* Brand Header */}
         <div className="h-16 flex items-center px-6 border-b border-slate-100">
-          <BrandLogo className="h-9 w-auto" href="/emis" />
+          <BrandLogo className="h-8 w-auto" href="/emis" />
         </div>
 
         {/* Workspace & Vault Selector */}
