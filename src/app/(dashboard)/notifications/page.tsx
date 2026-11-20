@@ -34,10 +34,10 @@ import { NotificationPreferencesModal } from "@/components/common/NotificationPr
 /* -------------------------------------------------------------------------
    Skeleton component with exact layout geometry to prevent CLS
 ------------------------------------------------------------------------- */
-function NotificationsSkeleton() {
+export function NotificationsSkeleton() {
   return (
-    <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-      <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5 animate-pulse">
+    <div className="relative w-full max-w-full min-w-0 pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5 animate-pulse min-w-0">
         {/* Header Skeleton */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
@@ -54,7 +54,7 @@ function NotificationsSkeleton() {
         </div>
 
         {/* Unified Card Skeleton */}
-        <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden">
+        <div className="w-full max-w-full min-w-0 bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
           {/* Attached Toolbar Skeleton */}
           <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
             <div className="p-1 rounded-[8px] bg-slate-100/80 border border-slate-200/70 inline-flex items-center gap-1">
@@ -416,9 +416,9 @@ function NotificationsPageContent() {
   return (
     <DashboardLayout>
       {/* Unified Main Viewport */}
-      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+      <div className="relative w-full max-w-full min-w-0 pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
         {/* Content Container */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5 min-w-0">
           {/* Page Header with Minimal Clean Actions */}
         <div className="flex items-start sm:items-center justify-between gap-3 min-h-[36px]">
           <div className="min-w-0">
@@ -552,7 +552,7 @@ function NotificationsPageContent() {
         </div>
 
         {/* Unified Reminders Feed Card (Exact EMI rounded-[16px] Geometry) */}
-        <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
+        <div className="w-full max-w-full min-w-0 bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
           {/* Attached Minimal Toolbar Header (Segmented Filter Pills matching EMI page) */}
           <div className="p-2.5 sm:px-4 sm:py-3 border-b border-slate-100 bg-white rounded-t-[16px]">
             {/* Themed Segmented Tab Control matching EMI Management */}
