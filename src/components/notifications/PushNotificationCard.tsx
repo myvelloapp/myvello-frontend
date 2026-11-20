@@ -48,9 +48,13 @@ export function PushNotificationCard({
         if (sub) {
           // Sync active subscription with backend in background
           import("@/lib/api").then(({ apiClient }) => {
+            const isDesktop =
+              typeof window !== "undefined" &&
+              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
             apiClient.post("/push/subscribe", {
               ...sub.toJSON(),
-              device_type: "ios",
+              device_type: isDesktop ? "desktop" : "mobile",
             }).catch(() => {});
           });
         }
@@ -148,7 +152,7 @@ export function PushNotificationCard({
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
               <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                Push Notifications
+                Desktop & Mobile Push Alerts
               </h3>
               {isSubscribed ? (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100/80 text-emerald-800 border border-emerald-200/80 inline-flex items-center gap-1">
@@ -157,21 +161,21 @@ export function PushNotificationCard({
                 </span>
               ) : isBlocked ? (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80">
-                  Blocked
+                  Blocked in Browser
                 </span>
               ) : (
                 <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
-                  iOS & Android
+                  Desktop & Mobile
                 </span>
               )}
             </div>
 
             <p className="text-[11px] text-slate-500 font-medium leading-normal mt-0.5">
               {isSubscribed
-                ? "Lock-screen alerts enabled for EMI repayment deadlines."
+                ? "Desktop and lock-screen alerts enabled for EMI repayment deadlines."
                 : isBlocked
-                ? "Notifications blocked in browser. Unblock in site settings."
-                : "Lock-screen alerts and banners before payment due dates."}
+                ? "Notifications blocked in browser. Unblock in your browser address bar settings."
+                : "Receive EMI due reminders directly on your desktop even when the app is minimized."}
             </p>
           </div>
         </div>

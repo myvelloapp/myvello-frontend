@@ -59,9 +59,13 @@ export async function syncPushSubscriptionToBackend(
     const sub = existingSub || (await getExistingSubscription());
     if (!sub) return false;
 
+    const isDesktop =
+      typeof window !== "undefined" &&
+      !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     await apiClient.post("/push/subscribe", {
       ...sub.toJSON(),
-      device_type: "ios",
+      device_type: isDesktop ? "desktop" : "mobile",
     });
     return true;
   } catch (err) {

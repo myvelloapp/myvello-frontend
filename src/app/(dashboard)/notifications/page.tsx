@@ -30,6 +30,7 @@ import { getCategoryIcon, getCategoryBgClass } from "@/lib/categoryConfig";
 import { BankLogo } from "@/components/ui/BankLogo";
 import { cn } from "@/lib/utils";
 import { NotificationPreferencesModal } from "@/components/common/NotificationPreferencesModal";
+import { PushNotificationCard } from "@/components/notifications/PushNotificationCard";
 
 /* -------------------------------------------------------------------------
    Skeleton component with exact layout geometry to prevent CLS
@@ -550,6 +551,9 @@ function NotificationsPageContent() {
             </button>
           </div>
         </div>
+
+        {/* Desktop & Mobile Push Notification Activation Card */}
+        <PushNotificationCard />
 
         {/* Unified Reminders Feed Card (Exact EMI rounded-[16px] Geometry) */}
         <div className="w-full max-w-full min-w-0 bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
