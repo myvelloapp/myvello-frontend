@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { setAuthCookie } from "@/services/authService";
-import { ShieldCheck, AlertCircle, Lock } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { BrandLogo } from "@/components/common/BrandLogo";
+import { AppWaveBackground } from "@/components/layout/AppWaveBackground";
 
 function CallbackHandler() {
   const router = useRouter();
@@ -45,82 +46,56 @@ function CallbackHandler() {
   }, [searchParams, refreshUser, router]);
 
   return (
-    <div className="min-h-screen w-full relative overflow-hidden bg-theme-gradient flex items-center justify-center p-6 select-none">
-      <div className="absolute inset-0 bg-auth-pattern" />
+    <div className="min-h-screen min-h-dvh w-full relative overflow-hidden bg-[#EDF8F2] flex items-center justify-center p-6 select-none">
+      {/* Soft Ambient Vector Wave Background matching the rest of the application */}
+      <AppWaveBackground />
 
-      {/* Floating Centered Card */}
-      <div className="relative z-10 w-full max-w-[380px] bg-white/95 backdrop-blur-2xl rounded-3xl border border-white/60 p-8 sm:p-10 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.4),0_0_0_1px_rgba(255,255,255,0.4)] text-center animate-fade-in">
+      {/* Clean, Minimalist Centered Card */}
+      <div className="relative z-10 w-full max-w-[360px] bg-white/90 backdrop-blur-xl rounded-2xl border border-white/80 p-8 sm:p-9 shadow-[0_16px_36px_-6px_rgba(2,54,27,0.08),0_4px_12px_-2px_rgba(2,54,27,0.04)] text-center animate-fade-in">
         {/* Brand Logo */}
-        <div className="mb-8 flex justify-center">
-          <BrandLogo className="h-8 w-auto" />
+        <div className="mb-6 flex justify-center">
+          <BrandLogo className="h-8 w-auto" href="" />
         </div>
 
         {error ? (
           /* Error State */
           <div className="space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto border border-rose-200 shadow-xs">
-              <AlertCircle className="w-7 h-7 stroke-[2.2]" />
+            <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto border border-rose-200/80 shadow-xs">
+              <AlertCircle className="w-6 h-6 stroke-[2.2]" />
             </div>
 
             <div>
-              <h2 className="text-lg font-extrabold text-[#02361B] tracking-tight">
+              <h2 className="text-base font-bold text-[#02361B] tracking-tight">
                 Authentication Failed
               </h2>
-              <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{error}</p>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">{error}</p>
             </div>
 
             <div className="pt-2">
               <Link
                 href="/login"
-                className="w-full h-10.5 btn-gradient-glow text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full h-10 btn-gradient-glow text-white text-xs font-bold rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 Return to Sign In
               </Link>
             </div>
           </div>
         ) : (
-          /* Unlocking Vault State */
-          <div className="space-y-5">
-            {/* Animated Glowing Dual-Ring Spinner */}
-            <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-              {/* Outer revolving gradient ring */}
-              <div
-                className="absolute inset-0 rounded-full animate-spin-infinite blur-[1px]"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg, #7c3aed 0%, #2563eb 45%, #06b6d4 85%, #7c3aed 100%)",
-                }}
-              />
-              {/* Inner white mask with center lock icon */}
-              <div className="relative w-13 h-13 rounded-full bg-white flex items-center justify-center shadow-xs">
-                <Lock className="w-5 h-5 text-indigo-600 animate-pulse" />
-              </div>
+          /* Minimalist Loading State */
+          <div className="space-y-4">
+            {/* Elegant Emerald Ring Spinner */}
+            <div className="flex items-center justify-center py-2">
+              <div className="w-8 h-8 rounded-full border-2 border-emerald-500/20 border-t-emerald-600 animate-spin" />
             </div>
 
-            {/* Title & Status */}
+            {/* Clean Typography */}
             <div>
-              <h2 className="text-lg font-extrabold text-[#02361B] tracking-tight">
-                Unlocking your vault...
+              <h2 className="text-base font-bold text-[#02361B] tracking-tight">
+                Signing you in...
               </h2>
-              <p className="text-xs text-slate-500 mt-1.5 max-w-[260px] mx-auto leading-relaxed">
-                Securing your session and synchronizing your digital records.
+              <p className="text-xs text-slate-500 mt-1">
+                Verifying session and preparing your records
               </p>
-            </div>
-
-            {/* Flowing Gradient Progress Beam */}
-            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden relative">
-              <div
-                className="h-full bg-gradient-to-r from-[#7c3aed] via-[#2563eb] to-[#06b6d4] rounded-full w-full animate-pulse"
-                style={{
-                  animationDuration: "1.2s",
-                }}
-              />
-            </div>
-
-            {/* Security Badge */}
-            <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-400">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-              <span>256-Bit Vault Encryption Active</span>
             </div>
           </div>
         )}
@@ -133,8 +108,8 @@ export default function GoogleAuthCallbackPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#1e1b4b] flex items-center justify-center">
-          <div className="w-10 h-10 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen min-h-dvh bg-[#EDF8F2] flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-emerald-500/20 border-t-emerald-600 rounded-full animate-spin" />
         </div>
       }
     >
