@@ -337,11 +337,19 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
     }
   }, [searchParams]);
 
+  const activeFamilyRef = useRef<FamilyDetail | null>(null);
+  activeFamilyRef.current = activeFamily;
+  const activeFamilyIdRef = useRef<number | null>(null);
+  activeFamilyIdRef.current = activeFamilyId;
+  const isRequestInProgressRef = useRef(false);
+
   // Load families and incoming invitations
   const loadFamilies = useCallback(
     async (preferredFamilyId?: number, isSilent = false) => {
-      if (!isSilent && !activeFamily) setIsLoading(true);
-      setError(null);
+      if (isRequestInProgressRef.current) return;
+      isRequestInProgressRef.current = true;
+
+      if (!isSilent && !activeFamilyRef.current) setIsLoading(true);
 
       try {
         const [familyList, incomingInvites] = await Promise.all([
@@ -354,32 +362,39 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
 
         if (familyList.length > 0) {
           const workspaceFamilyId =
-            typeof activeWorkspace.id === "number" ? activeWorkspace.id : undefined;
+            typeof activeWorkspace.id === "number" && familyList.some((f) => f.id === activeWorkspace.id)
+              ? activeWorkspace.id
+              : undefined;
 
           const targetId =
-            preferredFamilyId ||
+            (preferredFamilyId && familyList.some((f) => f.id === preferredFamilyId) ? preferredFamilyId : undefined) ||
             workspaceFamilyId ||
-            (activeFamilyId && familyList.some((f) => f.id === activeFamilyId)
-              ? activeFamilyId
+            (activeFamilyIdRef.current && familyList.some((f) => f.id === activeFamilyIdRef.current)
+              ? activeFamilyIdRef.current
               : familyList[0].id);
 
           setActiveFamilyId(targetId);
           const details = await familyService.getFamily(targetId);
           setActiveFamily((prev) => (areFamilyDetailsEqual(prev, details) ? prev : details));
           setNewFamilyName(details.name);
+          setError(null);
         } else {
           setActiveFamilyId(null);
           setActiveFamily(null);
+          setError(null);
         }
-      } catch {
-        if (!isSilent) {
+      } catch (err) {
+        console.warn("Failed to load family workspace:", err);
+        // Only show fatal error banner if we don't have an active family already loaded
+        if (!isSilent && !activeFamilyRef.current) {
           setError("Unable to load household workspace. Please verify your connection.");
         }
       } finally {
+        isRequestInProgressRef.current = false;
         if (!isSilent) setIsLoading(false);
       }
     },
-    [activeFamilyId, activeWorkspace.id, activeFamily]
+    [activeWorkspace.id]
   );
 
   useEffect(() => {
@@ -403,12 +418,14 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   // Switch active family workspace
   const handleSelectFamily = async (id: number) => {
     if (id === activeFamilyId && activeFamily) return;
+    setError(null);
     setActiveFamilyId(id);
     switchWorkspace(id);
     try {
       const details = await familyService.getFamily(id);
       setActiveFamily((prev) => (areFamilyDetailsEqual(prev, details) ? prev : details));
       setNewFamilyName(details.name);
+      setError(null);
     } catch {
       showToast("Failed to switch workspace.");
     }
@@ -1096,8 +1113,8 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* Error Alert */}
-        {!isLoading && error && (
+        {/* Error Alert (only show when there is no active group loaded) */}
+        {!isLoading && error && !activeFamily && (
           <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
