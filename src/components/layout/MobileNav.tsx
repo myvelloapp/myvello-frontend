@@ -394,14 +394,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         >
           <div
             className={cn(
-              "transition-all duration-300 flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center rounded-full aspect-square",
               isEmiActive
                 ? cn(
-                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
-                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                    "bg-emerald-50 text-emerald-800 shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
                 : cn(
-                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    "text-slate-500 hover:text-slate-900",
                     isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
             )}
@@ -423,14 +423,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         >
           <div
             className={cn(
-              "transition-all duration-300 flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center rounded-full aspect-square",
               isDocumentsActive
                 ? cn(
-                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
-                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                    "bg-emerald-50 text-emerald-800 shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
                 : cn(
-                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    "text-slate-500 hover:text-slate-900",
                     isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
             )}
@@ -452,14 +452,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         >
           <div
             className={cn(
-              "transition-all duration-300 flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center rounded-full aspect-square",
               isNotificationActive
                 ? cn(
-                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
-                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                    "bg-emerald-50 text-emerald-800 shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
                 : cn(
-                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    "text-slate-500 hover:text-slate-900",
                     isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
             )}
@@ -493,14 +493,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         >
           <div
             className={cn(
-              "transition-all duration-300 flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center rounded-full aspect-square",
               isFamilyActive
                 ? cn(
-                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
-                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                    "bg-emerald-50 text-emerald-800 shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
                 : cn(
-                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    "text-slate-500 hover:text-slate-900",
                     isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
             )}
@@ -522,21 +522,20 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         >
           <div
             className={cn(
-              "transition-all duration-300 flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center rounded-full aspect-square",
               isAccountActive
                 ? cn(
-                    "bg-emerald-50 rounded-full shadow-2xs border border-emerald-200/60",
-                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                    "bg-emerald-50 shadow-2xs border border-emerald-200/60",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
                 : cn(
-                    "rounded-full",
                     isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
                   )
             )}
           >
             <div
               className={cn(
-                "rounded-full overflow-hidden flex items-center justify-center font-bold text-xs transition-all duration-300 shadow-2xs",
+                "rounded-full aspect-square overflow-hidden flex items-center justify-center font-bold text-xs transition-all duration-300 shadow-2xs",
                 isCompact ? "w-6 h-6" : "w-7 h-7 sm:w-7.5 sm:h-7.5",
                 isAccountActive
                   ? "ring-2 ring-emerald-600 ring-offset-2 ring-offset-white scale-105"
