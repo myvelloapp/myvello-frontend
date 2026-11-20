@@ -601,41 +601,12 @@ function SettingsPageContent() {
                 </div>
 
                 {/* Photo Action Buttons */}
-                <div className="flex items-center gap-2 sm:self-center shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setIsAvatarModalOpen(true)}
-                    className="px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-emerald-500/50 text-slate-700 hover:text-emerald-800 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer touch-manipulation"
-                  >
-                    <Upload className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Upload Photo</span>
-                  </button>
-                  {profilePhoto && (
-                    <button
-                      type="button"
-                      onClick={() => setIsRemoveAvatarModalOpen(true)}
-                      className="px-3.5 py-2 rounded-xl border border-rose-200/80 bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer touch-manipulation"
-                    >
-                      <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                      <span>Remove</span>
-                    </button>
-                  )}
-                </div>
+
               </div>
 
               {/* Section 1: Personal Information */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center shrink-0">
-                    <User className="w-4 h-4 stroke-[2.5]" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-[#02361B]">Personal Information</h4>
-                    <p className="text-xs text-slate-500">
-                      Your identity and display details visible in family groups.
-                    </p>
-                  </div>
-                </div>
+    
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                   <div>
@@ -685,17 +656,7 @@ function SettingsPageContent() {
 
               {/* Section 2: Regional & Vault Baseline */}
               <div className="space-y-4 pt-4 border-t border-slate-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center shrink-0">
-                    <Coins className="w-4 h-4 stroke-[2.5]" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-[#02361B]">Regional & Vault Baseline</h4>
-                    <p className="text-xs text-slate-500">
-                      Controls currency symbols, interest amortization calculations, and calendar reminders.
-                    </p>
-                  </div>
-                </div>
+       
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                   {/* Currency Field */}
@@ -728,15 +689,6 @@ function SettingsPageContent() {
                           <Lock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                         </div>
 
-                        <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-2.5 text-xs text-amber-900">
-                          <Lock className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
-                          <div className="space-y-0.5 leading-relaxed">
-                            <span className="font-bold block text-amber-950">First-EMI Lock Rule</span>
-                            <span className="text-[11px] text-amber-800/90">
-                              Once active loans exist, your base currency is permanently locked to prevent calculation discrepancies across your dashboard.
-                            </span>
-                          </div>
-                        </div>
                       </div>
                     ) : (
                       <div>
