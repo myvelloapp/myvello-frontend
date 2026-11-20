@@ -20,33 +20,35 @@ import { authService } from "@/services/authService";
 import { BrandLogo } from "@/components/common/BrandLogo";
 import { cn } from "@/lib/utils";
 
-function RegisterFormSkeleton() {
+export function RegisterFormSkeleton() {
   return (
     <div
-      className="w-full max-w-[340px] sm:max-w-[360px] mx-auto my-auto py-4 space-y-5 animate-pulse select-none"
+      className="w-full max-w-[340px] sm:max-w-[360px] mx-auto my-auto py-4 select-none animate-pulse"
       aria-busy="true"
       aria-label="Loading registration form"
     >
       {/* Logo skeleton */}
-      <div className="h-9 w-32 rounded-xl bg-slate-200/70" />
+      <div className="mb-6">
+        <div className="h-8 sm:h-9 w-32 rounded-xl bg-slate-200/80" />
+      </div>
 
       {/* Heading skeleton */}
-      <div className="space-y-2 mb-2">
-        <div className="h-7 w-48 rounded-lg bg-slate-200/80" />
-        <div className="h-7 w-36 rounded-lg bg-slate-200/80" />
+      <div className="space-y-2 mb-6">
+        <div className="h-7 sm:h-8 w-48 rounded-lg bg-slate-200/85" />
+        <div className="h-7 sm:h-8 w-32 rounded-lg bg-slate-200/85" />
       </div>
 
       {/* Google button skeleton */}
-      <div className="h-11 w-full rounded-xl bg-slate-100 border border-slate-200/60" />
+      <div className="h-11 w-full rounded-xl bg-slate-100 border border-slate-200/70" />
 
       {/* Divider skeleton */}
-      <div className="flex items-center gap-3 py-1">
+      <div className="my-4.5 flex items-center gap-3 select-none">
         <div className="h-px bg-slate-200/80 flex-1" />
         <div className="h-2.5 w-6 rounded bg-slate-200" />
         <div className="h-px bg-slate-200/80 flex-1" />
       </div>
 
-      {/* Form Fields skeletons */}
+      {/* Form Fields skeletons - matching exact space-y-3.5 */}
       <div className="space-y-3.5">
         <div className="space-y-1.5">
           <div className="h-3.5 w-20 rounded bg-slate-200/80" />
@@ -64,25 +66,25 @@ function RegisterFormSkeleton() {
         </div>
 
         {/* Checkbox skeletons */}
-        <div className="space-y-2 pt-1">
-          <div className="flex items-center gap-2.5">
+        <div className="space-y-1.5 pt-1">
+          <div className="flex items-center gap-2.5 py-1">
             <div className="w-4 h-4 rounded-[5px] bg-slate-200" />
-            <div className="h-3 w-40 rounded bg-slate-200" />
+            <div className="h-3 w-40 rounded bg-slate-200/70" />
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-4 h-4 rounded-[5px] bg-slate-200" />
-            <div className="h-3 w-52 rounded bg-slate-200" />
+          <div className="flex items-start gap-2.5 py-1">
+            <div className="w-4 h-4 rounded-[5px] bg-slate-200 mt-0.5" />
+            <div className="h-3 w-52 rounded bg-slate-200/70" />
           </div>
         </div>
 
         {/* Submit button skeleton */}
         <div className="pt-2">
-          <div className="h-12 w-full rounded-xl bg-slate-200" />
+          <div className="h-12 w-full rounded-xl bg-slate-200/90" />
         </div>
       </div>
 
       {/* Sign in footer skeleton */}
-      <div className="h-4 w-44 rounded bg-slate-200 mx-auto" />
+      <div className="h-4 w-44 rounded bg-slate-200/70 mx-auto mt-4" />
     </div>
   );
 }
@@ -295,7 +297,7 @@ export default function RegisterPage() {
                 router.back();
               }
             }}
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] sm:rounded-[16px] border border-slate-200/90 bg-white shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] hover:bg-slate-50 flex items-center justify-center transition-all text-slate-600 hover:text-slate-900 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
+            className="w-11 h-11 rounded-[14px] sm:rounded-[16px] border border-slate-200/90 bg-white shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] hover:bg-slate-50 flex items-center justify-center transition-all text-slate-600 hover:text-slate-900 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
             aria-label="Go back"
           >
             <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
@@ -513,8 +515,8 @@ export default function RegisterPage() {
               </div>
 
               {/* Checkbox agreements with Theme Gradient Checkmarks */}
-              <div className="space-y-1.5 pt-1 text-xs text-slate-600 leading-normal">
-                <label className="flex items-center gap-2.5 cursor-pointer select-none group touch-manipulation py-0.5">
+              <div className="space-y-1 pt-1 text-xs text-slate-600 leading-normal">
+                <label className="flex items-center gap-2.5 cursor-pointer select-none group touch-manipulation py-1.5 min-h-[32px]">
                   <div className="relative shrink-0">
                     <input
                       type="checkbox"
@@ -546,7 +548,7 @@ export default function RegisterPage() {
                   </span>
                 </label>
 
-                <label className="flex items-start gap-2.5 cursor-pointer select-none group touch-manipulation py-0.5">
+                <label className="flex items-start gap-2.5 cursor-pointer select-none group touch-manipulation py-1.5 min-h-[32px]">
                   <div className="relative mt-0.5 shrink-0">
                     <input
                       type="checkbox"
