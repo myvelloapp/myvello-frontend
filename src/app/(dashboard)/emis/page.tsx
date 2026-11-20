@@ -106,11 +106,11 @@ function TableSkeleton() {
   return (
     <>
       {/* Mobile High-Fidelity Shimmer Card Skeleton (sm:hidden) */}
-      <div className="sm:hidden divide-y divide-slate-100 p-3 space-y-3">
+      <div className="sm:hidden space-y-2.5">
         {[1, 2, 3].map((row) => (
           <div
             key={row}
-            className="bg-white rounded-xl p-3.5 space-y-3 animate-pulse border border-slate-100 shadow-[0_2px_10px_-2px_rgba(15,23,42,0.04)]"
+            className="bg-white rounded-[16px] p-3.5 space-y-2.5 animate-pulse border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)]"
           >
             <div className="flex items-start justify-between gap-2.5">
               <div className="flex items-center gap-2.5 flex-1 min-w-0">
@@ -137,8 +137,8 @@ function TableSkeleton() {
             </div>
 
             <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
-              <div className="flex-1 h-9 rounded-[8px] bg-slate-100" />
-              <div className="h-9 w-9 rounded-[8px] bg-slate-100 shrink-0" />
+              <div className="flex-1 h-8 rounded-full bg-slate-100" />
+              <div className="h-8 w-8 rounded-full bg-slate-100 shrink-0" />
             </div>
           </div>
         ))}
@@ -230,8 +230,8 @@ function GridSkeleton() {
             </div>
 
             <div className="pt-2 flex items-center gap-2">
-              <div className="flex-1 h-9 rounded-[16px] bg-slate-100" />
-              <div className="flex-1 h-9 rounded-[16px] bg-slate-100" />
+              <div className="flex-1 h-9 rounded-[12px] sm:rounded-[10px] bg-slate-100" />
+              <div className="flex-1 h-9 rounded-[12px] sm:rounded-[10px] bg-slate-100" />
             </div>
           </div>
         ))}

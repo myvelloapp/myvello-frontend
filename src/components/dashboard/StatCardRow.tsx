@@ -21,16 +21,16 @@ export function StatCardRow({ stats, isLoading }: StatCardRowProps) {
   const currency = user?.preferred_currency || "INR";
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 xl:gap-4">
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="bg-white rounded-[16px] p-3 sm:p-4.5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100/90 flex items-center gap-2.5 sm:gap-3.5 animate-pulse min-h-[76px] sm:min-h-[86px]"
+            className="bg-white rounded-[16px] p-3 sm:p-3.5 xl:p-4.5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100/90 flex items-center gap-2.5 sm:gap-3 animate-pulse min-h-[76px] sm:min-h-[82px]"
           >
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-slate-100 shrink-0" />
-            <div className="min-w-0 flex-1 space-y-1.5 sm:space-y-2">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 xl:w-11 xl:h-11 rounded-xl bg-slate-100 shrink-0" />
+            <div className="min-w-0 flex-1 space-y-1.5">
               <div className="h-2.5 bg-slate-200/80 rounded w-14 sm:w-16" />
-              <div className="h-4 sm:h-6 bg-slate-200 rounded w-20 sm:w-24" />
+              <div className="h-4 sm:h-5 xl:h-6 bg-slate-200 rounded w-20 sm:w-24" />
               <div className="h-2 sm:h-2.5 bg-slate-100 rounded w-16 sm:w-20" />
             </div>
           </div>
@@ -88,12 +88,12 @@ export function StatCardRow({ stats, isLoading }: StatCardRowProps) {
         return (
           <div
             key={c.title}
-            className="bg-white rounded-[16px] p-3 sm:p-4.5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100/90 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2.5 sm:gap-3.5 group min-h-[76px] sm:min-h-[86px]"
+            className="bg-white rounded-[16px] p-3 sm:p-3.5 xl:p-4.5 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] border border-slate-100/90 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2.5 sm:gap-3 group min-h-[76px] sm:min-h-[82px]"
           >
             {/* Left Icon Container */}
             <div
               className={cn(
-                "w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 shadow-2xs transition-transform duration-300 group-hover:scale-105",
+                "w-9 h-9 sm:w-10 sm:h-10 xl:w-11 xl:h-11 rounded-xl flex items-center justify-center shrink-0 shadow-2xs transition-transform duration-300 group-hover:scale-105",
                 c.iconBg
               )}
             >
@@ -107,7 +107,7 @@ export function StatCardRow({ stats, isLoading }: StatCardRowProps) {
               </span>
               <span
                 suppressHydrationWarning
-                className="text-base sm:text-xl xl:text-2xl font-black text-[#02361B] tracking-tight block truncate mt-0.5"
+                className="text-base sm:text-lg xl:text-xl 2xl:text-2xl font-black text-[#02361B] tracking-tight block truncate mt-0.5"
               >
                 {c.value}
               </span>
