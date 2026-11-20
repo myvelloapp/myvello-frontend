@@ -88,21 +88,38 @@ export function PushNotificationCard({
   };
 
   const handleSendTest = async () => {
-    if (!subscription) return;
     setIsSendingTest(true);
     setStatusMessage(null);
     setIsError(false);
 
     try {
-      const res = await sendTestNotification(subscription);
-      if (res.success) {
-        setStatusMessage(
-          "Test alert dispatched! Check your device notification center."
-        );
-      } else {
-        setIsError(true);
-        setStatusMessage(res.error || "Could not deliver test notification.");
+      // 1. Direct local display test (triggers Windows toast immediately)
+      if ("serviceWorker" in navigator) {
+        const reg = await navigator.serviceWorker.ready;
+        await reg.showNotification("Myvello: EMI Due Alert", {
+          body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
+          icon: "/icons/icon-192x192.png",
+          badge: "/icons/icon-192x192.png",
+          tag: "myvello-direct-test",
+          requireInteraction: true,
+          silent: false,
+        });
+      } else if ("Notification" in window) {
+        new Notification("Myvello: EMI Due Alert", {
+          body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
+          icon: "/icons/icon-192x192.png",
+          requireInteraction: true,
+        });
       }
+
+      // 2. Also dispatch remote server push
+      if (subscription) {
+        await sendTestNotification(subscription);
+      }
+
+      setStatusMessage(
+        "Alert sent! If no banner popped up, please check Windows Notification Center (click the clock on your taskbar) or Windows Focus Assist."
+      );
     } catch (err: any) {
       setIsError(true);
       setStatusMessage(err?.message || "Error sending test alert.");

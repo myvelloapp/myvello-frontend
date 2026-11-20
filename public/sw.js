@@ -38,7 +38,8 @@ self.addEventListener('push', (event) => {
     },
     tag: payload.tag || 'myvello-alert',
     renotify: true,
-    requireInteraction: false,
+    requireInteraction: true,
+    silent: false,
     vibrate: [200, 100, 200],
   };
 
