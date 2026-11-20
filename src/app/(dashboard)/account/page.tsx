@@ -88,7 +88,7 @@ function AccountContent() {
             type="button"
             onClick={() => handleTabChange("group")}
             className={cn(
-              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none",
+              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none outline-none focus:outline-none focus-visible:outline-none",
               activeTab === "group"
                 ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                 : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
@@ -103,7 +103,7 @@ function AccountContent() {
             type="button"
             onClick={() => handleTabChange("history")}
             className={cn(
-              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none",
+              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none outline-none focus:outline-none focus-visible:outline-none",
               activeTab === "history"
                 ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                 : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
@@ -121,7 +121,7 @@ function AccountContent() {
             type="button"
             onClick={() => handleTabChange("settings")}
             className={cn(
-              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none",
+              "flex-1 sm:flex-initial min-h-[38px] px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 active:scale-95 touch-manipulation select-none outline-none focus:outline-none focus-visible:outline-none",
               activeTab === "settings"
                 ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
                 : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"

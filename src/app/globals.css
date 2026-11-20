@@ -28,6 +28,39 @@ html, body {
   background-color: #EDF8F2;
 }
 
+/* Prevent flashing black focus outlines/borders on navigation, clicks, and page transitions */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+}
+
+button:focus,
+button:focus-visible,
+button:active,
+a:focus,
+a:focus-visible,
+a:active,
+[role="button"]:focus,
+[role="button"]:focus-visible,
+[role="button"]:active,
+[tabindex]:focus,
+[tabindex]:focus-visible,
+main:focus,
+main:focus-visible {
+  outline: none !important;
+  outline-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
 body {
   background-color: #EDF8F2;
   color: var(--text-main);
