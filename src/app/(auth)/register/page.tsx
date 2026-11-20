@@ -290,9 +290,15 @@ export default function RegisterPage() {
         <div className="pt-2 sm:pt-0">
           <button
             type="button"
-            onClick={() => router.push("/login")}
+            onClick={() => {
+              if (isStandalone) {
+                router.push("/login");
+              } else {
+                router.back();
+              }
+            }}
             className="w-11 h-11 rounded-[14px] sm:rounded-[16px] border border-slate-200/90 bg-white shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] hover:bg-slate-50 flex items-center justify-center transition-all text-slate-600 hover:text-slate-900 cursor-pointer hover:border-slate-300 active:scale-95 touch-manipulation"
-            aria-label="Go to login"
+            aria-label="Go back"
           >
             <ChevronLeft className="w-5 h-5 text-slate-600" strokeWidth={2.2} />
           </button>

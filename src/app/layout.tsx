@@ -22,13 +22,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://myvello.life"
   ),
-  title: "myvello",
-  description: "myvello",
+  title: "Myvello | Your Life. Your Records. One Place.",
+  description:
+    "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "myvello",
+    title: "Myvello",
   },
   icons: {
     icon: [
@@ -44,16 +45,17 @@ export const metadata: Metadata = {
     shortcut: "/images/favicon.svg",
   },
   openGraph: {
-    title: "myvello",
-    description: "myvello",
+    title: "Myvello | Your Life. Your Records. One Place.",
+    description:
+      "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
     url: "https://myvello.life",
-    siteName: "myvello",
+    siteName: "Myvello",
     images: [
       {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "myvello",
+        alt: "Myvello - Your Life. Your Records. One Place.",
       },
     ],
     locale: "en_US",
@@ -61,8 +63,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "myvello",
-    description: "myvello",
+    title: "Myvello | Your Life. Your Records. One Place.",
+    description:
+      "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
     images: ["/images/og.png"],
   },
 };
@@ -99,6 +102,17 @@ export default function RootLayout({
                   var maxAge = 315360000;
                   var expires = new Date(Date.now() + maxAge * 1000).toUTCString();
                   document.cookie = 'myvello_token=' + encodeURIComponent(token) + '; path=/; max-age=' + maxAge + '; expires=' + expires + '; SameSite=Lax';
+                }
+
+                // If running in installed app / desktop software mode (standalone) on root path '/', immediately bypass landing page
+                if (window.location.pathname === '/') {
+                  var isApp = window.matchMedia('(display-mode: standalone)').matches ||
+                              window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+                              window.matchMedia('(display-mode: minimal-ui)').matches ||
+                              window.navigator.standalone === true;
+                  if (isApp) {
+                    window.location.replace(token ? '/emis' : '/register');
+                  }
                 }
               } catch (e) {}
 
