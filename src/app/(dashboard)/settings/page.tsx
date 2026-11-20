@@ -53,9 +53,9 @@ function SettingsSkeleton() {
           <div className="h-4 w-72 rounded-lg bg-slate-200/60 animate-pulse mt-1" />
         </div>
 
-        <div className="p-1 rounded-xl bg-white border border-slate-200/80 shadow-2xs inline-flex items-center gap-1.5">
-          <div className="h-9 w-28 rounded-lg bg-slate-200/70 animate-pulse" />
-          <div className="h-9 w-28 rounded-lg bg-slate-200/50 animate-pulse" />
+        <div className="p-0.5 sm:p-1 rounded-full bg-slate-100 border border-slate-200/70 shadow-2xs inline-flex items-center gap-0.5">
+          <div className="h-7 sm:h-8 w-20 sm:w-24 rounded-full bg-slate-200/80 animate-pulse" />
+          <div className="h-7 sm:h-8 w-20 sm:w-24 rounded-full bg-slate-200/50 animate-pulse" />
         </div>
 
         <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-7 lg:p-8 shadow-xs space-y-7">
@@ -485,35 +485,37 @@ function SettingsPageContent({ embedded = false }: { embedded?: boolean } = {}) 
           </div>
         )}
 
-          {/* Themed Segmented Tab Control */}
-          <div className="p-1 rounded-xl bg-white border border-slate-200/80 shadow-2xs inline-flex items-center gap-1.5 w-full sm:w-auto">
-            <button
-              type="button"
-              onClick={() => setActiveTab("profile")}
-              className={cn(
-                "flex-1 sm:flex-initial min-h-[38px] px-5 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95 touch-manipulation select-none",
-                activeTab === "profile"
-                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
-                  : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
-              )}
-            >
-              <User className="w-4 h-4" />
-              <span>Profile</span>
-            </button>
+          {/* Native App-Style Compact Sub-Segmented Control */}
+          <div className="flex items-center">
+            <div className="p-0.5 sm:p-1 rounded-full bg-slate-100/90 border border-slate-200/70 shadow-2xs inline-flex items-center gap-0.5">
+              <button
+                type="button"
+                onClick={() => setActiveTab("profile")}
+                className={cn(
+                  "h-7 sm:h-8 px-3.5 sm:px-4 rounded-full text-[11px] sm:text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation select-none font-bold",
+                  activeTab === "profile"
+                    ? "bg-white text-emerald-900 shadow-2xs border border-slate-200/60"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-white/60"
+                )}
+              >
+                <User className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-700" />
+                <span>Profile</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("security")}
-              className={cn(
-                "flex-1 sm:flex-initial min-h-[38px] px-5 py-2 rounded-lg text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95 touch-manipulation select-none",
-                activeTab === "security"
-                  ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
-                  : "text-slate-600 hover:text-slate-900 font-semibold hover:bg-slate-100/70"
-              )}
-            >
-              <Lock className="w-4 h-4" />
-              <span>Security</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("security")}
+                className={cn(
+                  "h-7 sm:h-8 px-3.5 sm:px-4 rounded-full text-[11px] sm:text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation select-none font-bold",
+                  activeTab === "security"
+                    ? "bg-white text-emerald-900 shadow-2xs border border-slate-200/60"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-white/60"
+                )}
+              >
+                <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-700" />
+                <span>Security</span>
+              </button>
+            </div>
           </div>
 
           {/* Global Feedback Alert Banner */}
