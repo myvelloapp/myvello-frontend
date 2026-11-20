@@ -50,13 +50,31 @@ export async function POST(req: Request) {
       );
     }
 
+    const title = payload?.title || "Myvello Alert";
+    const bodyText = payload?.body || "";
+    const tag = payload?.tag || "";
+
+    // STRICT SAFETY SUPPRESSION: Never deliver payment history, logs, or receipts as push notifications
+    const isPaymentAlert =
+      /payment\s*(logged|reconciled|history|recorded)/i.test(title) ||
+      /payment\s*(of|successfully|logged)/i.test(bodyText) ||
+      /payment_/i.test(tag);
+
+    if (isPaymentAlert) {
+      return NextResponse.json({
+        success: true,
+        message: "Payment push notifications are permanently suppressed.",
+        sent_count: 0,
+      });
+    }
+
     const jsonPayload = JSON.stringify({
-      title: payload?.title || "Myvello Alert",
-      body: payload?.body || "",
+      title,
+      body: bodyText,
       icon: payload?.icon || "/icons/icon-192x192.png",
       badge: payload?.badge || "/icons/icon-192x192.png",
       url: payload?.url || "/notifications",
-      tag: payload?.tag || `myvello-${payload?.title ? payload.title.replace(/\s+/g, '-').toLowerCase() : "alert"}`,
+      tag: tag || `myvello-${title ? title.replace(/\s+/g, '-').toLowerCase() : "alert"}`,
     });
 
     const expiredEndpoints: string[] = [];

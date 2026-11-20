@@ -28,6 +28,15 @@ self.addEventListener('push', (event) => {
     }
   }
 
+  // Strictly suppress payment history and payment reconciliation push alerts
+  if (
+    /payment\s*(logged|reconciled|history|recorded)/i.test(payload.title || '') ||
+    /payment\s*(of|successfully|logged)/i.test(payload.body || '') ||
+    /payment_/i.test(payload.tag || '')
+  ) {
+    return;
+  }
+
   const options = {
     body: payload.body,
     icon: payload.icon || '/icons/icon-192x192.png',
