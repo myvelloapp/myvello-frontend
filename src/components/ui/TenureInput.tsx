@@ -94,7 +94,7 @@ export const TenureInput: React.FC<TenureInputProps> = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
-            "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm pl-3.5 pr-28 rounded-xl border transition-all placeholder:text-slate-400 font-bold shadow-2xs focus:outline-none touch-manipulation",
+            "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-[16px] sm:text-sm pl-3.5 pr-28 rounded-xl border transition-all placeholder:text-slate-400 font-bold shadow-2xs focus:outline-none touch-manipulation",
             hasError
               ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
               : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]"

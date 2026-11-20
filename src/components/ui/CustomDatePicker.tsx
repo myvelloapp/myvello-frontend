@@ -230,7 +230,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
         disabled={disabled}
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] px-3.5 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-between transition-all select-none cursor-pointer group shadow-2xs active:scale-[0.99] touch-manipulation",
+          "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] px-3.5 rounded-xl border text-[16px] sm:text-sm font-semibold flex items-center justify-between transition-all select-none cursor-pointer group shadow-2xs active:scale-[0.99] touch-manipulation",
           hasError
             ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
             : isOpen

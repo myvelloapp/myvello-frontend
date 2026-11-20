@@ -181,7 +181,7 @@ export const BankSelector: React.FC<BankSelectorProps> = ({
           onChange={handleInputChange}
           placeholder={defaultPlaceholder}
           className={cn(
-            "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm pl-9 pr-16 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
+            "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-[16px] sm:text-sm pl-9 pr-16 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
             hasError
               ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
               : "border-slate-200/90 bg-white hover:border-slate-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]",
@@ -380,7 +380,7 @@ export const BankSelector: React.FC<BankSelectorProps> = ({
                   value={modalSearchQuery}
                   onChange={(e) => setModalSearchQuery(e.target.value)}
                   placeholder="Type any bank name (e.g. Canara, Federal, BoB, LIC, Muthoot)..."
-                  className="w-full h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] pl-9.5 pr-9 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 text-[#02361B] placeholder:text-slate-400 font-medium touch-manipulation"
+                  className="w-full h-11 sm:h-9 min-h-[44px] sm:min-h-[36px] pl-9.5 pr-9 text-[16px] sm:text-sm rounded-xl border border-slate-200 bg-white focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 text-[#02361B] placeholder:text-slate-400 font-medium touch-manipulation"
                   autoFocus
                 />
                 {modalSearchQuery && (

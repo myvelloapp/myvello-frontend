@@ -211,7 +211,7 @@ export function CustomDropdown({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={searchPlaceholder}
-                  className="w-full h-11 sm:h-8 pl-9 pr-8 text-xs sm:text-sm font-semibold text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-xl sm:rounded-[8px] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400 touch-manipulation"
+                  className="w-full h-11 sm:h-8 pl-9 pr-8 text-[16px] sm:text-sm font-semibold text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-xl sm:rounded-[8px] focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400 touch-manipulation"
                   onClick={(e) => e.stopPropagation()}
                 />
                 {searchQuery && (

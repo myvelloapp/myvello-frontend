@@ -92,27 +92,33 @@ function getNextDueDate(startDateStr: string, dueDayNum: number): string {
 const QUICK_DUE_DAYS = ["5", "10", "15", "20", "25", "30"];
 
 // High-fidelity shimmer skeleton matching exact geometry of the add EMI wizard (CLS = 0)
-function NewEmiSkeleton() {
+export function NewEmiSkeleton() {
   return (
     <div className="relative -mt-18 pt-20 pb-12 px-3.5 sm:px-6 lg:px-8 xl:px-10 max-w-[1360px] mx-auto min-h-dvh overflow-x-hidden select-none animate-popup-enter">
       {/* Living Brand Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
-      <div className="relative z-10 max-w-[1360px] mx-auto space-y-5 sm:space-y-6 animate-pulse">
+      <div className="relative z-10 max-w-[1360px] mx-auto space-y-3 sm:space-y-6 animate-pulse">
         {/* Page Heading & Back Action Skeleton */}
         {/* Mobile Skeleton: Single compact row */}
-        <div className="sm:hidden flex items-center justify-between gap-3">
+        <div className="sm:hidden flex items-center justify-between gap-2.5">
           <div className="space-y-1 min-w-0">
             <div className="h-5 w-32 bg-slate-200/80 rounded" />
             <div className="h-3 w-28 bg-slate-200/50 rounded" />
           </div>
-          <div className="h-6 w-12 rounded-full bg-slate-200/60 shrink-0" />
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="h-6 w-12 rounded-full bg-slate-200/60" />
+            <div className="w-8 h-8 rounded-full bg-slate-200/50" />
+          </div>
         </div>
 
         {/* Mobile Progress Bar Skeleton */}
-        <div className="sm:hidden grid grid-cols-4 gap-1.5 -mt-2">
+        <div className="sm:hidden grid grid-cols-4 gap-1.5 pt-0.5">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-1.5 rounded-full bg-slate-200/70" />
+            <div key={i} className="space-y-1">
+              <div className="h-1.5 rounded-full bg-slate-200/70" />
+              <div className="h-2 w-12 rounded bg-slate-200/40" />
+            </div>
           ))}
         </div>
 
@@ -135,6 +141,18 @@ function NewEmiSkeleton() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            {/* Mobile Live EMI Quick-Bar Capsule Skeleton (lg:hidden) */}
+            <div className="lg:hidden bg-white rounded-2xl border border-emerald-100/90 p-3 shadow-xs flex items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 shrink-0" />
+                <div className="space-y-1 min-w-0">
+                  <div className="h-2.5 w-20 bg-slate-200/60 rounded" />
+                  <div className="h-3.5 w-16 bg-slate-200/80 rounded" />
+                </div>
+              </div>
+              <div className="h-8 w-24 rounded-xl bg-slate-100 shrink-0" />
             </div>
 
             {/* Main Step Form Container */}
@@ -697,11 +715,11 @@ export default function AddNewEmiPage() {
 
   // Reusable Theme Input Class with Red Error Styling
   const inputClass =
-    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
+    "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-[16px] sm:text-sm px-3.5 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-semibold shadow-2xs touch-manipulation";
 
   const getInputClass = (hasError?: boolean, extra?: string) =>
     cn(
-      "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-xs sm:text-sm px-3.5 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
+      "w-full h-11 sm:h-10 min-h-[44px] sm:min-h-[40px] text-[16px] sm:text-sm px-3.5 rounded-xl border transition-all placeholder:text-slate-400 font-semibold shadow-2xs focus:outline-none touch-manipulation",
       hasError
         ? "border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 bg-rose-50/20 text-rose-900"
         : "border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-[#02361B]",
@@ -1915,7 +1933,7 @@ export default function AddNewEmiPage() {
                         placeholder="e.g. Salary account debited automatically on 10th morning"
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
+                        className="w-full text-[16px] sm:text-sm p-3 rounded-xl border border-slate-200/90 bg-white hover:border-emerald-300 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all text-[#02361B] placeholder:text-slate-400 font-medium shadow-2xs touch-manipulation"
                       />
                     </div>
                   </div>
