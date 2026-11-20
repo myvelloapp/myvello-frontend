@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X, Bell, Check, AlertCircle, Loader2 } from "lucide-react";
+import { X, Bell, Check, AlertCircle, Loader2, Mail } from "lucide-react";
 import { profileService, NotificationPreferences } from "@/services/profileService";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { PushNotificationCard } from "@/components/notifications/PushNotificationCard";
@@ -200,29 +200,65 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
             </div>
           ) : (
             <>
-              {/* Device Lock-Screen Push Notifications Activation */}
-              <PushNotificationCard compact className="mb-2" />
+              {/* Notification Channels Group */}
+              <div className="space-y-2">
+                <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400 px-0.5">
+                  Notification Channels
+                </h4>
 
-              {/* Master Email Toggle with Emerald Brand Accents */}
-              <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/50 border border-emerald-200/80 flex items-center justify-between min-h-[52px]">
-                <div>
-                  <span className="text-xs font-bold text-slate-900 block">Email Reminders</span>
-                  <span className="text-[11px] text-slate-600 font-medium block mt-0.5">
-                    Deliver scheduled alerts to {email || "your registered email"}
-                  </span>
+                <div className="space-y-2">
+                  {/* Device Lock-Screen Push Notifications Activation */}
+                  <PushNotificationCard compact />
+
+                  {/* Master Email Toggle with Emerald Brand Accents */}
+                  <label
+                    className={cn(
+                      "p-3 sm:p-3.5 rounded-[14px] border transition-all cursor-pointer flex items-center justify-between gap-3 min-h-[52px] select-none active:scale-[0.99] touch-manipulation shadow-2xs",
+                      preferences.email_enabled
+                        ? "bg-white border-slate-200/90 hover:border-slate-300/80"
+                        : "bg-slate-50/60 border-slate-200/70 text-slate-400"
+                    )}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={cn(
+                          "w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 border transition-colors",
+                          preferences.email_enabled
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200/70"
+                            : "bg-slate-100 text-slate-400 border-slate-200/80"
+                        )}
+                      >
+                        <Mail className="w-4.5 h-4.5 stroke-[2.2]" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-xs sm:text-sm font-bold text-slate-900 block leading-tight">
+                            Email Notifications
+                          </span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
+                            Inbox
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 font-medium block mt-0.5 truncate">
+                          Deliver scheduled alerts to {email || "your registered email"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <input
+                      type="checkbox"
+                      checked={preferences.email_enabled}
+                      onChange={(e) =>
+                        setPreferences((prev) => ({ ...prev, email_enabled: e.target.checked }))
+                      }
+                      className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-2"
+                    />
+                  </label>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.email_enabled}
-                  onChange={(e) =>
-                    setPreferences((prev) => ({ ...prev, email_enabled: e.target.checked }))
-                  }
-                  className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-3"
-                />
               </div>
 
               {/* Granular Due Date Cadence Rules */}
-              <div className="space-y-2">
+              <div className="space-y-2 pt-1">
                 <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400 px-0.5">
                   Instalment Due Date Alerts
                 </h4>
@@ -232,7 +268,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                     <label
                       key={item.id}
                       className={cn(
-                        "flex items-start justify-between p-3.5 sm:p-3 rounded-xl border transition-all cursor-pointer text-xs min-h-[52px] active:scale-[0.99] touch-manipulation",
+                        "flex items-start justify-between p-3 sm:p-3 rounded-[12px] border transition-all cursor-pointer text-xs min-h-[50px] active:scale-[0.99] touch-manipulation select-none shadow-2xs",
                         item.checked
                           ? "bg-emerald-50/25 border-emerald-300/80 hover:bg-emerald-50/40"
                           : "bg-white border-slate-200/80 hover:bg-slate-50/60 text-slate-400"
@@ -247,7 +283,7 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                         >
                           {item.title}
                         </span>
-                        <span className="text-[10px] text-slate-500 block mt-0.5 font-normal leading-relaxed">
+                        <span className="text-[10px] sm:text-[11px] text-slate-500 block mt-0.5 font-normal leading-relaxed">
                           {item.desc}
                         </span>
                       </div>

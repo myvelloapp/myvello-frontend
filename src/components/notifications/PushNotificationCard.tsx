@@ -6,7 +6,6 @@ import {
   Smartphone,
   CheckCircle2,
   AlertCircle,
-  Sparkles,
   Send,
   Loader2,
   ShieldCheck,
@@ -70,7 +69,7 @@ export function PushNotificationCard({
         setSubscription(res.subscription);
         setPermission("granted");
         setStatusMessage(
-          "Lock-screen push notifications are now active! Tap 'Send Test Notification' to verify."
+          "Lock-screen alerts active! Tap 'Test Alert' to verify delivery."
         );
       } else {
         setIsError(true);
@@ -94,7 +93,7 @@ export function PushNotificationCard({
       const res = await sendTestNotification(subscription);
       if (res.success) {
         setStatusMessage(
-          "Test alert dispatched! Lock your iPhone now or check your notification center."
+          "Test alert dispatched! Check your device notification center."
         );
       } else {
         setIsError(true);
@@ -114,81 +113,88 @@ export function PushNotificationCard({
   }
 
   const isSubscribed = Boolean(subscription) && permission === "granted";
+  const isBlocked = permission === "denied";
 
   return (
     <div
       className={cn(
-        "rounded-2xl border transition-all select-none overflow-hidden",
+        "rounded-[14px] border transition-all select-none shadow-2xs p-3 sm:p-3.5",
         isSubscribed
-          ? "bg-gradient-to-br from-emerald-50/50 via-white to-slate-50/40 border-emerald-200/70 shadow-xs"
-          : "bg-gradient-to-br from-emerald-50/30 via-white to-slate-50/50 border-emerald-200/70 shadow-xs",
-        compact ? "p-3.5 sm:p-4" : "p-4 sm:p-5",
+          ? "bg-emerald-50/25 border-emerald-300/80"
+          : "bg-white border-slate-200/90 hover:border-slate-300/80",
         className
       )}
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-3">
         {/* Left: Icon & Text Info */}
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           <div
             className={cn(
-              "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-2xs",
+              "w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 border transition-colors",
               isSubscribed
-                ? "bg-emerald-100/80 text-emerald-700 border border-emerald-200"
-                : "bg-emerald-50 text-emerald-800 border border-emerald-200/80"
+                ? "bg-emerald-100/80 text-emerald-800 border-emerald-300/90"
+                : isBlocked
+                ? "bg-amber-50 text-amber-700 border-amber-200/80"
+                : "bg-emerald-50 text-emerald-800 border-emerald-200/70"
             )}
           >
             {isSubscribed ? (
-              <ShieldCheck className="w-5 h-5 stroke-[2.2]" />
+              <ShieldCheck className="w-4.5 h-4.5 stroke-[2.2]" />
             ) : (
-              <Smartphone className="w-5 h-5 stroke-[2.2]" />
+              <Smartphone className="w-4.5 h-4.5 stroke-[2.2]" />
             )}
           </div>
 
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-900">
-                {isSubscribed
-                  ? "Lock-Screen Push Notifications Active"
-                  : "Enable Lock-Screen Notifications"}
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
+                Push Notifications
               </h3>
-              <span
-                className={cn(
-                  "text-[10px] font-bold px-2 py-0.5 rounded-full border",
-                  isSubscribed
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-200/80"
-                    : "bg-emerald-50 text-emerald-800 border-emerald-200/80"
-                )}
-              >
-                {isSubscribed ? "Active" : "iOS & Android"}
-              </span>
+              {isSubscribed ? (
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100/80 text-emerald-800 border border-emerald-200/80 inline-flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  Active
+                </span>
+              ) : isBlocked ? (
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80">
+                  Blocked
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
+                  iOS & Android
+                </span>
+              )}
             </div>
 
-            <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-xl">
+            <p className="text-[11px] text-slate-500 font-medium leading-normal mt-0.5">
               {isSubscribed
-                ? "Your phone will alert you on your lock screen for 7-day, 3-day, and due-today EMI payments, even when the app is closed."
-                : "Receive real lock-screen alerts with sounds and banners before your EMI due dates. Tap to enable."}
+                ? "Lock-screen alerts enabled for EMI repayment deadlines."
+                : isBlocked
+                ? "Notifications blocked in browser. Unblock in site settings."
+                : "Lock-screen alerts and banners before payment due dates."}
             </p>
           </div>
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           {isSubscribed ? (
             <button
               type="button"
               onClick={handleSendTest}
               disabled={isSendingTest}
-              className="min-h-[42px] px-4 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 text-xs font-bold shadow-2xs hover:border-slate-300 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="min-h-[32px] h-8 px-2.5 rounded-[8px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-[11px] font-bold shadow-2xs hover:border-slate-300 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
+              title="Send a sample lock-screen push notification to verify delivery"
             >
               {isSendingTest ? (
                 <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-700" />
-                  <span>Sending Alert...</span>
+                  <Loader2 className="w-3 h-3 animate-spin text-emerald-700" />
+                  <span>Sending...</span>
                 </>
               ) : (
                 <>
-                  <Send className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>Send Test Notification</span>
+                  <Send className="w-3 h-3 text-emerald-700" />
+                  <span>Test Alert</span>
                 </>
               )}
             </button>
@@ -196,18 +202,18 @@ export function PushNotificationCard({
             <button
               type="button"
               onClick={handleEnablePush}
-              disabled={isLoading}
-              className="min-h-[42px] px-5 rounded-xl btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-2"
+              disabled={isLoading || isBlocked}
+              className="min-h-[34px] h-8.5 px-3.5 rounded-[10px] btn-gradient-glow text-white text-xs font-bold shadow-xs shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0 disabled:opacity-50 disabled:pointer-events-none"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
-                  <span>Activating...</span>
+                  <span>Enabling...</span>
                 </>
               ) : (
                 <>
                   <Bell className="w-3.5 h-3.5" />
-                  <span>Enable Push Notifications</span>
+                  <span>Enable</span>
                 </>
               )}
             </button>
@@ -219,7 +225,7 @@ export function PushNotificationCard({
       {statusMessage && (
         <div
           className={cn(
-            "mt-3 pt-2.5 border-t text-xs font-medium flex items-center gap-2 animate-in fade-in duration-200",
+            "mt-2 pt-2 border-t text-[11px] font-medium flex items-center gap-1.5 animate-in fade-in duration-200",
             isError
               ? "border-rose-100 text-rose-600"
               : "border-emerald-100 text-emerald-700"
@@ -230,7 +236,7 @@ export function PushNotificationCard({
           ) : (
             <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
           )}
-          <span>{statusMessage}</span>
+          <span className="leading-tight">{statusMessage}</span>
         </div>
       )}
     </div>
