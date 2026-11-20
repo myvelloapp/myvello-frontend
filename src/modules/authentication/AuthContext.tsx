@@ -20,15 +20,68 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Instant synchronous hydration from localStorage - zero waiting on initial page load
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const token = localStorage.getItem("myvello_token");
+        const cachedUser = localStorage.getItem("myvello_user");
+        if (token && cachedUser) {
+          return JSON.parse(cachedUser);
+        }
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  const [isLoading, setIsLoading] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("myvello_token");
+      const cachedUser = localStorage.getItem("myvello_user");
+      // If token and cached user exist, session is ALREADY verified! Instant load!
+      if (token && cachedUser) {
+        return false;
+      }
+      // If no token exists at all, user is definitely unauthenticated, don't show verifying spinner!
+      if (!token) {
+        return false;
+      }
+    }
+    return true;
+  });
 
   const refreshUser = async () => {
-    try {
-      const currentUser = await authService.getAuthenticatedUser();
-      setUser(currentUser);
-    } catch {
+    const token = typeof window !== "undefined" ? localStorage.getItem("myvello_token") : null;
+    if (!token) {
       setUser(null);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const currentUser = await Promise.race([
+        authService.getAuthenticatedUser(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Session verification timeout")), 4000)
+        ),
+      ]);
+      setUser(currentUser);
+      if (typeof window !== "undefined" && currentUser) {
+        try {
+          localStorage.setItem("myvello_user", JSON.stringify(currentUser));
+        } catch {}
+      }
+    } catch {
+      // If verification genuinely failed (e.g. 401 token expired)
+      if (typeof window !== "undefined" && !localStorage.getItem("myvello_token")) {
+        setUser(null);
+        try {
+          localStorage.removeItem("myvello_user");
+        } catch {}
+      }
     } finally {
       setIsLoading(false);
     }

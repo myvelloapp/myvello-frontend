@@ -53,6 +53,11 @@ export const authService = {
       setAuthCookie(response.data.data.token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
     }
+    if (response.data.data.user && typeof window !== "undefined") {
+      try {
+        localStorage.setItem("myvello_user", JSON.stringify(response.data.data.user));
+      } catch {}
+    }
     return response.data.data;
   },
 
@@ -65,6 +70,11 @@ export const authService = {
       localStorage.setItem("myvello_token", response.data.data.token);
       setAuthCookie(response.data.data.token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
+    }
+    if (response.data.data.user && typeof window !== "undefined") {
+      try {
+        localStorage.setItem("myvello_user", JSON.stringify(response.data.data.user));
+      } catch {}
     }
     return response.data.data;
   },
@@ -79,9 +89,19 @@ export const authService = {
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       clearAuthCookie();
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("myvello_user");
+      }
+      throw new Error("No authentication token found");
     }
     const response = await apiClient.get<ApiResponse<{ user: User; email_verified: boolean }>>("/auth/user");
-    return response.data.data.user;
+    const user = response.data.data.user;
+    if (user && typeof window !== "undefined") {
+      try {
+        localStorage.setItem("myvello_user", JSON.stringify(user));
+      } catch {}
+    }
+    return user;
   },
 
   /**
@@ -93,6 +113,7 @@ export const authService = {
     } finally {
       if (typeof window !== "undefined") {
         localStorage.removeItem("myvello_token");
+        localStorage.removeItem("myvello_user");
         clearAuthCookie();
       }
       delete apiClient.defaults.headers.common["Authorization"];
@@ -119,6 +140,11 @@ export const authService = {
       localStorage.setItem("myvello_token", response.data.data.token);
       setAuthCookie(response.data.data.token);
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
+    }
+    if (response.data.data.user && typeof window !== "undefined") {
+      try {
+        localStorage.setItem("myvello_user", JSON.stringify(response.data.data.user));
+      } catch {}
     }
     return response.data.data;
   },

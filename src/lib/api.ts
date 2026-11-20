@@ -5,6 +5,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || `${BACKEND_BASE_URL}/api
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
+  timeout: 15000,
   headers: {
     "Accept": "application/json",
     "Content-Type": "application/json",
@@ -30,6 +31,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401 && typeof window !== "undefined") {
       localStorage.removeItem("myvello_token");
+      localStorage.removeItem("myvello_user");
       document.cookie = "myvello_token=; path=/; max-age=0; SameSite=Lax";
 
       const pathname = window.location.pathname;
