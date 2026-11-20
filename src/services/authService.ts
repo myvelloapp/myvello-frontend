@@ -172,7 +172,21 @@ export const authService = {
    */
   async getGoogleLoginUrl(): Promise<string> {
     const response = await apiClient.get<{ success: boolean; redirect_url: string }>("/auth/google/redirect");
-    return response.data.redirect_url;
+    let url = response.data.redirect_url;
+    if (url) {
+      try {
+        const parsedUrl = new URL(url);
+        // Force Google Account Chooser screen so users can select which account to sign in with
+        parsedUrl.searchParams.set("prompt", "select_account");
+        url = parsedUrl.toString();
+      } catch {
+        if (!url.includes("prompt=")) {
+          const separator = url.includes("?") ? "&" : "?";
+          url = `${url}${separator}prompt=select_account`;
+        }
+      }
+    }
+    return url;
   },
 };
 
