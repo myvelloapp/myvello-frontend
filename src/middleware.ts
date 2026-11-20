@@ -32,6 +32,15 @@ export function middleware(request: NextRequest) {
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
 
+  // Root path: Bypass landing page entirely - redirect directly to app or register
+  if (pathname === "/") {
+    if (token) {
+      return NextResponse.redirect(new URL("/emis", request.url));
+    } else {
+      return NextResponse.redirect(new URL("/register", request.url));
+    }
+  }
+
   // If unauthenticated user tries to access any protected account page, redirect immediately to login
   if (isProtectedRoute && !token) {
     const redirectUrl = new URL("/login", request.url);
