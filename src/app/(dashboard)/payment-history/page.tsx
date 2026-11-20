@@ -78,7 +78,7 @@ function arePaymentsEqual(a: EmiPayment[], b: EmiPayment[]): boolean {
 }
 
 // High-fidelity shimmer skeleton matching exact table & mobile card geometry to guarantee zero layout shift (CLS = 0)
-function PaymentHistoryTableSkeleton() {
+export function PaymentHistoryTableSkeleton() {
   return (
     <div className="animate-pulse">
       {/* Mobile Card Skeletons */}
@@ -110,7 +110,7 @@ function PaymentHistoryTableSkeleton() {
       </div>
 
       {/* Desktop Table View Skeleton */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block w-full max-w-full min-w-0 overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
             <tr className="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50/70">
@@ -161,6 +161,46 @@ function PaymentHistoryTableSkeleton() {
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+// High-fidelity shimmer skeleton matching exact page geometry to guarantee zero layout shift (CLS = 0)
+export function PaymentHistorySkeleton() {
+  return (
+    <div className="relative w-full max-w-full min-w-0 pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto space-y-3 sm:space-y-5 animate-pulse min-w-0">
+        {/* Page Header Skeleton */}
+        <div className="flex items-center justify-between gap-3 min-h-[36px]">
+          <div className="h-7 sm:h-8 w-44 sm:w-56 bg-slate-200/80 rounded-xl" />
+          <div className="flex items-center gap-2">
+            <div className="hidden sm:block h-9 w-28 bg-slate-200/70 rounded-[10px]" />
+            <div className="hidden sm:block h-9 w-32 bg-slate-200/70 rounded-[12px]" />
+            <div className="sm:hidden w-9 h-9 rounded-full bg-slate-200/70" />
+          </div>
+        </div>
+
+        {/* Unified Payment Ledger Card Skeleton */}
+        <div className="w-full max-w-full min-w-0 bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
+          {/* Mobile Toolbar Skeleton */}
+          <div className="sm:hidden p-3 border-b border-slate-100 bg-white flex items-center gap-2">
+            <div className="h-10 flex-1 bg-slate-100 rounded-[10px]" />
+            <div className="h-10 w-24 bg-slate-100 rounded-[10px]" />
+          </div>
+
+          {/* Desktop Toolbar Skeleton */}
+          <div className="hidden sm:flex px-4 py-2.5 border-b border-slate-100 items-center justify-between gap-2.5 bg-white">
+            <div className="h-9 w-72 bg-slate-100 rounded-[8px]" />
+            <div className="flex items-center gap-2">
+              <div className="h-9 w-32 bg-slate-100 rounded-[8px]" />
+              <div className="h-9 w-32 bg-slate-100 rounded-[8px]" />
+            </div>
+          </div>
+
+          {/* Table / Cards Content Skeleton */}
+          <PaymentHistoryTableSkeleton />
+        </div>
       </div>
     </div>
   );
@@ -451,8 +491,8 @@ export default function PaymentHistoryPage() {
 
   return (
     <DashboardLayout>
-      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-3 sm:space-y-5">
+      <div className="relative w-full max-w-full min-w-0 pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto space-y-3 sm:space-y-5 min-w-0">
           {/* Page Header */}
           <div className="flex items-center justify-between gap-3 min-h-[36px]">
             <div className="space-y-0.5 min-w-0">
@@ -535,7 +575,7 @@ export default function PaymentHistoryPage() {
           </div>
 
         {/* Unified Payment Ledger Card (Attached Minimal Toolbar + Table / Cards) */}
-        <div className="bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
+        <div className="w-full max-w-full min-w-0 bg-white rounded-[16px] shadow-[0_4px_20px_-4px_rgba(28,158,48,0.06)] border border-slate-200/80 overflow-hidden relative">
           {/* Mobile Minimal Unified Toolbar (sm:hidden - Search + Filters Popup Trigger) */}
           <div className="sm:hidden p-3 border-b border-slate-100 bg-white space-y-2.5 rounded-t-[16px]">
             <div className="flex items-center gap-2">
@@ -551,7 +591,7 @@ export default function PaymentHistoryPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search loans, lenders, UTR..."
-                  className="w-full h-10 pl-9 pr-8 text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[10px] focus:outline-none focus:border-[#1C9E30] focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400"
+                  className="w-full h-10 pl-9 pr-8 text-[16px] sm:text-xs font-medium text-slate-800 bg-slate-50 focus:bg-white border border-slate-200/80 rounded-[10px] focus:outline-none focus:border-[#1C9E30] focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-slate-400"
                 />
                 {searchQuery && (
                   <button
@@ -801,7 +841,7 @@ export default function PaymentHistoryPage() {
             </div>
 
             {/* Desktop Table View (Screens >= 768px) */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block w-full max-w-full min-w-0 overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50/70">
