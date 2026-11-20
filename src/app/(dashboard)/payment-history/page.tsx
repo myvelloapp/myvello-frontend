@@ -206,7 +206,11 @@ export function PaymentHistorySkeleton() {
   );
 }
 
-export default function PaymentHistoryPage() {
+export default function PaymentHistoryPage({
+  embedded = false,
+}: {
+  embedded?: boolean;
+} = {}) {
   const { isAuthenticated, user } = useAuth();
   const currency = user?.preferred_currency || "INR";
   const { activeWorkspace } = useWorkspace();
@@ -489,18 +493,33 @@ export default function PaymentHistoryPage() {
     );
   };
 
-  return (
-    <DashboardLayout>
-      <div className="relative w-full max-w-full min-w-0 pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto space-y-3 sm:space-y-5 min-w-0">
-          {/* Page Header */}
-          <div className="flex items-center justify-between gap-3 min-h-[36px]">
-            <div className="space-y-0.5 min-w-0">
+  const pageBody = (
+    <div
+      className={cn(
+        "w-full max-w-full min-w-0 select-none",
+        !embedded &&
+          "relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh"
+      )}
+    >
+      <div
+        className={cn(
+          "w-full max-w-[1500px] mx-auto space-y-3 sm:space-y-5 min-w-0",
+          !embedded && "relative z-10"
+        )}
+      >
+        {/* Page Header */}
+        <div className="flex items-center justify-between gap-3 min-h-[36px]">
+          <div className="space-y-0.5 min-w-0">
+            {!embedded ? (
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
                 Payment History
               </h1>
-            
-            </div>
+            ) : (
+              <p className="text-xs sm:text-sm text-slate-500 font-medium">
+                Detailed transaction records and settlement history
+              </p>
+            )}
+          </div>
 
             {/* Mobile Only: 3-Dot Dropdown Popover */}
             <div className="sm:hidden relative shrink-0" ref={headerMenuRef}>
@@ -1319,8 +1338,13 @@ export default function PaymentHistoryPage() {
           </div>,
           document.body
         )}
-        </div>
       </div>
-    </DashboardLayout>
+    </div>
   );
+
+  if (embedded) {
+    return pageBody;
+  }
+
+  return <DashboardLayout>{pageBody}</DashboardLayout>;
 }

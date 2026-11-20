@@ -227,7 +227,7 @@ export function FamilyWorkspaceSkeleton() {
   );
 }
 
-function FamilyPageContent() {
+function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useAuth();
@@ -654,6 +654,13 @@ _Myvello — Your Life. Your Records. One Place._`
   };
 
   if (isLoading && !activeFamily && !error) {
+    if (embedded) {
+      return (
+        <div className="space-y-2.5 sm:space-y-5">
+          <FamilyWorkspaceSkeleton />
+        </div>
+      );
+    }
     return (
       <DashboardLayout>
         <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
@@ -665,12 +672,21 @@ _Myvello — Your Life. Your Records. One Place._`
     );
   }
 
-  return (
-    <DashboardLayout>
-      {/* Unified Main Viewport */}
-      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-        {/* Content Container */}
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5">
+  const pageBody = (
+    <>
+      <div
+        className={cn(
+          "space-y-2.5 sm:space-y-5 select-none",
+          !embedded &&
+            "relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh"
+        )}
+      >
+      <div
+        className={cn(
+          "max-w-[1500px] mx-auto space-y-2.5 sm:space-y-5",
+          !embedded && "relative z-10"
+        )}
+      >
         {/* 1. Page Header (shown when active group exists) */}
         {activeFamily && (
           <>
@@ -1851,11 +1867,25 @@ _Myvello — Your Life. Your Records. One Place._`
         </div>,
         document.body
       )}
-    </DashboardLayout>
+    </>
   );
+
+  if (embedded) {
+    return pageBody;
+  }
+
+  return <DashboardLayout>{pageBody}</DashboardLayout>;
 }
 
-export default function FamilyPage() {
+export default function FamilyPage({
+  embedded = false,
+}: {
+  embedded?: boolean;
+} = {}) {
+  if (embedded) {
+    return <FamilyPageContent embedded />;
+  }
+
   return (
     <Suspense
       fallback={
@@ -1868,7 +1898,7 @@ export default function FamilyPage() {
         </DashboardLayout>
       }
     >
-      <FamilyPageContent />
+      <FamilyPageContent embedded={false} />
     </Suspense>
   );
 }

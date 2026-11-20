@@ -58,7 +58,7 @@ export function CommandSearchModal({ isOpen, onClose }: CommandSearchModalProps)
     { label: "Payment History", href: "/payment-history", icon: Clock },
     { label: "Groups", href: "/family", icon: Users },
     { label: "Reminders", href: "/notifications", icon: Bell },
-    { label: "User Settings", href: "/settings", icon: Settings },
+    { label: "Account & Settings", href: "/account?tab=settings", icon: Settings },
   ].filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
 
   const handleNavigate = (href: string) => {

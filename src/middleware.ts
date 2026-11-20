@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 
 // Routes that require an active authenticated session
 const PROTECTED_PREFIXES = [
+  "/account",
   "/dashboard",
   "/emis",
   "/family",

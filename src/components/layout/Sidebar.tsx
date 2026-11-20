@@ -83,6 +83,7 @@ export function Sidebar() {
   const initialLetter = (displayName || "J").trim().charAt(0).toUpperCase();
 
   const isAccountPageActive =
+    pathname.startsWith("/account") ||
     pathname.startsWith("/family") ||
     pathname.startsWith("/payment-history") ||
     pathname.startsWith("/notifications") ||
@@ -132,16 +133,16 @@ export function Sidebar() {
 
   const accountNav: SidebarNavItem[] = [
     {
-      label: "Groups",
-      href: "/family",
+      label: "My Group",
+      href: "/account?tab=group",
       icon: Users,
-      active: pathname.startsWith("/family"),
+      active: pathname.startsWith("/family") || (pathname.startsWith("/account") && !pathname.includes("history") && !pathname.includes("settings")),
     },
     {
       label: "Payment History",
-      href: "/payment-history",
+      href: "/account?tab=history",
       icon: Clock,
-      active: pathname === "/payment-history",
+      active: pathname === "/payment-history" || (pathname.startsWith("/account") && pathname.includes("history")),
     },
     {
       label: "Reminders",
@@ -152,9 +153,9 @@ export function Sidebar() {
     },
     {
       label: "Settings",
-      href: "/settings",
+      href: "/account?tab=settings",
       icon: Settings,
-      active: pathname === "/settings",
+      active: pathname === "/settings" || (pathname.startsWith("/account") && pathname.includes("settings")),
     },
   ];
 

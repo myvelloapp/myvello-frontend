@@ -125,14 +125,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
   const accountNav: MobileNavItem[] = [
     {
-      label: "Groups",
-      href: "/family",
+      label: "My Group",
+      href: "/account?tab=group",
       icon: Users,
-      active: pathname.startsWith("/family"),
+      active: pathname.startsWith("/family") || (pathname.startsWith("/account") && !pathname.includes("history") && !pathname.includes("settings")),
     },
     {
       label: "Payment History",
-      href: "/payment-history",
+      href: "/account?tab=history",
       icon: Clock,
       active: pathname === "/payment-history",
     },
@@ -145,9 +145,9 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     },
     {
       label: "Settings",
-      href: "/settings",
+      href: "/account?tab=settings",
       icon: Settings,
-      active: pathname === "/settings",
+      active: pathname === "/settings" || (pathname.startsWith("/account") && pathname.includes("settings")),
     },
   ];
 
@@ -155,7 +155,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const isHistoryActive = pathname === "/payment-history";
   const isNotificationActive = pathname === "/notifications";
   const isFamilyActive = pathname.startsWith("/family");
-  const isAccountActive = pathname === "/settings";
+  const isAccountActive = pathname.startsWith("/account") || pathname === "/settings";
 
   return (
     <>
@@ -515,9 +515,9 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
         {/* 5th Icon: Account (Instagram-Style Avatar Circle) */}
         <Link
-          href="/settings"
+          href="/account"
           className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
-          aria-label="Account Settings"
+          aria-label="Account"
         >
           <div
             className={cn(

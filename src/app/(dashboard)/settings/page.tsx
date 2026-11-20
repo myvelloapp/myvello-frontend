@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import {
   User,
   Lock,
@@ -142,7 +142,7 @@ function RemovePhotoConfirmModal({
   );
 }
 
-function SettingsPageContent() {
+function SettingsPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   const router = useRouter();
   const { user: authUser, refreshUser, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<"profile" | "security">("profile");
@@ -451,6 +451,9 @@ function SettingsPageContent() {
   };
 
   if (isLoading && !name && !email) {
+    if (embedded) {
+      return <SettingsSkeleton />;
+    }
     return (
       <DashboardLayout>
         <SettingsSkeleton />
@@ -458,17 +461,29 @@ function SettingsPageContent() {
     );
   }
 
-  return (
-    <DashboardLayout>
-      <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
-        <div className="relative z-10 max-w-[1500px] mx-auto space-y-4 sm:space-y-6">
-          {/* Page Header */}
+  const pageBody = (
+    <>
+      <div
+        className={cn(
+          "space-y-4 sm:space-y-6 select-none",
+          !embedded &&
+            "relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh"
+        )}
+      >
+      <div
+        className={cn(
+          "max-w-[1500px] mx-auto space-y-4 sm:space-y-6",
+          !embedded && "relative z-10"
+        )}
+      >
+        {/* Page Header (Hidden when embedded in Account section) */}
+        {!embedded && (
           <div className="space-y-1">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B]">
               Settings
             </h1>
-          
           </div>
+        )}
 
           {/* Themed Segmented Tab Control */}
           <div className="p-1 rounded-xl bg-white border border-slate-200/80 shadow-2xs inline-flex items-center gap-1.5 w-full sm:w-auto">
@@ -1048,20 +1063,25 @@ function SettingsPageContent() {
         onConfirm={handleConfirmRemoveAvatar}
         isRemoving={isRemovingAvatar}
       />
-    </DashboardLayout>
+    </>
   );
+
+  if (embedded) {
+    return pageBody;
+  }
+
+  return <DashboardLayout>{pageBody}</DashboardLayout>;
 }
 
-export default function SettingsPage() {
-  return (
-    <Suspense
-      fallback={
-        <DashboardLayout>
-          <SettingsSkeleton />
-        </DashboardLayout>
-      }
-    >
-      <SettingsPageContent />
-    </Suspense>
-  );
+export default function SettingsPage({
+  embedded = false,
+}: {
+  embedded?: boolean;
+} = {}) {
+  if (embedded) {
+    return <SettingsPageContent embedded />;
+  }
+
+  // Redirect standalone /settings visits to unified Account page
+  redirect("/account?tab=settings");
 }

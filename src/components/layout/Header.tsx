@@ -599,7 +599,7 @@ export function Header({
                 </Link>
 
                 <Link
-                  href="/settings"
+                  href="/account?tab=settings"
                   onClick={() => setIsNotificationsOpen(false)}
                   className="text-slate-400 hover:text-slate-600 p-1 rounded-md transition-colors"
                   title="Notification Preferences"
