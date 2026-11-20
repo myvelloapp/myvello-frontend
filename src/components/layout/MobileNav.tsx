@@ -43,6 +43,48 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const { user } = useAuth();
   const [isAccountOpen, setIsAccountOpen] = useState(true);
   const [isPwaCardVisible, setIsPwaCardVisible] = useState(true);
+  const [isCompact, setIsCompact] = useState(false);
+
+  // Instagram-style scroll listener: shrink navigation on scroll down, expand on scroll up
+  useEffect(() => {
+    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = Math.max(0, window.scrollY);
+
+          // If near top of page, always keep normal full size
+          if (currentScrollY <= 30) {
+            setIsCompact(false);
+          } else {
+            const diff = currentScrollY - lastScrollY;
+            // Scroll down past threshold -> shrink compact
+            if (diff > 8 && currentScrollY > 50) {
+              setIsCompact(true);
+            }
+            // Scroll up -> restore normal size
+            else if (diff < -8) {
+              setIsCompact(false);
+            }
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Reset to normal when route changes
+  useEffect(() => {
+    setIsCompact(false);
+  }, [pathname]);
 
   useEffect(() => {
     try {
@@ -335,63 +377,108 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
       {/* Instagram-Style Floating Pill Navigation Bar (Mobile & Tablet) */}
       <nav
-        className="lg:hidden fixed bottom-[max(18px,calc(18px+env(safe-area-inset-bottom)))] inset-x-3 sm:inset-x-4 max-w-[364px] mx-auto z-40 bg-white/95 backdrop-blur-2xl border border-white/80 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.16),0_4px_16px_-2px_rgba(15,23,42,0.08)] rounded-full px-2 py-1.5 flex items-center justify-between select-none"
+        className={cn(
+          "lg:hidden fixed inset-x-3 sm:inset-x-4 mx-auto z-40 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-full flex items-center justify-between select-none transition-all duration-300 ease-out will-change-[transform,max-width,padding,bottom]",
+          isCompact
+            ? "bottom-[max(12px,calc(12px+env(safe-area-inset-bottom)))] max-w-[286px] px-1.5 py-1 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.14),0_2px_8px_-2px_rgba(15,23,42,0.06)]"
+            : "bottom-[max(18px,calc(18px+env(safe-area-inset-bottom)))] max-w-[364px] px-2 py-1.5 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.16),0_4px_16px_-2px_rgba(15,23,42,0.08)]"
+        )}
         aria-label="Mobile Navigation"
       >
         {/* 1st Icon: EMI Management */}
         <Link
           href="/emis"
-          className="flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
+          className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
           aria-label="EMI Management"
         >
           <div
             className={cn(
-              "transition-all flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center",
               isEmiActive
-                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
-                : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
+                ? cn(
+                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                  )
+                : cn(
+                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
+                  )
             )}
           >
-            <CreditCard className="w-5.5 h-5.5 stroke-[2.2]" />
+            <CreditCard
+              className={cn(
+                "stroke-[2.2] transition-all duration-300",
+                isCompact ? "w-4.5 h-4.5" : "w-5.5 h-5.5"
+              )}
+            />
           </div>
         </Link>
 
         {/* 2nd Icon: Payment History */}
         <Link
           href="/payment-history"
-          className="flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
+          className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
           aria-label="Payment History"
         >
           <div
             className={cn(
-              "transition-all flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center",
               isHistoryActive
-                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
-                : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
+                ? cn(
+                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                  )
+                : cn(
+                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
+                  )
             )}
           >
-            <Clock className="w-5.5 h-5.5 stroke-[2.2]" />
+            <Clock
+              className={cn(
+                "stroke-[2.2] transition-all duration-300",
+                isCompact ? "w-4.5 h-4.5" : "w-5.5 h-5.5"
+              )}
+            />
           </div>
         </Link>
 
         {/* 3rd Icon (Center): Notifications with Red Dot */}
         <Link
           href="/notifications"
-          className="relative flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
+          className="relative flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
           aria-label="Notifications"
         >
           <div
             className={cn(
-              "transition-all flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center",
               isNotificationActive
-                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
-                : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
+                ? cn(
+                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                  )
+                : cn(
+                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
+                  )
             )}
           >
             <div className="relative flex items-center justify-center">
-              <Bell className="w-5.5 h-5.5 stroke-[2.2]" />
+              <Bell
+                className={cn(
+                  "stroke-[2.2] transition-all duration-300",
+                  isCompact ? "w-4.5 h-4.5" : "w-5.5 h-5.5"
+                )}
+              />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white shadow-2xs" />
+                <span
+                  className={cn(
+                    "absolute rounded-full bg-rose-500 ring-2 ring-white shadow-2xs transition-all duration-300",
+                    isCompact
+                      ? "-top-0.5 -right-0.5 w-2 h-2"
+                      : "-top-0.5 -right-0.5 w-2.5 h-2.5"
+                  )}
+                />
               )}
             </div>
           </div>
@@ -400,38 +487,56 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         {/* 4th Icon: Groups Workspace */}
         <Link
           href="/family"
-          className="flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
+          className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
           aria-label="Groups"
         >
           <div
             className={cn(
-              "transition-all flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center",
               isFamilyActive
-                ? "bg-emerald-50 text-emerald-800 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60 font-bold"
-                : "text-slate-500 hover:text-slate-900 w-11 h-11 rounded-full"
+                ? cn(
+                    "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
+                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                  )
+                : cn(
+                    "text-slate-500 hover:text-slate-900 rounded-full",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
+                  )
             )}
           >
-            <Users className="w-5.5 h-5.5 stroke-[2.2]" />
+            <Users
+              className={cn(
+                "stroke-[2.2] transition-all duration-300",
+                isCompact ? "w-4.5 h-4.5" : "w-5.5 h-5.5"
+              )}
+            />
           </div>
         </Link>
 
         {/* 5th Icon: Account (Instagram-Style Avatar Circle) */}
         <Link
           href="/settings"
-          className="flex items-center justify-center flex-1 min-w-[44px] min-h-[44px] touch-manipulation active:scale-90 transition-transform"
+          className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
           aria-label="Account Settings"
         >
           <div
             className={cn(
-              "transition-all flex items-center justify-center",
+              "transition-all duration-300 flex items-center justify-center",
               isAccountActive
-                ? "bg-emerald-50 rounded-full h-11 w-13 sm:w-15 shadow-2xs border border-emerald-200/60"
-                : "w-11 h-11 rounded-full"
+                ? cn(
+                    "bg-emerald-50 rounded-full shadow-2xs border border-emerald-200/60",
+                    isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
+                  )
+                : cn(
+                    "rounded-full",
+                    isCompact ? "w-8.5 h-8.5" : "w-11 h-11"
+                  )
             )}
           >
             <div
               className={cn(
-                "w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full overflow-hidden flex items-center justify-center font-bold text-xs transition-all shadow-2xs",
+                "rounded-full overflow-hidden flex items-center justify-center font-bold text-xs transition-all duration-300 shadow-2xs",
+                isCompact ? "w-6 h-6" : "w-7 h-7 sm:w-7.5 sm:h-7.5",
                 isAccountActive
                   ? "ring-2 ring-emerald-600 ring-offset-2 ring-offset-white scale-105"
                   : "opacity-85 hover:opacity-100"
@@ -441,8 +546,8 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 <Image
                   src={user.profile_photo}
                   alt={user?.name || "Account"}
-                  width={30}
-                  height={30}
+                  width={isCompact ? 24 : 30}
+                  height={isCompact ? 24 : 30}
                   unoptimized
                   className="w-full h-full object-cover"
                 />
@@ -455,7 +560,11 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                       : "bg-slate-200 text-slate-700"
                   )}
                 >
-                  {user?.name ? user.name.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
+                  {user?.name ? (
+                    user.name.charAt(0).toUpperCase()
+                  ) : (
+                    <User className={isCompact ? "w-3.5 h-3.5" : "w-4 h-4"} />
+                  )}
                 </div>
               )}
             </div>
