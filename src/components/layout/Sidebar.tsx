@@ -124,9 +124,9 @@ export function Sidebar() {
     },
     {
       label: "Documents",
-      href: "#",
+      href: "/documents",
       icon: FileText,
-      active: false,
+      active: pathname.startsWith("/documents"),
       badge: "Coming Soon",
     },
   ];

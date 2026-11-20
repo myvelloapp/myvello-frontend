@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 const PROTECTED_PREFIXES = [
   "/account",
   "/dashboard",
+  "/documents",
   "/emis",
   "/family",
   "/notifications",

@@ -116,9 +116,9 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
     },
     {
       label: "Documents",
-      href: "#",
+      href: "/documents",
       icon: FileText,
-      active: false,
+      active: pathname.startsWith("/documents"),
       badge: "Coming Soon",
     },
   ];
@@ -152,6 +152,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   ];
 
   const isEmiActive = pathname.startsWith("/emis");
+  const isDocumentsActive = pathname.startsWith("/documents");
   const isHistoryActive = pathname === "/payment-history";
   const isNotificationActive = pathname === "/notifications";
   const isFamilyActive = pathname.startsWith("/family");
@@ -414,16 +415,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           </div>
         </Link>
 
-        {/* 2nd Icon: Payment History */}
+        {/* 2nd Icon: Documents (Coming Soon) */}
         <Link
-          href="/payment-history"
+          href="/documents"
           className="flex items-center justify-center flex-1 min-w-[38px] min-h-[38px] sm:min-w-[44px] sm:min-h-[44px] touch-manipulation active:scale-90 transition-transform"
-          aria-label="Payment History"
+          aria-label="Documents"
         >
           <div
             className={cn(
               "transition-all duration-300 flex items-center justify-center",
-              isHistoryActive
+              isDocumentsActive
                 ? cn(
                     "bg-emerald-50 text-emerald-800 rounded-full shadow-2xs border border-emerald-200/60 font-bold",
                     isCompact ? "h-8.5 w-10.5 sm:w-11" : "h-11 w-13 sm:w-15"
@@ -434,7 +435,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   )
             )}
           >
-            <Clock
+            <FileText
               className={cn(
                 "stroke-[2.2] transition-all duration-300",
                 isCompact ? "w-4.5 h-4.5" : "w-5.5 h-5.5"
