@@ -43,8 +43,8 @@ function AccountContent() {
   return (
     <div className="relative pt-3.5 sm:pt-5 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none min-h-dvh">
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-3.5 sm:space-y-5">
-        {/* Account Header */}
-        <div className="flex items-center justify-between gap-3">
+        {/* Account Header (Mobile only, hidden on desktop where sidebar navigation already provides context) */}
+        <div className="lg:hidden flex items-center justify-between gap-3">
           <div className="space-y-0.5 min-w-0">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#02361B] truncate">
               Account
@@ -81,8 +81,8 @@ function AccountContent() {
           </div>
         </div>
 
-        {/* Themed Segmented Tab Control */}
-        <div className="p-1 rounded-xl bg-white border border-slate-200/80 shadow-2xs flex items-center gap-1 w-full sm:w-auto">
+        {/* Themed Segmented Tab Control (Mobile only, hidden on desktop where sidebar navigation is used) */}
+        <div className="lg:hidden p-1 rounded-xl bg-white border border-slate-200/80 shadow-2xs flex items-center gap-1 w-full sm:w-auto">
           {/* Tab 1: My Group */}
           <button
             type="button"
