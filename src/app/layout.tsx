@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { AuthProvider } from "@/modules/authentication/AuthContext";
 import { WorkspaceProvider } from "@/context/WorkspaceContext";
 import { NotificationProvider } from "@/context/NotificationContext";
+import { AppTitleManager } from "@/components/common/AppTitleManager";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -20,9 +21,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://myvello.life"
+    process.env.NEXT_PUBLIC_APP_URL || "https://myvello.app"
   ),
-  title: "Myvello | Your Life. Your Records. One Place.",
+  title: "Myvello",
   description:
     "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
   manifest: "/manifest.json",
@@ -45,10 +46,10 @@ export const metadata: Metadata = {
     shortcut: "/images/favicon.svg",
   },
   openGraph: {
-    title: "Myvello | Your Life. Your Records. One Place.",
+    title: "Myvello",
     description:
       "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
-    url: "https://myvello.life",
+    url: "https://myvello.app",
     siteName: "Myvello",
     images: [
       {
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Myvello | Your Life. Your Records. One Place.",
+    title: "Myvello",
     description:
       "Personal and family-oriented digital management platform for EMIs, loans, schedules, and important documents.",
     images: ["/images/og.png"],
@@ -145,6 +146,7 @@ export default function RootLayout({
         <AuthProvider>
           <WorkspaceProvider>
             <NotificationProvider>
+              <AppTitleManager />
               {children}
             </NotificationProvider>
           </WorkspaceProvider>
