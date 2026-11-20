@@ -42,7 +42,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const { unreadCount } = useNotifications();
   const { user } = useAuth();
   const [isAccountOpen, setIsAccountOpen] = useState(true);
-  const [isPwaCardVisible, setIsPwaCardVisible] = useState(true);
+  const [isPwaCardVisible, setIsPwaCardVisible] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
 
   // Instagram-style scroll listener: shrink navigation on scroll down, expand on scroll up
@@ -88,12 +88,24 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
   useEffect(() => {
     try {
-      const isDismissed = sessionStorage.getItem("myvello_pwa_dismissed_session");
-      if (isDismissed === "true") {
+      const isDesktopApp =
+        Boolean((window as any).desktopAPI || (window as any).electron) ||
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: window-controls-overlay)").matches ||
+        window.matchMedia("(display-mode: minimal-ui)").matches ||
+        Boolean((window.navigator as any).standalone);
+
+      if (isDesktopApp) {
         setIsPwaCardVisible(false);
+        return;
+      }
+
+      const isDismissed = sessionStorage.getItem("myvello_pwa_dismissed_session");
+      if (isDismissed !== "true") {
+        setIsPwaCardVisible(true);
       }
     } catch {
-      // ignore
+      setIsPwaCardVisible(false);
     }
   }, []);
 

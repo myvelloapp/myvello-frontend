@@ -48,17 +48,31 @@ export function Sidebar() {
   const { activeWorkspace, workspaces, switchWorkspace } = useWorkspace();
   const [isFamilyDropdownOpen, setIsFamilyDropdownOpen] = useState(false);
   const [isPwaModalOpen, setIsPwaModalOpen] = useState(false);
-  const [isPwaCardVisible, setIsPwaCardVisible] = useState(true);
+  const [isPwaCardVisible, setIsPwaCardVisible] = useState(false);
   const familyDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
-      const isDismissed = sessionStorage.getItem("myvello_pwa_dismissed_session");
-      if (isDismissed === "true") {
+      // If running inside desktop app or standalone PWA, never show install card
+      const isDesktopApp =
+        Boolean((window as any).desktopAPI || (window as any).electron) ||
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: window-controls-overlay)").matches ||
+        window.matchMedia("(display-mode: minimal-ui)").matches ||
+        Boolean((window.navigator as any).standalone);
+
+      if (isDesktopApp) {
         setIsPwaCardVisible(false);
+        return;
+      }
+
+      // On website (browser), keep visible unless user dismissed in this session
+      const isDismissed = sessionStorage.getItem("myvello_pwa_dismissed_session");
+      if (isDismissed !== "true") {
+        setIsPwaCardVisible(true);
       }
     } catch {
-      // ignore
+      setIsPwaCardVisible(false);
     }
   }, []);
 
