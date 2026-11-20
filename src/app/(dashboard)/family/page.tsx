@@ -108,9 +108,9 @@ function areFamilyDetailsEqual(a: FamilyDetail | null, b: FamilyDetail | null): 
 }
 
 // High-fidelity shimmer skeleton matching exact 2-column page geometry to guarantee zero layout shift (CLS = 0)
-function FamilyWorkspaceSkeleton() {
+export function FamilyWorkspaceSkeleton() {
   return (
-    <div className="space-y-5 sm:space-y-6 animate-pulse">
+    <div className="space-y-2.5 sm:space-y-5 animate-pulse">
       {/* 1. Page Header Skeleton */}
       {/* Mobile Skeleton: Single compact row */}
       <div className="sm:hidden flex items-center justify-between gap-2.5">
@@ -1534,7 +1534,7 @@ _Myvello — Your Life. Your Records. One Place._`
                         placeholder="spouse@gmail.com"
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
-                        className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
+                        className="w-full text-[16px] sm:text-xs min-h-[48px] sm:min-h-[42px] pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
                       />
                     </div>
                   </div>
@@ -1669,7 +1669,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   placeholder="e.g. FAM-TI6FSK"
                   value={joinToken}
                   onChange={(e) => setJoinToken(e.target.value)}
-                  className="w-full text-xs font-mono uppercase font-bold tracking-wider h-11 px-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white text-slate-900 shadow-2xs transition-all placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-slate-400"
+                  className="w-full text-[16px] sm:text-xs font-mono uppercase font-bold tracking-wider h-11 px-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white text-slate-900 shadow-2xs transition-all placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-slate-400"
                 />
               </div>
 
@@ -1759,7 +1759,7 @@ _Myvello — Your Life. Your Records. One Place._`
                   autoCapitalize="words"
                   value={newFamilyName}
                   onChange={(e) => setNewFamilyName(e.target.value)}
-                  className="w-full text-sm sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
+                  className="w-full text-[16px] sm:text-xs min-h-[48px] sm:min-h-[42px] px-3.5 py-2.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 bg-white font-semibold text-slate-800 shadow-2xs transition-all"
                 />
               </div>
 

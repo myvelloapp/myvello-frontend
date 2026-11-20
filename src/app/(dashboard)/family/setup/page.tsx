@@ -189,7 +189,7 @@ export default function FamilySetupPage() {
                       placeholder="e.g. Household & Family, Swift Car Co-owners, or Business Team"
                       value={groupName}
                       onChange={(e) => setGroupName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl border border-slate-200/90 text-sm font-bold text-slate-900 placeholder:text-slate-400 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 transition-all shadow-2xs bg-white"
+                      className="w-full pl-10 pr-4 py-2.5 min-h-[48px] sm:min-h-[42px] rounded-xl border border-slate-200/90 text-[16px] sm:text-sm font-bold text-slate-900 placeholder:text-slate-400 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 hover:border-emerald-300 transition-all shadow-2xs bg-white"
                     />
                   </div>
 
