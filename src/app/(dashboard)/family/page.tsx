@@ -12,6 +12,7 @@ import {
   X,
   Trash2,
   CheckCircle2,
+  Check,
   Copy,
   Users,
   CreditCard,
@@ -276,8 +277,22 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
 
   // Incoming invitations
   const [myInvitations, setMyInvitations] = useState<IncomingInvitationItem[]>([]);
+  const [selectedInviteId, setSelectedInviteId] = useState<number | null>(null);
   const [isAcceptingInviteId, setIsAcceptingInviteId] = useState<number | null>(null);
   const [isDecliningInviteId, setIsDecliningInviteId] = useState<number | null>(null);
+
+  // Computed: currently selected pending invitation tab (if user clicked an invited group)
+  const selectedInvite = useMemo(
+    () => (selectedInviteId ? myInvitations.find((i) => i.id === selectedInviteId) || null : null),
+    [selectedInviteId, myInvitations]
+  );
+
+  // Scoped: invitations to display ONLY under the currently selected group tab
+  const visibleInvitations = useMemo(() => {
+    if (selectedInvite) return [selectedInvite];
+    if (activeFamily) return myInvitations.filter((inv) => inv.family_id === activeFamily.id);
+    return [];
+  }, [selectedInvite, activeFamily, myInvitations]);
 
   // Client mounting for Portal modals
   const [mounted, setMounted] = useState(false);
@@ -325,7 +340,7 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   const showToast = (_msg?: string) => {};
 
 
-  // Check URL query parameters for invitation token or workspace code
+  // Check URL query parameters for invitation token, workspace code, or direct invitation ID
   useEffect(() => {
     const tokenParam =
       searchParams.get("token") ||
@@ -334,6 +349,11 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
     if (tokenParam) {
       setJoinToken(tokenParam);
       setIsJoinModalOpen(true);
+    }
+
+    const inviteIdParam = searchParams.get("invitation_id");
+    if (inviteIdParam) {
+      setSelectedInviteId(Number(inviteIdParam));
     }
   }, [searchParams]);
 
@@ -382,6 +402,9 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
           setActiveFamilyId(null);
           setActiveFamily(null);
           setError(null);
+          if (incomingInvites.length > 0) {
+            setSelectedInviteId((prev) => prev ?? incomingInvites[0].id);
+          }
         }
       } catch (err) {
         console.warn("Failed to load family workspace:", err);
@@ -417,6 +440,7 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
 
   // Switch active family workspace
   const handleSelectFamily = async (id: number) => {
+    setSelectedInviteId(null);
     if (id === activeFamilyId && activeFamily) return;
     setError(null);
     setActiveFamilyId(id);
@@ -438,6 +462,7 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
       const res = await familyService.acceptInvitationById(invitationId);
       showToast(res.family_name ? `Joined '${res.family_name}'!` : "Invitation accepted!");
       setMyInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+      setSelectedInviteId(null);
 
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
@@ -462,6 +487,7 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
       await familyService.declineInvitationById(invitationId);
       showToast("Invitation declined.");
       setMyInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+      setSelectedInviteId(null);
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("myvello:refresh_notifications"));
       }
@@ -704,170 +730,219 @@ _Myvello — Your Life. Your Records. One Place._`
           !embedded && "relative z-10"
         )}
       >
-        {/* 1. Page Header (shown when active group exists) */}
-        {activeFamily && (
+        {/* 1. Page Header (shown when active group or pending invite exists) */}
+        {(activeFamily || selectedInvite) && (
           <>
             {/* Mobile Header (sm:hidden): Sleek single compact row with 3-dot dropdown popover & primary action */}
             <div className="sm:hidden flex items-center justify-between gap-2.5 min-h-[36px]">
               <div className="flex items-center gap-2 min-w-0">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-                  {activeFamily.name}
+                  {selectedInvite ? selectedInvite.family_name : activeFamily?.name}
                 </h1>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-black capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
-                  {activeFamily.my_role}
+                <span className={cn(
+                  "px-2 py-0.5 rounded-full text-[10px] font-black capitalize shrink-0 border",
+                  selectedInvite
+                    ? "bg-amber-50 text-amber-800 border-amber-200"
+                    : "bg-emerald-50 text-emerald-800 border-emerald-200/80"
+                )}>
+                  {selectedInvite ? "Pending Invite" : activeFamily?.my_role}
                 </span>
               </div>
 
           <div className="flex items-center gap-2 shrink-0">
             {/* 3-Dot Options & Groups Menu Trigger */}
-            {activeFamily && (
-              <div ref={mobileMenuRef} className="relative shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  aria-label="Group options"
-                  aria-expanded={isMobileMenuOpen}
-                  className={cn(
-                    "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
-                    isMobileMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
-                  )}
-                >
-                  <MoreHorizontal className="w-5 h-5 text-slate-700" />
-                </button>
+            <div ref={mobileMenuRef} className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Group options"
+                aria-expanded={isMobileMenuOpen}
+                className={cn(
+                  "w-9 h-9 rounded-full border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 shadow-2xs flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation",
+                  isMobileMenuOpen && "bg-slate-100 border-emerald-300 ring-2 ring-emerald-500/20"
+                )}
+              >
+                <MoreHorizontal className="w-5 h-5 text-slate-700" />
+              </button>
 
-                {/* Mobile Dropdown Menu Popover matching other screens */}
-                {isMobileMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
-                    {/* Top Pointer Tip Arrow */}
-                    <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
+              {/* Mobile Dropdown Menu Popover matching other screens */}
+              {isMobileMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
+                  {/* Top Pointer Tip Arrow */}
+                  <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-white border-t border-l border-slate-200/90 rotate-45 z-10" />
 
-                    <div className="relative z-20 space-y-0.5">
-                      {/* Groups Switcher (if user belongs to multiple groups) */}
-                      {families.length > 1 && (
-                        <>
-                          <div className="px-3 pt-1.5 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400">
-                            Switch Group
-                          </div>
-                          {families.map((f) => {
-                            const isSelected = f.id === activeFamilyId;
-                            return (
-                              <button
-                                key={f.id}
-                                type="button"
-                                onClick={() => {
-                                  setIsMobileMenuOpen(false);
-                                  handleSelectFamily(f.id);
-                                }}
+                  <div className="relative z-20 space-y-0.5">
+                    {/* Groups Switcher (if user belongs to multiple groups or has pending invites) */}
+                    {(families.length > 1 || myInvitations.length > 0) && (
+                      <>
+                        <div className="px-3 pt-1.5 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                          Switch Group
+                        </div>
+                        {families.map((f) => {
+                          const isSelected = selectedInviteId === null && f.id === activeFamilyId;
+                          return (
+                            <button
+                              key={f.id}
+                              type="button"
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setSelectedInviteId(null);
+                                handleSelectFamily(f.id);
+                              }}
+                              className={cn(
+                                "w-full px-3 py-2 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
+                                isSelected
+                                  ? "bg-emerald-50 text-emerald-800 font-bold"
+                                  : "text-slate-700 hover:text-emerald-700 hover:bg-slate-50"
+                              )}
+                            >
+                              <div className="flex items-center gap-2 min-w-0 truncate">
+                                <Users className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-emerald-700" : "text-slate-400")} />
+                                <span className="truncate">{f.name}</span>
+                              </div>
+                              <span
                                 className={cn(
-                                  "w-full px-3 py-2 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
-                                  isSelected
-                                    ? "bg-emerald-50 text-emerald-800 font-bold"
-                                    : "text-slate-700 hover:text-emerald-700 hover:bg-slate-50"
+                                  "px-1.5 py-0.2 rounded-full text-[10px] font-bold shrink-0",
+                                  isSelected ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-500"
                                 )}
                               >
-                                <div className="flex items-center gap-2 min-w-0 truncate">
-                                  <Users className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-emerald-700" : "text-slate-400")} />
-                                  <span className="truncate">{f.name}</span>
-                                </div>
-                                <span
-                                  className={cn(
-                                    "px-1.5 py-0.2 rounded-full text-[10px] font-bold shrink-0",
-                                    isSelected ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-500"
-                                  )}
-                                >
-                                  {f.members_count}
-                                </span>
-                              </button>
-                            );
-                          })}
-                          <div className="h-px bg-slate-100 my-1" />
-                        </>
-                      )}
+                                {f.members_count}
+                              </span>
+                            </button>
+                          );
+                        })}
 
-                      {/* Share a Loan */}
-                      <Link
-                        href="/emis/new"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                      >
-                        <Plus className="w-4 h-4 text-emerald-700 shrink-0" />
-                        <span>Share a Loan</span>
-                      </Link>
+                        {myInvitations.map((inv) => {
+                          const isSelected = selectedInviteId === inv.id;
+                          return (
+                            <button
+                              key={`mob-invite-${inv.id}`}
+                              type="button"
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setSelectedInviteId(inv.id);
+                              }}
+                              className={cn(
+                                "w-full px-3 py-2 text-left text-xs font-semibold rounded-xl flex items-center justify-between gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation",
+                                isSelected
+                                  ? "bg-amber-100 text-amber-900 font-bold"
+                                  : "text-amber-800 hover:text-amber-900 hover:bg-amber-50"
+                              )}
+                            >
+                              <div className="flex items-center gap-2 min-w-0 truncate">
+                                <Sparkles className={cn("w-3.5 h-3.5 shrink-0", isSelected ? "text-amber-700" : "text-amber-500")} />
+                                <span className="truncate">{inv.family_name}</span>
+                              </div>
+                              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold shrink-0 bg-amber-200 text-amber-900">
+                                Invite
+                              </span>
+                            </button>
+                          );
+                        })}
+                        <div className="h-px bg-slate-100 my-1" />
+                      </>
+                    )}
 
-                      {/* Rename Group (owner only) */}
-                      {activeFamily.is_owner && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsMobileMenuOpen(false);
-                            setIsRenameModalOpen(true);
-                          }}
+                    {/* Active Group Actions */}
+                    {activeFamily && !selectedInvite && (
+                      <>
+                        <Link
+                          href="/emis/new"
+                          onClick={() => setIsMobileMenuOpen(false)}
                           className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                         >
-                          <Edit2 className="w-4 h-4 text-slate-500 shrink-0" />
-                          <span>Rename Group</span>
-                        </button>
-                      )}
+                          <Plus className="w-4 h-4 text-emerald-700 shrink-0" />
+                          <span>Share a Loan</span>
+                        </Link>
 
-                      {/* Create New Group */}
-                      <Link
-                        href="/family/setup"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                      >
-                        <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>Create New Group</span>
-                      </Link>
+                        {activeFamily.is_owner && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setIsRenameModalOpen(true);
+                            }}
+                            className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                          >
+                            <Edit2 className="w-4 h-4 text-slate-500 shrink-0" />
+                            <span>Rename Group</span>
+                          </button>
+                        )}
+                      </>
+                    )}
 
-                      {/* Join with Code */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsMobileMenuOpen(false);
-                          setIsJoinModalOpen(true);
-                        }}
-                        className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                      >
-                        <LinkIcon className="w-4 h-4 text-slate-500 shrink-0" />
-                        <span>Join with Code</span>
-                      </button>
+                    {/* Create New Group */}
+                    <Link
+                      href="/family/setup"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>Create New Group</span>
+                    </Link>
 
-                      {/* Danger: Leave / Delete */}
-                      <div className="h-px bg-slate-100 my-1" />
-                      {!activeFamily.is_owner ? (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsMobileMenuOpen(false);
-                            handleLeaveFamily();
-                          }}
-                          className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                        >
-                          <LogOut className="w-4 h-4 text-rose-500 shrink-0" />
-                          <span>Leave Group</span>
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsMobileMenuOpen(false);
-                            setDeleteError(null);
-                            setIsDeleteModalOpen(true);
-                          }}
-                          className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
-                        >
-                          <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
-                          <span>Delete Group</span>
-                        </button>
-                      )}
-                    </div>
+                    {/* Join with Code */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsJoinModalOpen(true);
+                      }}
+                      className="w-full px-3 py-2 text-left text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-slate-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                    >
+                      <LinkIcon className="w-4 h-4 text-slate-500 shrink-0" />
+                      <span>Join with Code</span>
+                    </button>
+
+                    {/* Danger: Leave / Delete (Only for active groups) */}
+                    {activeFamily && !selectedInvite && (
+                      <>
+                        <div className="h-px bg-slate-100 my-1" />
+                        {!activeFamily.is_owner ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              handleLeaveFamily();
+                            }}
+                            className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                          >
+                            <LogOut className="w-4 h-4 text-rose-500 shrink-0" />
+                            <span>Leave Group</span>
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setDeleteError(null);
+                              setIsDeleteModalOpen(true);
+                            }}
+                            className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
+                          >
+                            <Trash2 className="w-4 h-4 text-rose-500 shrink-0" />
+                            <span>Delete Group</span>
+                          </button>
+                        )}
+                      </>
+                    )}
                   </div>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
 
-            {/* Primary Action Button: Invite Member */}
-            {activeFamily && (activeFamily.is_owner || activeFamily.is_admin) ? (
+            {/* Primary Action Button: Accept invite on mobile, or Invite Member */}
+            {selectedInvite ? (
+              <button
+                type="button"
+                disabled={isAcceptingInviteId === selectedInvite.id}
+                onClick={() => handleAcceptIncomingInvite(selectedInvite.id)}
+                className="h-9 px-3.5 rounded-[12px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 disabled:opacity-60"
+              >
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>{isAcceptingInviteId === selectedInvite.id ? "Joining..." : "Accept"}</span>
+              </button>
+            ) : activeFamily && (activeFamily.is_owner || activeFamily.is_admin) ? (
               <button
                 type="button"
                 onClick={() => {
@@ -899,25 +974,33 @@ _Myvello — Your Life. Your Records. One Place._`
           <div className="space-y-2.5 min-w-0">
             <div className="flex items-center gap-2.5 flex-wrap">
               <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-[#02361B] truncate">
-                {activeFamily.name}
+                {selectedInvite ? selectedInvite.family_name : activeFamily?.name}
               </h1>
 
               {/* Role Badge */}
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-emerald-50 text-emerald-800 border border-emerald-200/80 shrink-0">
-                {activeFamily.my_role}
+              <span className={cn(
+                "px-2.5 py-0.5 rounded-full text-xs font-bold capitalize shrink-0 border",
+                selectedInvite
+                  ? "bg-amber-50 text-amber-800 border-amber-200"
+                  : "bg-emerald-50 text-emerald-800 border-emerald-200/80"
+              )}>
+                {selectedInvite ? "Pending Invitation" : activeFamily?.my_role}
               </span>
             </div>
 
             {/* Segmented Workspace Tabs on Desktop */}
-            {families.length > 1 && (
+            {(families.length > 1 || myInvitations.length > 0) && (
               <div className="p-1 rounded-[8px] bg-white border border-slate-200/80 shadow-2xs flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth">
                 {families.map((f) => {
-                  const isSelected = f.id === activeFamilyId;
+                  const isSelected = selectedInviteId === null && f.id === activeFamilyId;
                   return (
                     <button
                       key={f.id}
                       type="button"
-                      onClick={() => handleSelectFamily(f.id)}
+                      onClick={() => {
+                        setSelectedInviteId(null);
+                        handleSelectFamily(f.id);
+                      }}
                       className={cn(
                         "min-h-[34px] px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap active:scale-95 touch-manipulation",
                         isSelected
@@ -938,6 +1021,36 @@ _Myvello — Your Life. Your Records. One Place._`
                     </button>
                   );
                 })}
+
+                {/* Pending Invited Group Tabs */}
+                {myInvitations.map((inv) => {
+                  const isSelected = selectedInviteId === inv.id;
+                  return (
+                    <button
+                      key={`invite-${inv.id}`}
+                      type="button"
+                      onClick={() => setSelectedInviteId(inv.id)}
+                      className={cn(
+                        "min-h-[34px] px-3.5 py-1.5 rounded-[6px] text-xs transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap active:scale-95 touch-manipulation",
+                        isSelected
+                          ? "btn-gradient-glow text-white font-bold shadow-xs shadow-emerald-500/25"
+                          : "text-amber-800 bg-amber-50/70 border border-amber-200/60 hover:bg-amber-100/70 font-semibold"
+                      )}
+                    >
+                      <Sparkles className={cn("w-3.5 h-3.5", isSelected ? "text-white" : "text-amber-600")} />
+                      <span>{inv.family_name}</span>
+                      <span
+                        className={cn(
+                          "px-1.5 py-0.5 rounded-full text-[10px] font-bold leading-none",
+                          isSelected ? "bg-white/20 text-white" : "bg-amber-200/80 text-amber-900"
+                        )}
+                      >
+                        Invite
+                      </span>
+                    </button>
+                  );
+                })}
+
                 <Link
                   href="/family/setup"
                   className="min-h-[34px] px-3 py-1.5 rounded-[6px] text-xs font-semibold text-emerald-700 hover:bg-emerald-50/80 transition-all flex items-center gap-1 whitespace-nowrap ml-0.5 cursor-pointer active:scale-95 touch-manipulation shrink-0"
@@ -952,35 +1065,60 @@ _Myvello — Your Life. Your Records. One Place._`
 
           {/* Quick Header Actions on Desktop */}
           <div className="flex items-center gap-2">
-            {activeFamily && (activeFamily.is_owner || activeFamily.is_admin) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setInviteSuccessMessage(null);
-                  setLastGeneratedToken(null);
-                  setIsInviteModalOpen(true);
-                }}
-                className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
-              >
-                <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>Invite Member</span>
-              </button>
-            )}
-
-            {activeFamily && (
-              <Link href="/emis/new">
+            {selectedInvite ? (
+              <>
                 <button
                   type="button"
-                  className="min-h-[38px] h-9.5 px-4 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                  disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
+                  onClick={() => handleAcceptIncomingInvite(selectedInvite.id)}
+                  className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap disabled:opacity-60"
                 >
-                  <Plus className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>Share a Loan</span>
+                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>{isAcceptingInviteId === selectedInvite.id ? "Joining..." : "Accept"}</span>
                 </button>
-              </Link>
+                <button
+                  type="button"
+                  disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
+                  onClick={() => handleDeclineIncomingInvite(selectedInvite.id)}
+                  className="min-h-[38px] h-9.5 px-4 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap disabled:opacity-60"
+                >
+                  <X className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Decline</span>
+                </button>
+              </>
+            ) : (
+              <>
+                {activeFamily && (activeFamily.is_owner || activeFamily.is_admin) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setInviteSuccessMessage(null);
+                      setLastGeneratedToken(null);
+                      setIsInviteModalOpen(true);
+                    }}
+                    className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  >
+                    <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Invite Member</span>
+                  </button>
+                )}
+
+                {activeFamily && (
+                  <Link href="/emis/new">
+                    <button
+                      type="button"
+                      className="min-h-[38px] h-9.5 px-4 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-emerald-700" />
+                      <span>Share a Loan</span>
+                    </button>
+                  </Link>
+                )}
+              </>
             )}
 
             {/* Discreet Options Menu */}
-            {activeFamily && (
+            {activeFamily && !selectedInvite && (
               <div ref={menuRef} className="relative shrink-0">
                 <button
                   type="button"
@@ -1065,18 +1203,18 @@ _Myvello — Your Life. Your Records. One Place._`
           </>
         )}
 
-        {/* 2. Pending Incoming Invitations Banner (if any) */}
-        {myInvitations.length > 0 && (
-          <div className="bg-white rounded-2xl border border-emerald-200/80 p-4 sm:p-5 shadow-xs space-y-3">
+        {/* 2. Pending Incoming Invitations Banner (Displayed ONLY under the currently selected group) */}
+        {visibleInvitations.length > 0 && (
+          <div className="bg-white rounded-2xl border border-emerald-200/80 p-4 sm:p-5 shadow-xs space-y-3 animate-in fade-in">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-700" />
               <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                Pending Invitations ({myInvitations.length})
+                Pending Invitations ({visibleInvitations.length})
               </h3>
             </div>
 
             <div className="space-y-2.5">
-              {myInvitations.map((inv) => (
+              {visibleInvitations.map((inv) => (
                 <div
                   key={inv.id}
                   className="p-3.5 sm:p-4 rounded-xl bg-emerald-50/40 border border-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
@@ -1121,8 +1259,8 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 3. Empty State: No Group Created Yet */}
-        {!isLoading && !activeFamily && !error && (
+        {/* 3. Empty State: No Group Created Yet and No Pending Invites */}
+        {!isLoading && !activeFamily && !selectedInvite && !error && (
           <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-12 text-center max-w-xl mx-auto shadow-2xs space-y-5">
             <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-700 shadow-2xs">
               <Users className="w-7 h-7" />
@@ -1163,9 +1301,51 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 4. Active Workspace Content: Clean 2-Column Minimal Architecture */}
-        {!isLoading && activeFamily && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
+        {/* 4. Active Workspace Content or Selected Invite View */}
+        {selectedInvite ? (
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-10 text-center max-w-xl mx-auto shadow-2xs space-y-5 animate-in fade-in">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-700 shadow-2xs">
+              <Users className="w-7 h-7" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h2 className="text-lg sm:text-xl font-black text-[#02361B]">
+                {selectedInvite.family_name} Workspace
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
+                <strong>{selectedInvite.invited_by_name}</strong> has invited you to join this group vault as <strong>{selectedInvite.role}</strong>. Accept the invitation to access shared loan schedules, repayments, and collaborative documents.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full">
+              <button
+                type="button"
+                disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
+                onClick={() => handleAcceptIncomingInvite(selectedInvite.id)}
+                className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-6 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
+              >
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>{isAcceptingInviteId === selectedInvite.id ? "Joining..." : "Accept & Join Group"}</span>
+              </button>
+              <button
+                type="button"
+                disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
+                onClick={() => handleDeclineIncomingInvite(selectedInvite.id)}
+                className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-5 rounded-xl sm:rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
+              >
+                <X className="w-3.5 h-3.5 text-slate-500" />
+                <span>Decline</span>
+              </button>
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>Zero Personal Exposure: Your private loans remain confidential in your personal vault.</span>
+            </div>
+          </div>
+        ) : (
+          !isLoading && activeFamily && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
             {/* Left Column (8 cols): Shared Loans & Financial Metrics */}
             <div className="lg:col-span-8 space-y-4">
               {/* Minimal 2-Stat Row */}
@@ -1472,6 +1652,7 @@ _Myvello — Your Life. Your Records. One Place._`
               </div>
             </div>
           </div>
+          )
         )}
         </div>
       </div>
