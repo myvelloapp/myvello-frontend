@@ -6,6 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import {
   Bell,
   Menu,
+  ArrowLeft,
   CheckCheck,
   ChevronRight,
   ChevronDown,
@@ -84,6 +85,18 @@ export function Header({
     }, 220);
   }, [isPopupExiting, router, pathname]);
 
+  // Mobile App Back Button: Visible on secondary/sub-pages, hidden on primary home screen
+  const isMainPage = pathname === "/emis" || pathname === "/dashboard" || pathname === "/";
+  const showBackButton = !isMainPage;
+
+  const handleBack = useCallback(() => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/emis");
+    }
+  }, [router]);
+
   // Close notifications dropdown when clicking outside or pressing Escape
   useEffect(() => {
     if (!isNotificationsOpen) return;
@@ -149,10 +162,21 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-30 h-18 sm:h-18 lg:h-20 pt-2.5 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
-      {/* Left side: Brand Logo (Omitted in popup mode) */}
+      {/* Left side: Brand Logo & Mobile Back Button (Omitted in popup mode) */}
       <div className="flex items-center gap-2 pointer-events-auto">
         {!isPopupMode && (
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-2">
+            {showBackButton && (
+              <button
+                type="button"
+                onClick={handleBack}
+                className="w-11 h-11 rounded-[15px] sm:rounded-[16px] bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 shadow-[0_4px_16px_-4px_rgba(15,23,42,0.08)] border border-white/60 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer active:scale-95 touch-manipulation"
+                aria-label="Go back"
+                title="Back"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            )}
             <BrandLogo iconOnly className="" href="/emis" />
           </div>
         )}
