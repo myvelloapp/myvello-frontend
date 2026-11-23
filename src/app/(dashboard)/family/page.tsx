@@ -19,6 +19,7 @@ import {
   Edit2,
   Plus,
   LogOut,
+  UserMinus,
   Sparkles,
   Link as LinkIcon,
   MessageCircle,
@@ -322,20 +323,30 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   const [isDeletingFamily, setIsDeletingFamily] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+  const [isLeavingFamily, setIsLeavingFamily] = useState(false);
+  const [leaveError, setLeaveError] = useState<string | null>(null);
+
+  const [memberToRemove, setMemberToRemove] = useState<{ id: number; name: string } | null>(null);
+  const [isRemovingMember, setIsRemovingMember] = useState(false);
+  const [removeMemberError, setRemoveMemberError] = useState<string | null>(null);
+
   // Close modals on Escape key
   useEffect(() => {
-    if (!isJoinModalOpen && !isInviteModalOpen && !isRenameModalOpen && !isDeleteModalOpen) return;
+    if (!isJoinModalOpen && !isInviteModalOpen && !isRenameModalOpen && !isDeleteModalOpen && !isLeaveModalOpen && !memberToRemove) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (isJoinModalOpen && !isJoining) setIsJoinModalOpen(false);
         if (isInviteModalOpen && !isSendingInvite) setIsInviteModalOpen(false);
         if (isRenameModalOpen && !isRenaming) setIsRenameModalOpen(false);
         if (isDeleteModalOpen && !isDeletingFamily) setIsDeleteModalOpen(false);
+        if (isLeaveModalOpen && !isLeavingFamily) setIsLeaveModalOpen(false);
+        if (memberToRemove && !isRemovingMember) setMemberToRemove(null);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isJoinModalOpen, isJoining, isInviteModalOpen, isSendingInvite, isRenameModalOpen, isRenaming, isDeleteModalOpen, isDeletingFamily]);
+  }, [isJoinModalOpen, isJoining, isInviteModalOpen, isSendingInvite, isRenameModalOpen, isRenaming, isDeleteModalOpen, isDeletingFamily, isLeaveModalOpen, isLeavingFamily, memberToRemove, isRemovingMember]);
 
   const showToast = (_msg?: string) => {};
 
@@ -586,18 +597,25 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   };
 
   // Leave family
-  const handleLeaveFamily = async () => {
+  const handleConfirmLeaveFamily = async () => {
     if (!activeFamily) return;
-    if (!confirm(`Are you sure you want to leave '${activeFamily.name}'?`)) return;
 
+    setIsLeavingFamily(true);
+    setLeaveError(null);
     try {
       await familyService.leaveFamily(activeFamily.id);
       await refreshWorkspaces();
       showToast(`Left '${activeFamily.name}'`);
+      setIsLeaveModalOpen(false);
       switchWorkspace("personal");
       await loadFamilies();
-    } catch {
-      showToast("Failed to leave workspace.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } } };
+      const message = errorObj.response?.data?.message || "Failed to leave workspace.";
+      setLeaveError(message);
+      showToast(message);
+    } finally {
+      setIsLeavingFamily(false);
     }
   };
 
@@ -631,17 +649,24 @@ function FamilyPageContent({ embedded = false }: { embedded?: boolean } = {}) {
   };
 
   // Remove member
-  const handleRemoveMember = async (memberId: number, memberName: string) => {
-    if (!activeFamily) return;
-    if (!confirm(`Remove ${memberName} from this household workspace?`)) return;
+  const handleConfirmRemoveMember = async () => {
+    if (!activeFamily || !memberToRemove) return;
 
+    setIsRemovingMember(true);
+    setRemoveMemberError(null);
     try {
-      await familyService.removeMember(activeFamily.id, memberId);
-      showToast(`${memberName} removed.`);
+      await familyService.removeMember(activeFamily.id, memberToRemove.id);
+      showToast(`${memberToRemove.name} removed.`);
+      setMemberToRemove(null);
       const refreshed = await familyService.getFamily(activeFamily.id);
       setActiveFamily(refreshed);
-    } catch {
-      showToast("Failed to remove member.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } } };
+      const message = errorObj.response?.data?.message || "Failed to remove member.";
+      setRemoveMemberError(message);
+      showToast(message);
+    } finally {
+      setIsRemovingMember(false);
     }
   };
 
@@ -903,7 +928,8 @@ _Myvello — Your Life. Your Records. One Place._`
                             type="button"
                             onClick={() => {
                               setIsMobileMenuOpen(false);
-                              handleLeaveFamily();
+                              setLeaveError(null);
+                              setIsLeaveModalOpen(true);
                             }}
                             className="w-full px-3 py-2 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-xl flex items-center gap-2.5 transition-colors cursor-pointer active:scale-[0.98] touch-manipulation"
                           >
@@ -1152,7 +1178,8 @@ _Myvello — Your Life. Your Records. One Place._`
                         type="button"
                         onClick={() => {
                           setIsMenuOpen(false);
-                          handleLeaveFamily();
+                          setLeaveError(null);
+                          setIsLeaveModalOpen(true);
                         }}
                         className="w-full px-4 py-2.5 text-left text-xs font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors cursor-pointer active:bg-rose-100 touch-manipulation"
                       >
@@ -1540,7 +1567,10 @@ _Myvello — Your Life. Your Records. One Place._`
                         {activeFamily.is_owner && member.user_id !== user?.id && (
                           <button
                             type="button"
-                            onClick={() => handleRemoveMember(member.id, member.name)}
+                            onClick={() => {
+                              setRemoveMemberError(null);
+                              setMemberToRemove({ id: member.id, name: member.name });
+                            }}
                             className="min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px] flex items-center justify-center rounded-lg text-slate-300 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer active:scale-95 touch-manipulation"
                             title="Remove member"
                           >
@@ -1995,6 +2025,124 @@ _Myvello — Your Life. Your Records. One Place._`
                 className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md shadow-rose-600/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
               >
                 {isDeletingFamily ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Leave Group Confirmation Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
+      {mounted && isLeaveModalOpen && activeFamily && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isLeavingFamily) {
+              setIsLeaveModalOpen(false);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative w-full max-w-sm bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 space-y-4 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
+            {/* Native Mobile Drag Handle */}
+            <div className="sm:hidden -mt-2 pb-2 flex justify-center w-full">
+              <div className="w-10 h-1.5 rounded-full bg-slate-300" />
+            </div>
+
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-2xs shrink-0">
+              <LogOut className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-base font-black text-[#02361B]">Leave Group?</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Are you sure you want to leave <strong>&apos;{activeFamily.name}&apos;</strong>? You will lose access to shared loans and activities within this group.
+              </p>
+            </div>
+
+            {leaveError && (
+              <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-start gap-2 text-left w-full">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                <span>{leaveError}</span>
+              </div>
+            )}
+
+            <div className="flex items-center justify-center gap-2.5 pt-2 w-full">
+              <button
+                type="button"
+                disabled={isLeavingFamily}
+                onClick={() => setIsLeaveModalOpen(false)}
+                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isLeavingFamily}
+                onClick={handleConfirmLeaveFamily}
+                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md shadow-rose-600/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+              >
+                {isLeavingFamily ? "Leaving..." : "Leave Group"}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Remove Member Confirmation Modal - Native Mobile Bottom Sheet & Desktop Dialog */}
+      {mounted && memberToRemove && activeFamily && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 select-none"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isRemovingMember) {
+              setMemberToRemove(null);
+            }
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative w-full max-w-sm bg-white rounded-t-[28px] sm:rounded-2xl shadow-2xl border-t sm:border border-slate-200/90 overflow-hidden flex flex-col items-center text-center p-5 sm:p-6 space-y-4 animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 max-h-[92dvh] sm:max-h-[85vh] pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
+            {/* Native Mobile Drag Handle */}
+            <div className="sm:hidden -mt-2 pb-2 flex justify-center w-full">
+              <div className="w-10 h-1.5 rounded-full bg-slate-300" />
+            </div>
+
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-2xs shrink-0">
+              <UserMinus className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-base font-black text-[#02361B]">Remove Member?</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Remove <strong>{memberToRemove.name}</strong> from <strong>&apos;{activeFamily.name}&apos;</strong>? They will lose access to shared group loans and records.
+              </p>
+            </div>
+
+            {removeMemberError && (
+              <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-start gap-2 text-left w-full">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                <span>{removeMemberError}</span>
+              </div>
+            )}
+
+            <div className="flex items-center justify-center gap-2.5 pt-2 w-full">
+              <button
+                type="button"
+                disabled={isRemovingMember}
+                onClick={() => setMemberToRemove(null)}
+                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isRemovingMember}
+                onClick={handleConfirmRemoveMember}
+                className="flex-1 min-h-[44px] h-11 sm:h-9.5 rounded-xl sm:rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md shadow-rose-600/20 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60 active:scale-95 touch-manipulation"
+              >
+                {isRemovingMember ? "Removing..." : "Remove"}
               </button>
             </div>
           </div>
