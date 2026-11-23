@@ -1301,51 +1301,9 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 4. Active Workspace Content or Selected Invite View */}
-        {selectedInvite ? (
-          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-10 text-center max-w-xl mx-auto shadow-2xs space-y-5 animate-in fade-in">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-700 shadow-2xs">
-              <Users className="w-7 h-7" />
-            </div>
-
-            <div className="space-y-1.5">
-              <h2 className="text-lg sm:text-xl font-black text-[#02361B]">
-                {selectedInvite.family_name} Workspace
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
-                <strong>{selectedInvite.invited_by_name}</strong> has invited you to join this group vault as <strong>{selectedInvite.role}</strong>. Accept the invitation to access shared loan schedules, repayments, and collaborative documents.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 w-full">
-              <button
-                type="button"
-                disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
-                onClick={() => handleAcceptIncomingInvite(selectedInvite.id)}
-                className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-6 rounded-xl sm:rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
-              >
-                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>{isAcceptingInviteId === selectedInvite.id ? "Joining..." : "Accept & Join Group"}</span>
-              </button>
-              <button
-                type="button"
-                disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
-                onClick={() => handleDeclineIncomingInvite(selectedInvite.id)}
-                className="w-full sm:w-auto min-h-[44px] h-11 sm:h-10 px-5 rounded-xl sm:rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer active:scale-95 touch-manipulation inline-flex items-center justify-center gap-1.5 disabled:opacity-60"
-              >
-                <X className="w-3.5 h-3.5 text-slate-500" />
-                <span>Decline</span>
-              </button>
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Zero Personal Exposure: Your private loans remain confidential in your personal vault.</span>
-            </div>
-          </div>
-        ) : (
-          !isLoading && activeFamily && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
+        {/* 4. Active Workspace Content: Clean 2-Column Minimal Architecture */}
+        {!isLoading && activeFamily && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
             {/* Left Column (8 cols): Shared Loans & Financial Metrics */}
             <div className="lg:col-span-8 space-y-4">
               {/* Minimal 2-Stat Row */}
@@ -1652,7 +1610,6 @@ _Myvello — Your Life. Your Records. One Place._`
               </div>
             </div>
           </div>
-          )
         )}
         </div>
       </div>
