@@ -1065,28 +1065,7 @@ _Myvello — Your Life. Your Records. One Place._`
 
           {/* Quick Header Actions on Desktop */}
           <div className="flex items-center gap-2">
-            {selectedInvite ? (
-              <>
-                <button
-                  type="button"
-                  disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
-                  onClick={() => handleAcceptIncomingInvite(selectedInvite.id)}
-                  className="min-h-[38px] h-9.5 px-4 rounded-[8px] btn-gradient-glow text-white text-xs font-bold shadow-md shadow-emerald-500/25 active:scale-95 touch-manipulation transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 whitespace-nowrap disabled:opacity-60"
-                >
-                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                  <span>{isAcceptingInviteId === selectedInvite.id ? "Joining..." : "Accept"}</span>
-                </button>
-                <button
-                  type="button"
-                  disabled={isAcceptingInviteId === selectedInvite.id || isDecliningInviteId === selectedInvite.id}
-                  onClick={() => handleDeclineIncomingInvite(selectedInvite.id)}
-                  className="min-h-[38px] h-9.5 px-4 rounded-[8px] border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation whitespace-nowrap disabled:opacity-60"
-                >
-                  <X className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Decline</span>
-                </button>
-              </>
-            ) : (
+            {!selectedInvite && (
               <>
                 {activeFamily && (activeFamily.is_owner || activeFamily.is_admin) && (
                   <button
