@@ -94,11 +94,12 @@ export function DashboardLayout({
 
         {/* Page Viewport with safe-area padding for bottom mobile nav */}
         <main
+          id="main-viewport"
           className={cn(
-            "flex-1 min-w-0 overflow-x-hidden outline-none focus:outline-none",
+            "dashboard-main-viewport flex-1 flex flex-col min-w-0 overflow-x-hidden outline-none focus:outline-none",
             isPopupMode
-              ? "pb-8 sm:pb-12"
-              : "pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-12"
+              ? "pb-6 sm:pb-8"
+              : "pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-8"
           )}
         >
           {children}
