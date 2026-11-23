@@ -109,6 +109,17 @@ export const authService = {
    */
   async logout(): Promise<void> {
     try {
+      if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          const sub = await reg?.pushManager?.getSubscription();
+          if (sub?.endpoint) {
+            await apiClient.post("/push/unsubscribe", { endpoint: sub.endpoint }).catch(() => {});
+          }
+        } catch {
+          // ignore
+        }
+      }
       await apiClient.post("/auth/logout");
     } finally {
       if (typeof window !== "undefined") {
