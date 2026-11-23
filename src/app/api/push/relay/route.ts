@@ -54,18 +54,6 @@ export async function POST(req: Request) {
     const bodyText = payload?.body || "";
     const tag = payload?.tag || "";
 
-    // Suppress push alerts when OTHER members pay ("Payment Logged")
-    // Allow the payer's own confirmation receipt ("Payment Reconciled") to reach their desktop
-    const isOtherMemberPaymentAlert = /payment\s*logged/i.test(title);
-
-    if (isOtherMemberPaymentAlert) {
-      return NextResponse.json({
-        success: true,
-        message: "Payment push notifications for other group members are suppressed.",
-        sent_count: 0,
-      });
-    }
-
     const jsonPayload = JSON.stringify({
       title,
       body: bodyText,

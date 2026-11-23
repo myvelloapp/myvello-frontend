@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X, Bell, Check, AlertCircle, Loader2, Mail } from "lucide-react";
+import { X, Bell, Check, AlertCircle, Loader2, Mail, Receipt, Users } from "lucide-react";
 import { profileService, NotificationPreferences } from "@/services/profileService";
 import { useAuth } from "@/modules/authentication/AuthContext";
 import { PushNotificationCard } from "@/components/notifications/PushNotificationCard";
@@ -21,6 +21,8 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   rem_1_day: true,
   rem_due_date: true,
   rem_overdue: true,
+  email_receipts: true,
+  group_payment_push: true,
 };
 
 export const NotificationPreferencesModal: React.FC<NotificationPreferencesModalProps> = ({
@@ -62,6 +64,8 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
             rem_1_day: np.rem_1_day !== undefined ? Boolean(np.rem_1_day) : true,
             rem_due_date: np.rem_due_date !== undefined ? Boolean(np.rem_due_date) : true,
             rem_overdue: np.rem_overdue !== undefined ? Boolean(np.rem_overdue) : true,
+            email_receipts: np.email_receipts !== undefined ? Boolean(np.email_receipts) : true,
+            group_payment_push: np.group_payment_push !== undefined ? Boolean(np.group_payment_push) : true,
           });
         } else {
           // If no preferences record exists, ensure all are filled true initially
@@ -250,6 +254,105 @@ export const NotificationPreferencesModal: React.FC<NotificationPreferencesModal
                       checked={preferences.email_enabled}
                       onChange={(e) =>
                         setPreferences((prev) => ({ ...prev, email_enabled: e.target.checked }))
+                      }
+                      className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-2"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Payment Receipts & Group Activity */}
+              <div className="space-y-2 pt-1">
+                <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400 px-0.5">
+                  Payment Receipts & Group Activity
+                </h4>
+
+                <div className="space-y-2">
+                  {/* Email Payment Receipts */}
+                  <label
+                    className={cn(
+                      "p-3 sm:p-3.5 rounded-[14px] border transition-all cursor-pointer flex items-center justify-between gap-3 min-h-[52px] select-none active:scale-[0.99] touch-manipulation shadow-2xs",
+                      preferences.email_receipts
+                        ? "bg-white border-slate-200/90 hover:border-slate-300/80"
+                        : "bg-slate-50/60 border-slate-200/70 text-slate-400"
+                    )}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={cn(
+                          "w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 border transition-colors",
+                          preferences.email_receipts
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200/70"
+                            : "bg-slate-100 text-slate-400 border-slate-200/80"
+                        )}
+                      >
+                        <Receipt className="w-4.5 h-4.5 stroke-[2.2]" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-xs sm:text-sm font-bold text-slate-900 block leading-tight">
+                            Email Payment Receipts
+                          </span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                            Records
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 font-medium block mt-0.5 truncate">
+                          Automated confirmation receipt with transaction reference for tax & bookkeeping
+                        </span>
+                      </div>
+                    </div>
+
+                    <input
+                      type="checkbox"
+                      checked={preferences.email_receipts}
+                      onChange={(e) =>
+                        setPreferences((prev) => ({ ...prev, email_receipts: e.target.checked }))
+                      }
+                      className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-2"
+                    />
+                  </label>
+
+                  {/* Group Member Payment Alerts */}
+                  <label
+                    className={cn(
+                      "p-3 sm:p-3.5 rounded-[14px] border transition-all cursor-pointer flex items-center justify-between gap-3 min-h-[52px] select-none active:scale-[0.99] touch-manipulation shadow-2xs",
+                      preferences.group_payment_push
+                        ? "bg-white border-slate-200/90 hover:border-slate-300/80"
+                        : "bg-slate-50/60 border-slate-200/70 text-slate-400"
+                    )}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={cn(
+                          "w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 border transition-colors",
+                          preferences.group_payment_push
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200/70"
+                            : "bg-slate-100 text-slate-400 border-slate-200/80"
+                        )}
+                      >
+                        <Users className="w-4.5 h-4.5 stroke-[2.2]" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-xs sm:text-sm font-bold text-slate-900 block leading-tight">
+                            Group Member Payment Alerts
+                          </span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80">
+                            Household
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 font-medium block mt-0.5 truncate">
+                          Lock-screen push alerts when other members record payments on shared loans
+                        </span>
+                      </div>
+                    </div>
+
+                    <input
+                      type="checkbox"
+                      checked={preferences.group_payment_push}
+                      onChange={(e) =>
+                        setPreferences((prev) => ({ ...prev, group_payment_push: e.target.checked }))
                       }
                       className="w-5 h-5 rounded-md text-emerald-700 cursor-pointer accent-[#1C9E30] shrink-0 ml-2"
                     />

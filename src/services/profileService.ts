@@ -8,6 +8,8 @@ export interface NotificationPreferences {
   rem_1_day: boolean;
   rem_due_date: boolean;
   rem_overdue: boolean;
+  email_receipts?: boolean;
+  group_payment_push?: boolean;
 }
 
 export interface ProfileDetails {

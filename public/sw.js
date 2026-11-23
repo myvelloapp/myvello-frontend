@@ -28,11 +28,6 @@ self.addEventListener('push', (event) => {
     }
   }
 
-  // Suppress push alerts when other group members pay ("Payment Logged")
-  if (/payment\s*logged/i.test(payload.title || '')) {
-    return;
-  }
-
   const options = {
     body: payload.body,
     icon: payload.icon || '/icons/icon-192x192.png',
