@@ -1301,8 +1301,8 @@ _Myvello — Your Life. Your Records. One Place._`
           </div>
         )}
 
-        {/* 4. Active Workspace Content: Clean 2-Column Minimal Architecture */}
-        {!isLoading && activeFamily && (
+        {/* 4. Active Workspace Content: Clean 2-Column Architecture (Hidden when viewing pending invitation) */}
+        {!isLoading && !selectedInvite && activeFamily && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
             {/* Left Column (8 cols): Shared Loans & Financial Metrics */}
             <div className="lg:col-span-8 space-y-4">
