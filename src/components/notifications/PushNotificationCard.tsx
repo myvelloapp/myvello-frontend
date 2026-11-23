@@ -6,7 +6,6 @@ import {
   Smartphone,
   CheckCircle2,
   AlertCircle,
-  Send,
   Loader2,
   ShieldCheck,
 } from "lucide-react";
@@ -14,7 +13,6 @@ import {
   isPushSupported,
   getExistingSubscription,
   subscribeToPush,
-  sendTestNotification,
   syncPushSubscriptionToBackend,
 } from "@/lib/pushNotifications";
 import { cn } from "@/lib/utils";
@@ -32,7 +30,6 @@ export function PushNotificationCard({
   const [subscription, setSubscription] = useState<PushSubscription | null>(null);
   const [permission, setPermission] = useState<NotificationPermission>("default");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSendingTest, setIsSendingTest] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
 
@@ -68,9 +65,8 @@ export function PushNotificationCard({
       if (res.success && res.subscription) {
         setSubscription(res.subscription);
         setPermission("granted");
-        setStatusMessage(
-          "Lock-screen alerts active! Tap 'Test Alert' to verify delivery."
-        );
+        setStatusMessage("Desktop & mobile push alerts active!");
+        setTimeout(() => setStatusMessage(null), 4000);
       } else {
         setIsError(true);
         setStatusMessage(res.error || "Could not activate notifications.");
@@ -80,54 +76,6 @@ export function PushNotificationCard({
       setStatusMessage(err?.message || "Unexpected error enabling push notifications.");
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleSendTest = async () => {
-    setIsSendingTest(true);
-    setStatusMessage(null);
-    setIsError(false);
-
-    try {
-      let activeSub = subscription;
-      if (!activeSub) {
-        activeSub = await getExistingSubscription();
-      }
-      if (!activeSub && Notification.permission === "granted") {
-        const res = await subscribeToPush();
-        if (res.success && res.subscription) {
-          activeSub = res.subscription;
-          setSubscription(activeSub);
-        }
-      }
-
-      if (activeSub) {
-        const res = await sendTestNotification(activeSub);
-        if (!res.success) {
-          throw new Error(res.error || "Failed to dispatch test notification.");
-        }
-        setStatusMessage(
-          "Cloud push alert dispatched! Check your desktop notification center."
-        );
-      } else if ("serviceWorker" in navigator) {
-        const reg = await navigator.serviceWorker.ready;
-        await reg.showNotification("Myvello: EMI Due Alert", {
-          body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
-          icon: "/icons/icon-192x192.png",
-          badge: "/icons/icon-192x192.png",
-          tag: "myvello-test-alert",
-          requireInteraction: true,
-          silent: false,
-        });
-        setStatusMessage(
-          "Local test alert displayed. Please click 'Enable' to activate cloud push."
-        );
-      }
-    } catch (err: any) {
-      setIsError(true);
-      setStatusMessage(err?.message || "Error sending test alert.");
-    } finally {
-      setIsSendingTest(false);
     }
   };
 
@@ -201,28 +149,8 @@ export function PushNotificationCard({
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-1.5 shrink-0">
-          {isSubscribed ? (
-            <button
-              type="button"
-              onClick={handleSendTest}
-              disabled={isSendingTest}
-              className="min-h-[32px] h-8 px-2.5 rounded-[8px] bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-[11px] font-bold shadow-2xs hover:border-slate-300 active:scale-95 touch-manipulation transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0"
-              title="Send a sample lock-screen push notification to verify delivery"
-            >
-              {isSendingTest ? (
-                <>
-                  <Loader2 className="w-3 h-3 animate-spin text-emerald-700" />
-                  <span>Sending...</span>
-                </>
-              ) : (
-                <>
-                  <Send className="w-3 h-3 text-emerald-700" />
-                  <span>Test Alert</span>
-                </>
-              )}
-            </button>
-          ) : (
+        {!isSubscribed && (
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
               onClick={handleEnablePush}
@@ -241,8 +169,8 @@ export function PushNotificationCard({
                 </>
               )}
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Dynamic Status / Feedback Message */}
