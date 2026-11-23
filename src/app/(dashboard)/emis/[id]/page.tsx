@@ -911,17 +911,6 @@ function EmiDetailContent() {
       <div className="absolute inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-6">
-        {/* Mobile Top Navigation: Clean, thumb-friendly return link */}
-        <div className="flex items-center justify-between gap-2 lg:hidden">
-          <Link
-            href="/emis"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs active:scale-95 touch-manipulation transition-all cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4 text-slate-500" />
-            <span>Back to EMI Management</span>
-          </Link>
-        </div>
-
         {/* HERO CARD: EMI ACCOUNT MAIN BANNER */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-6 shadow-xs space-y-4 sm:space-y-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
