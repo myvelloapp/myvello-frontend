@@ -15,6 +15,7 @@ import {
   getExistingSubscription,
   subscribeToPush,
   sendTestNotification,
+  syncPushSubscriptionToBackend,
 } from "@/lib/pushNotifications";
 import { cn } from "@/lib/utils";
 
@@ -43,20 +44,15 @@ export function PushNotificationCard({
 
     if (isSupp && "Notification" in window) {
       setPermission(Notification.permission);
-      getExistingSubscription().then((sub) => {
+      getExistingSubscription().then(async (sub) => {
         setSubscription(sub);
         if (sub) {
-          // Sync active subscription with backend in background
-          import("@/lib/api").then(({ apiClient }) => {
-            const isDesktop =
-              typeof window !== "undefined" &&
-              !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-            apiClient.post("/push/subscribe", {
-              ...sub.toJSON(),
-              device_type: isDesktop ? "desktop" : "mobile",
-            }).catch(() => {});
-          });
+          await syncPushSubscriptionToBackend(sub);
+        } else if (Notification.permission === "granted") {
+          const res = await subscribeToPush();
+          if (res.success && res.subscription) {
+            setSubscription(res.subscription);
+          }
         }
       });
     }
@@ -93,12 +89,27 @@ export function PushNotificationCard({
     setIsError(false);
 
     try {
-      // Deduplicated test dispatch: trigger EXACTLY ONE notification
-      if (subscription) {
-        // Dispatch via remote server push relay (which delivers via the background service worker)
-        await sendTestNotification(subscription);
+      let activeSub = subscription;
+      if (!activeSub) {
+        activeSub = await getExistingSubscription();
+      }
+      if (!activeSub && Notification.permission === "granted") {
+        const res = await subscribeToPush();
+        if (res.success && res.subscription) {
+          activeSub = res.subscription;
+          setSubscription(activeSub);
+        }
+      }
+
+      if (activeSub) {
+        const res = await sendTestNotification(activeSub);
+        if (!res.success) {
+          throw new Error(res.error || "Failed to dispatch test notification.");
+        }
+        setStatusMessage(
+          "Cloud push alert dispatched! Check your desktop notification center."
+        );
       } else if ("serviceWorker" in navigator) {
-        // Local fallback only when not yet subscribed to push service
         const reg = await navigator.serviceWorker.ready;
         await reg.showNotification("Myvello: EMI Due Alert", {
           body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
@@ -108,17 +119,10 @@ export function PushNotificationCard({
           requireInteraction: true,
           silent: false,
         });
-      } else if ("Notification" in window) {
-        new Notification("Myvello: EMI Due Alert", {
-          body: "Your upcoming EMI of ₹3,670 is scheduled soon. Desktop notifications are active!",
-          icon: "/icons/icon-192x192.png",
-          requireInteraction: true,
-        });
+        setStatusMessage(
+          "Local test alert displayed. Please click 'Enable' to activate cloud push."
+        );
       }
-
-      setStatusMessage(
-        "Alert sent! If no banner popped up, please check Windows Notification Center (click the clock on your taskbar) or Windows Focus Assist."
-      );
     } catch (err: any) {
       setIsError(true);
       setStatusMessage(err?.message || "Error sending test alert.");

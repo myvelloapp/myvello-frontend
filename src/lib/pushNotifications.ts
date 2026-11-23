@@ -29,7 +29,10 @@ export function isPushSupported(): boolean {
 export async function getExistingSubscription(): Promise<PushSubscription | null> {
   if (!isPushSupported()) return null;
   try {
-    const registration = await navigator.serviceWorker.getRegistration("/sw.js");
+    const registration =
+      (await navigator.serviceWorker.ready) ||
+      (await navigator.serviceWorker.getRegistration("/")) ||
+      (await navigator.serviceWorker.getRegistration());
     if (!registration) return null;
     return await registration.pushManager.getSubscription();
   } catch (err) {
@@ -44,6 +47,9 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
     const registration = await navigator.serviceWorker.register("/sw.js", {
       scope: "/",
     });
+    if (registration) {
+      registration.update().catch(() => {});
+    }
     return registration;
   } catch (err) {
     console.error("Service Worker registration failed:", err);

@@ -202,8 +202,14 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (!user || typeof window === "undefined") return;
     if ("Notification" in window && Notification.permission === "granted") {
-      import("@/lib/pushNotifications").then(({ syncPushSubscriptionToBackend }) => {
-        syncPushSubscriptionToBackend().catch(() => {});
+      import("@/lib/pushNotifications").then(({ getExistingSubscription, syncPushSubscriptionToBackend, subscribeToPush }) => {
+        getExistingSubscription().then(async (sub) => {
+          if (sub) {
+            await syncPushSubscriptionToBackend(sub);
+          } else {
+            await subscribeToPush().catch(() => {});
+          }
+        }).catch(() => {});
       });
     }
   }, [user]);
