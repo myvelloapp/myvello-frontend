@@ -170,16 +170,11 @@ function areLoanDetailsEqual(a: DetailedEmi | null, b: DetailedEmi | null): bool
 // High-fidelity shimmer skeleton matching exact page geometry to guarantee zero layout shift (CLS = 0)
 export function EmiDetailSkeleton() {
   return (
-    <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh select-none">
+    <div className="relative -mt-18 pt-20 pb-2 sm:pb-4 lg:pb-8 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none">
       {/* Living Aurora Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-[1500px] mx-auto space-y-2.5 sm:space-y-6 animate-pulse">
-        {/* Mobile Top Navigation Skeleton */}
-        <div className="flex items-center justify-between gap-2 lg:hidden">
-          <div className="h-8.5 w-48 rounded-xl bg-slate-200/80" />
-        </div>
-
         {/* HERO CARD SKELETON */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-6 shadow-xs space-y-4 sm:space-y-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -906,7 +901,7 @@ function EmiDetailContent() {
   }
 
   return (
-    <div className="relative -mt-18 pt-20 pb-[max(6.5rem,calc(5.5rem+env(safe-area-inset-bottom)))] lg:pb-16 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden min-h-dvh select-none">
+    <div className="relative -mt-18 pt-20 pb-2 sm:pb-4 lg:pb-8 px-3.5 sm:px-6 lg:px-8 xl:px-10 overflow-x-hidden select-none">
       {/* Living Aurora Gradient Backdrop */}
       <div className="absolute inset-0 pointer-events-none z-0" />
 
