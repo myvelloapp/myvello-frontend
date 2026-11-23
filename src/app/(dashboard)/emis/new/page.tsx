@@ -108,7 +108,6 @@ export function NewEmiSkeleton() {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <div className="h-6 w-12 rounded-full bg-slate-200/60" />
-            <div className="w-8 h-8 rounded-full bg-slate-200/50" />
           </div>
         </div>
 
@@ -759,19 +758,11 @@ export default function AddNewEmiPage() {
                 </p>
               </div>
 
-              {/* Step Completion Badge & Mobile Close Button */}
+              {/* Step Completion Badge */}
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/70 shadow-2xs">
                   {currentStep === 1 ? "25%" : currentStep === 2 ? "50%" : currentStep === 3 ? "75%" : "100%"}
                 </span>
-                <Link
-                  href="/emis"
-                  className="w-8 h-8 rounded-full bg-white/90 border border-slate-200/90 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-2xs active:scale-95"
-                  aria-label="Close popup"
-                  title="Close"
-                >
-                  <X className="w-4 h-4 stroke-[2.2]" />
-                </Link>
               </div>
             </div>
 
