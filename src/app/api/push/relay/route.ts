@@ -54,16 +54,14 @@ export async function POST(req: Request) {
     const bodyText = payload?.body || "";
     const tag = payload?.tag || "";
 
-    // STRICT SAFETY SUPPRESSION: Never deliver payment history, logs, or receipts as push notifications
-    const isPaymentAlert =
-      /payment\s*(logged|reconciled|history|recorded)/i.test(title) ||
-      /payment\s*(of|successfully|logged)/i.test(bodyText) ||
-      /payment_/i.test(tag);
+    // Suppress push alerts when OTHER members pay ("Payment Logged")
+    // Allow the payer's own confirmation receipt ("Payment Reconciled") to reach their desktop
+    const isOtherMemberPaymentAlert = /payment\s*logged/i.test(title);
 
-    if (isPaymentAlert) {
+    if (isOtherMemberPaymentAlert) {
       return NextResponse.json({
         success: true,
-        message: "Payment push notifications are permanently suppressed.",
+        message: "Payment push notifications for other group members are suppressed.",
         sent_count: 0,
       });
     }

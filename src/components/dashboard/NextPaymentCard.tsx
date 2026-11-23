@@ -109,25 +109,7 @@ export function NextPaymentCard({
     );
   }
 
-  const handlePaymentSuccess = async (data: {
-    emiId: number;
-    amount: number;
-    date: string;
-    method: string;
-    reference: string;
-  }) => {
-    if (activeCard?.schedule_id && activeCard?.emi_id) {
-      try {
-        await emiService.markScheduleAsPaid(activeCard.emi_id, activeCard.schedule_id, {
-          paid_amount: data.amount,
-          payment_date: data.date,
-          payment_method: data.method,
-          transaction_reference: data.reference,
-        });
-      } catch (err) {
-        console.error("Failed to mark schedule as paid in backend:", err);
-      }
-    }
+  const handlePaymentSuccess = () => {
     if (onPaymentRecorded) {
       onPaymentRecorded();
     }
