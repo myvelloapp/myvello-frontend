@@ -14,10 +14,17 @@ export function CapacitorBridge() {
     import("@capacitor/core").then(({ Capacitor }) => {
       if (!Capacitor.isNativePlatform()) return;
 
-      // 1. Configure Native Status Bar (Mint background with dark icons)
-      import("@capacitor/status-bar").then(({ StatusBar, Style }) => {
-        StatusBar.setBackgroundColor({ color: "#EDF8F2" }).catch(() => {});
-        StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
+      document.documentElement.classList.add("capacitor-native");
+
+      // 1. Configure Native Status Bar (Mint background with dark icons, no webview overlap)
+      import("@capacitor/status-bar").then(async ({ StatusBar, Style }) => {
+        try {
+          await StatusBar.setOverlaysWebView({ overlay: false });
+          await StatusBar.setBackgroundColor({ color: "#EDF8F2" });
+          await StatusBar.setStyle({ style: Style.Dark });
+        } catch (e) {
+          console.warn("StatusBar setup error:", e);
+        }
       });
 
       // 2. Hide Native Splash Screen smoothly once UI renders

@@ -409,8 +409,8 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         className={cn(
           "lg:hidden fixed inset-x-3 sm:inset-x-4 mx-auto z-40 bg-white/95 backdrop-blur-2xl border border-white/80 rounded-full flex items-center justify-between select-none transition-all duration-300 ease-out will-change-[transform,max-width,padding,bottom]",
           isCompact
-            ? "bottom-[max(12px,calc(12px+env(safe-area-inset-bottom)))] max-w-[286px] px-1.5 py-1 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.14),0_2px_8px_-2px_rgba(15,23,42,0.06)]"
-            : "bottom-[max(18px,calc(18px+env(safe-area-inset-bottom)))] max-w-[364px] px-2 py-1.5 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.16),0_4px_16px_-2px_rgba(15,23,42,0.08)]"
+            ? "bottom-[max(8px,calc(8px+env(safe-area-inset-bottom)))] max-w-[286px] px-1.5 py-1 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.14),0_2px_8px_-2px_rgba(15,23,42,0.06)]"
+            : "bottom-[max(10px,calc(10px+env(safe-area-inset-bottom)))] max-w-[364px] px-2 py-1.5 shadow-[0_12px_36px_-6px_rgba(15,23,42,0.16),0_4px_16px_-2px_rgba(15,23,42,0.08)]"
         )}
         aria-label="Mobile Navigation"
       >

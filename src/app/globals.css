@@ -99,6 +99,15 @@ body {
   touch-action: manipulation;
 }
 
+/* Capacitor Native Android Shell: status bar spacing (zero effect on web / responsive) */
+.capacitor-native header {
+  padding-top: max(env(safe-area-inset-top, 0px), 0.875rem);
+}
+
+.capacitor-native nav[aria-label="Mobile Navigation"] {
+  bottom: 0.5rem !important; /* sits cleanly 8px just above Android layout bounds */
+}
+
 /* Global Dark Forest Text (#02361B) Theme Override */
 .text-slate-900,
 .text-\[\#0F172A\],

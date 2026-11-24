@@ -161,7 +161,7 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-30 h-18 sm:h-18 lg:h-20 pt-2.5 pb-1 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
+    <header className="sticky top-0 z-30 min-h-18 sm:min-h-18 lg:min-h-20 pt-[max(env(safe-area-inset-top,0px),0.625rem)] pb-1.5 sm:pt-0 sm:pb-0 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between select-none pointer-events-none">
       {/* Left side: Brand Logo & Mobile Back Button (Omitted in popup mode) */}
       <div className="flex items-center gap-2 pointer-events-auto">
         {!isPopupMode && (
