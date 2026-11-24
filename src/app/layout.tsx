@@ -4,6 +4,7 @@ import { AuthProvider } from "@/modules/authentication/AuthContext";
 import { WorkspaceProvider } from "@/context/WorkspaceContext";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { AppTitleManager } from "@/components/common/AppTitleManager";
+import { CapacitorBridge } from "@/components/common/CapacitorBridge";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -147,6 +148,7 @@ export default function RootLayout({
           <WorkspaceProvider>
             <NotificationProvider>
               <AppTitleManager />
+              <CapacitorBridge />
               {children}
             </NotificationProvider>
           </WorkspaceProvider>
