@@ -32,7 +32,7 @@ export function GmailConnectionCard({ status, onRefresh, onScanComplete }: Gmail
     setIsScanning(true);
     setErrorMsg(null);
     try {
-      await subscriptionService.scanGmail({ max_emails: 30 });
+      await subscriptionService.scanGmail({ max_emails: 100 });
       onRefresh();
       if (onScanComplete) {
         onScanComplete();
