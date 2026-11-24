@@ -127,6 +127,12 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       active: pathname.startsWith("/emis"),
     },
     {
+      label: "Subscriptions",
+      href: "/subscriptions",
+      icon: Clock,
+      active: pathname.startsWith("/subscriptions"),
+    },
+    {
       label: "Documents",
       href: "/documents",
       icon: FileText,
